@@ -20,7 +20,7 @@
   </div>
 
   <!-- BOTÓN FLOTANTE DEL CARRITO -->
-  <a href="#" class="btn btn_shopping" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
+  <a href="#" class="btn btn_shopping" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
     <i class="bi bi-bag-heart"></i>
     <span id="contador-carrito" class="contador-carrito">0</span>
   </a>
@@ -37,10 +37,8 @@
     <div id="seccion-categorias" class="grid-productos"></div>
   </section>
 
-
-
   <!-- CARRITO OFFCANVAS -->
-  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight">
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito">
     <div class="offcanvas-header border-bottom">
       <h4 class="offcanvas-title text-center">Carrito de compras</h4>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
@@ -86,7 +84,6 @@
       window.catalogoGlobal = productos;
       renderProductos(productos);
       renderizarCategoriasRelacionadas(productos);
-      renderMenuLateral(productos);
     }
 
     function renderProductos(productos) {
@@ -99,7 +96,7 @@
       contenedor.innerHTML = "";
 
       const productosFiltrados = productos.filter(p =>
-        (p.tipo?.trim() === tipo || p.subtipo?.trim() === tipo) &&
+        p.tipo?.trim() === tipo &&
         p.subtipo?.trim() === subtipo &&
         p.categoria?.trim() === categoria
       );
@@ -159,7 +156,7 @@
         contenedor.appendChild(tarjeta);
       });
     }
-    
+
     function ajustarCarrito() {
       const header = document.querySelector(".header");
       const carritoBtn = document.querySelector(".btn_shopping");
@@ -168,6 +165,7 @@
         carritoBtn.style.top = `${alturaHeader + 12}px`;
       }
     }
+
     document.addEventListener("DOMContentLoaded", async () => {
       const header = await fetch("HEADER.HTML").then(res => res.text());
       document.getElementById("header-container").insertAdjacentHTML("afterbegin", header);
@@ -180,15 +178,5 @@
       document.getElementById("footer-container").innerHTML = footer;
 
       await cargarCatalogo();
-
-      if (typeof cargarCarritoDesdeStorage === "function") {
-        cargarCarritoDesdeStorage();
-      }
-
-      if (typeof actualizarCarrito === "function") {
-        actualizarCarrito();
-      }
     });
-  </script>
-</body>
-</html>
+  </script
