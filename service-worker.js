@@ -1,14 +1,12 @@
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open('anmago-cache').then(cache => {
-      return cache.addAll([
-        '/',
-        '/index.html',
-        '/styles.css',
-        '/script.js',
-        '/icon-192.png',
-        '/icon-512.png'
-      ]);
+     return cache.addAll([
+  './INICIO.HTML',
+  './ESTILO.CSS',
+  './carrito.js',
+  './logo.jpg'
+]);
     })
   );
 });
