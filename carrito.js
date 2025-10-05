@@ -8,7 +8,7 @@ const btn_shopping = document.querySelector(".btn_shopping");
 const subtotalElement = document.getElementById("subtotal");
 const contadorCarrito = document.getElementById("contador-carrito");
 const closeButton = document.querySelector(".btn-close");
-const btnWhatsApp = document.querySelector("button[onclick='generarPedidoWhatsApp()']);
+const btnWhatsApp = document.getElementById("btnWhatsApp");
 
 // === FUNCIONES ===
 
