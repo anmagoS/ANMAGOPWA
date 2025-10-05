@@ -116,7 +116,7 @@
         return promo === true || promo === "true" || promo === "sí" || promo === "activo";
       });
 
-      indiceActual = 0;
+      indiceActual = parseInt(localStorage.getItem("indicePromoActual")) || 0;
       renderPromocionesPorCiclo();
     }
 
@@ -126,7 +126,6 @@
 
       const siguienteBloque = promocionesGlobal.slice(indiceActual, indiceActual + cantidadPorCiclo);
 
-      // 🧠 Guardar IDs activos para sincronizar con producto.html
       const idsPromosActivas = siguienteBloque.map(p => p.id);
       localStorage.setItem("promosActivas", JSON.stringify(idsPromosActivas));
 
@@ -151,11 +150,6 @@
         `;
         contenedor.appendChild(tarjeta);
       });
-
-      indiceActual += cantidadPorCiclo;
-      if (indiceActual >= promocionesGlobal.length) {
-        indiceActual = 0;
-      }
     }
 
     function iniciarTemporizador() {
@@ -172,6 +166,11 @@
         if (restante <= 0) {
           finPromo = new Date(Date.now() + duracionCiclo);
           localStorage.setItem("finPromo", finPromo.toISOString());
+
+          indiceActual += cantidadPorCiclo;
+          if (indiceActual >= promocionesGlobal.length) indiceActual = 0;
+          localStorage.setItem("indicePromoActual", indiceActual);
+
           renderPromocionesPorCiclo();
           temporizador.textContent = "⏳ ¡Promociones actualizadas!";
           return;
