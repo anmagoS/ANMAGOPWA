@@ -139,10 +139,10 @@ function mostrarTemporizadorPromos() {
       return;
     }
 
-    const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
-    const segundos = Math.floor((restante % (1000 * 60)) / 1000);
-
-    contenedor.textContent = `⏰ Cambia en ${minutos}m ${segundos}s`;
+    const horas = Math.floor(restante / (1000 * 60 * 60));
+const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
+const segundos = Math.floor((restante % (1000 * 60)) / 1000);
+contenedor.textContent = `⏰ Cambia en ${horas}h ${minutos}m ${segundos}s`;
   }, 1000);
 }
 
