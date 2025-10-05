@@ -131,8 +131,32 @@
 
       document.getElementById("nombre").textContent = producto.producto;
 
-      const precioContainer = document.getElementById("precio");
-      const precioFinal = producto.promo ? producto.precio * 0.9 : producto.precio;
+    const precioContainer = document.getElementById("precio");
+
+// Recuperar el tiempo de fin de promoción desde localStorage
+const finPromoGlobal = new Date(localStorage.getItem("finPromo")) || new Date(0);
+const ahora = new Date();
+
+// Validar si el producto está en promoción activa
+function esPromocionActiva(p) {
+  const promo = typeof p.promo === "string" ? p.promo.toLowerCase().trim() : p.promo;
+  return promo === true || promo === "true" || promo === "sí" || promo === "activo";
+}
+
+const dentroDePromocion = ahora < finPromoGlobal && esPromocionActiva(producto);
+const precioFinal = dentroDePromocion ? producto.precio * 0.9 : producto.precio;
+
+// Render del precio
+if (dentroDePromocion) {
+  precioContainer.innerHTML = `
+    <s>$${producto.precio.toLocaleString()} COP</s>
+    <span class="text-success fw-bold ms-2 precio-final">$${precioFinal.toLocaleString()} COP</span>
+    <span class="badge bg-danger ms-2">-10%</span>
+  `;
+} else {
+  precioContainer.innerHTML = `<span class="precio-final">$${precioFinal.toLocaleString()} COP</span>`;
+}
+
 
       if (producto.promo) {
         precioContainer.innerHTML = `
