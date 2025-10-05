@@ -123,6 +123,30 @@ function getParametrosDesdeURL() {
     categoria: params.get("categoria")?.trim()
   };
 }
+function mostrarTemporizadorPromos() {
+  const contenedor = document.getElementById("temporizador-promos");
+  if (!contenedor) return;
+
+  const finPromo = new Date(localStorage.getItem("finPromo"));
+  if (!finPromo || isNaN(finPromo)) return;
+
+  setInterval(() => {
+    const ahora = new Date();
+    const restante = finPromo - ahora;
+
+    if (restante <= 0) {
+      contenedor.textContent = "⏳ Promociones actualizadas";
+      return;
+    }
+
+    const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
+    const segundos = Math.floor((restante % (1000 * 60)) / 1000);
+
+    contenedor.textContent = `⏰ Cambia en ${minutos}m ${segundos}s`;
+  }, 1000);
+}
+
+document.addEventListener("DOMContentLoaded", mostrarTemporizadorPromos);
 
 // === Inicialización ===
 document.addEventListener("DOMContentLoaded", async () => {
