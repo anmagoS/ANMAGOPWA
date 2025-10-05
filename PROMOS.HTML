@@ -168,7 +168,7 @@
       const restante = finPromo - ahora;
 
       if (restante <= 0) {
-        finPromo = new Date(Date.now() + 3 * 60 * 60 * 1000); // reinicia
+        finPromo = new Date(Date.now() + 0 * 0 * 60 * 1000); // reinicia
         renderPromocionesPorCiclo(); // muestra siguiente bloque
         temporizador.textContent = "⏳ ¡Promociones actualizadas!";
         return;
