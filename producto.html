@@ -59,7 +59,6 @@
     </div>
   </div>
 
-  <!-- SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="carrito.js"></script>
   <script src="app.js"></script>
@@ -72,8 +71,6 @@
       const header = await fetch("HEADER.HTML").then(res => res.text());
       document.getElementById("header-container").insertAdjacentHTML("afterbegin", header);
       await new Promise(resolve => requestAnimationFrame(resolve));
-      ajustarCarrito();
-
       activarBuscadorGlobal();
 
       const footer = await fetch("footer.html").then(res => res.text());
@@ -81,35 +78,6 @@
 
       await cargarProducto();
     });
-
-    function ajustarCarrito() {
-      const header = document.querySelector(".header");
-      const carritoBtn = document.querySelector(".btn_shopping");
-      if (header && carritoBtn) {
-        const alturaHeader = header.offsetHeight;
-        carritoBtn.style.top = `${alturaHeader + 12}px`;
-      }
-    }
-
-    function generarDescripcionCorta(producto) {
-      const categoria = producto.categoria?.toUpperCase() || "CATÁLOGO";
-      const subtipo = producto.subtipo?.toLowerCase() || "";
-      const nombre = producto.producto?.toUpperCase() || "PRODUCTO DESTACADO";
-      const material = producto.material?.toUpperCase() || "";
-      const tallas = producto.tallas?.toUpperCase() || "";
-
-      let publico = "";
-      if (subtipo === "dama") publico = "mujer";
-      else if (subtipo === "hombre" || subtipo === "caballero") publico = "caballero";
-      else if (subtipo === "niño") publico = "niños";
-      else if (subtipo === "unisex") publico = "todos";
-      else if (subtipo) publico = subtipo;
-
-      let tallasTexto = tallas && tallas !== "N/A" ? `disponible en tallas ${tallas}` : "";
-      let materialTexto = material ? `en ${material}` : "";
-
-      return `¡Descubre lo nuevo en ${categoria} para ${publico}! Presentamos ${nombre} ${materialTexto}${tallasTexto ? `, ${tallasTexto}` : ""}. Calidad profesional y entrega inmediata. Solo en ANMAGO Store.`;
-    }
 
     async function cargarProducto() {
       const params = new URLSearchParams(window.location.search);
@@ -139,7 +107,8 @@
         precioContainer.innerHTML = `<span class="precio-final">$${precioFinal.toLocaleString()} COP</span>`;
       }
 
-      document.getElementById("descripcion-corta").textContent = generarDescripcionCorta(producto);
+      const descripcionCorta = `¡Descubre lo nuevo en ${producto.categoria?.toUpperCase() || "CATÁLOGO"} para ${producto.subtipo?.toLowerCase() || "todos"}! Presentamos ${producto.producto?.toUpperCase()} en ${producto.material?.toUpperCase() || "material especial"}${producto.tallas ? `, disponible en tallas ${producto.tallas}` : ""}. Calidad profesional y entrega inmediata. Solo en ANMAGO Store.`;
+      document.getElementById("descripcion-corta").textContent = descripcionCorta;
 
       const galeria = document.getElementById("galeria");
       const imagenes = producto.url?.split(",").map(url => url.trim()).filter(Boolean) || [];
@@ -176,8 +145,8 @@
             <label for="selector-variable-${i}" class="mt-2">Selecciona variante:</label>
             <select id="selector-variable-${i}" class="form-select mb-2 selector-variable">
               ${opcionesVariante}
-                    </select>
-        `;
+            </select>
+          `;
         }
 
         tarjeta.innerHTML = `
@@ -218,7 +187,7 @@
       });
 
       if (producto.descripcion) {
-        const descripcionCompleta = document.getElementById("descripcion-completa");
+                const descripcionCompleta = document.getElementById("descripcion-completa");
         descripcionCompleta.innerHTML = `
           <h4 class="mt-4 mb-2">Descripción del producto</h4>
           <p>${producto.descripcion.replace(/\n/g, "<br>")}</p>
@@ -226,6 +195,7 @@
       }
     }
 
+    // Activar zoom en imágenes
     document.addEventListener("click", function (e) {
       if (e.target.classList.contains("zoomable")) {
         const src = e.target.getAttribute("src");
