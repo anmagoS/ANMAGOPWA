@@ -159,27 +159,38 @@
     }
   }
 
-  function iniciarTemporizador() {
-    finPromo = new Date(Date.now() + 60 * 60 * 1000);
-    const temporizador = document.getElementById("temporizador");
+function iniciarTemporizador() {
+  // 🔒 Definir duración del ciclo (1 hora en este ejemplo)
+  const duracionCiclo = 60 * 60 * 1000; // 1 hora en milisegundos
+  finPromo = new Date(Date.now() + duracionCiclo);
 
-    setInterval(() => {
-      const ahora = new Date();
-      const restante = finPromo - ahora;
+  // 🧠 Guardar el tiempo de fin de promoción para otras vistas
+  localStorage.setItem("finPromo", finPromo.toISOString());
 
-      if (restante <= 0) {
-        finPromo = new Date(Date.now() + 60 * 60 * 1000); // reinicia
-        renderPromocionesPorCiclo(); // muestra siguiente bloque
-        temporizador.textContent = "⏳ ¡Promociones actualizadas!";
-        return;
-      }
+  const temporizador = document.getElementById("temporizador");
 
-      const horas = Math.floor(restante / (1000 * 60 * 60));
-      const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
-      const segundos = Math.floor((restante % (1000 * 60)) / 1000);
-      temporizador.textContent = `⏰ Por tiempo limitado: ${horas}h ${minutos}m ${segundos}s`;
-    }, 1000);
-  }
+  setInterval(() => {
+    const ahora = new Date();
+    const restante = finPromo - ahora;
+
+    if (restante <= 0) {
+      // 🔁 Reiniciar ciclo y guardar nuevo tiempo
+      finPromo = new Date(Date.now() + duracionCiclo);
+      localStorage.setItem("finPromo", finPromo.toISOString());
+
+      renderPromocionesPorCiclo(); // mostrar siguiente bloque
+      temporizador.textContent = "⏳ ¡Promociones actualizadas!";
+      return;
+    }
+
+    const horas = Math.floor(restante / (1000 * 60 * 60));
+    const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
+    const segundos = Math.floor((restante % (1000 * 60)) / 1000);
+
+    temporizador.textContent = `⏰ Por tiempo limitado: ${horas}h ${minutos}m ${segundos}s`;
+  }, 1000);
+}
+
 </script>
 
  
