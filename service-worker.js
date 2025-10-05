@@ -5,6 +5,7 @@ self.addEventListener('install', event => {
   './INICIO.HTML',
   './ESTILO.CSS',
   './carrito.js',
+  './logo.jpg',
   './logo.jpg'
 ]);
     })
