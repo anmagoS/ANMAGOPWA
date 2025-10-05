@@ -71,6 +71,16 @@
       const header = await fetch("HEADER.HTML").then(res => res.text());
       document.getElementById("header-container").insertAdjacentHTML("afterbegin", header);
       await new Promise(resolve => requestAnimationFrame(resolve));
+      // 🔒 Refuerzo para mantener el carrito abierto al hacer clic en el botón flotante
+const carritoBtn = document.querySelector(".btn_shopping");
+carritoBtn?.addEventListener("click", e => {
+  e.preventDefault();
+  const offcanvas = document.getElementById("offcanvasCarrito");
+  if (offcanvas) {
+    const instancia = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
+    instancia.show();
+  }
+});
       activarBuscadorGlobal();
 
       const footer = await fetch("footer.html").then(res => res.text());
