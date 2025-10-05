@@ -1,4 +1,3 @@
-const carritoContainer = document.getElementById("carrito-contenido");
 const subtotalElement = document.getElementById("subtotal");
 const contadorCarrito = document.getElementById("contador-carrito");
 
