@@ -156,18 +156,6 @@ if (dentroDePromocion) {
 } else {
   precioContainer.innerHTML = `<span class="precio-final">$${precioFinal.toLocaleString()} COP</span>`;
 }
-
-
-      if (producto.promo) {
-        precioContainer.innerHTML = `
-          <s>$${producto.precio.toLocaleString()} COP</s>
-          <span class="text-success fw-bold ms-2 precio-final">$${precioFinal.toLocaleString()} COP</span>
-          <span class="badge bg-danger ms-2">-10%</span>
-        `;
-      } else {
-        precioContainer.innerHTML = `<span class="precio-final">$${precioFinal.toLocaleString()} COP</span>`;
-      }
-
       const descripcionCorta = `¡Descubre lo nuevo en ${producto.categoria?.toUpperCase() || "CATÁLOGO"} para ${producto.subtipo?.toLowerCase() || "todos"}! Presentamos ${producto.producto?.toUpperCase()} en ${producto.material?.toUpperCase() || "material especial"}${producto.tallas ? `, disponible en tallas ${producto.tallas}` : ""}. Calidad profesional y entrega inmediata. Solo en ANMAGO Store.`;
       document.getElementById("descripcion-corta").textContent = descripcionCorta;
 
