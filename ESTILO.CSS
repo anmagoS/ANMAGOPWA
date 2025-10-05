@@ -659,7 +659,10 @@ details[open] > summary::after {
   white-space: nowrap;
   width: 100%;
   max-width: 100%;
+  -webkit-background-clip: padding-box;
+  -webkit-text-fill-color: white;
 }
+
 .btn-gradient:hover {
   transform: scale(1.05);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
