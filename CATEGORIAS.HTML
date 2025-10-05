@@ -163,6 +163,20 @@
       document.getElementById("header-container").insertAdjacentHTML("afterbegin", header);
       await new Promise(resolve => requestAnimationFrame(resolve));
       ajustarCarrito();
+  await new Promise(resolve => requestAnimationFrame(resolve));
+  ajustarCarrito();
+
+  // 🔒 Reforzar apertura del carrito si el contenedor ya está cargado
+  const carritoBtn = document.querySelector(".btn_shopping");
+  carritoBtn?.addEventListener("click", e => {
+    e.preventDefault();
+    const offcanvas = document.getElementById("offcanvasCarrito");
+    if (offcanvas) {
+      const instancia = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
+      instancia.show();
+    }
+  });
+
 
       activarBuscadorGlobal();
 
