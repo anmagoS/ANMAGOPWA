@@ -176,4 +176,64 @@
             <label for="selector-variable-${i}" class="mt-2">Selecciona variante:</label>
             <select id="selector-variable-${i}" class="form-select mb-2 selector-variable">
               ${opcionesVariante}
-            </select
+                    </select>
+        `;
+        }
+
+        tarjeta.innerHTML = `
+          <div class="imagen-producto">
+            <img src="${img}" alt="${producto.producto} - Variante ${i + 1}" class="zoomable" style="cursor: zoom-in;">
+          </div>
+          ${selectorHTML}
+          <button class="boton-comprar btn-cart">Agregar al carrito</button>
+        `;
+
+        const boton = tarjeta.querySelector(".btn-cart");
+        const selectorTalla = tarjeta.querySelector(".selector-talla");
+        const selectorVariable = tarjeta.querySelector(".selector-variable");
+
+        boton.addEventListener("click", () => {
+          let tallaSeleccionada = "No especificada";
+          if (selectorTalla) tallaSeleccionada = selectorTalla.value;
+          else if (selectorVariable) tallaSeleccionada = selectorVariable.value;
+
+          const productoFinal = {
+            id: img + "-" + tallaSeleccionada,
+            nombre: producto.producto,
+            precio: precioFinal,
+            imagen: img,
+            talla: tallaSeleccionada,
+            cantidad: 1
+          };
+
+          if (typeof window.agregarAlCarrito === "function") {
+            window.agregarAlCarrito(productoFinal);
+          }
+
+          const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(document.getElementById("offcanvasCarrito"));
+          bsOffcanvas.show();
+        });
+
+        galeria.appendChild(tarjeta);
+      });
+
+      if (producto.descripcion) {
+        const descripcionCompleta = document.getElementById("descripcion-completa");
+        descripcionCompleta.innerHTML = `
+          <h4 class="mt-4 mb-2">Descripción del producto</h4>
+          <p>${producto.descripcion.replace(/\n/g, "<br>")}</p>
+        `;
+      }
+    }
+
+    document.addEventListener("click", function (e) {
+      if (e.target.classList.contains("zoomable")) {
+        const src = e.target.getAttribute("src");
+        document.getElementById("zoomImagen").setAttribute("src", src);
+        const modal = new bootstrap.Modal(document.getElementById("zoomModal"));
+        modal.show();
+      }
+    });
+  </script>
+</body>
+</html>
