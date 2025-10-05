@@ -398,7 +398,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     renderizarCategoriasDesdeCatalogo(window.catalogoGlobal, tipo, subtipo);
   }
   if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/service-worker.js')
+  navigator.serviceWorker.register('service-worker.js')
     .then(reg => console.log('Service Worker registrado:', reg))
     .catch(err => console.error('Error al registrar Service Worker:', err));
 }
