@@ -623,7 +623,7 @@ details[open] > summary::after {
 }
 
 .footer {
-  background-color: #222; /* Fondo oscuro */
+  background-color: #1b4557; /* Fondo oscuro */
   color: #f2f2f2;          /* Texto claro */
   padding: 20px;
 }
