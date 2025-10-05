@@ -645,3 +645,16 @@ details[open] > summary::after {
 .footer p {
   margin: 4px 0;
 }
+.btn-gradient {
+  background: linear-gradient(45deg, #ff6b6b, #f06595, #cc5de8);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-gradient:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
