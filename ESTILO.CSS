@@ -670,14 +670,15 @@ details[open] > summary::after {
 #temporizador {
   font-size: 2rem;
   font-weight: bold;
+  color: #d63384;
   background: linear-gradient(45deg, #ff6b6b, #f06595, #cc5de8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text; /* para navegadores no WebKit */
-  color: transparent; /* refuerzo para compatibilidad */
-  display: inline-block;
-  text-align: center;
-  width: 100%;
   animation: parpadeo 1s infinite;
   margin-top: 1rem;
+}
+
+@keyframes parpadeo {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
 }
