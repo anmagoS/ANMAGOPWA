@@ -127,7 +127,11 @@
       const productos = await res.json();
       window.catalogoGlobal = productos;
 
-      const promociones = productos.filter(p => String(p.promo).toLowerCase() === "true");
+     const promociones = productos.filter(p => {
+  const valor = String(p.promo).toLowerCase().trim();
+  return valor === "true" || valor === "sí" || valor === "activo" || p.promo === true;
+});
+
       const contenedor = document.getElementById("contenedor-promos");
 
       contenedor.innerHTML = "";
