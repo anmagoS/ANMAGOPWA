@@ -154,8 +154,11 @@
 
     function iniciarTemporizador() {
       const duracionCiclo = 60 * 1000; // 1 minuto para pruebas
-      finPromo = new Date(Date.now() + duracionCiclo);
-      localStorage.setItem("finPromo", finPromo.toISOString());
+      const finGuardado = localStorage.getItem("finPromo");
+      finPromo = finGuardado ? new Date(finGuardado) : new Date(Date.now() + duracionCiclo);
+      if (!finGuardado) {
+        localStorage.setItem("finPromo", finPromo.toISOString());
+      }
 
       const temporizador = document.getElementById("temporizador");
 
