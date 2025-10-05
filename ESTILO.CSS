@@ -667,3 +667,18 @@ details[open] > summary::after {
   transform: scale(1.05);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
+#temporizador {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #d63384;
+  background: linear-gradient(45deg, #ff6b6b, #f06595, #cc5de8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: parpadeo 1s infinite;
+  margin-top: 1rem;
+}
+
+@keyframes parpadeo {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
