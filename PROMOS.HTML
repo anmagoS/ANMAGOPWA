@@ -152,35 +152,38 @@
         temporizador.textContent = `⏰ Por tiempo limitado: ${horas}h ${minutos}m ${segundos}s`;
       }, 1000);
     }
+function renderPromocionesPorCiclo() {
+  const contenedor = document.getElementById("contenedor-promos");
+  contenedor.innerHTML = "";
 
-    function renderPromocionesPorCiclo() {
-      const contenedor = document.getElementById("contenedor-promos");
-      contenedor.innerHTML = "";
+  const siguienteBloque = promocionesGlobal.slice(indiceActual, indiceActual + cantidadPorCiclo);
 
-      const siguienteBloque = promocionesGlobal.slice(indiceActual, indiceActual + cantidadPorCiclo);
+  siguienteBloque.forEach(p => {
+    p.precioDescuento = Math.round(p.precio * 0.9); // ← Aquí se aplica el descuento
 
-      siguienteBloque.forEach(p => {
-        const tarjeta = document.createElement("div");
-        tarjeta.className = "producto";
-        tarjeta.innerHTML = `
-          <a href="producto.html?id=${p.id}">
-            <div class="imagen-producto">
-              <img src="${p.imagen}" alt="${p.producto}">
-              <span class="etiqueta-promo">🔥 10%</span>
-            </div>
-          </a>
-          <div class="nombre-producto">${p.producto}</div>
-          <div class="nombre-producto">${p.material}</div>
-          <div class="nombre-producto">${p.tallas}</div>
-          <div class="precio-producto">
-            <s>$${p.precio.toLocaleString()} COP</s>
-            <span class="text-success fw-bold">$${(p.precio * 0.9).toLocaleString()} COP</span>
-          </div>
-          <a href="producto.html?id=${p.id}" class="boton-comprar">Ver más</a>
-        `;
-        contenedor.appendChild(tarjeta);
-      });
-    }
+    const tarjeta = document.createElement("div");
+    tarjeta.className = "producto";
+    tarjeta.innerHTML = `
+      <a href="producto.html?id=${p.id}">
+        <div class="imagen-producto">
+          <img src="${p.imagen}" alt="${p.producto}">
+          <span class="etiqueta-promo">🔥 10%</span>
+        </div>
+      </a>
+      <div class="nombre-producto">${p.producto}</div>
+      <div class="nombre-producto">${p.material}</div>
+      <div class="nombre-producto">${p.tallas}</div>
+      <div class="precio-producto">
+        <s>$${p.precio.toLocaleString()} COP</s>
+        <span class="text-success fw-bold">$${p.precioDescuento.toLocaleString()} COP</span>
+      </div>
+      <a href="producto.html?id=${p.id}" class="boton-comprar">Ver más</a>
+    `;
+    contenedor.appendChild(tarjeta);
+  });
+}
+
+   
   </script>
 </body>
 </html>
