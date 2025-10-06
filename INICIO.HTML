@@ -112,6 +112,7 @@
       const productos = await respuesta.json();
       window.catalogoGlobal = productos;
       renderTipos(productos);
+      renderCarruselPromos(productos);
     }
 
     function renderTipos(productos) {
