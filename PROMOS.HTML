@@ -11,6 +11,7 @@
 </head>
 <body>
   <div id="header-container"></div>
+
   <div class="container mt-4 position-relative" style="max-width: 500px;">
     <input id="buscador" class="form-control" placeholder="Buscar productos, categorías, precios..." autocomplete="off">
     <div id="sugerencias" class="dropdown-menu position-absolute mt-1 w-100 z-3"></div>
@@ -69,9 +70,9 @@
       const url = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json?nocache=${Date.now()}`;
       const res = await fetch(url);
       const data = await res.json();
-     return {
-  finPromo: new Date(data.finPromo),
-  indiceActual: Number(data.indicePromoActual) || 0
+      return {
+        finPromo: new Date(data.finPromo),
+        indiceActual: Number(data.indicePromoActual) || 0
       };
     }
 
@@ -126,121 +127,109 @@
       });
     }
 
-async function iniciarTemporizador() {
-  // Forzar recarga sin caché
-  const url = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json?nocache=${Date.now()}`;
-  const res = await fetch(url);
-  const { finPromo: finGlobal, indicePromoActual: indiceGlobal } = await res.json();
+    async function iniciarTemporizador() {
+      const { finPromo: finGlobal, indiceActual: indiceGlobal } = await obtenerTemporizadorGlobal();
+      finPromo = finGlobal;
+      indiceActual = indiceGlobal;
 
-  finPromo = new Date(finGlobal);
-  indiceActual = parseInt(indiceGlobal);
-
-  renderPromocionesPorCiclo();
-
-  const temporizador = document.getElementById("temporizador");
-
-  // Temporizador visual en pantalla
-  setInterval(() => {
-    const ahora = new Date();
-    const restante = finPromo - ahora;
-
-    if (restante <= 0) {
-      temporizador.textContent = "⏳ ¡Promociones actualizadas!";
-      return;
-    }
-
-    const horas = Math.floor(restante / (1000 * 60 * 60));
-    const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
-    const segundos = Math.floor((restante % (1000 * 60)) / 1000);
-
-    temporizador.textContent = `⏰ Por tiempo limitado: ${horas}h ${minutos}m ${segundos}s`;
-  }, 1000);
-
- // Recargar bloque automáticamente cuando expire
-const tiempoRestante = finPromo - new Date();
-
-if (tiempoRestante > 0) {
-  setTimeout(async () => {
-    try {
-      const nuevaURL = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json?nocache=${Date.now()}`;
-      const nuevaRes = await fetch(nuevaURL);
-      const { finPromo: nuevaFin, indicePromoActual: nuevoIndice } = await nuevaRes.json();
-
-      finPromo = new Date(nuevaFin);
-      indiceActual = Number(nuevoIndice) || 0;
-
-      console.log("🔄 Bloque actualizado automáticamente:", indiceActual);
       renderPromocionesPorCiclo();
-    } catch (err) {
-      console.error("❌ Error al recargar promociones:", err);
+
+      const temporizador = document.getElementById("temporizador");
+
+      setInterval(() => {
+        const ahora = new Date();
+        const restante = finPromo - ahora;
+
+        if (restante <= 0) {
+          temporizador.textContent = "⏳ ¡Promociones actualizadas!";
+          return;
+        }
+
+        const horas = Math.floor(restante / (1000 * 60 * 60));
+        const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
+        const segundos = Math.floor((restante % (1000 * 60)) / 1000);
+
+        temporizador.textContent = `⏰ Por tiempo limitado: ${horas}h ${minutos}m ${segundos}s`;
+      }, 1000);
+
+      const tiempoRestante = finPromo - new Date();
+      if (tiempoRestante > 0) {
+        setTimeout(async () => {
+          try {
+            const nuevaURL = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json?nocache=${Date.now()}`;
+            const nuevaRes = await fetch(nuevaURL);
+            const { finPromo: nuevaFin, indicePromoActual: nuevoIndice } = await nuevaRes.json();
+
+            finPromo = new Date(nuevaFin);
+            indiceActual = Number(nuevoIndice) || 0;
+
+            console.log("🔄 Bloque actualizado automáticamente:", indiceActual);
+            renderPromocionesPorCiclo();
+          } catch (err) {
+            console.error("❌ Error al recargar promociones:", err);
+          }
+        }, tiempoRestante);
+      } else {
+        console.warn("⚠️ El tiempo de promoción ya venció. No se programó recarga automática.");
+      }
     }
-  }, tiempoRestante);
-} else {
-  console.warn("⚠️ El tiempo de promoción ya venció. No se programó recarga automática.");
-}
-function renderPromocionesPorCiclo() {
-  const contenedor = document.getElementById("contenedor-promos");
-  contenedor.innerHTML = "";
 
-  // Validar que el índice no exceda el total
-  if (!Array.isArray(promocionesGlobal) || promocionesGlobal.length === 0) {
-    contenedor.innerHTML = `<div class="text-center text-muted">No hay promociones disponibles.</div>`;
-    console.warn("⚠️ promocionesGlobal está vacío o no definido.");
-    return;
-  }
+    function renderPromocionesPorCiclo() {
+      const contenedor = document.getElementById("contenedor-promos");
+      contenedor.innerHTML = "";
 
-  if (indiceActual >= promocionesGlobal.length || isNaN(indiceActual)) {
-    indiceActual = 0;
-  }
+      if (!Array.isArray(promocionesGlobal) || promocionesGlobal.length === 0) {
+        contenedor.innerHTML = `<div class="text-center text-muted">No hay promociones disponibles.</div>`;
+        console.warn("⚠️ promocionesGlobal está vacío o no definido.");
+        return;
+      }
 
-  // Calcular el bloque activo
-  const siguienteBloque = promocionesGlobal.slice(indiceActual, indiceActual + cantidadPorCiclo);
+      if (indiceActual >= promocionesGlobal.length || isNaN(indiceActual)) {
+        indiceActual = 0;
+      }
 
-  // Mostrar mensaje si no hay productos
-  if (siguienteBloque.length === 0) {
-    contenedor.innerHTML = `<div class="text-center text-muted">No hay promociones activas en este momento.</div>`;
-    console.warn("⚠️ Bloque vacío. índiceActual:", indiceActual);
-    return;
-  }
+      const siguienteBloque = promocionesGlobal.slice(indiceActual, indiceActual + cantidadPorCiclo);
 
-  // Aplicar clase si el bloque está incompleto
-  contenedor.classList.toggle("bloque-incompleto", siguienteBloque.length < cantidadPorCiclo);
+      if (siguienteBloque.length === 0) {
+        contenedor.innerHTML = `<div class="text-center text-muted">No hay promociones activas en este momento.</div>`;
+        console.warn("⚠️ Bloque vacío. índiceActual:", indiceActual);
+        return;
+      }
 
-  // Trazabilidad visual
-  console.log("🔁 Bloque activo:", siguienteBloque.map(p => p.id));
+      contenedor.classList.toggle("bloque-incompleto", siguienteBloque.length < cantidadPorCiclo);
+            console.log("🔁 Bloque activo:", siguienteBloque.map(p => p.id));
 
-  // Renderizar cada producto
-  siguienteBloque.forEach(p => {
-    const precioOriginal = Number(p.precio) || 0;
-    const precioDescuento = Math.round(precioOriginal * 0.9);
+      siguienteBloque.forEach(p => {
+        const precioOriginal = Number(p.precio) || 0;
+        const precioDescuento = Math.round(precioOriginal * 0.9);
 
-    const producto = p.producto || "Producto sin nombre";
-    const material = p.material || "";
-    const tallas = p.tallas || "";
-    const imagen = p.imagen || "placeholder.jpg";
-    const id = p.id || "sin-id";
+        const producto = p.producto || "Producto sin nombre";
+        const material = p.material || "";
+        const tallas = p.tallas || "";
+        const imagen = p.imagen || "placeholder.jpg";
+        const id = p.id || "sin-id";
 
-    const tarjeta = document.createElement("div");
-    tarjeta.className = "producto";
-    tarjeta.innerHTML = `
-      <a href="producto.html?id=${id}">
-        <div class="imagen-producto">
-          <img src="${imagen}" alt="${producto}">
-          <span class="etiqueta-promo">🔥 10%</span>
-        </div>
-      </a>
-      <div class="nombre-producto">${producto}</div>
-      <div class="nombre-producto">${material}</div>
-      <div class="nombre-producto">${tallas}</div>
-      <div class="precio-producto">
-        <s>$${precioOriginal.toLocaleString("es-CO")} COP</s>
-        <span class="text-success fw-bold">$${precioDescuento.toLocaleString("es-CO")} COP</span>
-      </div>
-      <a href="producto.html?id=${id}" class="boton-comprar">Ver más</a>
-    `;
-    contenedor.appendChild(tarjeta);
-  });
-} 
+        const tarjeta = document.createElement("div");
+        tarjeta.className = "producto";
+        tarjeta.innerHTML = `
+          <a href="producto.html?id=${id}">
+            <div class="imagen-producto">
+              <img src="${imagen}" alt="${producto}">
+              <span class="etiqueta-promo">🔥 10%</span>
+            </div>
+          </a>
+          <div class="nombre-producto">${producto}</div>
+          <div class="nombre-producto">${material}</div>
+          <div class="nombre-producto">${tallas}</div>
+          <div class="precio-producto">
+            <s>$${precioOriginal.toLocaleString("es-CO")} COP</s>
+            <span class="text-success fw-bold">$${precioDescuento.toLocaleString("es-CO")} COP</span>
+          </div>
+          <a href="producto.html?id=${id}" class="boton-comprar">Ver más</a>
+        `;
+        contenedor.appendChild(tarjeta);
+      });
+    }
   </script>
 </body>
 </html>
