@@ -79,17 +79,21 @@ function renderizarProductos(catalogo) {
 }
 
 // === Renderizar carrusel sincronizado con ciclo de promociones ===
-function renderCarruselPromosDesdePromos(productos) {
+async function renderCarruselPromosDesdePromos(productos) {
   const contenedor = document.getElementById("carousel-promos-contenido");
   if (!contenedor) return;
+
+  // Obtener índice desde archivo remoto
+  const url = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json?nocache=${Date.now()}`;
+  const res = await fetch(url);
+  const { indicePromoActual } = await res.json();
 
   const promociones = productos.filter(p => {
     const promo = typeof p.promo === "string" ? p.promo.toLowerCase().trim() : p.promo;
     return promo === true || promo === "true" || promo === "sí" || promo === "activo";
   });
 
-  const indiceActual = parseInt(localStorage.getItem("indicePromoActual")) || 0;
-  const bloqueCarrusel = promociones.slice(indiceActual, indiceActual + 4);
+  const bloqueCarrusel = promociones.slice(indicePromoActual, indicePromoActual + 4);
 
   contenedor.innerHTML = "";
 
@@ -114,6 +118,7 @@ function renderCarruselPromosDesdePromos(productos) {
     contenedor.appendChild(item);
   });
 }
+
 
 // === Renderizar menú lateral desde catálogo ===
 function renderizarMenuLateral(catalogo) {
