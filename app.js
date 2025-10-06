@@ -91,7 +91,7 @@ function renderPromos(productos) {
         <div class="card" style="width: 18rem;">
           <img src="${producto.imagen}" class="card-img-top" alt="${producto.nombre}">
           <div class="card-body text-center">
-            <h5 class="card-title">${producto.nombre}</h5>
+            <h5 class="card-title">${producto.producto}</h5>
             <p class="card-text fw-bold text-success">$${producto.precio}</p>
             <a href="DETALLE.HTML?id=${producto.id}" class="boton-comprar">Ver producto</a>
           </div>
