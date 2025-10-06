@@ -189,7 +189,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   await cargarAccesosGlobal();
 
   renderizarMenuLateral(window.catalogoGlobal);
-  renderPromos(window.catalogoGlobal);
   const headerContainer = document.getElementById("header-container");
   if (!headerContainer.querySelector(".header")) {
     const header = await fetch("HEADER.HTML").then(res => res.text());
