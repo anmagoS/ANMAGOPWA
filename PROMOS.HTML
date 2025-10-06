@@ -66,6 +66,16 @@
     const cantidadPorCiclo = 4;
     let finPromo;
 
+    async function obtenerTemporizadorGlobal() {
+      const url = "https://raw.githubusercontent.com/anmagoS/CATALOGO-SPA/main/temporizador.json";
+      const res = await fetch(url);
+      const data = await res.json();
+      return {
+        finPromo: new Date(data.finPromo),
+        indiceActual: parseInt(data.indicePromoActual)
+      };
+    }
+
     document.addEventListener("DOMContentLoaded", async () => {
       const headerContainer = document.getElementById('header-container');
       if (!headerContainer.querySelector(".header")) {
@@ -93,7 +103,7 @@
       document.getElementById('footer-container').innerHTML = footer;
 
       await cargarPromociones();
-      iniciarTemporizador();
+      await iniciarTemporizador();
     });
 
     function ajustarCarrito() {
@@ -115,9 +125,32 @@
         const promo = typeof p.promo === "string" ? p.promo.toLowerCase().trim() : p.promo;
         return promo === true || promo === "true" || promo === "sí" || promo === "activo";
       });
+    }
 
-      indiceActual = parseInt(localStorage.getItem("indicePromoActual")) || 0;
+    async function iniciarTemporizador() {
+      const { finPromo: finGlobal, indiceActual: indiceGlobal } = await obtenerTemporizadorGlobal();
+      finPromo = finGlobal;
+      indiceActual = indiceGlobal;
+
       renderPromocionesPorCiclo();
+
+      const temporizador = document.getElementById("temporizador");
+
+      setInterval(() => {
+        const ahora = new Date();
+        const restante = finPromo - ahora;
+
+        if (restante <= 0) {
+          temporizador.textContent = "⏳ ¡Promociones actualizadas!";
+          return;
+        }
+
+        const horas = Math.floor(restante / (1000 * 60 * 60));
+        const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
+        const segundos = Math.floor((restante % (1000 * 60)) / 1000);
+
+        temporizador.textContent = `⏰ Por tiempo limitado: ${horas}h ${minutos}m ${segundos}s`;
+      }, 1000);
     }
 
     function renderPromocionesPorCiclo() {
@@ -125,9 +158,6 @@
       contenedor.innerHTML = "";
 
       const siguienteBloque = promocionesGlobal.slice(indiceActual, indiceActual + cantidadPorCiclo);
-
-      const idsPromosActivas = siguienteBloque.map(p => p.id);
-      localStorage.setItem("promosActivas", JSON.stringify(idsPromosActivas));
 
       siguienteBloque.forEach(p => {
         const tarjeta = document.createElement("div");
@@ -150,41 +180,6 @@
         `;
         contenedor.appendChild(tarjeta);
       });
-    }
-
-    function iniciarTemporizador() {
-      const duracionCiclo = 3 * 60 * 60 * 1000; // 
-      const finGuardado = localStorage.getItem("finPromo");
-      finPromo = finGuardado ? new Date(finGuardado) : new Date(Date.now() + duracionCiclo);
-      if (!finGuardado) {
-        localStorage.setItem("finPromo", finPromo.toISOString());
-      }
-
-      const temporizador = document.getElementById("temporizador");
-
-      setInterval(() => {
-        const ahora = new Date();
-        const restante = finPromo - ahora;
-
-        if (restante <= 0) {
-          finPromo = new Date(Date.now() + duracionCiclo);
-          localStorage.setItem("finPromo", finPromo.toISOString());
-
-          indiceActual += cantidadPorCiclo;
-          if (indiceActual >= promocionesGlobal.length) indiceActual = 0;
-          localStorage.setItem("indicePromoActual", indiceActual);
-
-          renderPromocionesPorCiclo();
-          temporizador.textContent = "⏳ ¡Promociones actualizadas!";
-          return;
-        }
-
-        const horas = Math.floor(restante / (1000 * 60 * 60));
-        const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
-        const segundos = Math.floor((restante % (1000 * 60)) / 1000);
-
-        temporizador.textContent = `⏰ Por tiempo limitado: ${horas}h ${minutos}m ${segundos}s`;
-      }, 1000);
     }
   </script>
 </body>
