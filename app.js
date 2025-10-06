@@ -179,9 +179,6 @@ contenedor.textContent = `⏰ Cambia en ${horas}h ${minutos}m ${segundos}s`;
   }, 1000);
 }
 
-document.addEventListener("DOMContentLoaded", mostrarTemporizadorPromos);
-
-// === Inicialización ===
 document.addEventListener("DOMContentLoaded", async () => {
   const { tipo, subtipo, categoria } = getParametrosDesdeURL();
 
@@ -189,6 +186,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   await cargarAccesosGlobal();
 
   renderizarMenuLateral(window.catalogoGlobal);
+  renderCarruselPromos(window.catalogoGlobal); // 👈 Esta línea activa el carrusel
+
   const headerContainer = document.getElementById("header-container");
   if (!headerContainer.querySelector(".header")) {
     const header = await fetch("HEADER.HTML").then(res => res.text());
@@ -204,7 +203,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     menu.style.display = menu.style.display === "none" ? "flex" : "none";
   });
 
-  // Renderizado contextual por ruta
   if (document.getElementById("contenido-productos")) {
     const rutaActual = window.location.pathname;
     const accesosRuta = window.accesosGlobal?.filter(a => a.ruta === rutaActual) || [];
