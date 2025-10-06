@@ -25,11 +25,13 @@
     <i class="bi bi-bag-heart"></i>
     <span id="contador-carrito" class="contador-carrito">0</span>
   </a>
-<div class="text-center mt-4">
-  <button id="boton-instalar" class="boton-comprar" style="display: none;">
-    📲 Instalar Anmago Store
+<div id="instalar-container" class="text-center mt-4" style="display: none;">
+  <button id="boton-instalar" class="btn btn-gradient fw-bold d-flex align-items-center justify-content-center mx-auto" style="gap: 12px; padding: 12px 24px; border-radius: 8px; font-size: 1.1rem;">
+    <img src="https://anmagos.github.io/ANMAGOPWA/Copilot_20251004_233346.png" alt="Instalar" style="width: 32px; height: 32px;" />
+    Instalar Anmago Store
   </button>
 </div>
+
 
   <!-- CONTENIDO PRINCIPAL -->
   <main class="contenedor-categoria">
@@ -175,17 +177,20 @@ window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   deferredPrompt = e;
 
-  const btnInstalar = document.getElementById("boton-instalar");
-  btnInstalar.style.display = "block";
+  const contenedor = document.getElementById("instalar-container");
+  const boton = document.getElementById("boton-instalar");
 
-  btnInstalar.addEventListener("click", async () => {
+  contenedor.style.display = "block";
+
+  boton.addEventListener("click", async () => {
     deferredPrompt.prompt();
     const resultado = await deferredPrompt.userChoice;
     console.log("Resultado instalación:", resultado.outcome);
     deferredPrompt = null;
-    btnInstalar.style.display = "none";
+    contenedor.style.display = "none";
   });
 });
+
 
 
 const footer = await fetch("footer.html").then(res => res.text());
