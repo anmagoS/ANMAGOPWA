@@ -77,23 +77,31 @@ function renderizarProductos(catalogo) {
     });
   });
 }
-function renderPromos(productos) {
-  const contenedor = document.getElementById("carousel-promos-contenido");
-  if (!contenedor) return; // 🔒 Blindaje por si no existe el contenedor
+export function renderCarruselPromos(productos, contenedorId = "carousel-promos-contenido") {
+  const contenedor = document.getElementById(contenedorId);
+  if (!contenedor) return;
 
-  const promos = productos.filter(p => p.promo);
+  const promociones = productos.filter(p => {
+    const promo = typeof p.promo === "string" ? p.promo.toLowerCase().trim() : p.promo;
+    return promo === true || promo === "true" || promo === "sí" || promo === "activo";
+  });
 
-  promos.forEach((producto, index) => {
+  contenedor.innerHTML = "";
+
+  promociones.slice(0, 6).forEach((p, index) => {
     const item = document.createElement("div");
     item.className = `carousel-item ${index === 0 ? "active" : ""}`;
     item.innerHTML = `
       <div class="d-flex justify-content-center">
         <div class="card" style="width: 18rem;">
-          <img src="${producto.imagen}" class="card-img-top" alt="${producto.nombre}">
+          <img src="${p.imagen}" class="card-img-top" alt="${p.producto}">
           <div class="card-body text-center">
-            <h5 class="card-title">${producto.producto}</h5>
-            <p class="card-text fw-bold text-success">$${producto.precio}</p>
-            <a href="DETALLE.HTML?id=${producto.id}" class="boton-comprar">Ver producto</a>
+            <h5 class="card-title">${p.producto}</h5>
+            <p class="card-text">
+              <s class="text-muted me-2">$${p.precio.toLocaleString("es-CO")}</s>
+              <span class="text-success fw-bold">$${(p.precio * 0.9).toLocaleString("es-CO")}</span>
+            </p>
+            <a href="producto.html?id=${p.id}" class="boton-comprar">Ver producto</a>
           </div>
         </div>
       </div>
@@ -101,6 +109,7 @@ function renderPromos(productos) {
     contenedor.appendChild(item);
   });
 }
+
 
 // === Renderizar menú lateral desde catálogo ===
 function renderizarMenuLateral(catalogo) {
