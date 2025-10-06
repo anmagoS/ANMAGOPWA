@@ -162,34 +162,42 @@
         instancia.show();
       }
     });
+activarBuscadorGlobal();
 
-    activarBuscadorGlobal();
+// 🔔 Alerta institucional de instalación PWA con botón
+let deferredPrompt;
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
 
-    // 🔔 Alerta de instalación PWA
-    let deferredPrompt;
-    window.addEventListener("beforeinstallprompt", (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
+  // Crear botón institucional
+  const btnInstalar = document.createElement("button");
+  btnInstalar.textContent = "📲 Instalar Anmago Store";
+  btnInstalar.className = "boton-comprar mt-3 d-block mx-auto";
+  btnInstalar.style.maxWidth = "300px";
+  document.body.appendChild(btnInstalar);
 
-      const deseaInstalar = window.confirm("¡Descarga nuestra app y disfruta de excelentes productos y promociones!");
-
-      if (deseaInstalar && deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === "accepted") {
-            console.log("✅ App instalada");
-          } else {
-            console.log("❌ Instalación cancelada");
-          }
-          deferredPrompt = null;
-        });
+  btnInstalar.addEventListener("click", async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const resultado = await deferredPrompt.userChoice;
+      if (resultado.outcome === "accepted") {
+        console.log("✅ App instalada");
+      } else {
+        console.log("❌ Instalación cancelada");
       }
-    });
+      deferredPrompt = null;
+      btnInstalar.remove();
+    }
+  });
+});
 
-    const footer = await fetch("footer.html").then(res => res.text());
-    document.getElementById("footer-container").innerHTML = footer;
+const footer = await fetch("footer.html").then(res => res.text());
+document.getElementById("footer-container").innerHTML = footer;
 
-    await cargarCatalogo();
+await cargarCatalogo();
+
+   
   });
 </script>
 </body>
