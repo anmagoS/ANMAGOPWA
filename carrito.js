@@ -12,6 +12,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnWhatsApp = document.querySelector("button[onclick='generarPedidoWhatsApp()']");
 
   function agregarAlCarrito(producto) {
+    // ✅ Aplicar precio con descuento si existe
+    if (producto.precioDescuento) {
+      producto.precio = producto.precioDescuento;
+    }
+
     const existe = articulosCarrito.find(p => p.id === producto.id);
     if (existe) {
       existe.cantidad = (existe.cantidad || 1) + 1;
