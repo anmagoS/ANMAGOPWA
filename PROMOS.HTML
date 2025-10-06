@@ -126,31 +126,48 @@
       });
     }
 
-    async function iniciarTemporizador() {
-      const { finPromo: finGlobal, indiceActual: indiceGlobal } = await obtenerTemporizadorGlobal();
-      finPromo = finGlobal;
-      indiceActual = indiceGlobal;
+async function iniciarTemporizador() {
+  // Forzar recarga sin caché
+  const url = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json?nocache=${Date.now()}`;
+  const res = await fetch(url);
+  const { finPromo: finGlobal, indicePromoActual: indiceGlobal } = await res.json();
 
-      renderPromocionesPorCiclo();
+  finPromo = new Date(finGlobal);
+  indiceActual = parseInt(indiceGlobal);
 
-      const temporizador = document.getElementById("temporizador");
+  renderPromocionesPorCiclo();
 
-      setInterval(() => {
-        const ahora = new Date();
-        const restante = finPromo - ahora;
+  const temporizador = document.getElementById("temporizador");
 
-        if (restante <= 0) {
-          temporizador.textContent = "⏳ ¡Promociones actualizadas!";
-          return;
-        }
+  // Temporizador visual en pantalla
+  setInterval(() => {
+    const ahora = new Date();
+    const restante = finPromo - ahora;
 
-        const horas = Math.floor(restante / (1000 * 60 * 60));
-        const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
-        const segundos = Math.floor((restante % (1000 * 60)) / 1000);
-
-        temporizador.textContent = `⏰ Por tiempo limitado: ${horas}h ${minutos}m ${segundos}s`;
-      }, 1000);
+    if (restante <= 0) {
+      temporizador.textContent = "⏳ ¡Promociones actualizadas!";
+      return;
     }
+
+    const horas = Math.floor(restante / (1000 * 60 * 60));
+    const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
+    const segundos = Math.floor((restante % (1000 * 60)) / 1000);
+
+    temporizador.textContent = `⏰ Por tiempo limitado: ${horas}h ${minutos}m ${segundos}s`;
+  }, 1000);
+
+  // Recargar bloque automáticamente cuando expire
+  setTimeout(async () => {
+    const nuevaURL = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json?nocache=${Date.now()}`;
+    const nuevaRes = await fetch(nuevaURL);
+    const { finPromo: nuevaFin, indicePromoActual: nuevoIndice } = await nuevaRes.json();
+
+    finPromo = new Date(nuevaFin);
+    indiceActual = parseInt(nuevoIndice);
+    renderPromocionesPorCiclo();
+  }, finPromo - new Date());
+}
+
 function renderPromocionesPorCiclo() {
   const contenedor = document.getElementById("contenedor-promos");
   contenedor.innerHTML = "";
