@@ -69,9 +69,9 @@
       const url = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json?nocache=${Date.now()}`;
       const res = await fetch(url);
       const data = await res.json();
-      return {
-        finPromo: new Date(data.finPromo),
-        indiceActual: parseInt(data.indicePromoActual)
+     return {
+  finPromo: new Date(data.finPromo),
+  indiceActual: Number(data.indicePromoActual) || 0
       };
     }
 
@@ -156,24 +156,40 @@ async function iniciarTemporizador() {
     temporizador.textContent = `⏰ Por tiempo limitado: ${horas}h ${minutos}m ${segundos}s`;
   }, 1000);
 
-  // Recargar bloque automáticamente cuando expire
+ // Recargar bloque automáticamente cuando expire
+const tiempoRestante = finPromo - new Date();
+
+if (tiempoRestante > 0) {
   setTimeout(async () => {
-    const nuevaURL = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json?nocache=${Date.now()}`;
-    const nuevaRes = await fetch(nuevaURL);
-    const { finPromo: nuevaFin, indicePromoActual: nuevoIndice } = await nuevaRes.json();
+    try {
+      const nuevaURL = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json?nocache=${Date.now()}`;
+      const nuevaRes = await fetch(nuevaURL);
+      const { finPromo: nuevaFin, indicePromoActual: nuevoIndice } = await nuevaRes.json();
 
-    finPromo = new Date(nuevaFin);
-    indiceActual = parseInt(nuevoIndice);
-    renderPromocionesPorCiclo();
-  }, finPromo - new Date());
+      finPromo = new Date(nuevaFin);
+      indiceActual = Number(nuevoIndice) || 0;
+
+      console.log("🔄 Bloque actualizado automáticamente:", indiceActual);
+      renderPromocionesPorCiclo();
+    } catch (err) {
+      console.error("❌ Error al recargar promociones:", err);
+    }
+  }, tiempoRestante);
+} else {
+  console.warn("⚠️ El tiempo de promoción ya venció. No se programó recarga automática.");
 }
-
 function renderPromocionesPorCiclo() {
   const contenedor = document.getElementById("contenedor-promos");
   contenedor.innerHTML = "";
 
   // Validar que el índice no exceda el total
-  if (indiceActual >= promocionesGlobal.length) {
+  if (!Array.isArray(promocionesGlobal) || promocionesGlobal.length === 0) {
+    contenedor.innerHTML = `<div class="text-center text-muted">No hay promociones disponibles.</div>`;
+    console.warn("⚠️ promocionesGlobal está vacío o no definido.");
+    return;
+  }
+
+  if (indiceActual >= promocionesGlobal.length || isNaN(indiceActual)) {
     indiceActual = 0;
   }
 
@@ -183,6 +199,7 @@ function renderPromocionesPorCiclo() {
   // Mostrar mensaje si no hay productos
   if (siguienteBloque.length === 0) {
     contenedor.innerHTML = `<div class="text-center text-muted">No hay promociones activas en este momento.</div>`;
+    console.warn("⚠️ Bloque vacío. índiceActual:", indiceActual);
     return;
   }
 
@@ -194,30 +211,36 @@ function renderPromocionesPorCiclo() {
 
   // Renderizar cada producto
   siguienteBloque.forEach(p => {
-    p.precioDescuento = Math.round(p.precio * 0.9);
+    const precioOriginal = Number(p.precio) || 0;
+    const precioDescuento = Math.round(precioOriginal * 0.9);
+
+    const producto = p.producto || "Producto sin nombre";
+    const material = p.material || "";
+    const tallas = p.tallas || "";
+    const imagen = p.imagen || "placeholder.jpg";
+    const id = p.id || "sin-id";
 
     const tarjeta = document.createElement("div");
     tarjeta.className = "producto";
     tarjeta.innerHTML = `
-      <a href="producto.html?id=${p.id}">
+      <a href="producto.html?id=${id}">
         <div class="imagen-producto">
-          <img src="${p.imagen}" alt="${p.producto}">
+          <img src="${imagen}" alt="${producto}">
           <span class="etiqueta-promo">🔥 10%</span>
         </div>
       </a>
-      <div class="nombre-producto">${p.producto}</div>
-      <div class="nombre-producto">${p.material}</div>
-      <div class="nombre-producto">${p.tallas}</div>
+      <div class="nombre-producto">${producto}</div>
+      <div class="nombre-producto">${material}</div>
+      <div class="nombre-producto">${tallas}</div>
       <div class="precio-producto">
-        <s>$${p.precio.toLocaleString()} COP</s>
-        <span class="text-success fw-bold">$${p.precioDescuento.toLocaleString()} COP</span>
+        <s>$${precioOriginal.toLocaleString("es-CO")} COP</s>
+        <span class="text-success fw-bold">$${precioDescuento.toLocaleString("es-CO")} COP</span>
       </div>
-      <a href="producto.html?id=${p.id}" class="boton-comprar">Ver más</a>
+      <a href="producto.html?id=${id}" class="boton-comprar">Ver más</a>
     `;
     contenedor.appendChild(tarjeta);
   });
-}
-   
+} 
   </script>
 </body>
 </html>
