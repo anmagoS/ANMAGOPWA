@@ -156,10 +156,21 @@ function renderPromocionesPorCiclo() {
   const contenedor = document.getElementById("contenedor-promos");
   contenedor.innerHTML = "";
 
+  // Validar que el índice no exceda el total
+  if (indiceActual >= promocionesGlobal.length) {
+    indiceActual = 0;
+  }
+
+  // Ajustar el bloque si quedan menos de 4
   const siguienteBloque = promocionesGlobal.slice(indiceActual, indiceActual + cantidadPorCiclo);
 
+  if (siguienteBloque.length === 0) {
+    contenedor.innerHTML = `<div class="text-center text-muted">No hay promociones activas en este momento.</div>`;
+    return;
+  }
+
   siguienteBloque.forEach(p => {
-    p.precioDescuento = Math.round(p.precio * 0.9); // ← Aquí se aplica el descuento
+    p.precioDescuento = Math.round(p.precio * 0.9);
 
     const tarjeta = document.createElement("div");
     tarjeta.className = "producto";
@@ -182,6 +193,7 @@ function renderPromocionesPorCiclo() {
     contenedor.appendChild(tarjeta);
   });
 }
+
 
    
   </script>
