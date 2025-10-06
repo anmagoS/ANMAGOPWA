@@ -77,6 +77,30 @@ function renderizarProductos(catalogo) {
     });
   });
 }
+function renderPromos(productos) {
+  const contenedor = document.getElementById("carousel-promos-contenido");
+  if (!contenedor) return; // 🔒 Blindaje por si no existe el contenedor
+
+  const promos = productos.filter(p => p.promo);
+
+  promos.forEach((producto, index) => {
+    const item = document.createElement("div");
+    item.className = `carousel-item ${index === 0 ? "active" : ""}`;
+    item.innerHTML = `
+      <div class="d-flex justify-content-center">
+        <div class="card" style="width: 18rem;">
+          <img src="${producto.imagen}" class="card-img-top" alt="${producto.nombre}">
+          <div class="card-body text-center">
+            <h5 class="card-title">${producto.nombre}</h5>
+            <p class="card-text fw-bold text-success">$${producto.precio}</p>
+            <a href="DETALLE.HTML?id=${producto.id}" class="boton-comprar">Ver producto</a>
+          </div>
+        </div>
+      </div>
+    `;
+    contenedor.appendChild(item);
+  });
+}
 
 // === Renderizar menú lateral desde catálogo ===
 function renderizarMenuLateral(catalogo) {
