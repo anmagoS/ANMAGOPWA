@@ -170,20 +170,24 @@ window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   deferredPrompt = e;
 
-  // Mostrar alerta institucional
   const deseaInstalar = window.confirm("📲 ¿Deseas instalar Anmago Store y disfrutar promociones exclusivas?");
 
-  // Solo si el usuario acepta, lanzar el prompt
   if (deseaInstalar && deferredPrompt) {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((choiceResult) => {
-      if (choiceResult.outcome === "accepted") {
-        console.log("✅ App instalada");
-      } else {
-        console.log("❌ Instalación cancelada");
-      }
+    // Crear botón invisible
+    const btn = document.createElement("button");
+    btn.style.display = "none";
+    document.body.appendChild(btn);
+
+    btn.addEventListener("click", async () => {
+      deferredPrompt.prompt();
+      const resultado = await deferredPrompt.userChoice;
+      console.log("Resultado instalación:", resultado.outcome);
       deferredPrompt = null;
+      btn.remove();
     });
+
+    // Simular clic real
+    btn.click();
   }
 });
 
