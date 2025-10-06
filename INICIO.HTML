@@ -153,23 +153,44 @@
   }
 
   document.addEventListener("DOMContentLoaded", async () => {
-    const header = await fetch("HEADER.HTML").then(res => res.text());
-    document.getElementById("header-container").insertAdjacentHTML("afterbegin", header);
-    await new Promise(resolve => requestAnimationFrame(resolve));
-    ajustarCarrito();
-    await new Promise(resolve => requestAnimationFrame(resolve));
-    ajustarCarrito();
+  // Cargar encabezado
+  const header = await fetch("HEADER.HTML").then(res => res.text());
+  document.getElementById("header-container").insertAdjacentHTML("afterbegin", header);
+  await new Promise(resolve => requestAnimationFrame(resolve));
+  ajustarCarrito();
+  await new Promise(resolve => requestAnimationFrame(resolve));
+  ajustarCarrito();
 
-    const carritoBtn = document.querySelector(".btn_shopping");
-    carritoBtn?.addEventListener("click", e => {
-      e.preventDefault();
-      const offcanvas = document.getElementById("offcanvasCarrito");
-      if (offcanvas) {
-        const instancia = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
-        instancia.show();
-      }
-    });
-activarBuscadorGlobal();
+  // Activar botón de carrito
+  const carritoBtn = document.querySelector(".btn_shopping");
+  carritoBtn?.addEventListener("click", e => {
+    e.preventDefault();
+    const offcanvas = document.getElementById("offcanvasCarrito");
+    if (offcanvas) {
+      const instancia = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
+      instancia.show();
+    }
+  });
+
+  // Activar buscador
+  activarBuscadorGlobal();
+
+  // Cargar catálogo y renderizar carrusel inicial
+  await cargarCatalogoGlobal();
+  renderCarruselPromosDesdePromos(window.catalogoGlobal);
+
+  // Programar actualización automática del carrusel cuando expire finPromo
+  const tiempoRestante = finPromo - new Date();
+  if (tiempoRestante > 0) {
+    setTimeout(async () => {
+      await cargarCatalogoGlobal(); // asegurar datos frescos
+      renderCarruselPromosDesdePromos(window.catalogoGlobal);
+      console.log("🔄 Carrusel actualizado automáticamente");
+    }, tiempoRestante);
+  } else {
+    console.warn("⚠️ El tiempo de promoción ya venció. No se programó recarga automática.");
+  }
+});
 
 // 🔔 Alerta institucional de instalación PWA con confirmación directa
 let deferredPrompt;
