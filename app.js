@@ -77,16 +77,14 @@ function renderizarProductos(catalogo) {
     });
   });
 }
-export function renderCarruselPromos(productos, contenedorId = "carousel-promos-contenido") {
-  const contenedor = document.getElementById(contenedorId);
+function renderCarruselPromosDesdePromos(productos) {
+  const contenedor = document.getElementById("carousel-promos-contenido");
   if (!contenedor) return;
 
   const promociones = productos.filter(p => {
     const promo = typeof p.promo === "string" ? p.promo.toLowerCase().trim() : p.promo;
     return promo === true || promo === "true" || promo === "sí" || promo === "activo";
   });
-
-  contenedor.innerHTML = "";
 
   promociones.slice(0, 6).forEach((p, index) => {
     const item = document.createElement("div");
@@ -109,7 +107,6 @@ export function renderCarruselPromos(productos, contenedorId = "carousel-promos-
     contenedor.appendChild(item);
   });
 }
-
 
 // === Renderizar menú lateral desde catálogo ===
 function renderizarMenuLateral(catalogo) {
