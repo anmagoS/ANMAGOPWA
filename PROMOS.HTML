@@ -58,130 +58,129 @@
   <script src="app.js"></script>
   <script src="buscador.js" type="module"></script>
 
- <script type="module">
-  import { activarBuscadorGlobal } from './buscador.js';
+  <script type="module">
+    import { activarBuscadorGlobal } from './buscador.js';
 
-  let promocionesGlobal = [];
-  let indiceActual = 0;
-  const cantidadPorCiclo = 4;
-  let finPromo;
+    let promocionesGlobal = [];
+    let indiceActual = 0;
+    const cantidadPorCiclo = 4;
+    let finPromo;
 
-  async function obtenerTemporizadorGlobal() {
-   const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json";
-    const res = await fetch(url);
-    const data = await res.json();
-    return {
-      finPromo: new Date(data.finPromo),
-      indiceActual: parseInt(data.indicePromoActual)
-    };
-  }
+    async function obtenerTemporizadorGlobal() {
+      const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json";
+      const res = await fetch(url);
+      const data = await res.json();
+      return {
+        finPromo: new Date(data.finPromo),
+        indiceActual: parseInt(data.indicePromoActual)
+      };
+    }
 
-  document.addEventListener("DOMContentLoaded", async () => {
-    const headerContainer = document.getElementById('header-container');
-    if (!headerContainer.querySelector(".header")) {
-      const header = await fetch('HEADER.HTML').then(res => res.text());
-      headerContainer.insertAdjacentHTML("afterbegin", header);
+    document.addEventListener("DOMContentLoaded", async () => {
+      const headerContainer = document.getElementById('header-container');
+      if (!headerContainer.querySelector(".header")) {
+        const header = await fetch('HEADER.HTML').then(res => res.text());
+        headerContainer.insertAdjacentHTML("afterbegin", header);
+        await new Promise(resolve => requestAnimationFrame(resolve));
+      }
+
+      ajustarCarrito();
       await new Promise(resolve => requestAnimationFrame(resolve));
-    }
+      ajustarCarrito();
 
-    ajustarCarrito();
-    await new Promise(resolve => requestAnimationFrame(resolve));
-    ajustarCarrito();
+      document.querySelector(".btn_shopping")?.addEventListener("click", e => {
+        e.preventDefault();
+        const offcanvas = document.getElementById("offcanvasCarrito");
+        if (offcanvas) {
+          const instancia = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
+          instancia.show();
+        }
+      });
 
-    document.querySelector(".btn_shopping")?.addEventListener("click", e => {
-      e.preventDefault();
-      const offcanvas = document.getElementById("offcanvasCarrito");
-      if (offcanvas) {
-        const instancia = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
-        instancia.show();
-      }
+      activarBuscadorGlobal();
+
+      const footer = await fetch('footer.html').then(res => res.text());
+      document.getElementById('footer-container').innerHTML = footer;
+
+      await cargarPromociones();
+      await iniciarTemporizador();
     });
 
-    activarBuscadorGlobal();
-
-    const footer = await fetch('footer.html').then(res => res.text());
-    document.getElementById('footer-container').innerHTML = footer;
-
-    await cargarPromociones();
-    await iniciarTemporizador();
-  });
-
-  function ajustarCarrito() {
-    const header = document.querySelector(".header");
-    const carritoBtn = document.querySelector(".btn_shopping");
-    if (header && carritoBtn) {
-      const alturaHeader = header.offsetHeight;
-      carritoBtn.style.top = `${alturaHeader + 12}px`;
-    }
-  }
-
-  async function cargarPromociones() {
-    const url = "https://raw.githubusercontent.com/anmagoS/CATALOGO-SPA/main/catalogo.json";
-    const res = await fetch(url);
-    const productos = await res.json();
-    window.catalogoGlobal = productos;
-
-    promocionesGlobal = productos.filter(p => {
-      const promo = typeof p.promo === "string" ? p.promo.toLowerCase().trim() : p.promo;
-      return promo === true || promo === "true" || promo === "sí" || promo === "activo";
-    });
-  }
-
-  async function iniciarTemporizador() {
-    const { finPromo: finGlobal, indiceActual: indiceGlobal } = await obtenerTemporizadorGlobal();
-    finPromo = finGlobal;
-    indiceActual = indiceGlobal;
-
-    renderPromocionesPorCiclo();
-
-    const temporizador = document.getElementById("temporizador");
-
-    setInterval(() => {
-      const ahora = new Date();
-      const restante = finPromo - ahora;
-
-      if (restante <= 0) {
-        temporizador.textContent = "⏳ ¡Promociones actualizadas!";
-        return;
+    function ajustarCarrito() {
+      const header = document.querySelector(".header");
+      const carritoBtn = document.querySelector(".btn_shopping");
+      if (header && carritoBtn) {
+        const alturaHeader = header.offsetHeight;
+        carritoBtn.style.top = `${alturaHeader + 12}px`;
       }
+    }
 
-      const horas = Math.floor(restante / (1000 * 60 * 60));
-      const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
-      const segundos = Math.floor((restante % (1000 * 60)) / 1000);
+    async function cargarPromociones() {
+      const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json";
+      const res = await fetch(url);
+      const productos = await res.json();
+      window.catalogoGlobal = productos;
 
-      temporizador.textContent = `⏰ Por tiempo limitado: ${horas}h ${minutos}m ${segundos}s`;
-    }, 1000);
-  }
+      promocionesGlobal = productos.filter(p => {
+        const promo = typeof p.promo === "string" ? p.promo.toLowerCase().trim() : p.promo;
+        return promo === true || promo === "true" || promo === "sí" || promo === "activo";
+      });
+    }
 
-  function renderPromocionesPorCiclo() {
-    const contenedor = document.getElementById("contenedor-promos");
-    contenedor.innerHTML = "";
+    async function iniciarTemporizador() {
+      const { finPromo: finGlobal, indiceActual: indiceGlobal } = await obtenerTemporizadorGlobal();
+      finPromo = finGlobal;
+      indiceActual = indiceGlobal;
 
-    const siguienteBloque = promocionesGlobal.slice(indiceActual, indiceActual + cantidadPorCiclo);
+      renderPromocionesPorCiclo();
 
-    siguienteBloque.forEach(p => {
-      const tarjeta = document.createElement("div");
-      tarjeta.className = "producto";
-      tarjeta.innerHTML = `
-        <a href="producto.html?id=${p.id}">
-          <div class="imagen-producto">
-            <img src="${p.imagen}" alt="${p.producto}">
-            <span class="etiqueta-promo">🔥 10%</span>
+      const temporizador = document.getElementById("temporizador");
+
+      setInterval(() => {
+        const ahora = new Date();
+        const restante = finPromo - ahora;
+
+        if (restante <= 0) {
+          temporizador.textContent = "⏳ ¡Promociones actualizadas!";
+          return;
+        }
+
+        const horas = Math.floor(restante / (1000 * 60 * 60));
+        const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
+        const segundos = Math.floor((restante % (1000 * 60)) / 1000);
+
+        temporizador.textContent = `⏰ Por tiempo limitado: ${horas}h ${minutos}m ${segundos}s`;
+      }, 1000);
+    }
+
+    function renderPromocionesPorCiclo() {
+      const contenedor = document.getElementById("contenedor-promos");
+      contenedor.innerHTML = "";
+
+      const siguienteBloque = promocionesGlobal.slice(indiceActual, indiceActual + cantidadPorCiclo);
+
+      siguienteBloque.forEach(p => {
+        const tarjeta = document.createElement("div");
+        tarjeta.className = "producto";
+        tarjeta.innerHTML = `
+          <a href="producto.html?id=${p.id}">
+            <div class="imagen-producto">
+              <img src="${p.imagen}" alt="${p.producto}">
+              <span class="etiqueta-promo">🔥 10%</span>
+            </div>
+          </a>
+          <div class="nombre-producto">${p.producto}</div>
+          <div class="nombre-producto">${p.material}</div>
+          <div class="nombre-producto">${p.tallas}</div>
+          <div class="precio-producto">
+            <s>$${p.precio.toLocaleString()} COP</s>
+            <span class="text-success fw-bold">$${(p.precio * 0.9).toLocaleString()} COP</span>
           </div>
-        </a>
-        <div class="nombre-producto">${p.producto}</div>
-        <div class="nombre-producto">${p.material}</div>
-        <div class="nombre-producto">${p.tallas}</div>
-        <div class="precio-producto">
-          <s>$${p.precio.toLocaleString()} COP</s>
-          <span class="text-success fw-bold">$${(p.precio * 0.9).toLocaleString()} COP</span>
-        </div>
-        <a href="producto.html?id=${p.id}" class="boton-comprar">Ver más</a>
-      `;
-      contenedor.appendChild(tarjeta);
-    });
-  }
-</script>
-
+          <a href="producto.html?id=${p.id}" class="boton-comprar">Ver más</a>
+        `;
+        contenedor.appendChild(tarjeta);
+      });
+    }
+  </script>
 </body>
 </html>
