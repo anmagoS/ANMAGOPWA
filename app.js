@@ -77,6 +77,8 @@ function renderizarProductos(catalogo) {
     });
   });
 }
+
+// === Renderizar carrusel sincronizado con ciclo de promociones ===
 function renderCarruselPromosDesdePromos(productos) {
   const contenedor = document.getElementById("carousel-promos-contenido");
   if (!contenedor) return;
@@ -112,7 +114,6 @@ function renderCarruselPromosDesdePromos(productos) {
     contenedor.appendChild(item);
   });
 }
-
 
 // === Renderizar menú lateral desde catálogo ===
 function renderizarMenuLateral(catalogo) {
@@ -159,6 +160,8 @@ function getParametrosDesdeURL() {
     categoria: params.get("categoria")?.trim()
   };
 }
+
+// === Mostrar temporizador de promociones ===
 function mostrarTemporizadorPromos() {
   const contenedor = document.getElementById("temporizador-promos");
   if (!contenedor) return;
@@ -176,20 +179,23 @@ function mostrarTemporizadorPromos() {
     }
 
     const horas = Math.floor(restante / (1000 * 60 * 60));
-const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
-const segundos = Math.floor((restante % (1000 * 60)) / 1000);
-contenedor.textContent = `⏰ Cambia en ${horas}h ${minutos}m ${segundos}s`;
+    const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
+    const segundos = Math.floor((restante % (1000 * 60)) / 1000);
+
+    contenedor.textContent = `⏰ Cambia en ${horas}h ${minutos}m ${segundos}s`;
   }, 1000);
 }
 
+// === Inicialización ===
 document.addEventListener("DOMContentLoaded", async () => {
   const { tipo, subtipo, categoria } = getParametrosDesdeURL();
 
   await cargarCatalogoGlobal();
+  mostrarTemporizadorPromos();
   await cargarAccesosGlobal();
 
   renderizarMenuLateral(window.catalogoGlobal);
-  renderCarruselPromos(window.catalogoGlobal); // 👈 Esta línea activa el carrusel
+  renderCarruselPromosDesdePromos(window.catalogoGlobal);
 
   const headerContainer = document.getElementById("header-container");
   if (!headerContainer.querySelector(".header")) {
