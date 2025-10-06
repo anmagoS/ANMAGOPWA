@@ -66,7 +66,7 @@
     let finPromo;
 
     async function obtenerTemporizadorGlobal() {
-      const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json";
+      const url = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json?nocache=${Date.now()}`;
       const res = await fetch(url);
       const data = await res.json();
       return {
