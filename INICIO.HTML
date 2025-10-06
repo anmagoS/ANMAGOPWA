@@ -164,33 +164,29 @@
     });
 activarBuscadorGlobal();
 
-// 🔔 Alerta institucional de instalación PWA con botón
+// 🔔 Alerta institucional de instalación PWA con confirmación directa
 let deferredPrompt;
 window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   deferredPrompt = e;
 
-  // Crear botón institucional
-  const btnInstalar = document.createElement("button");
-  btnInstalar.textContent = "📲 Instalar Anmago Store";
-  btnInstalar.className = "boton-comprar mt-3 d-block mx-auto";
-  btnInstalar.style.maxWidth = "300px";
-  document.body.appendChild(btnInstalar);
+  // Mostrar alerta institucional
+  const deseaInstalar = window.confirm("📲 ¿Deseas instalar Anmago Store y disfrutar promociones exclusivas?");
 
-  btnInstalar.addEventListener("click", async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const resultado = await deferredPrompt.userChoice;
-      if (resultado.outcome === "accepted") {
+  // Solo si el usuario acepta, lanzar el prompt
+  if (deseaInstalar && deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === "accepted") {
         console.log("✅ App instalada");
       } else {
         console.log("❌ Instalación cancelada");
       }
       deferredPrompt = null;
-      btnInstalar.remove();
-    }
-  });
+    });
+  }
 });
+
 
 const footer = await fetch("footer.html").then(res => res.text());
 document.getElementById("footer-container").innerHTML = footer;
