@@ -160,14 +160,22 @@ function renderPromocionesPorCiclo() {
     indiceActual = 0;
   }
 
-  // Ajustar el bloque si quedan menos de 4
+  // Calcular el bloque activo
   const siguienteBloque = promocionesGlobal.slice(indiceActual, indiceActual + cantidadPorCiclo);
 
+  // Mostrar mensaje si no hay productos
   if (siguienteBloque.length === 0) {
     contenedor.innerHTML = `<div class="text-center text-muted">No hay promociones activas en este momento.</div>`;
     return;
   }
 
+  // Aplicar clase si el bloque está incompleto
+  contenedor.classList.toggle("bloque-incompleto", siguienteBloque.length < cantidadPorCiclo);
+
+  // Trazabilidad visual
+  console.log("🔁 Bloque activo:", siguienteBloque.map(p => p.id));
+
+  // Renderizar cada producto
   siguienteBloque.forEach(p => {
     p.precioDescuento = Math.round(p.precio * 0.9);
 
@@ -192,8 +200,6 @@ function renderPromocionesPorCiclo() {
     contenedor.appendChild(tarjeta);
   });
 }
-
-
    
   </script>
 </body>
