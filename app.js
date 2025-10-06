@@ -86,7 +86,12 @@ function renderCarruselPromosDesdePromos(productos) {
     return promo === true || promo === "true" || promo === "sí" || promo === "activo";
   });
 
-  promociones.slice(0, 6).forEach((p, index) => {
+  const indiceActual = parseInt(localStorage.getItem("indicePromoActual")) || 0;
+  const bloqueCarrusel = promociones.slice(indiceActual, indiceActual + 4);
+
+  contenedor.innerHTML = "";
+
+  bloqueCarrusel.forEach((p, index) => {
     const item = document.createElement("div");
     item.className = `carousel-item ${index === 0 ? "active" : ""}`;
     item.innerHTML = `
@@ -107,6 +112,7 @@ function renderCarruselPromosDesdePromos(productos) {
     contenedor.appendChild(item);
   });
 }
+
 
 // === Renderizar menú lateral desde catálogo ===
 function renderizarMenuLateral(catalogo) {
