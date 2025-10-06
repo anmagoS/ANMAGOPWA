@@ -173,24 +173,21 @@ window.addEventListener("beforeinstallprompt", (e) => {
   const deseaInstalar = window.confirm("📲 ¿Deseas instalar Anmago Store y disfrutar promociones exclusivas?");
 
   if (deseaInstalar && deferredPrompt) {
-    // Crear botón invisible
-    const btn = document.createElement("button");
-    btn.style.display = "none";
-    document.body.appendChild(btn);
+    const btnInstalar = document.createElement("button");
+    btnInstalar.textContent = "📲 Instalar ahora";
+    btnInstalar.className = "boton-comprar mt-3 d-block mx-auto";
+    btnInstalar.style.maxWidth = "300px";
+    document.body.appendChild(btnInstalar);
 
-    btn.addEventListener("click", async () => {
+    btnInstalar.addEventListener("click", async () => {
       deferredPrompt.prompt();
       const resultado = await deferredPrompt.userChoice;
       console.log("Resultado instalación:", resultado.outcome);
       deferredPrompt = null;
-      btn.remove();
+      btnInstalar.remove();
     });
-
-    // Simular clic real
-    btn.click();
   }
 });
-
 
 const footer = await fetch("footer.html").then(res => res.text());
 document.getElementById("footer-container").innerHTML = footer;
