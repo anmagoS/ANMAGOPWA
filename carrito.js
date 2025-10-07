@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
       mensajeTelegram += `🖼️ Imagen:\n${producto.imagen}\n`;
       mensajeTelegram += `📏 Talla: ${producto.talla || "No especificada"}\n`;
       mensajeTelegram += `🔢 Cantidad: ${producto.cantidad}\n`;
-      mensajeTelegram += `🏬 Proveedor: ${limpiarTextoTelegram(producto.proveedor || "No definido")}\n\n`;
+      mensajeTelegram += `🏬 Proveedor: ${producto.proveedor || "No definido"}\n\n`;
     });
 
     const total = articulosCarrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.open(urlWhatsApp, "_blank");
 
     // Telegram
-    enviarPedidoTelegram("mensajeTelegram");
+    enviarPedidoTelegram(mensajeTelegram);
 
     // Limpiar carrito
     articulosCarrito = [];
