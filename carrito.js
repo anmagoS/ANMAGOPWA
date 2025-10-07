@@ -1,5 +1,5 @@
 let articulosCarrito = JSON.parse(localStorage.getItem("carritoAnmago")) || [];
-let catalogo = []; // ✅ Asegúrate de cargar esto desde tu JSON o fuente externa
+let catalogo = []; // ✅ Asegúrate de cargar esto desde tu JSON institucional
 
 document.addEventListener("DOMContentLoaded", () => {
   const carritoContainer = document.getElementById("carrito-contenido");
