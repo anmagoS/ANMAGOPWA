@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.open(urlWhatsApp, "_blank");
 
     // Telegram
-    enviarPedidoTelegram(mensajeTelegram);
+    enviarPedidoTelegram("mensajeTelegram");
 
     // Limpiar carrito
     articulosCarrito = [];
