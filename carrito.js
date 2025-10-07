@@ -116,7 +116,6 @@ function generarPedidoWhatsApp() {
     mensajeTelegram += `🔢 Cantidad: ${producto.cantidad}\n\n`;
    mensajeTelegram += `🏬 Proveedor: ${producto.proveedor || "No definido"}\n\n`; 
   });
-
   const total = articulosCarrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
   mensajeWhatsApp += `*🧾 Total del pedido:* $${total.toLocaleString("es-CO")}\n\n✅ *¡Gracias por tu atención!*`;
 
