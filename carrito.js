@@ -9,24 +9,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeButton = document.querySelector(".btn-close");
   const btnWhatsApp = document.querySelector("button[onclick='generarPedidoWhatsApp()']");
 
-  // ✅ Sanitiza texto para Telegram
   function limpiarTextoTelegram(texto) {
     return texto
-      .replace(/[*_`[\]()~>#+=|{}.!]/g, '') // elimina caracteres conflictivos
-      .replace(/\n/g, ' ') // elimina saltos de línea
+      .replace(/[*_`[\]()~>#+=|{}.!]/g, '')
+      .replace(/\n/g, ' ')
       .trim();
   }
 
-  // ✅ Agrega producto al carrito y recupera proveedor si falta
   function agregarAlCarrito(producto) {
     if (producto.precioDescuento) {
       producto.precio = producto.precioDescuento;
     }
 
-    // Verifica proveedor si falta (requiere variable global `catalogo`)
+    // ✅ Recuperar proveedor si falta
     if (!producto.proveedor && typeof catalogo !== "undefined") {
       const desdeCatalogo = catalogo.find(p => p.id === producto.id);
-      if (desdeCatalogo) {
+      if (desdeCatalogo && desdeCatalogo.proveedor) {
         producto.proveedor = desdeCatalogo.proveedor;
       }
     }
@@ -117,32 +115,28 @@ document.addEventListener("DOMContentLoaded", () => {
     let mensajeTelegram = `🕒 Pedido registrado el ${new Date().toLocaleString("es-CO")}\n\n`;
 
     articulosCarrito.forEach((producto, index) => {
-      // WhatsApp completo (sin proveedor)
       mensajeWhatsApp += `*${index + 1}.* ${producto.nombre}\n`;
       mensajeWhatsApp += `🖼️ Imagen: ${producto.imagen}\n`;
       mensajeWhatsApp += `📏 Talla: ${producto.talla || "No especificada"}\n`;
       mensajeWhatsApp += `💲 Precio: $${producto.precio.toLocaleString("es-CO")}\n`;
       mensajeWhatsApp += `🔢 Cantidad: ${producto.cantidad}\n\n`;
 
-      // Telegram simplificado con proveedor
+      const proveedorTexto = typeof producto.proveedor === "string" ? producto.proveedor : "No definido";
       mensajeTelegram += `🖼️ Imagen:\n${producto.imagen}\n`;
       mensajeTelegram += `📏 Talla: ${producto.talla || "No especificada"}\n`;
       mensajeTelegram += `🔢 Cantidad: ${producto.cantidad}\n`;
-      mensajeTelegram += `🏬 Proveedor: ${producto.proveedor || "No definido"}\n\n`;
+      mensajeTelegram += `🏬 Proveedor: ${limpiarTextoTelegram(proveedorTexto)}\n\n`;
     });
 
     const total = articulosCarrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
     mensajeWhatsApp += `*🧾 Total del pedido:* $${total.toLocaleString("es-CO")}\n\n✅ *¡Gracias por tu atención!*`;
 
-    // WhatsApp
     const mensajeCodificado = encodeURIComponent(mensajeWhatsApp);
     const urlWhatsApp = `https://wa.me/573006498710?text=${mensajeCodificado}`;
     window.open(urlWhatsApp, "_blank");
 
-    // Telegram
     enviarPedidoTelegram(mensajeTelegram);
 
-    // Limpiar carrito
     articulosCarrito = [];
     guardarCarrito();
     renderizarCarrito();
