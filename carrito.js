@@ -96,34 +96,62 @@ document.addEventListener("DOMContentLoaded", () => {
     contadorCarrito.textContent = articulosCarrito.length;
   }
 
-  function generarPedidoWhatsApp() {
-    if (articulosCarrito.length === 0) return alert("Tu carrito está vacío.");
+function generarPedidoWhatsApp() {
+  if (articulosCarrito.length === 0) return alert("Tu carrito está vacío.");
 
-    let mensaje = "🛍️ *¡Hola! Quiero realizar el siguiente pedido:*\n\n";
+  let mensaje = "🛍️ *¡Hola! Quiero realizar el siguiente pedido:*\n\n";
 
-    articulosCarrito.forEach((producto, index) => {
-      mensaje += `*${index + 1}.* ${producto.nombre}\n`;
-      mensaje += `🖼️ Imagen: ${producto.imagen}\n`;
-      mensaje += `📏 Talla: ${producto.talla || "No especificada"}\n`;
-      mensaje += `💲 Precio: $${producto.precio.toLocaleString("es-CO")}\n`;
-      mensaje += `🔢 Cantidad: ${producto.cantidad}\n\n`;
+  articulosCarrito.forEach((producto, index) => {
+    mensaje += `*${index + 1}.* ${producto.nombre}\n`;
+    mensaje += `🖼️ Imagen: ${producto.imagen}\n`;
+    mensaje += `📏 Talla: ${producto.talla || "No especificada"}\n`;
+    mensaje += `💲 Precio: $${producto.precio.toLocaleString("es-CO")}\n`;
+    mensaje += `🔢 Cantidad: ${producto.cantidad}\n\n`;
+  });
+
+  const total = articulosCarrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
+  mensaje += `*🧾 Total del pedido:* $${total.toLocaleString("es-CO")}\n\n✅ *¡Gracias por tu atención!*`;
+
+  // Enviar a WhatsApp
+  const mensajeCodificado = encodeURIComponent(mensaje);
+  const urlWhatsApp = `https://wa.me/573006498710?text=${mensajeCodificado}`;
+  window.open(urlWhatsApp, "_blank");
+
+  // Enviar al grupo de Telegram
+  enviarPedidoTelegram(mensaje);
+
+  // Limpiar carrito
+  articulosCarrito = [];
+  guardarCarrito();
+  renderizarCarrito();
+  actualizarSubtotal();
+  actualizarContadorCarrito();
+  actualizarEstadoBotonWhatsApp();
+}
+
+// ✅ Función auxiliar para enviar el mensaje a Telegram
+async function enviarPedidoTelegram(mensaje) {
+  const token = "8320682242:AAG4h89_8WVmljeEvYHjzRxmnJDt-HoxcAY";
+  const chatId = "-1003044241716";
+  const url = `https://api.telegram.org/bot${token}/sendMessage`;
+
+  const payload = {
+    chat_id: chatId,
+    text: mensaje,
+    parse_mode: "Markdown"
+  };
+
+  try {
+    await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
     });
-
-    const total = articulosCarrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
-    mensaje += `*🧾 Total del pedido:* $${total.toLocaleString("es-CO")}\n\n✅ *¡Gracias por tu atención!*`;
-
-    const mensajeCodificado = encodeURIComponent(mensaje);
-    const urlWhatsApp = `https://wa.me/573006498710?text=${mensajeCodificado}`;
-    window.open(urlWhatsApp, "_blank");
-
-    articulosCarrito = [];
-    guardarCarrito();
-    renderizarCarrito();
-    actualizarSubtotal();
-    actualizarContadorCarrito();
-    actualizarEstadoBotonWhatsApp();
+    console.log("✅ Pedido enviado a Telegram");
+  } catch (error) {
+    console.error("❌ Error al enviar pedido a Telegram:", error);
   }
-
+}
   function abrirCarrito() {
     const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasCarrito);
     bsOffcanvas.show();
