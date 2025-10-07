@@ -1,4 +1,5 @@
 let articulosCarrito = JSON.parse(localStorage.getItem("carritoAnmago")) || [];
+let catalogo = []; // ✅ Asegúrate de cargar esto desde tu JSON o fuente externa
 
 document.addEventListener("DOMContentLoaded", () => {
   const carritoContainer = document.getElementById("carrito-contenido");
@@ -22,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ✅ Recuperar proveedor si falta
-    if (!producto.proveedor && typeof catalogo !== "undefined") {
+    if (!producto.proveedor && catalogo.length > 0) {
       const desdeCatalogo = catalogo.find(p => p.id === producto.id);
       if (desdeCatalogo && desdeCatalogo.proveedor) {
         producto.proveedor = desdeCatalogo.proveedor;
