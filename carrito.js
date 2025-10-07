@@ -138,8 +138,7 @@ async function enviarPedidoTelegram(mensaje) {
   const payload = {
     chat_id: chatId,
     text: mensaje,
-    parse_mode: "MarkdownV2" // más tolerante que Markdown plano
-  };
+    };
 
   try {
     const response = await fetch(url, {
