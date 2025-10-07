@@ -138,20 +138,27 @@ async function enviarPedidoTelegram(mensaje) {
   const payload = {
     chat_id: chatId,
     text: mensaje,
-    parse_mode: "Markdown"
+    parse_mode: "MarkdownV2" // más tolerante que Markdown plano
   };
 
   try {
-    await fetch(url, {
+    const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
-    console.log("✅ Pedido enviado a Telegram");
+
+    const data = await response.json();
+    if (!data.ok) {
+      console.error("❌ Telegram error:", data);
+    } else {
+      console.log("✅ Pedido enviado a Telegram");
+    }
   } catch (error) {
-    console.error("❌ Error al enviar pedido a Telegram:", error);
+    console.error("❌ Error de red al enviar a Telegram:", error);
   }
 }
+
   function abrirCarrito() {
     const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasCarrito);
     bsOffcanvas.show();
