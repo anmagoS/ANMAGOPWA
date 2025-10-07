@@ -118,7 +118,7 @@ function generarPedidoWhatsApp() {
   window.open(urlWhatsApp, "_blank");
 
   // Enviar al grupo de Telegram
-  enviarPedidoTelegram("545454546464546456456");
+  enviarPedidoTelegram(mensaje);
 
   // Limpiar carrito
   articulosCarrito = [];
