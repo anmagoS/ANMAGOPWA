@@ -114,6 +114,7 @@ function generarPedidoWhatsApp() {
     mensajeTelegram += `🖼️ Imagen:\n${producto.imagen}\n`;
     mensajeTelegram += `📏 Talla: ${producto.talla || "No especificada"}\n`;
     mensajeTelegram += `🔢 Cantidad: ${producto.cantidad}\n\n`;
+   mensajeTelegram += `🏬 Proveedor: ${producto.proveedor || "No definido"}\n\n`; 
   });
 
   const total = articulosCarrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
