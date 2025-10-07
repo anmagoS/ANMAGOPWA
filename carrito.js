@@ -99,26 +99,33 @@ document.addEventListener("DOMContentLoaded", () => {
 function generarPedidoWhatsApp() {
   if (articulosCarrito.length === 0) return alert("Tu carrito está vacío.");
 
-  let mensaje = "🛍️ *¡Hola! Quiero realizar el siguiente pedido:*\n\n";
+  let mensajeWhatsApp = "🛍️ *¡Hola! Quiero realizar el siguiente pedido:*\n\n";
+  let mensajeTelegram = "";
 
   articulosCarrito.forEach((producto, index) => {
-    mensaje += `*${index + 1}.* ${producto.nombre}\n`;
-    mensaje += `🖼️ Imagen: ${producto.imagen}\n`;
-    mensaje += `📏 Talla: ${producto.talla || "No especificada"}\n`;
-    mensaje += `💲 Precio: $${producto.precio.toLocaleString("es-CO")}\n`;
-    mensaje += `🔢 Cantidad: ${producto.cantidad}\n\n`;
+    // WhatsApp completo
+    mensajeWhatsApp += `*${index + 1}.* ${producto.nombre}\n`;
+    mensajeWhatsApp += `🖼️ Imagen: ${producto.imagen}\n`;
+    mensajeWhatsApp += `📏 Talla: ${producto.talla || "No especificada"}\n`;
+    mensajeWhatsApp += `💲 Precio: $${producto.precio.toLocaleString("es-CO")}\n`;
+    mensajeWhatsApp += `🔢 Cantidad: ${producto.cantidad}\n\n`;
+
+    // Telegram simplificado
+    mensajeTelegram += `🖼️ Imagen:\n${producto.imagen}\n`;
+    mensajeTelegram += `📏 Talla: ${producto.talla || "No especificada"}\n`;
+    mensajeTelegram += `🔢 Cantidad: ${producto.cantidad}\n\n`;
   });
 
   const total = articulosCarrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
-  mensaje += `*🧾 Total del pedido:* $${total.toLocaleString("es-CO")}\n\n✅ *¡Gracias por tu atención!*`;
+  mensajeWhatsApp += `*🧾 Total del pedido:* $${total.toLocaleString("es-CO")}\n\n✅ *¡Gracias por tu atención!*`;
 
-  // Enviar a WhatsApp
-  const mensajeCodificado = encodeURIComponent(mensaje);
+  // WhatsApp
+  const mensajeCodificado = encodeURIComponent(mensajeWhatsApp);
   const urlWhatsApp = `https://wa.me/573006498710?text=${mensajeCodificado}`;
   window.open(urlWhatsApp, "_blank");
 
-  // Enviar al grupo de Telegram
-  enviarPedidoTelegram(mensaje);
+  // Telegram
+  enviarPedidoTelegram(mensajeTelegram);
 
   // Limpiar carrito
   articulosCarrito = [];
@@ -128,6 +135,7 @@ function generarPedidoWhatsApp() {
   actualizarContadorCarrito();
   actualizarEstadoBotonWhatsApp();
 }
+
 
 // ✅ Función auxiliar para enviar el mensaje a Telegram
 async function enviarPedidoTelegram(mensaje) {
