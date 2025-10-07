@@ -1,4 +1,3 @@
-// === CARRITO ANMAGO STORE ===
 let articulosCarrito = JSON.parse(localStorage.getItem("carritoAnmago")) || [];
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -10,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeButton = document.querySelector(".btn-close");
   const btnWhatsApp = document.querySelector("button[onclick='generarPedidoWhatsApp()']");
 
+  // ✅ Sanitiza texto para Telegram
   function limpiarTextoTelegram(texto) {
     return texto
       .replace(/[*_`[\]()~>#+=|{}.!]/g, '') // elimina caracteres conflictivos
@@ -17,9 +17,18 @@ document.addEventListener("DOMContentLoaded", () => {
       .trim();
   }
 
+  // ✅ Agrega producto al carrito y recupera proveedor si falta
   function agregarAlCarrito(producto) {
     if (producto.precioDescuento) {
       producto.precio = producto.precioDescuento;
+    }
+
+    // Verifica proveedor si falta (requiere variable global `catalogo`)
+    if (!producto.proveedor && typeof catalogo !== "undefined") {
+      const desdeCatalogo = catalogo.find(p => p.id === producto.id);
+      if (desdeCatalogo) {
+        producto.proveedor = desdeCatalogo.proveedor;
+      }
     }
 
     const existe = articulosCarrito.find(p => p.id === producto.id);
@@ -108,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let mensajeTelegram = `🕒 Pedido registrado el ${new Date().toLocaleString("es-CO")}\n\n`;
 
     articulosCarrito.forEach((producto, index) => {
-      // WhatsApp completo
+      // WhatsApp completo (sin proveedor)
       mensajeWhatsApp += `*${index + 1}.* ${producto.nombre}\n`;
       mensajeWhatsApp += `🖼️ Imagen: ${producto.imagen}\n`;
       mensajeWhatsApp += `📏 Talla: ${producto.talla || "No especificada"}\n`;
@@ -204,5 +213,3 @@ document.addEventListener("DOMContentLoaded", () => {
   window.agregarAlCarrito = agregarAlCarrito;
   window.generarPedidoWhatsApp = generarPedidoWhatsApp;
 });
-
-
