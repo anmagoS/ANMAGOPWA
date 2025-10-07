@@ -62,11 +62,11 @@ function renderizarProductos(catalogo) {
       const card = btn.closest(".producto");
       const talla = card.querySelector(".selector-talla")?.value || "Sin talla";
 
-      // ✅ Recuperar proveedor desde el catálogo global
-      const productoCatalogo = window.catalogoGlobal?.find(p => p.id === btn.dataset.id);
+      // ✅ Recuperar proveedor desde el catálogo global usando el ID original
+      const productoCatalogo = window.catalogoGlobal?.find(p => p.id === card.dataset.id);
 
       const producto = {
-        id: btn.dataset.imagen + "-" + talla,
+        id: card.dataset.id + "-" + talla,
         nombre: btn.dataset.nombre,
         precio: Number(btn.dataset.precio) || 0,
         cantidad: 1,
@@ -82,13 +82,11 @@ function renderizarProductos(catalogo) {
   });
 }
 
-
 // === Renderizar carrusel sincronizado con ciclo de promociones ===
 async function renderCarruselPromosDesdePromos(productos) {
   const contenedor = document.getElementById("carousel-promos-contenido");
   if (!contenedor) return;
 
-  // Obtener índice desde archivo remoto
   const url = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json?nocache=${Date.now()}`;
   const res = await fetch(url);
   const { indicePromoActual } = await res.json();
@@ -123,7 +121,6 @@ async function renderCarruselPromosDesdePromos(productos) {
     contenedor.appendChild(item);
   });
 }
-
 
 // === Renderizar menú lateral desde catálogo ===
 function renderizarMenuLateral(catalogo) {
@@ -206,11 +203,12 @@ async function mostrarTemporizadorPromos() {
 // === Inicialización ===
 document.addEventListener("DOMContentLoaded", async () => {
   const { tipo, subtipo, categoria } = getParametrosDesdeURL();
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js")
-    .then(() => console.log("✅ Service Worker registrado"))
-    .catch(err => console.error("❌ Error al registrar SW:", err));
-}
+
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js")
+      .then(() => console.log("✅ Service Worker registrado"))
+      .catch(err => console.error("❌ Error al registrar SW:", err));
+  }
 
   await cargarCatalogoGlobal();
   mostrarTemporizadorPromos();
@@ -242,3 +240,4 @@ if ("serviceWorker" in navigator) {
     renderizarProductos(productosFiltrados.length ? productosFiltrados : window.catalogoGlobal);
   }
 });
+
