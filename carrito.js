@@ -1,5 +1,4 @@
 // === CARRITO ANMAGO STORE ===
-
 let articulosCarrito = JSON.parse(localStorage.getItem("carritoAnmago")) || [];
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -11,8 +10,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeButton = document.querySelector(".btn-close");
   const btnWhatsApp = document.querySelector("button[onclick='generarPedidoWhatsApp()']");
 
+  function limpiarTextoTelegram(texto) {
+    return texto
+      .replace(/[*_`[\]()~>#+=|{}.!]/g, '') // elimina caracteres conflictivos
+      .replace(/\n/g, ' ') // elimina saltos de línea
+      .trim();
+  }
+
   function agregarAlCarrito(producto) {
-    // ✅ Aplicar precio con descuento si existe
     if (producto.precioDescuento) {
       producto.precio = producto.precioDescuento;
     }
@@ -96,75 +101,74 @@ document.addEventListener("DOMContentLoaded", () => {
     contadorCarrito.textContent = articulosCarrito.length;
   }
 
-function generarPedidoWhatsApp() {
-  if (articulosCarrito.length === 0) return alert("Tu carrito está vacío.");
+  function generarPedidoWhatsApp() {
+    if (articulosCarrito.length === 0) return alert("Tu carrito está vacío.");
 
-  let mensajeWhatsApp = "🛍️ *¡Hola! Quiero realizar el siguiente pedido:*\n\n";
-  let mensajeTelegram = "";
+    let mensajeWhatsApp = "🛍️ *¡Hola! Quiero realizar el siguiente pedido:*\n\n";
+    let mensajeTelegram = `🕒 Pedido registrado el ${new Date().toLocaleString("es-CO")}\n\n`;
 
-  articulosCarrito.forEach((producto, index) => {
-    // WhatsApp completo
-    mensajeWhatsApp += `*${index + 1}.* ${producto.nombre}\n`;
-    mensajeWhatsApp += `🖼️ Imagen: ${producto.imagen}\n`;
-    mensajeWhatsApp += `📏 Talla: ${producto.talla || "No especificada"}\n`;
-    mensajeWhatsApp += `💲 Precio: $${producto.precio.toLocaleString("es-CO")}\n`;
-    mensajeWhatsApp += `🔢 Cantidad: ${producto.cantidad}\n\n`;
+    articulosCarrito.forEach((producto, index) => {
+      // WhatsApp completo
+      mensajeWhatsApp += `*${index + 1}.* ${producto.nombre}\n`;
+      mensajeWhatsApp += `🖼️ Imagen: ${producto.imagen}\n`;
+      mensajeWhatsApp += `📏 Talla: ${producto.talla || "No especificada"}\n`;
+      mensajeWhatsApp += `💲 Precio: $${producto.precio.toLocaleString("es-CO")}\n`;
+      mensajeWhatsApp += `🔢 Cantidad: ${producto.cantidad}\n\n`;
 
-    // Telegram simplificado
-    mensajeTelegram += `🖼️ Imagen:\n${producto.imagen}\n`;
-    mensajeTelegram += `📏 Talla: ${producto.talla || "No especificada"}\n`;
-    mensajeTelegram += `🔢 Cantidad: ${producto.cantidad}\n\n`;
-   mensajeTelegram += `🏬 Proveedor: ${producto.proveedor || "No definido"}\n\n`; 
-  });
-  const total = articulosCarrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
-  mensajeWhatsApp += `*🧾 Total del pedido:* $${total.toLocaleString("es-CO")}\n\n✅ *¡Gracias por tu atención!*`;
-
-  // WhatsApp
-  const mensajeCodificado = encodeURIComponent(mensajeWhatsApp);
-  const urlWhatsApp = `https://wa.me/573006498710?text=${mensajeCodificado}`;
-  window.open(urlWhatsApp, "_blank");
-
-  // Telegram
-  enviarPedidoTelegram(mensajeTelegram);
-
-  // Limpiar carrito
-  articulosCarrito = [];
-  guardarCarrito();
-  renderizarCarrito();
-  actualizarSubtotal();
-  actualizarContadorCarrito();
-  actualizarEstadoBotonWhatsApp();
-}
-
-
-// ✅ Función auxiliar para enviar el mensaje a Telegram
-async function enviarPedidoTelegram(mensaje) {
-  const token = "8320682242:AAG4h89_8WVmljeEvYHjzRxmnJDt-HoxcAY";
-  const chatId = "-1003044241716";
-  const url = `https://api.telegram.org/bot${token}/sendMessage`;
-
-  const payload = {
-    chat_id: chatId,
-    text: mensaje,
-    };
-
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
+      // Telegram simplificado con proveedor
+      mensajeTelegram += `🖼️ Imagen:\n${producto.imagen}\n`;
+      mensajeTelegram += `📏 Talla: ${producto.talla || "No especificada"}\n`;
+      mensajeTelegram += `🔢 Cantidad: ${producto.cantidad}\n`;
+      mensajeTelegram += `🏬 Proveedor: ${limpiarTextoTelegram(producto.proveedor || "No definido")}\n\n`;
     });
 
-    const data = await response.json();
-    if (!data.ok) {
-      console.error("❌ Telegram error:", data);
-    } else {
-      console.log("✅ Pedido enviado a Telegram");
-    }
-  } catch (error) {
-    console.error("❌ Error de red al enviar a Telegram:", error);
+    const total = articulosCarrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
+    mensajeWhatsApp += `*🧾 Total del pedido:* $${total.toLocaleString("es-CO")}\n\n✅ *¡Gracias por tu atención!*`;
+
+    // WhatsApp
+    const mensajeCodificado = encodeURIComponent(mensajeWhatsApp);
+    const urlWhatsApp = `https://wa.me/573006498710?text=${mensajeCodificado}`;
+    window.open(urlWhatsApp, "_blank");
+
+    // Telegram
+    enviarPedidoTelegram(mensajeTelegram);
+
+    // Limpiar carrito
+    articulosCarrito = [];
+    guardarCarrito();
+    renderizarCarrito();
+    actualizarSubtotal();
+    actualizarContadorCarrito();
+    actualizarEstadoBotonWhatsApp();
   }
-}
+
+  async function enviarPedidoTelegram(mensaje) {
+    const token = "8320682242:AAG4h89_8WVmljeEvYHjzRxmnJDt-HoxcAY";
+    const chatId = "-1003044241716";
+    const url = `https://api.telegram.org/bot${token}/sendMessage`;
+
+    const payload = {
+      chat_id: chatId,
+      text: mensaje
+    };
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await response.json();
+      if (!data.ok) {
+        console.error("❌ Telegram error:", data);
+      } else {
+        console.log("✅ Pedido enviado a Telegram");
+      }
+    } catch (error) {
+      console.error("❌ Error de red al enviar a Telegram:", error);
+    }
+  }
 
   function abrirCarrito() {
     const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasCarrito);
@@ -184,7 +188,6 @@ async function enviarPedidoTelegram(mensaje) {
     localStorage.setItem("carritoAnmago", JSON.stringify(articulosCarrito));
   }
 
-  // === EVENTOS ===
   btn_shopping?.addEventListener("click", () => {
     const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasCarrito);
     bsOffcanvas.toggle();
@@ -198,7 +201,8 @@ async function enviarPedidoTelegram(mensaje) {
   actualizarContadorCarrito();
   actualizarEstadoBotonWhatsApp();
 
-  // ✅ Exponer funciones al contexto global
   window.agregarAlCarrito = agregarAlCarrito;
   window.generarPedidoWhatsApp = generarPedidoWhatsApp;
 });
+
+
