@@ -1,5 +1,7 @@
 let articulosCarrito = JSON.parse(localStorage.getItem("carritoAnmago")) || [];
 let catalogo = [];
+
+// ✅ Cargar catálogo antes de usar
 fetch("catalogo.json")
   .then(response => response.json())
   .then(data => {
@@ -31,7 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
       producto.precio = producto.precioDescuento;
     }
 
-    if (!producto.proveedor && catalogo.length > 0 && producto.id) {
+    // ✅ Recuperar proveedor si falta
+    if (!producto.proveedor && producto.id && catalogo.length > 0) {
       const desdeCatalogo = catalogo.find(p => p.id === producto.id);
       if (desdeCatalogo && desdeCatalogo.proveedor) {
         producto.proveedor = desdeCatalogo.proveedor;
@@ -206,13 +209,13 @@ document.addEventListener("DOMContentLoaded", () => {
     btn_shopping.classList.toggle("balanceo");
   });
 
-  closeButton?.addEventListener("click", () => cerrarCarrito());
+    closeButton?.addEventListener("click", () => cerrarCarrito());
 
   renderizarCarrito();
   actualizarSubtotal();
   actualizarContadorCarrito();
   actualizarEstadoBotonWhatsApp();
 
-   window.agregarAlCarrito = agregarAlCarrito;
+  window.agregarAlCarrito = agregarAlCarrito;
   window.generarPedidoWhatsApp = generarPedidoWhatsApp;
 });
