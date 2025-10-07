@@ -62,13 +62,17 @@ function renderizarProductos(catalogo) {
       const card = btn.closest(".producto");
       const talla = card.querySelector(".selector-talla")?.value || "Sin talla";
 
+      // ✅ Recuperar proveedor desde el catálogo global
+      const productoCatalogo = window.catalogoGlobal?.find(p => p.id === btn.dataset.id);
+
       const producto = {
         id: btn.dataset.imagen + "-" + talla,
         nombre: btn.dataset.nombre,
         precio: Number(btn.dataset.precio) || 0,
         cantidad: 1,
         imagen: btn.dataset.imagen,
-        talla: talla
+        talla: talla,
+        proveedor: productoCatalogo?.proveedor || "No definido"
       };
 
       if (typeof window.agregarAlCarrito === "function") {
@@ -77,6 +81,7 @@ function renderizarProductos(catalogo) {
     });
   });
 }
+
 
 // === Renderizar carrusel sincronizado con ciclo de promociones ===
 async function renderCarruselPromosDesdePromos(productos) {
