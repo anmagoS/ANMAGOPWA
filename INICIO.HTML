@@ -25,40 +25,39 @@
     <i class="bi bi-bag-heart"></i>
     <span id="contador-carrito" class="contador-carrito">0</span>
   </a>
-<div id="instalar-container" class="text-center mt-4" style="display: none;">
-  <button id="boton-instalar" class="btn btn-gradient fw-bold d-flex align-items-center justify-content-center mx-auto" style="gap: 12px; padding: 12px 24px; border-radius: 8px; font-size: 1.1rem;">
-    <img src="https://anmagos.github.io/ANMAGOPWA/Copilot_20251004_233346.png" alt="Instalar" style="width: 32px; height: 32px;" />
-    Instalar Anmago Store
-  </button>
-</div>
 
+  <!-- BOTÓN DE INSTALACIÓN PWA -->
+  <div id="instalar-container" class="text-center mt-4" style="display: none;">
+    <button id="boton-instalar" class="btn btn-gradient fw-bold d-flex align-items-center justify-content-center mx-auto" style="gap: 12px; padding: 12px 24px; border-radius: 8px; font-size: 1.1rem;">
+      <img src="https://anmagos.github.io/ANMAGOPWA/Copilot_20251004_233346.png" alt="Instalar" style="width: 32px; height: 32px;" />
+      Instalar Anmago Store
+    </button>
+  </div>
 
   <!-- CONTENIDO PRINCIPAL -->
   <main class="contenedor-categoria">
     <h1 class="titulo-categoria text-center">Colecciones</h1>
     <div id="grid-tipos" class="grid-productos"></div>
-<div class="container-fluid text-center mt-3 px-3">
-  <a href="PROMOS.HTML" class="btn btn-gradient fw-bold">
-    🎁 Ver promociones exclusivas
-  </a>
-</div>
-<div id="temporizador-promos" class="text-center text-muted mt-2 small"></div>
-   <div id="carouselPromos" class="carousel slide mt-4" data-bs-ride="carousel">
-    <div class="carousel-inner" id="carousel-promos-contenido"></div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselPromos" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon"></span>
-    </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselPromos" data-bs-slide="next">
-    <span class="carousel-control-next-icon"></span>
-  </button>
-</div>
+
+    <div class="container-fluid text-center mt-3 px-3">
+      <a href="PROMOS.HTML" class="btn btn-gradient fw-bold">🎁 Ver promociones exclusivas</a>
+    </div>
+    <div id="temporizador-promos" class="text-center text-muted mt-2 small"></div>
+
+    <div id="carouselPromos" class="carousel slide mt-4" data-bs-ride="carousel">
+      <div class="carousel-inner" id="carousel-promos-contenido"></div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselPromos" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselPromos" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
 
     <!-- Secciones institucionales -->
     <section class="seccion-centrada">
       <h2 class="titulo-categoria">Conoce más sobre Anmago Store</h2>
-      <iframe width="100%" height="315" src="https://www.youtube.com/embed/E8_rkF1957Y"
-        title="Video de presentación" frameborder="0" allowfullscreen
-        style="max-width: 560px; border-radius: 12px;"></iframe>
+      <iframe width="100%" height="315" src="https://www.youtube.com/embed/E8_rkF1957Y" title="Video de presentación" frameborder="0" allowfullscreen style="max-width: 560px; border-radius: 12px;"></iframe>
     </section>
 
     <section class="seccion-centrada">
@@ -67,9 +66,7 @@
     </section>
 
     <section class="seccion-centrada">
-      <p class="frase-destacada">
-        “La ropa no solo cubre tu cuerpo, sino que también expresa tu alma. En cada prenda, encuentras confianza, elegancia y la magia de ser tú mismo”
-      </p>
+      <p class="frase-destacada">“La ropa no solo cubre tu cuerpo, sino que también expresa tu alma. En cada prenda, encuentras confianza, elegancia y la magia de ser tú mismo”</p>
       <p class="frase-secundaria">¡Disfruta la experiencia de vestir tus sueños en Anmago Store!</p>
       <a class="boton-comprar" href="https://docs.google.com/forms/d/e/1FAIpQLSevvlCBgz7L6l2-DecKQLazoswqzf7DRYWOaCq4FtMGOR6D2Q/viewform?usp=header" target="_blank">Deja tus datos</a>
     </section>
@@ -101,126 +98,128 @@
   <script src="carrito.js"></script>
   <script src="app.js"></script>
   <script src="buscador.js" type="module"></script>
-<!-- INICIALIZACIÓN -->
-<script type="module">
-  import { activarBuscadorGlobal } from './buscador.js';
 
-  const imagenesPorTipo = {
-    "ROPA": "https://ik.imagekit.io/mbsk9dati/593678a2-9af5-47a8-a47c-34407d25bd60.jpg?updatedAt=1758216950422",
-    "RELOJERIA": "https://ik.imagekit.io/mbsk9dati/producto_53/PRODUCTOS_Images_d9594fb8.IMAGEN_12.215521.jpg?updatedAt=1757714222484",
-    "HOGAR": "portad1-1.webp",
-    "BELLEZA": "R.jpg",
-    "ESCOLAR": "fondo-vuelta-al-cole-elementos_23-2147848492.jpg"
-  };
-
-  async function cargarCatalogo() {
-    const url = "https://raw.githubusercontent.com/anmagoS/CATALOGO-SPA/main/catalogo.json";
-    const respuesta = await fetch(url);
-    const productos = await respuesta.json();
-    window.catalogoGlobal = productos;
-    renderTipos(productos);
-    renderCarruselPromosDesdePromos(window.catalogoGlobal);    
-  }
-
-  function renderTipos(productos) {
-    const contenedor = document.getElementById("grid-tipos");
-    contenedor.innerHTML = "";
-
-    const tiposUnicos = [...new Set(productos.map(p => p.tipo?.trim()).filter(Boolean))];
-
-    tiposUnicos.forEach(tipo => {
-      const imagenRef = imagenesPorTipo[tipo] || "imagen-default.jpg";
-      const tarjeta = document.createElement("div");
-      tarjeta.className = "producto";
-      tarjeta.innerHTML = `
-        <a href="SUBTIPOS.HTML?tipo=${encodeURIComponent(tipo)}" class="imagen-producto">
-          <img src="${imagenRef}" alt="${tipo}">
-        </a>
-        <div class="nombre-producto">${tipo}</div>
-        <a class="boton-comprar" href="SUBTIPOS.HTML?tipo=${encodeURIComponent(tipo)}">Ver más</a>
-      `;
-      contenedor.appendChild(tarjeta);
-    });
-  }
-
-  function ajustarCarrito() {
-    const header = document.querySelector(".header");
-    const carritoBtn = document.querySelector(".btn_shopping");
-    if (header && carritoBtn) {
-      const alturaHeader = header.offsetHeight;
-      carritoBtn.style.top = `${alturaHeader + 12}px`;
+  <!-- 🔧 Limpieza de parámetros Facebook -->
+  <script>
+    if (window.location.search.includes("fbclid")) {
+      const cleanURL = window.location.origin + window.location.pathname;
+      window.location.replace(cleanURL);
     }
-  }
+  </script>
 
-  document.addEventListener("DOMContentLoaded", async () => {
-  // Cargar encabezado
-  const header = await fetch("HEADER.HTML").then(res => res.text());
-  document.getElementById("header-container").insertAdjacentHTML("afterbegin", header);
-  await new Promise(resolve => requestAnimationFrame(resolve));
-  ajustarCarrito();
-  await new Promise(resolve => requestAnimationFrame(resolve));
-  ajustarCarrito();
+  <!-- INICIALIZACIÓN -->
+  <script type="module">
+    import { activarBuscadorGlobal } from './buscador.js';
 
-  // Activar botón de carrito
-  const carritoBtn = document.querySelector(".btn_shopping");
-  carritoBtn?.addEventListener("click", e => {
-    e.preventDefault();
-    const offcanvas = document.getElementById("offcanvasCarrito");
-    if (offcanvas) {
-      const instancia = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
-      instancia.show();
-    }
-  });
+    const imagenesPorTipo = {
+      "ROPA": "https://ik.imagekit.io/mbsk9dati/593678a2-9af5-47a8-a47c-34407d25bd60.jpg?updatedAt=1758216950422",
+      "RELOJERIA": "https://ik.imagekit.io/mbsk9dati/producto_53/PRODUCTOS_Images_d9594fb8.IMAGEN_12.215521.jpg?updatedAt=1757714222484",
+      "HOGAR": "portad1-1.webp",
+      "BELLEZA": "R.jpg",
+      "ESCOLAR": "fondo-vuelta-al-cole-elementos_23-2147848492.jpg"
+    };
 
-  // Activar buscador
-  activarBuscadorGlobal();
-
-  // Cargar catálogo y renderizar carrusel inicial
-  await cargarCatalogoGlobal();
-  renderCarruselPromosDesdePromos(window.catalogoGlobal);
-
-  // Programar actualización automática del carrusel cuando expire finPromo
-  const tiempoRestante = finPromo - new Date();
-  if (tiempoRestante > 0) {
-    setTimeout(async () => {
-      await cargarCatalogoGlobal(); // asegurar datos frescos
+    async function cargarCatalogo() {
+      const url = "https://raw.githubusercontent.com/anmagoS/CATALOGO-SPA/main/catalogo.json";
+      const respuesta = await fetch(url);
+      const productos = await respuesta.json();
+      window.catalogoGlobal = productos;
+      renderTipos(productos);
       renderCarruselPromosDesdePromos(window.catalogoGlobal);
-      console.log("🔄 Carrusel actualizado automáticamente");
-    }, tiempoRestante);
-  } else {
-    console.warn("⚠️ El tiempo de promoción ya venció. No se programó recarga automática.");
-  }
-});
+    }
 
-// 🔔 Alerta institucional de instalación PWA con confirmación directa
-let deferredPrompt;
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
+    function renderTipos(productos) {
+      const contenedor = document.getElementById("grid-tipos");
+      contenedor.innerHTML = "";
 
-  const contenedor = document.getElementById("instalar-container");
-  const boton = document.getElementById("boton-instalar");
+      const tiposUnicos = [...new Set(productos.map(p => p.tipo?.trim()).filter(Boolean))];
 
-  contenedor.style.display = "block";
+      tiposUnicos.forEach(tipo => {
+        const imagenRef = imagenesPorTipo[tipo] || "imagen-default.jpg";
+        const tarjeta = document.createElement("div");
+        tarjeta.className = "producto";
+        tarjeta.innerHTML = `
+          <a href="SUBTIPOS.HTML?tipo=${encodeURIComponent(tipo)}" class="imagen-producto">
+            <img src="${imagenRef}" alt="${tipo}">
+          </a>
+          <div class="nombre-producto">${tipo}</div>
+          <a class="boton-comprar" href="SUBTIPOS.HTML?tipo=${encodeURIComponent(tipo)}">Ver más</a>
+        `;
+        contenedor.appendChild(tarjeta);
+      });
+    }
 
-  boton.addEventListener("click", async () => {
-    deferredPrompt.prompt();
-    const resultado = await deferredPrompt.userChoice;
-    console.log("Resultado instalación:", resultado.outcome);
-    deferredPrompt = null;
-    contenedor.style.display = "none";
-  });
-});
+    function ajustarCarrito() {
+      const header = document.querySelector(".header");
+      const carritoBtn = document.querySelector(".btn_shopping");
+      if (header && carritoBtn) {
+        const alturaHeader = header.offsetHeight;
+        carritoBtn.style.top = `${alturaHeader + 12}px`;
+      }
+    }
 
+    document.addEventListener("DOMContentLoaded", async () => {
+      // Cargar encabezado
+      const header = await fetch("HEADER.HTML").then(res => res.text());
+      document.getElementById("header-container").insertAdjacentHTML("afterbegin", header);
+      await new Promise(resolve => requestAnimationFrame(resolve));
+      ajustarCarrito();
 
+      // Activar botón de carrito
+      const carritoBtn = document.querySelector(".btn_shopping");
+      carritoBtn?.addEventListener("click", e => {
+        e.preventDefault();
+        const offcanvas = document.getElementById("offcanvasCarrito");
+        if (offcanvas) {
+          const instancia = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
+          instancia.show();
+        }
+      });
 
-const footer = await fetch("footer.html").then(res => res.text());
-document.getElementById("footer-container").innerHTML = footer;
+      // Activar buscador
+      activarBuscadorGlobal();
 
-await cargarCatalogo();
+      // Cargar catálogo y renderizar carrusel inicial
+      await cargarCatalogo();
 
-   
-  });
-</script>
+      // Cargar footer
+      const footer = await fetch("footer.html").then(res => res.text());
+      document.getElementById("footer-container").innerHTML = footer;
+
+      // Programar actualización automática del carrusel si hay promociones activas
+      if (typeof finPromo !== "undefined") {
+        const tiempoRestante = finPromo - new Date();
+        if (tiempoRestante > 0) {
+          setTimeout(async () => {
+            await cargarCatalogo();
+            renderCarruselPromosDesdePromos(window.catalogoGlobal);
+            console.log("🔄 Carrusel actualizado automáticamente");
+          }, tiempoRestante);
+        } else {
+          console.warn("⚠️ El tiempo de promoción ya venció. No se programó recarga automática.");
+        }
+      }
+    });
+
+    // 🔔 Instalación PWA
+    let deferredPrompt;
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+
+      const contenedor = document.getElementById("instalar-container");
+      const boton = document.getElementById("boton-instalar");
+
+      contenedor.style.display = "block";
+
+      boton.addEventListener("click", async () => {
+        deferredPrompt.prompt();
+        const resultado = await deferredPrompt.userChoice;
+        console.log("Resultado instalación:", resultado.outcome);
+        deferredPrompt = null;
+        contenedor.style.display = "none";
+      });
+    });
+  </script>
 </body>
 </html>
