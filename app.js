@@ -9,7 +9,6 @@ async function cargarCatalogoGlobal() {
     console.error("Error al cargar catálogo:", err);
   }
 }
-
 // === Cargar accesos ===
 async function cargarAccesosGlobal() {
   try {
@@ -26,12 +25,10 @@ async function cargarAccesosGlobal() {
 function renderizarProductos(catalogo) {
   const contenedor = document.getElementById("contenido-productos");
   if (!contenedor) return;
-
   contenedor.innerHTML = "";
   catalogo.forEach(p => {
     const tallas = p.tallas?.split(",").map(t => t.trim()) || [];
     const opciones = tallas.map(t => `<option value="${t}">${t}</option>`).join("");
-
     contenedor.insertAdjacentHTML("beforeend", `
       <div class="producto" data-id="${p.id}">
         <a href="producto.html?id=${p.id}" class="imagen-producto">
