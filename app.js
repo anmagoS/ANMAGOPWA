@@ -211,8 +211,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   await cargarCatalogoGlobal();
-  mostrarTemporizadorPromos();
-  await cargarAccesosGlobal();
+window.catalogo = window.catalogoGlobal; // ✅ sincroniza con carrito.js
+mostrarTemporizadorPromos();
+await cargarAccesosGlobal();
 
   renderizarMenuLateral(window.catalogoGlobal);
   renderCarruselPromosDesdePromos(window.catalogoGlobal);
