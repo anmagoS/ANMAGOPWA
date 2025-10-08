@@ -6,6 +6,8 @@ function getParametrosDesdeURL() {
     subtipo: params.get("subtipo")?.trim(),
     categoria: params.get("categoria")?.trim()
   };
+}
+
 // === Cargar catálogo global ===
 async function cargarCatalogoGlobal() {
   try {
@@ -137,64 +139,6 @@ async function renderCarruselPromosDesdePromos(productos) {
   });
 }
 
-// === Renderizar productos si aplica ===
-function renderizarProductos(catalogo) {
-  const contenedor = document.getElementById("contenido-productos");
-  if (!contenedor) return;
-  contenedor.innerHTML = "";
-
-  catalogo.forEach(p => {
-    const tallas = p.tallas?.split(",").map(t => t.trim()) || [];
-    const opciones = tallas.map(t => `<option value="${t}">${t}</option>`).join("");
-
-    contenedor.insertAdjacentHTML("beforeend", `
-      <div class="producto" data-id="${p.id}">
-        <a href="producto.html?id=${p.id}" class="imagen-producto">
-          <img src="${p.imagen}" alt="${p.producto}" />
-        </a>
-        <div class="nombre-producto">${p.producto}</div>
-        <p class="precio-producto">$${p.precio.toLocaleString("es-CO")}</p>
-        ${tallas.length ? `
-          <label>Opción:</label>
-          <select class="selector-talla form-select mb-2">
-            ${opciones}
-          </select>
-        ` : ""}
-        <button class="boton-comprar btn-cart"
-          data-id="${p.id}"
-          data-nombre="${p.producto}"
-          data-imagen="${p.imagen}"
-          data-precio="${p.precio}">
-          Agregar al carrito
-        </button>
-      </div>
-    `);
-  });
-
-  contenedor.querySelectorAll(".btn-cart").forEach(boton => {
-    boton.addEventListener("click", e => {
-      const btn = e.currentTarget;
-      const card = btn.closest(".producto");
-      const talla = card.querySelector(".selector-talla")?.value || "Sin talla";
-      const productoCatalogo = window.catalogoGlobal?.find(p => p.id === card.dataset.id);
-
-      const producto = {
-        id: card.dataset.id + "-" + talla,
-        nombre: btn.dataset.nombre,
-        precio: Number(btn.dataset.precio) || 0,
-        cantidad: 1,
-        imagen: btn.dataset.imagen,
-        talla: talla,
-        proveedor: productoCatalogo?.proveedor || "No definido"
-      };
-
-      if (typeof window.agregarAlCarrito === "function") {
-        window.agregarAlCarrito(producto);
-      }
-    });
-  });
-}
-
 // === Inicialización principal ===
 document.addEventListener("DOMContentLoaded", async () => {
   const { tipo, subtipo, categoria } = getParametrosDesdeURL();
@@ -207,23 +151,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   await cargarCatalogoGlobal();
   await cargarAccesosGlobal();
-    window.catalogo = window.catalogoGlobal || [];
+  window.catalogo = window.catalogoGlobal || [];
 
-  // ✅ Validar que el catálogo esté listo antes de renderizar menú y carrusel
-  if (Array.isArray(window.catalogoGlobal) && window.catalogoGlobal.length > 0) {
-    renderizarMenuLateral(window.catalogoGlobal);
-    renderCarruselPromosDesdePromos(window.catalogoGlobal);
-  }
-
-  // ✅ Mostrar temporizador de promociones
-  mostrarTemporizadorPromos();
-
-  // ✅ Cargar encabezado si no está presente
+  // ✅ Cargar encabezado
   const headerContainer = document.getElementById("header-container");
   if (!headerContainer.querySelector(".header")) {
     const header = await fetch("HEADER.HTML").then(res => res.text());
     headerContainer.insertAdjacentHTML("afterbegin", header);
     await new Promise(resolve => requestAnimationFrame(resolve));
+  }
+
+  // ✅ Ahora que el header está listo, renderizar menú lateral
+  if (Array.isArray(window.catalogoGlobal) && window.catalogoGlobal.length > 0) {
+    renderizarMenuLateral(window.catalogoGlobal);
+    renderCarruselPromosDesdePromos(window.catalogoGlobal);
   }
 
   // ✅ Activar buscador si existe
@@ -242,6 +183,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
+  // ✅ Mostrar temporizador
+  mostrarTemporizadorPromos();
+
   // ✅ Cargar pie de página
   const footer = await fetch("footer.html").then(res => res.text());
   document.getElementById("footer-container").innerHTML = footer;
@@ -259,7 +203,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const accesosRuta = window.accesosGlobal?.filter(a => a.ruta === rutaActual) || [];
     const idsRuta = accesosRuta.map(a => a.id_producto);
     const productosFiltrados = window.catalogoGlobal.filter(p => idsRuta.includes(p.id));
-    renderizarProductos(productosFiltrados.length ? productosFiltrados : window.catalogoGlobal);
+       renderizarProductos(productosFiltrados.length ? productosFiltrados : window.catalogoGlobal);
   }
 
   // ✅ Actualizar contador del carrito si la función está disponible
@@ -267,8 +211,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.actualizarContadorCarrito();
   }
 
-  // ✅ Renderizar contenido del carrito si la función está disponible
-  if (document.getElementById("carrito-contenido") && typeof window.renderizarCarrito === "function") {
+  // ✅ Renderizar contenido del carrito si la función está disponible y el catálogo está listo
+  if (
+    typeof window.renderizarCarrito === "function" &&
+    Array.isArray(window.catalogoGlobal) &&
+    window.catalogoGlobal.length > 0 &&
+    document.getElementById("carrito-contenido")
+  ) {
     window.renderizarCarrito();
   }
 });
