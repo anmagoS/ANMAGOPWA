@@ -91,6 +91,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     agregarEventosBorrar();
   }
+  if (articulosCarrito.length > 0) {
+  const botonComprarHTML = `
+    <div class="text-center mt-3">
+      <button class="btn btn-success w-100" id="btn-comprar">
+        Comprar
+      </button>
+    </div>
+  `;
+  carritoContainer.insertAdjacentHTML("beforeend", botonComprarHTML);
+}
 
   function agregarEventosBorrar() {
     const botonesBorrar = document.querySelectorAll(".boton-comprar[data-index]");
