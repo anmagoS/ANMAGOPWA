@@ -1,6 +1,5 @@
 let articulosCarrito = JSON.parse(localStorage.getItem("carritoAnmago")) || [];
 let catalogo = [];
-
 fetch("catalogo.json")
   .then(response => response.json())
   .then(data => {
