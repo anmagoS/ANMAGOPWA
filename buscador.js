@@ -1,7 +1,7 @@
 export async function activarBuscadorGlobal() {
   // Cargar catálogo si no está disponible
   if (!window.catalogoGlobal) {
-    const url = "https://raw.githubusercontent.com/anmagoS/CATALOGO-SPA/main/catalogo.json";
+    const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json";
     const respuesta = await fetch(url);
     window.catalogoGlobal = await respuesta.json();
   }
