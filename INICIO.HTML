@@ -101,126 +101,156 @@
   </script>
 
   <!-- INICIALIZACIÓN -->
-  <script type="module">
-    import { activarBuscadorGlobal } from './buscador.js';
+ <script type="module">
+  import { activarBuscadorGlobal } from './buscador.js';
 
-    const imagenesPorTipo = {
-      "ROPA": "https://ik.imagekit.io/mbsk9dati/593678a2-9af5-47a8-a47c-34407d25bd60.jpg?updatedAt=1758216950422",
-      "RELOJERIA": "https://ik.imagekit.io/mbsk9dati/producto_53/PRODUCTOS_Images_d9594fb8.IMAGEN_12.215521.jpg?updatedAt=1757714222484",
-      "HOGAR": "portad1-1.webp",
-      "BELLEZA": "R.jpg",
-      "ESCOLAR": "fondo-vuelta-al-cole-elementos_23-2147848492.jpg"
-    };
+  const imagenesPorTipo = {
+    "ROPA": "https://ik.imagekit.io/mbsk9dati/593678a2-9af5-47a8-a47c-34407d25bd60.jpg?updatedAt=1758216950422",
+    "RELOJERIA": "https://ik.imagekit.io/mbsk9dati/producto_53/PRODUCTOS_Images_d9594fb8.IMAGEN_12.215521.jpg?updatedAt=1757714222484",
+    "HOGAR": "portad1-1.webp",
+    "BELLEZA": "R.jpg",
+    "ESCOLAR": "fondo-vuelta-al-cole-elementos_23-2147848492.jpg"
+  };
 
-    async function cargarCatalogo() {
-      const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json";
-      const respuesta = await fetch(url);
-      const productos = await respuesta.json();
-      window.catalogoGlobal = productos;
-      renderTipos(productos);
-      renderCarruselPromosDesdePromos(window.catalogoGlobal);
-    }
-
-    function renderTipos(productos) {
-      const contenedor = document.getElementById("grid-tipos");
-      contenedor.innerHTML = "";
-
-      const tiposUnicos = [...new Set(productos.map(p => p.tipo?.trim()).filter(Boolean))];
-
-      tiposUnicos.forEach(tipo => {
-        const imagenRef = imagenesPorTipo[tipo] || "imagen-default.jpg";
-        const tarjeta = document.createElement("div");
-        tarjeta.className = "producto";
-        tarjeta.innerHTML = `
-          <a href="SUBTIPOS.HTML?tipo=${encodeURIComponent(tipo)}" class="imagen-producto">
-            <img src="${imagenRef}" alt="${tipo}">
-          </a>
-          <div class="nombre-producto">${tipo}</div>
-          <a class="boton-comprar" href="SUBTIPOS.HTML?tipo=${encodeURIComponent(tipo)}">Ver más</a>
-        `;
-        contenedor.appendChild(tarjeta);
-      });
-    }
-function ajustarCarrito() {
-  const header = document.querySelector(".header");
-  const carritoBtn = document.querySelector(".btn_shopping");
-  if (header && carritoBtn) {
-    const alturaHeader = header.offsetHeight;
-    carritoBtn.style.top = `${alturaHeader + 12}px`;
+  async function cargarCatalogo() {
+    const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json";
+    const respuesta = await fetch(url);
+    const productos = await respuesta.json();
+    window.catalogoGlobal = productos;
+    renderTipos(productos);
+    renderCarruselPromosDesdePromos(productos);
   }
-}
 
-document.addEventListener("DOMContentLoaded", async () => {
-  // ✅ Cargar encabezado
-  const header = await fetch("HEADER.HTML").then(res => res.text());
-  document.getElementById("header-container").insertAdjacentHTML("afterbegin", header);
-  await new Promise(resolve => requestAnimationFrame(resolve));
-  ajustarCarrito();
+  function renderTipos(productos) {
+    const contenedor = document.getElementById("grid-tipos");
+    contenedor.innerHTML = "";
 
-  // ✅ Activar botón de carrito
-  const carritoBtn = document.querySelector(".btn_shopping");
-  carritoBtn?.addEventListener("click", e => {
+    const tiposUnicos = [...new Set(productos.map(p => p.tipo?.trim()).filter(Boolean))];
+
+    tiposUnicos.forEach(tipo => {
+      const imagenRef = imagenesPorTipo[tipo] || "imagen-default.jpg";
+      const tarjeta = document.createElement("div");
+      tarjeta.className = "producto";
+      tarjeta.innerHTML = `
+        <a href="SUBTIPOS.HTML?tipo=${encodeURIComponent(tipo)}" class="imagen-producto">
+          <img src="${imagenRef}" alt="${tipo}">
+        </a>
+        <div class="nombre-producto">${tipo}</div>
+        <a class="boton-comprar" href="SUBTIPOS.HTML?tipo=${encodeURIComponent(tipo)}">Ver más</a>
+      `;
+      contenedor.appendChild(tarjeta);
+    });
+  }
+
+  function renderCarruselPromosDesdePromos(productos) {
+    const contenedor = document.getElementById("carousel-promos-contenido");
+    if (!contenedor) return;
+
+    const promociones = productos.filter(p => {
+      const promo = typeof p.promo === "string" ? p.promo.toLowerCase().trim() : p.promo;
+      return promo === true || promo === "true" || promo === "sí" || promo === "activo";
+    });
+
+    contenedor.innerHTML = "";
+
+    promociones.slice(0, 4).forEach((p, index) => {
+      const item = document.createElement("div");
+      item.className = `carousel-item ${index === 0 ? "active" : ""}`;
+      item.innerHTML = `
+        <div class="d-flex justify-content-center">
+          <div class="card" style="width: 18rem;">
+            <img src="${p.imagen}" class="card-img-top" alt="${p.producto}">
+            <div class="card-body text-center">
+              <h5 class="card-title">${p.producto}</h5>
+              <p class="card-text">
+                <s class="text-muted me-2">$${p.precio.toLocaleString("es-CO")}</s>
+                <span class="text-success fw-bold">$${(p.precio * 0.9).toLocaleString("es-CO")}</span>
+              </p>
+              <a href="producto.html?id=${p.id}" class="boton-comprar">Ver producto</a>
+            </div>
+          </div>
+        </div>
+      `;
+      contenedor.appendChild(item);
+    });
+  }
+
+  function ajustarCarrito() {
+    const header = document.querySelector(".header");
+    const carritoBtn = document.querySelector(".btn_shopping");
+    if (header && carritoBtn) {
+      const alturaHeader = header.offsetHeight;
+      carritoBtn.style.top = `${alturaHeader + 12}px`;
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    const header = await fetch("HEADER.HTML").then(res => res.text());
+    document.getElementById("header-container").insertAdjacentHTML("afterbegin", header);
+    await new Promise(resolve => requestAnimationFrame(resolve));
+    ajustarCarrito();
+
+    const carritoBtn = document.querySelector(".btn_shopping");
+    carritoBtn?.addEventListener("click", e => {
+      e.preventDefault();
+      const offcanvas = document.getElementById("offcanvasCarrito");
+      if (offcanvas) {
+        const instancia = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
+        instancia.show();
+      }
+    });
+
+    activarBuscadorGlobal();
+    await cargarCatalogo();
+    window.catalogo = window.catalogoGlobal || [];
+
+    if (typeof window.actualizarContadorCarrito === "function") {
+      window.actualizarContadorCarrito();
+    }
+    if (typeof window.renderizarCarrito === "function") {
+      window.renderizarCarrito();
+    }
+
+    const footer = await fetch("footer.html").then(res => res.text());
+    document.getElementById("footer-container").innerHTML = footer;
+
+    try {
+      const urlTemporizador = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json?nocache=${Date.now()}`;
+      const res = await fetch(urlTemporizador);
+      const { finPromo } = await res.json();
+      const tiempoRestante = new Date(finPromo) - new Date();
+      if (tiempoRestante > 0) {
+        setTimeout(async () => {
+          await cargarCatalogo();
+          renderCarruselPromosDesdePromos(window.catalogoGlobal);
+          console.log("🔄 Carrusel actualizado automáticamente");
+        }, tiempoRestante);
+      }
+    } catch (err) {
+      console.warn("⚠️ No se pudo cargar temporizador de promociones:", err);
+    }
+  });
+
+  // 🔔 Instalación PWA
+  let deferredPrompt;
+  window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
-    const offcanvas = document.getElementById("offcanvasCarrito");
-    if (offcanvas) {
-      const instancia = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
-      instancia.show();
-    }
+    deferredPrompt = e;
+
+    const contenedor = document.getElementById("instalar-container");
+    const boton = document.getElementById("boton-instalar");
+
+    contenedor.style.display = "block";
+
+    boton.addEventListener("click", async () => {
+      deferredPrompt.prompt();
+      const resultado = await deferredPrompt.userChoice;
+      console.log("Resultado instalación:", resultado.outcome);
+      deferredPrompt = null;
+      contenedor.style.display = "none";
+    });
   });
+</script>
 
-  // ✅ Activar buscador
-  activarBuscadorGlobal();
-
-  // ✅ Cargar catálogo y renderizar carrusel inicial
-  await cargarCatalogo();
-  window.catalogo = window.catalogoGlobal || [];
-
-  // ✅ Actualizar carrito visual y contador
-  if (typeof window.actualizarContadorCarrito === "function") {
-    window.actualizarContadorCarrito();
-  }
-  if (typeof window.renderizarCarrito === "function") {
-    window.renderizarCarrito();
-  }
-
-  // ✅ Cargar footer
-  const footer = await fetch("footer.html").then(res => res.text());
-  document.getElementById("footer-container").innerHTML = footer;
-
-  // ✅ Programar actualización automática del carrusel si hay promociones activas
-  if (typeof finPromo !== "undefined") {
-    const tiempoRestante = finPromo - new Date();
-    if (tiempoRestante > 0) {
-      setTimeout(async () => {
-        await cargarCatalogo();
-        renderCarruselPromosDesdePromos(window.catalogoGlobal);
-        console.log("🔄 Carrusel actualizado automáticamente");
-      }, tiempoRestante);
-    } else {
-      console.warn("⚠️ El tiempo de promoción ya venció. No se programó recarga automática.");
-    }
-  }
-});
-
-// 🔔 Instalación PWA
-let deferredPrompt;
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-
-  const contenedor = document.getElementById("instalar-container");
-  const boton = document.getElementById("boton-instalar");
-
-  contenedor.style.display = "block";
-
-  boton.addEventListener("click", async () => {
-    deferredPrompt.prompt();
-    const resultado = await deferredPrompt.userChoice;
-    console.log("Resultado instalación:", resultado.outcome);
-    deferredPrompt = null;
-    contenedor.style.display = "none";
-  });
-});  
-  </script>
 </body>
 </html>
