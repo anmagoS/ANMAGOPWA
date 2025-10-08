@@ -7,7 +7,6 @@ function getParametrosDesdeURL() {
     categoria: params.get("categoria")?.trim()
   };
 }
-
 // === Cargar catálogo global ===
 async function cargarCatalogoGlobal() {
   try {
