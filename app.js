@@ -201,41 +201,55 @@ async function mostrarTemporizadorPromos() {
 document.addEventListener("DOMContentLoaded", async () => {
   const { tipo, subtipo, categoria } = getParametrosDesdeURL();
 
+  // ✅ Registrar Service Worker si aplica
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js")
       .then(() => console.log("✅ Service Worker registrado"))
       .catch(err => console.error("❌ Error al registrar SW:", err));
   }
 
+  // ✅ Cargar catálogo y sincronizar con carrito.js
   await cargarCatalogoGlobal();
-window.catalogo = window.catalogoGlobal; // ✅ sincroniza con carrito.js
-mostrarTemporizadorPromos();
-await cargarAccesosGlobal();
+  window.catalogo = window.catalogoGlobal;
 
+  // ✅ Activar temporizador y accesos
+  mostrarTemporizadorPromos();
+  await cargarAccesosGlobal();
+
+  // ✅ Renderizar menú lateral y carrusel
   renderizarMenuLateral(window.catalogoGlobal);
   renderCarruselPromosDesdePromos(window.catalogoGlobal);
 
+  // ✅ Cargar encabezado si no está presente
   const headerContainer = document.getElementById("header-container");
   if (!headerContainer.querySelector(".header")) {
     const header = await fetch("HEADER.HTML").then(res => res.text());
     headerContainer.insertAdjacentHTML("afterbegin", header);
   }
 
+  // ✅ Cargar pie de página
   const footer = await fetch("footer.html").then(res => res.text());
   document.getElementById("footer-container").innerHTML = footer;
 
+  // ✅ Activar menú lateral si existe
   const toggle = document.getElementById("toggle-categorias");
   const menu = document.getElementById("menu-categorias");
   toggle?.addEventListener("click", () => {
     menu.style.display = menu.style.display === "none" ? "flex" : "none";
   });
 
+  // ✅ Renderizar productos si aplica
   if (document.getElementById("contenido-productos")) {
     const rutaActual = window.location.pathname;
     const accesosRuta = window.accesosGlobal?.filter(a => a.ruta === rutaActual) || [];
     const idsRuta = accesosRuta.map(a => a.id_producto);
     const productosFiltrados = window.catalogoGlobal.filter(p => idsRuta.includes(p.id));
     renderizarProductos(productosFiltrados.length ? productosFiltrados : window.catalogoGlobal);
+  }
+
+  // ✅ Actualizar contador del carrito si la función está disponible
+  if (typeof window.actualizarContadorCarrito === "function") {
+    window.actualizarContadorCarrito();
   }
 });
 
