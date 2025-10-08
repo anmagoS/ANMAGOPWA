@@ -1,6 +1,6 @@
 let articulosCarrito = JSON.parse(localStorage.getItem("carritoAnmago")) || [];
 let catalogo = [];
-fetch("catalogo.json")
+fetch("https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json")
   .then(response => response.json())
   .then(data => {
     catalogo = data;
