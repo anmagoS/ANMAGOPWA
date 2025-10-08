@@ -7,6 +7,7 @@ function getParametrosDesdeURL() {
     categoria: params.get("categoria")?.trim()
   };
 }
+
 // === Cargar catálogo global ===
 async function cargarCatalogoGlobal() {
   try {
@@ -114,7 +115,6 @@ async function renderCarruselPromosDesdePromos(productos) {
   });
 
   const bloqueCarrusel = promociones.slice(indicePromoActual, indicePromoActual + 4);
-
   contenedor.innerHTML = "";
 
   bloqueCarrusel.forEach((p, index) => {
@@ -201,26 +201,24 @@ function renderizarProductos(catalogo) {
 document.addEventListener("DOMContentLoaded", async () => {
   const { tipo, subtipo, categoria } = getParametrosDesdeURL();
 
-  // ✅ Registrar Service Worker
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js")
       .then(() => console.log("✅ Service Worker registrado"))
       .catch(err => console.error("❌ Error al registrar SW:", err));
   }
 
-  // ✅ Cargar catálogo y accesos
   await cargarCatalogoGlobal();
   await cargarAccesosGlobal();
-  window.catalogo = window.catalogoGlobal;
+    window.catalogo = window.catalogoGlobal || [];
 
-  // ✅ Activar temporizador
+  // ✅ Validar que el catálogo esté listo antes de renderizar menú y carrusel
+  if (Array.isArray(window.catalogoGlobal) && window.catalogoGlobal.length > 0) {
+    renderizarMenuLateral(window.catalogoGlobal);
+    renderCarruselPromosDesdePromos(window.catalogoGlobal);
+  }
+
+  // ✅ Mostrar temporizador de promociones
   mostrarTemporizadorPromos();
-
-  // ✅ Renderizar menú lateral y carrusel
-  renderizarMenuLateral(window.catalogoGlobal);
-  renderCarruselPromosDesdePromos(window.catalogoGlobal);
-    // ✅ Renderizar carrusel de promociones
-  renderCarruselPromosDesdePromos(window.catalogoGlobal);
 
   // ✅ Cargar encabezado si no está presente
   const headerContainer = document.getElementById("header-container");
@@ -229,6 +227,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     headerContainer.insertAdjacentHTML("afterbegin", header);
     await new Promise(resolve => requestAnimationFrame(resolve));
   }
+
+  // ✅ Activar buscador si existe
+  if (typeof activarBuscadorGlobal === "function") {
+    activarBuscadorGlobal();
+  }
+
+  // ✅ Activar botón flotante del carrito
+  const carritoBtn = document.querySelector(".btn_shopping");
+  carritoBtn?.addEventListener("click", e => {
+    e.preventDefault();
+    const offcanvas = document.getElementById("offcanvasCarrito");
+    if (offcanvas) {
+      const instancia = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
+      instancia.show();
+    }
+  });
 
   // ✅ Cargar pie de página
   const footer = await fetch("footer.html").then(res => res.text());
@@ -256,7 +270,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // ✅ Renderizar contenido del carrito si la función está disponible
-  if (typeof window.renderizarCarrito === "function") {
+  if (document.getElementById("carrito-contenido") && typeof window.renderizarCarrito === "function") {
     window.renderizarCarrito();
   }
 });
