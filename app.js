@@ -247,9 +247,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     renderizarProductos(productosFiltrados.length ? productosFiltrados : window.catalogoGlobal);
   }
 
-  // ✅ Actualizar contador del carrito si la función está disponible
-  if (typeof window.actualizarContadorCarrito === "function") {
-    window.actualizarContadorCarrito();
-  }
+ // ✅ Actualizar contador del carrito si la función está disponible
+if (typeof window.actualizarContadorCarrito === "function") {
+  window.actualizarContadorCarrito();
+}
+
+// ✅ Renderizar contenido del carrito si la función está disponible
+if (typeof window.renderizarCarrito === "function") {
+  window.renderizarCarrito();
+}
 });
 
