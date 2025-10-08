@@ -10,7 +10,6 @@ fetch("catalogo.json")
   .catch(error => {
     console.error("❌ Error al cargar catálogo:", error);
   });
-
 document.addEventListener("DOMContentLoaded", () => {
   const carritoContainer = document.getElementById("carrito-contenido");
   const offcanvasCarrito = document.getElementById("offcanvasCarrito");
