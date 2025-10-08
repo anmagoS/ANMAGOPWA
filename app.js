@@ -9,7 +9,7 @@ function getParametrosDesdeURL() {
 // === Cargar catálogo global ===
 async function cargarCatalogoGlobal() {
   try {
-    const url = "https://raw.githubusercontent.com/anmagoS/CATALOGO-SPA/main/catalogo.json";
+    const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json";
     const res = await fetch(url);
     const productos = await res.json();
     window.catalogoGlobal = productos;
@@ -21,7 +21,7 @@ async function cargarCatalogoGlobal() {
 // === Cargar accesos globales ===
 async function cargarAccesosGlobal() {
   try {
-    const url = "https://raw.githubusercontent.com/anmagoS/CATALOGO-SPA/main/accesos.json";
+    const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/accesos.json";
     const res = await fetch(url);
     const accesos = await res.json();
     window.accesosGlobal = accesos;
