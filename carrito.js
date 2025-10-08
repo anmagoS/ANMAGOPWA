@@ -1,15 +1,20 @@
 let articulosCarrito = JSON.parse(localStorage.getItem("carritoAnmago")) || [];
 let catalogo = [];
-fetch("https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json")
-  .then(response => response.json())
-  .then(data => {
-    catalogo = data;
-    console.log("✅ Catálogo cargado");
-  })
-  .catch(error => {
-    console.error("❌ Error al cargar catálogo:", error);
-  });
-document.addEventListener("DOMContentLoaded", () => {
+
+async function cargarCatalogo() {
+  try {
+    const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json";
+    const res = await fetch(url);
+    catalogo = await res.json();
+    console.log("✅ Catálogo cargado en carrito.js");
+  } catch (error) {
+    console.error("❌ Error al cargar catálogo en carrito.js:", error);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  await cargarCatalogo();
+
   const carritoContainer = document.getElementById("carrito-contenido");
   const offcanvasCarrito = document.getElementById("offcanvasCarrito");
   const btn_shopping = document.querySelector(".btn_shopping");
@@ -17,7 +22,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const contadorCarrito = document.getElementById("contador-carrito");
   const closeButton = document.querySelector(".btn-close");
   const btnWhatsApp = document.querySelector("button[onclick='generarPedidoWhatsApp()']");
-  const modalFormulario = new bootstrap.Modal(document.getElementById("modalFormularioCliente"));
+  const modalFormulario = document.getElementById("modalFormularioCliente")
+    ? new bootstrap.Modal(document.getElementById("modalFormularioCliente"))
+    : null;
   const formCliente = document.getElementById("formCliente");
   const btnEnviarPedido = document.getElementById("btnEnviarPedido");
 
@@ -32,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!producto.proveedor && producto.id && catalogo.length > 0) {
       const desdeCatalogo = catalogo.find(p => p.id === producto.id);
-      if (desdeCatalogo && desdeCatalogo.proveedor) {
+      if (desdeCatalogo?.proveedor) {
         producto.proveedor = desdeCatalogo.proveedor;
       }
     }
@@ -54,6 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderizarCarrito() {
+    if (!carritoContainer) return;
     carritoContainer.innerHTML = "";
 
     if (articulosCarrito.length === 0) {
@@ -87,18 +95,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     agregarEventosBorrar();
 
-    const botonComprarHTML = `
+    carritoContainer.insertAdjacentHTML("beforeend", `
       <div class="text-center mt-3">
         <button class="btn btn-success w-100" id="btn-comprar">Comprar</button>
       </div>
-    `;
-    carritoContainer.insertAdjacentHTML("beforeend", botonComprarHTML);
+    `);
   }
 
   function agregarEventosBorrar() {
-    const botonesBorrar = document.querySelectorAll(".boton-comprar[data-index]");
-    botonesBorrar.forEach((boton) => {
-      boton.addEventListener("click", (e) => {
+    document.querySelectorAll(".boton-comprar[data-index]").forEach(boton => {
+      boton.addEventListener("click", e => {
         const index = parseInt(e.currentTarget.dataset.index);
         articulosCarrito.splice(index, 1);
         guardarCarrito();
@@ -111,29 +117,60 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function actualizarSubtotal() {
-    const subtotal = articulosCarrito.reduce((total, producto) => total + producto.precio * producto.cantidad, 0);
+    const subtotal = articulosCarrito.reduce((total, p) => total + p.precio * p.cantidad, 0);
     const opciones = {
       minimumFractionDigits: subtotal % 1 === 0 ? 0 : 2,
       maximumFractionDigits: 2
     };
-    subtotalElement.textContent = `$${subtotal.toLocaleString("es-CO", opciones)}`;
+    if (subtotalElement) {
+      subtotalElement.textContent = `$${subtotal.toLocaleString("es-CO", opciones)}`;
+    }
   }
 
   function actualizarContadorCarrito() {
-    contadorCarrito.textContent = articulosCarrito.length;
+    if (contadorCarrito) {
+      contadorCarrito.textContent = articulosCarrito.length;
+    }
+  }
+
+  function actualizarEstadoBotonWhatsApp() {
+    if (btnWhatsApp) {
+      btnWhatsApp.disabled = articulosCarrito.length === 0;
+    }
+  }
+
+  function guardarCarrito() {
+    localStorage.setItem("carritoAnmago", JSON.stringify(articulosCarrito));
+  }
+
+  function abrirCarrito() {
+    if (offcanvasCarrito) {
+      const instancia = bootstrap.Offcanvas.getOrCreateInstance(offcanvasCarrito);
+      instancia.show();
+    }
+  }
+
+  function cerrarCarrito() {
+    if (offcanvasCarrito) {
+      const instancia = bootstrap.Offcanvas.getOrCreateInstance(offcanvasCarrito);
+      instancia.hide();
+    }
   }
 
   function generarPedidoWhatsApp() {
-    const nombre = document.getElementById("nombreCliente").value.trim();
-    const telefono = document.getElementById("telefonoCliente").value.trim();
-    const direccion = document.getElementById("direccionCliente").value.trim();
+    const nombre = document.getElementById("nombreCliente")?.value.trim();
+    const telefono = document.getElementById("telefonoCliente")?.value.trim();
+    const direccion = document.getElementById("direccionCliente")?.value.trim();
 
-    if (!nombre || !telefono || !direccion) return alert("Por favor completa todos los campos.");
+    if (!nombre || !telefono || !direccion) {
+      alert("Por favor completa todos los campos.");
+      return;
+    }
 
-    articulosCarrito.forEach((producto) => {
+    articulosCarrito.forEach(producto => {
       if (!producto.proveedor && producto.id && catalogo.length > 0) {
         const desdeCatalogo = catalogo.find(p => p.id === producto.id);
-        if (desdeCatalogo && desdeCatalogo.proveedor) {
+        if (desdeCatalogo?.proveedor) {
           producto.proveedor = desdeCatalogo.proveedor;
         }
       }
@@ -163,10 +200,10 @@ document.addEventListener("DOMContentLoaded", () => {
     actualizarSubtotal();
     actualizarContadorCarrito();
     actualizarEstadoBotonWhatsApp();
-    modalFormulario.hide();
+    modalFormulario?.hide();
   }
 
-  async function enviarPedidoTelegram(mensaje) {
+    async function enviarPedidoTelegram(mensaje) {
     const token = "8320682242:AAG4h89_8WVmljeEvYHjzRxmnJDt-HoxcAY";
     const chatId = "-1003044241716";
     const url = `https://api.telegram.org/bot${token}/sendMessage`;
@@ -194,49 +231,35 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function abrirCarrito() {
-    const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasCarrito);
-    bsOffcanvas.show();
-  }
-
-    function cerrarCarrito() {
-    const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasCarrito);
-    bsOffcanvas.hide();
-  }
-
-  function actualizarEstadoBotonWhatsApp() {
-    if (btnWhatsApp) btnWhatsApp.disabled = articulosCarrito.length === 0;
-  }
-
-  function guardarCarrito() {
-    localStorage.setItem("carritoAnmago", JSON.stringify(articulosCarrito));
-  }
-
+  // 🛍️ Activar botón flotante del carrito
   btn_shopping?.addEventListener("click", () => {
     const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasCarrito);
     bsOffcanvas.toggle();
     btn_shopping.classList.toggle("balanceo");
   });
 
+  // ❌ Cerrar carrito al hacer clic en la X
   closeButton?.addEventListener("click", () => cerrarCarrito());
 
   // 🧩 Mostrar modal al hacer clic en "Comprar"
   document.addEventListener("click", (e) => {
-    if (e.target && e.target.id === "btn-comprar") {
+    if (e.target?.id === "btn-comprar" && modalFormulario) {
       modalFormulario.show();
     }
   });
 
   // 🧠 Validar campos del formulario
-  formCliente.addEventListener("input", () => {
-    const nombre = document.getElementById("nombreCliente").value.trim();
-    const telefono = document.getElementById("telefonoCliente").value.trim();
-    const direccion = document.getElementById("direccionCliente").value.trim();
-    btnEnviarPedido.disabled = !(nombre && telefono && direccion);
+  formCliente?.addEventListener("input", () => {
+    const nombre = document.getElementById("nombreCliente")?.value.trim();
+    const telefono = document.getElementById("telefonoCliente")?.value.trim();
+    const direccion = document.getElementById("direccionCliente")?.value.trim();
+    if (btnEnviarPedido) {
+      btnEnviarPedido.disabled = !(nombre && telefono && direccion);
+    }
   });
 
   // 📦 Enviar pedido al hacer clic en el botón del modal
-  btnEnviarPedido.addEventListener("click", generarPedidoWhatsApp);
+  btnEnviarPedido?.addEventListener("click", generarPedidoWhatsApp);
 
   // 🔁 Inicializar interfaz
   renderizarCarrito();
@@ -244,7 +267,9 @@ document.addEventListener("DOMContentLoaded", () => {
   actualizarContadorCarrito();
   actualizarEstadoBotonWhatsApp();
 
-  // 🔗 Exponer funciones globales si se necesitan
+  // 🔗 Exponer funciones globales
   window.agregarAlCarrito = agregarAlCarrito;
   window.generarPedidoWhatsApp = generarPedidoWhatsApp;
+  window.renderizarCarrito = renderizarCarrito;
+  window.actualizarContadorCarrito = actualizarContadorCarrito;
 });
