@@ -2045,5 +2045,21 @@
     "promo": true,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_137/PRODUCTOS_Images_80783575.IMAGEN_1.165716.jpg, https://ik.imagekit.io/mbsk9dati/producto_137/PRODUCTOS_Images_80783575.IMAGEN_2.165716.jpg, https://ik.imagekit.io/mbsk9dati/producto_137/PRODUCTOS_Images_80783575.IMAGEN_3.165716.jpg, https://ik.imagekit.io/mbsk9dati/producto_137/PRODUCTOS_Images_80783575.IMAGEN_4.165719.jpg, https://ik.imagekit.io/mbsk9dati/producto_137/PRODUCTOS_Images_80783575.IMAGEN_5.165719.jpg",
     "proveedor": "WOMANS FITNESS"
+  },
+  {
+    "id": "5828B632",
+    "tipo": "ROPA",
+    "subtipo": "DAMA",
+    "categoria": "DEPORTIVA",
+    "subcategoria": "ESQUELETOS",
+    "producto": "ESQUELETO CAPRITI",
+    "material": "TELA CAPRITI",
+    "tallas": "SM,LXL",
+    "precio": 45000,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_138/PRODUCTOS_Images_5828b632.IMAGEN_1.180259.jpg",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_138/PRODUCTOS_Images_5828b632.IMAGEN_1.180259.jpg, https://ik.imagekit.io/mbsk9dati/producto_138/PRODUCTOS_Images_5828b632.IMAGEN_2.180259.jpg, https://ik.imagekit.io/mbsk9dati/producto_138/PRODUCTOS_Images_5828b632.IMAGEN_3.180259.jpg, https://ik.imagekit.io/mbsk9dati/producto_138/PRODUCTOS_Images_5828b632.IMAGEN_4.180302.jpg, https://ik.imagekit.io/mbsk9dati/producto_138/PRODUCTOS_Images_5828b632.IMAGEN_5.180302.jpg, https://ik.imagekit.io/mbsk9dati/producto_138/PRODUCTOS_Images_5828b632.IMAGEN_6.180303.jpg, https://ik.imagekit.io/mbsk9dati/producto_138/PRODUCTOS_Images_5828b632.IMAGEN_7.180304.jpg",
+    "proveedor": "WOMANS FITNESS",
+    "descripcion": "POCAS UNIDADES ALGUNOS COLORES SOLO ESTAN DISPONIBLES EN UNA TALLA."
   }
 ]
