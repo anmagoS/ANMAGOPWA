@@ -546,5 +546,9 @@
   {
     "id_producto": "BA5579D2",
     "ruta": "/ROPA/DAMA/PANTALONES/CARGO"
+  },
+  {
+    "id_producto": "80783575",
+    "ruta": "/ROPA/DAMA/DEPORTIVA/BUSOS"
   }
 ]
