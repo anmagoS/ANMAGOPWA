@@ -2061,5 +2061,21 @@
     "url": "https://ik.imagekit.io/mbsk9dati/producto_138/PRODUCTOS_Images_5828b632.IMAGEN_1.180259.jpg, https://ik.imagekit.io/mbsk9dati/producto_138/PRODUCTOS_Images_5828b632.IMAGEN_2.180259.jpg, https://ik.imagekit.io/mbsk9dati/producto_138/PRODUCTOS_Images_5828b632.IMAGEN_3.180259.jpg, https://ik.imagekit.io/mbsk9dati/producto_138/PRODUCTOS_Images_5828b632.IMAGEN_4.180302.jpg, https://ik.imagekit.io/mbsk9dati/producto_138/PRODUCTOS_Images_5828b632.IMAGEN_5.180302.jpg, https://ik.imagekit.io/mbsk9dati/producto_138/PRODUCTOS_Images_5828b632.IMAGEN_6.180303.jpg, https://ik.imagekit.io/mbsk9dati/producto_138/PRODUCTOS_Images_5828b632.IMAGEN_7.180304.jpg",
     "proveedor": "WOMANS FITNESS",
     "descripcion": "POCAS UNIDADES ALGUNOS COLORES SOLO ESTAN DISPONIBLES EN UNA TALLA."
+  },
+  {
+    "id": "2755F4FF",
+    "tipo": "ROPA",
+    "subtipo": "DAMA",
+    "categoria": "DEPORTIVA",
+    "subcategoria": "TEXTURIZADA",
+    "producto": "CAMISETA TEXTURIZADA",
+    "material": "TELA CAPRITI",
+    "tallas": "SM,LXL",
+    "precio": 45000,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_139/PRODUCTOS_Images_2755f4ff.IMAGEN_1.181408.jpg",
+    "promo": false,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_139/PRODUCTOS_Images_2755f4ff.IMAGEN_1.181408.jpg, https://ik.imagekit.io/mbsk9dati/producto_139/PRODUCTOS_Images_2755f4ff.IMAGEN_2.181408.jpg, https://ik.imagekit.io/mbsk9dati/producto_139/PRODUCTOS_Images_2755f4ff.IMAGEN_3.181408.jpg, https://ik.imagekit.io/mbsk9dati/producto_139/PRODUCTOS_Images_2755f4ff.IMAGEN_4.181410.jpg",
+    "proveedor": "WOMANS FITNESS",
+    "descripcion": "UNIDADES DE ALTA ROTACION REALIZA TU PEDIDO Y EN EL PROCESO CONFIRMAREMOS DISPONIBILIDAD"
   }
 ]
