@@ -2030,5 +2030,20 @@
     "promo": false,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_137/PRODUCTOS_Images_ba5579d2.IMAGEN_1.235423.jpg, https://ik.imagekit.io/mbsk9dati/producto_137/PRODUCTOS_Images_ba5579d2.IMAGEN_2.235423.jpg, https://ik.imagekit.io/mbsk9dati/producto_137/PRODUCTOS_Images_ba5579d2.IMAGEN_3.235423.jpg, https://ik.imagekit.io/mbsk9dati/producto_137/PRODUCTOS_Images_ba5579d2.IMAGEN_4.235426.jpg",
     "proveedor": "DIAGLER DIANA GONZALEZ"
+  },
+  {
+    "id": "80783575",
+    "tipo": "ROPA",
+    "subtipo": "DAMA",
+    "categoria": "DEPORTIVA",
+    "subcategoria": "BUSOS",
+    "producto": "BUSO OMBLIGUERO",
+    "material": "LYCRA NYLONS",
+    "tallas": "UNICA",
+    "precio": 51000,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_137/PRODUCTOS_Images_80783575.IMAGEN_1.165716.jpg",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_137/PRODUCTOS_Images_80783575.IMAGEN_1.165716.jpg, https://ik.imagekit.io/mbsk9dati/producto_137/PRODUCTOS_Images_80783575.IMAGEN_2.165716.jpg, https://ik.imagekit.io/mbsk9dati/producto_137/PRODUCTOS_Images_80783575.IMAGEN_3.165716.jpg, https://ik.imagekit.io/mbsk9dati/producto_137/PRODUCTOS_Images_80783575.IMAGEN_4.165719.jpg, https://ik.imagekit.io/mbsk9dati/producto_137/PRODUCTOS_Images_80783575.IMAGEN_5.165719.jpg",
+    "proveedor": "WOMANS FITNESS"
   }
 ]
