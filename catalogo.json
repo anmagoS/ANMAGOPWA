@@ -2061,5 +2061,22 @@
     "url": "https://ik.imagekit.io/mbsk9dati/producto_139/PRODUCTOS_Images_2755f4ff.IMAGEN_1.181408.jpg, https://ik.imagekit.io/mbsk9dati/producto_139/PRODUCTOS_Images_2755f4ff.IMAGEN_2.181408.jpg, https://ik.imagekit.io/mbsk9dati/producto_139/PRODUCTOS_Images_2755f4ff.IMAGEN_3.181408.jpg, https://ik.imagekit.io/mbsk9dati/producto_139/PRODUCTOS_Images_2755f4ff.IMAGEN_4.181410.jpg",
     "proveedor": "WOMANS FITNESS",
     "descripcion": "UNIDADES DE ALTA ROTACION REALIZA TU PEDIDO Y EN EL PROCESO CONFIRMAREMOS DISPONIBILIDAD"
+  },
+  {
+    "id": "BA344895",
+    "tipo": "ROPA",
+    "subtipo": "CABALLERO",
+    "categoria": "PANTALONES",
+    "subcategoria": "JEANS",
+    "producto": "LEVIS HOMBRE",
+    "material": "JEAN LICRADO",
+    "tallas": "28,30,32,34,36",
+    "precio": 75000,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_139/PRODUCTOS_Images_ba344895.IMAGEN_1.174153.jpg",
+    "promo": false,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_139/PRODUCTOS_Images_ba344895.IMAGEN_1.174153.jpg",
+    "proveedor": "KYM",
+    "descripcion": "JEANS PARA CABALLERO MARCA LEVIS LICRADOS",
+    "variables": "PLATEADO , DORADO , NARANJA"
   }
 ]
