@@ -2246,5 +2246,20 @@
     "promo": false,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_149/PRODUCTOS_Images_9d514fa2.IMAGEN_1.180312.jpg, https://ik.imagekit.io/mbsk9dati/producto_149/PRODUCTOS_Images_9d514fa2.IMAGEN_2.180312.jpg",
     "proveedor": "KYM"
+  },
+  {
+    "id": "290F65AC",
+    "tipo": "ROPA",
+    "subtipo": "DAMA",
+    "categoria": "JEANS",
+    "subcategoria": "LEVIS",
+    "producto": "JEAN DAMA LEVIS",
+    "material": "JEAN LICRADO",
+    "tallas": "6,8,10,12,14,16",
+    "precio": 80000,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_150/PRODUCTOS_Images_290f65ac.IMAGEN_1.182613.jpg",
+    "promo": false,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_150/PRODUCTOS_Images_290f65ac.IMAGEN_1.182613.jpg, https://ik.imagekit.io/mbsk9dati/producto_150/PRODUCTOS_Images_290f65ac.IMAGEN_2.182613.jpg, https://ik.imagekit.io/mbsk9dati/producto_150/PRODUCTOS_Images_290f65ac.IMAGEN_3.182613.jpg, https://ik.imagekit.io/mbsk9dati/producto_150/PRODUCTOS_Images_290f65ac.IMAGEN_4.182616.jpg, https://ik.imagekit.io/mbsk9dati/producto_150/PRODUCTOS_Images_290f65ac.IMAGEN_5.182616.jpg, https://ik.imagekit.io/mbsk9dati/producto_150/PRODUCTOS_Images_290f65ac.IMAGEN_6.182617.jpg, https://ik.imagekit.io/mbsk9dati/producto_150/PRODUCTOS_Images_290f65ac.IMAGEN_7.182619.jpg, https://ik.imagekit.io/mbsk9dati/producto_150/PRODUCTOS_Images_290f65ac.IMAGEN_8.182619.jpg, https://ik.imagekit.io/mbsk9dati/producto_150/PRODUCTOS_Images_290f65ac.IMAGEN_9.182620.jpg",
+    "proveedor": "KYM"
   }
 ]
