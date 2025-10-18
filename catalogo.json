@@ -2370,5 +2370,20 @@
     "url": "https://ik.imagekit.io/mbsk9dati/producto_150/PRODUCTOS_Images_290f65ac.IMAGEN_1.182613.jpg, https://ik.imagekit.io/mbsk9dati/producto_150/PRODUCTOS_Images_290f65ac.IMAGEN_2.182613.jpg, https://ik.imagekit.io/mbsk9dati/producto_150/PRODUCTOS_Images_290f65ac.IMAGEN_3.182613.jpg, https://ik.imagekit.io/mbsk9dati/producto_150/PRODUCTOS_Images_290f65ac.IMAGEN_4.182616.jpg, https://ik.imagekit.io/mbsk9dati/producto_150/PRODUCTOS_Images_290f65ac.IMAGEN_5.182616.jpg, https://ik.imagekit.io/mbsk9dati/producto_150/PRODUCTOS_Images_290f65ac.IMAGEN_6.182617.jpg, https://ik.imagekit.io/mbsk9dati/producto_150/PRODUCTOS_Images_290f65ac.IMAGEN_7.182619.jpg, https://ik.imagekit.io/mbsk9dati/producto_150/PRODUCTOS_Images_290f65ac.IMAGEN_8.182619.jpg, https://ik.imagekit.io/mbsk9dati/producto_150/PRODUCTOS_Images_290f65ac.IMAGEN_9.182620.jpg",
     "proveedor": "KYM",
     "descripcion": "PUEDES REALIZAR TODO EL PROCESO DE COMPRA DIRECTAMENTE DESDE ESTE CANAL, Y DURANTE EL CHAT VERIFICAMOS JUNTOS LA DISPONIBILIDAD DE TALLA Y COLOR PARA ASEGURAR UNA EXPERIENCIA PERFECTA."
+  },
+  {
+    "id": "E982DF66",
+    "tipo": "ROPA",
+    "subtipo": "DAMA",
+    "categoria": "PIJAMAS",
+    "subcategoria": "PIEL DE DURAZNO",
+    "producto": "PIAJAM GRINCH",
+    "material": "PIEL DE DURAZNO",
+    "tallas": "S,M,L,XL",
+    "precio": 47000,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_151/PRODUCTOS_Images_e982df66.IMAGEN_1.232608.jpg",
+    "promo": false,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_151/PRODUCTOS_Images_e982df66.IMAGEN_1.232608.jpg",
+    "proveedor": "FAMS"
   }
 ]
