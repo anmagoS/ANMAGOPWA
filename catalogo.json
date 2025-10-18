@@ -2231,5 +2231,20 @@
     "proveedor": "KYM",
     "descripcion": "JEANS PARA CABALLERO MARCA LEVIS LICRADOS",
     "variables": "PLATEADO , DORADO , NARANJA"
+  },
+  {
+    "id": "9D514FA2",
+    "tipo": "ROPA",
+    "subtipo": "CABALLERO",
+    "categoria": "PANTALONES",
+    "subcategoria": "JEANS",
+    "producto": "JEAN DIESEL AZUL",
+    "material": "JEAN LICRADO",
+    "tallas": "28,30,32,34,36",
+    "precio": 75000,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_149/PRODUCTOS_Images_9d514fa2.IMAGEN_1.180312.jpg",
+    "promo": false,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_149/PRODUCTOS_Images_9d514fa2.IMAGEN_1.180312.jpg, https://ik.imagekit.io/mbsk9dati/producto_149/PRODUCTOS_Images_9d514fa2.IMAGEN_2.180312.jpg",
+    "proveedor": "KYM"
   }
 ]
