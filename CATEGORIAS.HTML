@@ -100,29 +100,26 @@
       const productosFiltrados = productos.filter(p =>
         p.tipo?.trim() === tipo && p.subtipo?.trim() === subtipo
       );
-const categoriasMap = new Map();
 
-productosFiltrados.forEach(p => {
-  const categoriaKey = p.categoria?.trim().toUpperCase();
-  if (categoriaKey && !categoriasMap.has(categoriaKey)) {
-    categoriasMap.set(categoriaKey, p);
-  }
-});
+      const categoriasUnicas = [...new Set(productosFiltrados.map(p => p.categoria?.trim()).filter(Boolean))];
 
-categoriasMap.forEach((productoRef, categoriaKey) => {
-  const categoriaOriginal = productoRef.categoria?.trim(); // para mostrar el nombre original
-  const tarjeta = document.createElement("div");
-  tarjeta.className = "producto";
-  tarjeta.innerHTML = `
-    <a href="PRODUCTOS.HTML?tipo=${encodeURIComponent(tipo)}&subtipo=${encodeURIComponent(subtipo)}&categoria=${encodeURIComponent(categoriaOriginal)}" class="imagen-producto">
-      <img src="${productoRef.imagen}" alt="${categoriaOriginal}">
-    </a>
-    <div class="nombre-producto">${categoriaOriginal}</div>
-    <a class="boton-comprar" href="PRODUCTOS.HTML?tipo=${encodeURIComponent(tipo)}&subtipo=${encodeURIComponent(subtipo)}&categoria=${encodeURIComponent(categoriaOriginal)}">Ver productos</a>
-  `;
-  contenedor.appendChild(tarjeta);
-});
-     
+      categoriasUnicas.forEach(categoria => {
+        const productoRef = productosFiltrados.find(p => p.categoria?.trim() === categoria);
+        if (!productoRef) return;
+
+        const tarjeta = document.createElement("div");
+        tarjeta.className = "producto";
+        tarjeta.innerHTML = `
+          <a href="PRODUCTOS.HTML?tipo=${encodeURIComponent(tipo)}&subtipo=${encodeURIComponent(subtipo)}&categoria=${encodeURIComponent(categoria)}" class="imagen-producto">
+            <img src="${productoRef.imagen}" alt="${categoria}">
+          </a>
+          <div class="nombre-producto">${categoria}</div>
+          <a class="boton-comprar" href="PRODUCTOS.HTML?tipo=${encodeURIComponent(tipo)}&subtipo=${encodeURIComponent(subtipo)}&categoria=${encodeURIComponent(categoria)}">Ver productos</a>
+        `;
+        contenedor.appendChild(tarjeta);
+      });
+    }
+
     function renderizarSubtiposRelacionados(productos) {
       const { tipo, subtipo: subtipoActual } = getParametrosDesdeURL();
       const contenedor = document.getElementById("seccion-subtipos");
