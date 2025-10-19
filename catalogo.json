@@ -2385,5 +2385,20 @@
     "promo": false,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_151/PRODUCTOS_Images_e982df66.IMAGEN_1.232608.jpg",
     "proveedor": "FAMS"
+  },
+  {
+    "id": "53DF353F",
+    "tipo": "ROPA",
+    "subtipo": "UNISEX",
+    "categoria": "PIJAMAS",
+    "subcategoria": "PIEL DE DURAZNO",
+    "producto": "PIJAMA WINNIE POOH",
+    "material": "PIEL DE DURAZNO",
+    "tallas": "S,M,L,XL",
+    "precio": 49000,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_152/PRODUCTOS_Images_53df353f.IMAGEN_1.184817.png",
+    "promo": false,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_152/PRODUCTOS_Images_53df353f.IMAGEN_1.184817.png",
+    "proveedor": "FAMS"
   }
 ]
