@@ -27,15 +27,18 @@
   <div class="container-fluid text-center mt-3 px-3">
     <a href="PROMOS.HTML" class="btn btn-gradient fw-bold">🎁 Ver promociones exclusivas</a>
   </div>
+
   <main class="contenedor-categoria">
     <h1 class="titulo-categoria text-center" id="titulo-categorias">Categorías</h1>
     <div id="grid-categorias" class="grid-productos"></div>
   </main>
+
   <section class="contenedor-categoria">
     <h2 class="titulo-categoria text-center">Explora más subtipos</h2>
     <div id="seccion-subtipos" class="grid-productos"></div>
   </section>
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito">
+
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito">
     <div class="offcanvas-header border-bottom">
       <h4 class="offcanvas-title text-center">Carrito de compras</h4>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
@@ -48,171 +51,177 @@
       </h5>
     </div>
   </div>
+
   <div id="footer-container"></div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="carrito.js"></script>
-<script src="app.js"></script>
-<script src="buscador.js" type="module"></script>
-<script type="module">
-  import { activarBuscadorGlobal } from './buscador.js';
 
-  function getParametrosDesdeURL() {
-    const params = new URLSearchParams(window.location.search);
-    return {
-      tipo: params.get("tipo")?.trim(),
-      subtipo: params.get("subtipo")?.trim()
-    };
-  }
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="carrito.js"></script>
+  <script src="app.js"></script>
+  <script src="buscador.js" type="module"></script>
 
-  async function cargarCatalogo() {
-    const url = "https://raw.githubusercontent.com/anmagoS/CATALOGO-SPA/main/catalogo.json";
-    const respuesta = await fetch(url);
-    const productos = await respuesta.json();
-    window.catalogoGlobal = productos;
-    renderCategorias(productos);
-    renderizarSubtiposRelacionados(productos);
-  }
+  <script type="module">
+    import { activarBuscadorGlobal } from './buscador.js';
 
-  function renderCategorias(productos) {
-    const { tipo, subtipo } = getParametrosDesdeURL();
-    if (!tipo || !subtipo) return;
-
-    document.getElementById("titulo-categorias").textContent = `CATEGORÍAS DE ${subtipo}`;
-    const contenedor = document.getElementById("grid-categorias");
-    contenedor.innerHTML = "";
-
-    const productosFiltrados = productos.filter(p =>
-      p.tipo?.trim().toUpperCase() === tipo.toUpperCase() &&
-      p.subtipo?.trim().toUpperCase() === subtipo.toUpperCase()
-    );
-
-    const categoriasMap = new Map();
-
-    productosFiltrados.forEach(p => {
-      const categoriaKey = p.categoria?.trim().toUpperCase();
-      if (categoriaKey && !categoriasMap.has(categoriaKey)) {
-        categoriasMap.set(categoriaKey, p);
-      }
-    });
-
-    categoriasMap.forEach((productoRef, categoriaKey) => {
-      const categoriaOriginal = productoRef.categoria?.trim();
-      const tarjeta = document.createElement("div");
-      tarjeta.className = "producto";
-      tarjeta.innerHTML = `
-        <a href="PRODUCTOS.HTML?tipo=${encodeURIComponent(tipo)}&subtipo=${encodeURIComponent(subtipo)}&categoria=${encodeURIComponent(categoriaOriginal)}" class="imagen-producto">
-          <img src="${productoRef.imagen}" alt="${categoriaOriginal}">
-        </a>
-        <div class="nombre-producto">${categoriaOriginal}</div>
-        <a class="boton-comprar" href="PRODUCTOS.HTML?tipo=${encodeURIComponent(tipo)}&subtipo=${encodeURIComponent(subtipo)}&categoria=${encodeURIComponent(categoriaOriginal)}">Ver productos</a>
-      `;
-      contenedor.appendChild(tarjeta);
-    });
-
-    console.log("Categorías detectadas:", Array.from(categoriasMap.keys()));
-  }
-
-  function renderizarSubtiposRelacionados(productos) {
-    const { tipo, subtipo: subtipoActual } = getParametrosDesdeURL();
-    const contenedor = document.getElementById("seccion-subtipos");
-    if (!contenedor || !tipo) return;
-
-    const productosFiltrados = productos.filter(p =>
-      p.tipo?.trim().toUpperCase() === tipo.toUpperCase()
-    );
-
-    const subtiposUnicos = [...new Set(productosFiltrados.map(p => p.subtipo?.trim().toUpperCase()).filter(Boolean))]
-      .filter(sub => sub && sub !== subtipoActual.toUpperCase());
-
-    contenedor.innerHTML = "";
-
-    if (subtiposUnicos.length === 0) {
-      contenedor.innerHTML = `<p class="text-center text-muted">No hay otros subtipos disponibles.</p>`;
-      return;
+    function getParametrosDesdeURL() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        tipo: params.get("tipo")?.trim(),
+        subtipo: params.get("subtipo")?.trim()
+      };
     }
 
-    subtiposUnicos.forEach(subtipoKey => {
-      const productoRef = productosFiltrados.find(p =>
-        p.subtipo?.trim().toUpperCase() === subtipoKey
+    async function cargarCatalogo() {
+      const url = "https://raw.githubusercontent.com/anmagoS/CATALOGO-SPA/main/catalogo.json";
+      const respuesta = await fetch(url);
+      const productos = await respuesta.json();
+      window.catalogoGlobal = productos;
+      renderCategorias(productos);
+      renderizarSubtiposRelacionados(productos);
+    }
+
+    function renderCategorias(productos) {
+      const { tipo, subtipo } = getParametrosDesdeURL();
+      if (!tipo || !subtipo) return;
+
+      document.getElementById("titulo-categorias").textContent = `CATEGORÍAS DE ${subtipo}`;
+      const contenedor = document.getElementById("grid-categorias");
+      contenedor.innerHTML = "";
+
+      const productosFiltrados = productos.filter(p =>
+        p.tipo?.trim().toUpperCase() === tipo.toUpperCase() &&
+        p.subtipo?.trim().toUpperCase() === subtipo.toUpperCase()
       );
-      const subtipoOriginal = productoRef?.subtipo?.trim() || subtipoKey;
-      const imagen = productoRef?.imagen || "REDES_IMAGES/default-categoria.jpg";
 
-      const tarjeta = document.createElement("div");
-      tarjeta.className = "producto";
-      tarjeta.innerHTML = `
-        <a href="CATEGORIAS.HTML?tipo=${encodeURIComponent(tipo)}&subtipo=${encodeURIComponent(subtipoOriginal)}" class="imagen-producto">
-          <img src="${imagen}" alt="${subtipoOriginal}">
-        </a>
-        <div class="nombre-producto">${subtipoOriginal}</div>
-        <a class="boton-comprar" href="CATEGORIAS.HTML?tipo=${encodeURIComponent(tipo)}&subtipo=${encodeURIComponent(subtipoOriginal)}">Ver categorías</a>
-      `;
-      contenedor.appendChild(tarjeta);
-    });
-  }
+      const categoriasMap = new Map();
 
-  function ajustarCarrito() {
-    const header = document.querySelector(".header");
-    const carritoBtn = document.querySelector(".btn_shopping");
-    if (header && carritoBtn) {
-      const alturaHeader = header.offsetHeight;
-      carritoBtn.style.top = `${alturaHeader + 12}px`;
+      productosFiltrados.forEach(p => {
+        const categoriaKey = p.categoria?.trim().toUpperCase();
+        if (categoriaKey && !categoriasMap.has(categoriaKey)) {
+          categoriasMap.set(categoriaKey, p);
+        }
+      });
+
+      categoriasMap.forEach((productoRef, categoriaKey) => {
+        const categoriaOriginal = productoRef.categoria?.trim();
+        const tarjeta = document.createElement("div");
+        tarjeta.className = "producto";
+        tarjeta.innerHTML = `
+          <a href="PRODUCTOS.HTML?tipo=${encodeURIComponent(tipo)}&subtipo=${encodeURIComponent(subtipo)}&categoria=${encodeURIComponent(categoriaOriginal)}" class="imagen-producto">
+            <img src="${productoRef.imagen}" alt="${categoriaOriginal}">
+          </a>
+          <div class="nombre-producto">${categoriaOriginal}</div>
+          <a class="boton-comprar" href="PRODUCTOS.HTML?tipo=${encodeURIComponent(tipo)}&subtipo=${encodeURIComponent(subtipo)}&categoria=${encodeURIComponent(categoriaOriginal)}">Ver productos</a>
+        `;
+        contenedor.appendChild(tarjeta);
+      });
+
+      console.log("Categorías detectadas:", Array.from(categoriasMap.keys()));
     }
-  }
 
-  document.addEventListener("DOMContentLoaded", async () => {
-    const header = await fetch("HEADER.HTML").then(res => res.text());
-    document.getElementById("header-container").insertAdjacentHTML("afterbegin", header);
-    await new Promise(resolve => requestAnimationFrame(resolve));
-    ajustarCarrito();
+    function renderizarSubtiposRelacionados(productos) {
+      const { tipo, subtipo: subtipoActual } = getParametrosDesdeURL();
+      const contenedor = document.getElementById("seccion-subtipos");
+      if (!contenedor || !tipo) return;
 
-        const carritoBtn = document.querySelector(".btn_shopping");
-    carritoBtn?.addEventListener("click", e => {
-      e.preventDefault();
-      const offcanvas = document.getElementById("offcanvasCarrito");
-      if (offcanvas) {
-        const instancia = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
-        instancia.show();
+      const productosFiltrados = productos.filter(p =>
+        p.tipo?.trim().toUpperCase() === tipo.toUpperCase()
+      );
+
+      const subtiposUnicos = [...new Set(productosFiltrados.map(p => p.subtipo?.trim().toUpperCase()).filter(Boolean))]
+        .filter(sub => sub && sub !== subtipoActual.toUpperCase());
+
+      contenedor.innerHTML = "";
+
+      if (subtiposUnicos.length === 0) {
+        contenedor.innerHTML = `<p class="text-center text-muted">No hay otros subtipos disponibles.</p>`;
+        return;
       }
+
+      subtiposUnicos.forEach(subtipoKey => {
+        const productoRef = productosFiltrados.find(p =>
+          p.subtipo?.trim().toUpperCase() === subtipoKey
+        );
+        const subtipoOriginal = productoRef?.subtipo?.trim() || subtipoKey;
+        const imagen = productoRef?.imagen || "REDES_IMAGES/default-categoria.jpg";
+
+        const tarjeta = document.createElement("div");
+        tarjeta.className = "producto";
+        tarjeta.innerHTML = `
+          <a href="CATEGORIAS.HTML?tipo=${encodeURIComponent(tipo)}&subtipo=${encodeURIComponent(subtipoOriginal)}" class="imagen-producto">
+            <img src="${imagen}" alt="${subtipoOriginal}">
+          </a>
+          <div class="nombre-producto">${subtipoOriginal}</div>
+          <a class="boton-comprar" href="CATEGORIAS.HTML?tipo=${encodeURIComponent(tipo)}&subtipo=${encodeURIComponent(subtipoOriginal)}">Ver categorías</a>
+        `;
+        contenedor.appendChild(tarjeta);
+      });
+
+      console.log("Subtipos detectados:", subtiposUnicos);
+    }
+
+    function ajustarCarrito() {
+      const header = document.querySelector(".header");
+      const carritoBtn = document.querySelector(".btn_shopping");
+      if (header && carritoBtn) {
+        const alturaHeader = header.offsetHeight;
+        carritoBtn.style.top = `${alturaHeader + 12}px`;
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      const header = await fetch("HEADER.HTML").then(res => res.text());
+      document.getElementById("header-container").insertAdjacentHTML("afterbegin", header);
+      await new Promise(resolve => requestAnimationFrame(resolve));
+      ajustarCarrito();
+
+            const carritoBtn = document.querySelector(".btn_shopping");
+      carritoBtn?.addEventListener("click", e => {
+        e.preventDefault();
+        const offcanvas = document.getElementById("offcanvasCarrito");
+        if (offcanvas) {
+          const instancia = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
+          instancia.show();
+        }
+      });
+
+      activarBuscadorGlobal();
+
+      const footer = await fetch("footer.html").then(res => res.text());
+      document.getElementById("footer-container").innerHTML = footer;
+
+      await cargarCatalogo();
     });
+  </script>
 
-    activarBuscadorGlobal();
-
-    const footer = await fetch("footer.html").then(res => res.text());
-    document.getElementById("footer-container").innerHTML = footer;
-
-    await cargarCatalogo();
-  });
-</script>
-<!-- MODAL FORMULARIO CLIENTE -->
-<div class="modal fade" id="modalFormularioCliente" tabindex="-1" aria-labelledby="modalFormularioLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalFormularioLabel">Datos del cliente</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        <form id="formCliente">
-          <div class="mb-3">
-            <label for="nombreCliente" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="nombreCliente" required>
-          </div>
-          <div class="mb-3">
-            <label for="telefonoCliente" class="form-label">Teléfono</label>
-            <input type="tel" class="form-control" id="telefonoCliente" required>
-          </div>
-          <div class="mb-3">
-            <label for="direccionCliente" class="form-label">Dirección</label>
-            <input type="text" class="form-control" id="direccionCliente" required>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button id="btnEnviarPedido" class="btn btn-primary" disabled>Enviar pedido</button>
+  <!-- MODAL FORMULARIO CLIENTE -->
+  <div class="modal fade" id="modalFormularioCliente" tabindex="-1" aria-labelledby="modalFormularioLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalFormularioLabel">Datos del cliente</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <form id="formCliente">
+            <div class="mb-3">
+              <label for="nombreCliente" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombreCliente" required>
+            </div>
+            <div class="mb-3">
+              <label for="telefonoCliente" class="form-label">Teléfono</label>
+              <input type="tel" class="form-control" id="telefonoCliente" required>
+            </div>
+            <div class="mb-3">
+              <label for="direccionCliente" class="form-label">Dirección</label>
+              <input type="text" class="form-control" id="direccionCliente" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button id="btnEnviarPedido" class="btn btn-primary" disabled>Enviar pedido</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </body>
 </html>
