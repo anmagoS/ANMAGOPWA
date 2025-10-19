@@ -122,22 +122,7 @@ categoriasMap.forEach((productoRef, categoriaKey) => {
   `;
   contenedor.appendChild(tarjeta);
 });
-
-
-
-        const tarjeta = document.createElement("div");
-        tarjeta.className = "producto";
-        tarjeta.innerHTML = `
-          <a href="PRODUCTOS.HTML?tipo=${encodeURIComponent(tipo)}&subtipo=${encodeURIComponent(subtipo)}&categoria=${encodeURIComponent(categoria)}" class="imagen-producto">
-            <img src="${productoRef.imagen}" alt="${categoria}">
-          </a>
-          <div class="nombre-producto">${categoria}</div>
-          <a class="boton-comprar" href="PRODUCTOS.HTML?tipo=${encodeURIComponent(tipo)}&subtipo=${encodeURIComponent(subtipo)}&categoria=${encodeURIComponent(categoria)}">Ver productos</a>
-        `;
-        contenedor.appendChild(tarjeta);
-      });
-    }
-
+     
     function renderizarSubtiposRelacionados(productos) {
       const { tipo, subtipo: subtipoActual } = getParametrosDesdeURL();
       const contenedor = document.getElementById("seccion-subtipos");
