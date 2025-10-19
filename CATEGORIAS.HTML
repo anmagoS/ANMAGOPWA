@@ -100,11 +100,10 @@
       const productosFiltrados = productos.filter(p =>
         p.tipo?.trim() === tipo && p.subtipo?.trim() === subtipo
       );
-
-      const categoriasUnicas = [...new Set(productosFiltrados.map(p => p.categoria?.trim()).filter(Boolean))];
+const categoriasUnicas = [...new Set(productosFiltrados.map(p => p.categoria?.trim().toUpperCase()).filter(Boolean))];
 
       categoriasUnicas.forEach(categoria => {
-        const productoRef = productosFiltrados.find(p => p.categoria?.trim() === categoria);
+        const productoRef = productosFiltrados.find(p => p.categoria?.trim().toUpperCase() === categoria);
         if (!productoRef) return;
 
         const tarjeta = document.createElement("div");
