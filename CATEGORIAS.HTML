@@ -71,7 +71,7 @@
     }
 
     async function cargarCatalogo() {
-      const url = "https://raw.githubusercontent.com/anmagoS/CATALOGO-SPA/main/catalogo.json";
+      const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json";
       const respuesta = await fetch(url);
       const productos = await respuesta.json();
       window.catalogoGlobal = productos;
