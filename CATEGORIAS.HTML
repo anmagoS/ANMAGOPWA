@@ -89,7 +89,7 @@
       renderizarSubtiposRelacionados(productos);
     }
 
-   function renderCategorias(productos) {
+  function renderCategorias(productos) {
   const { tipo, subtipo } = getParametrosDesdeURL();
   if (!tipo || !subtipo) return;
 
@@ -124,6 +124,8 @@
     `;
     contenedor.appendChild(tarjeta);
   });
+
+  console.log("Categorías detectadas:", Array.from(categoriasMap.keys()));
 }
 
 
