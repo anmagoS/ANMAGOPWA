@@ -64,7 +64,16 @@
     <!-- Secciones institucionales -->
     <section class="seccion-centrada">
       <h2 class="titulo-categoria">Conoce más sobre Anmago Store</h2>
+    <div class="video-wrapper">
+  <img src="portada-video.webp" alt="Video Anmago Store" loading="lazy" onclick="cargarVideo()" style="cursor:pointer;">
+</div>
+<script>
+  function cargarVideo() {
+    document.querySelector('.video-wrapper').innerHTML = `
       <iframe width="100%" height="315" src="https://www.youtube.com/embed/E8_rkF1957Y" title="Video de presentación" frameborder="0" allowfullscreen style="max-width: 560px; border-radius: 12px;"></iframe>
+    `;
+  }
+</script>
     </section>
 
     <section class="seccion-centrada">
