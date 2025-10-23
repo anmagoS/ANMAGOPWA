@@ -130,25 +130,28 @@
   import { activarBuscadorGlobal } from './buscador.js';
 
   const imagenesPorTipo = {
-    "ROPA": "https://ik.imagekit.io/mbsk9dati/593678a2-9af5-47a8-a47c-34407d25bd60.jpg?updatedAt=1758216950422",
-    "RELOJERIA": "https://ik.imagekit.io/mbsk9dati/producto_53/PRODUCTOS_Images_d9594fb8.IMAGEN_12.215521.jpg?updatedAt=1757714222484",
+    "ROPA": "https://ik.imagekit.io/mbsk9dati/593678a2-9af5-47a8-a47c-34407d25bd60.jpg?tr=w-600,q-80",
+    "RELOJERIA": "https://ik.imagekit.io/mbsk9dati/producto_53/PRODUCTOS_Images_d9594fb8.IMAGEN_12.215521.jpg?tr=w-600,q-80",
     "HOGAR": "portad1-1.webp",
     "BELLEZA": "R.jpg",
     "ESCOLAR": "fondo-vuelta-al-cole-elementos_23-2147848492.jpg"
   };
- // ✅ Carga diferida del header institucional
+
+  // ✅ Carga diferida del header institucional
   requestIdleCallback(async () => {
     const header = await fetch("HEADER.HTML").then(res => res.text());
     document.getElementById("header-container").innerHTML = header;
+    await new Promise(resolve => requestAnimationFrame(resolve));
+    ajustarCarrito();
   });
 
-  async function cargarCatalogo() {
-    const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json";
-    const respuesta = await fetch(url);
-    const productos = await respuesta.json();
-    window.catalogoGlobal = productos;
-    renderTipos(productos);
-    renderCarruselPromosDesdePromos(productos);
+  function ajustarCarrito() {
+    const header = document.querySelector(".header");
+    const carritoBtn = document.querySelector(".btn_shopping");
+    if (header && carritoBtn) {
+      const alturaHeader = header.offsetHeight;
+      carritoBtn.style.top = `${alturaHeader + 12}px`;
+    }
   }
 
   function renderTipos(productos) {
@@ -163,10 +166,10 @@
       tarjeta.className = "producto";
       tarjeta.innerHTML = `
         <a href="SUBTIPOS.HTML?tipo=${encodeURIComponent(tipo)}" class="imagen-producto">
-        <img src="${imagenRef}" alt="${tipo}" loading="lazy">
+          <img src="${imagenRef}" alt="${tipo}" loading="lazy">
         </a>
-       <div class="nombre-producto">${tipo}</div>
-       <a class="boton-comprar" href="SUBTIPOS.HTML?tipo=${encodeURIComponent(tipo)}">Ver más</a>
+        <div class="nombre-producto">${tipo}</div>
+        <a class="boton-comprar" href="SUBTIPOS.HTML?tipo=${encodeURIComponent(tipo)}">Ver más</a>
       `;
       contenedor.appendChild(tarjeta);
     });
@@ -189,7 +192,7 @@
       item.innerHTML = `
         <div class="d-flex justify-content-center">
           <div class="card" style="width: 18rem;">
-            <img src="${p.imagen}" class="card-img-top" alt="${p.producto}"  loading="lazy">
+            <img src="${p.imagen}" class="card-img-top" alt="${p.producto}" loading="lazy">
             <div class="card-body text-center">
               <h5 class="card-title">${p.producto}</h5>
               <p class="card-text">
@@ -205,39 +208,50 @@
     });
   }
 
-  function ajustarCarrito() {
-    const header = document.querySelector(".header");
-    const carritoBtn = document.querySelector(".btn_shopping");
-    if (header && carritoBtn) {
-      const alturaHeader = header.offsetHeight;
-      carritoBtn.style.top = `${alturaHeader + 12}px`;
+  function cargarTemporizadorPromos() {
+    try {
+      const urlTemporizador = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json?nocache=${Date.now()}`;
+      fetch(urlTemporizador)
+        .then(res => res.json())
+        .then(({ finPromo }) => {
+          const tiempoRestante = new Date(finPromo) - new Date();
+          if (tiempoRestante > 0) {
+            setTimeout(() => {
+              renderCarruselPromosDesdePromos(window.catalogoGlobal);
+              console.log("🔄 Carrusel actualizado automáticamente");
+            }, tiempoRestante);
+          }
+        });
+    } catch (err) {
+      console.warn("⚠️ No se pudo cargar temporizador de promociones:", err);
     }
   }
-document.addEventListener("DOMContentLoaded", async () => {
-  activarBuscadorGlobal();
 
-  // 🔹 Carga inmediata de catálogo base (solo tipos)
-  const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json";
-  const respuesta = await fetch(url);
-  const productos = await respuesta.json();
-  window.catalogoGlobal = productos;
-  renderTipos(productos); // ✅ Esto sí debe ir directo
+  document.addEventListener("DOMContentLoaded", async () => {
+    activarBuscadorGlobal();
 
-  // 🔸 Carga diferida del resto (carrusel, temporizador, etc.)
-  requestIdleCallback(() => {
-    renderCarruselPromosDesdePromos(productos);
-    cargarTemporizadorPromos();
-  });
+    // 🔹 Carga inmediata del catálogo base
+    const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json";
+    const respuesta = await fetch(url);
+    const productos = await respuesta.json();
+    window.catalogoGlobal = productos;
+    window.catalogo = productos;
 
-  // 🔹 Resto del flujo
-  window.catalogo = productos;
-  if (typeof window.actualizarContadorCarrito === "function") window.actualizarContadorCarrito();
-  if (typeof window.renderizarCarrito === "function") window.renderizarCarrito();
-});
+    renderTipos(productos); // ✅ Esto sí debe ir directo
 
+    // 🔸 Carga diferida del carrusel y temporizador
+    requestIdleCallback(() => {
+      renderCarruselPromosDesdePromos(productos);
+      cargarTemporizadorPromos();
+    });
 
+    // 🔹 Carga diferida del footer
+    requestIdleCallback(async () => {
+      const footer = await fetch("footer.html").then(res => res.text());
+      document.getElementById("footer-container").innerHTML = footer;
+    });
 
-
+    // 🔹 Carrito
     const carritoBtn = document.querySelector(".btn_shopping");
     carritoBtn?.addEventListener("click", e => {
       e.preventDefault();
@@ -248,40 +262,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     });
 
-    activarBuscadorGlobal();
-    requestIdleCallback(async () => {
-  await cargarCatalogo();
-});
-    window.catalogo = window.catalogoGlobal || [];
-
-    if (typeof window.actualizarContadorCarrito === "function") {
-      window.actualizarContadorCarrito();
-    }
-    if (typeof window.renderizarCarrito === "function") {
-      window.renderizarCarrito();
-    }
-
-    requestIdleCallback(async () => {
-  const footer = await fetch("footer.html").then(res => res.text());
-  document.getElementById("footer-container").innerHTML = footer;
-});
-
-
-    try {
-      const urlTemporizador = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json?nocache=${Date.now()}`;
-      const res = await fetch(urlTemporizador);
-      const { finPromo } = await res.json();
-      const tiempoRestante = new Date(finPromo) - new Date();
-      if (tiempoRestante > 0) {
-        setTimeout(async () => {
-          await cargarCatalogo();
-          renderCarruselPromosDesdePromos(window.catalogoGlobal);
-          console.log("🔄 Carrusel actualizado automáticamente");
-        }, tiempoRestante);
-      }
-    } catch (err) {
-      console.warn("⚠️ No se pudo cargar temporizador de promociones:", err);
-    }
+    if (typeof window.actualizarContadorCarrito === "function") window.actualizarContadorCarrito();
+    if (typeof window.renderizarCarrito === "function") window.renderizarCarrito();
   });
 
   // 🔔 Instalación PWA
