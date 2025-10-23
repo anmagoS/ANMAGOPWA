@@ -499,3 +499,25 @@ details[open] > summary::after {
 .footer .redes-sociales a:hover img {
   transform: scale(1.1);
 }
+.btn-gradient {
+  background: linear-gradient(135deg, #1B4557, #3a5d75, #199461);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  padding: 12px 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.btn-gradient:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #163544, #2e5c6e, #157a4f);
+}
