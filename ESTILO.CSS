@@ -13,3 +13,11 @@
 /* === RESPONSIVE === */@media(max-width:600px){.header{height:56px;padding:0 8px}.btn_shopping{top:8px;right:12px;font-size:16px;padding:8px 12px}.grid-productos{grid-template-columns:repeat(2,1fr)}.boton-comprar{width:90%;font-size:13px}.vista-producto{margin:100px 10px 40px;padding:16px}.footer{flex-direction:column;align-items:center;text-align:center}.footer-links{flex-direction:row;justify-content:center;gap:16px}.logos-pago{justify-content:center}}@media(max-width:576px){.grid-productos{grid-template-columns:repeat(2,1fr)}#galeria{grid-template-columns:repeat(2,1fr)}}
 /* === BLOQUES JERÁRQUICOS === */.bloque-tipo h2,.bloque-subtipo h3,.bloque-categoria h4,.bloque-subcategoria h5{margin-top:2rem;font-weight:bold;color:#333}.bloque-tipo h2{font-size:2rem;color:#222;border-left:6px solid #111;padding-left:12px;margin-top:3rem}.bloque-subtipo h3{font-size:1.6rem;color:#444;border-left:4px solid #555;padding-left:10px}
 /* === DETALLES DESPLEGABLES === */details{margin-bottom:8px;padding-left:4px}summary{font-weight:600;cursor:pointer;list-style:none;padding:6px 8px;border-radius:4px;background-color:#f1f3f5;transition:background .2s ease}summary:hover{background-color
+summary:hover{background-color:#e2e6ea}
+/* Subniveles */
+details details summary{font-weight:500;background-color:#f8f9fa}
+details details .nav-link{padding-left:16px;font-size:15px}
+/* Indicador visual de despliegue */
+summary::marker{display:none}
+summary::after{content:"▸";float:right;transition:transform .3s ease}
+details[open]>summary::after{transform:rotate(90deg)}
