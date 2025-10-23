@@ -147,7 +147,7 @@
       document.getElementById("descripcion-corta").textContent = descripcionCorta;
 
       const galeria = document.getElementById("galeria");
-      const imagenes = producto.url?.split(",").map(url => url.trim()).filter(Boolean) || [];
+      const imagenes = producto.url?.split("[]").map(url => url.trim()).filter(Boolean) || [];
 
       imagenes.forEach((img, i) => {
         const tarjeta = document.createElement("div");
