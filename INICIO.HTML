@@ -137,6 +137,11 @@
     "BELLEZA": "R.jpg",
     "ESCOLAR": "fondo-vuelta-al-cole-elementos_23-2147848492.jpg"
   };
+ // ✅ Carga diferida del header institucional
+  requestIdleCallback(async () => {
+    const header = await fetch("HEADER.HTML").then(res => res.text());
+    document.getElementById("header-container").innerHTML = header;
+  });
 
   async function cargarCatalogo() {
     const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json";
