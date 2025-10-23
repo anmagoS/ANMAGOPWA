@@ -31,19 +31,20 @@ details[open]>summary::after{transform:rotate(90deg)}
 }
 
 .redes-sociales img {
-  height: 32px;
-  width: 32px;
-  object-fit: contain;
-  border-radius: 6px;
-  transition: transform 0.3s ease;
+  height: 32px !important;
+  width: 32px !important;
+  object-fit: contain !important;
+  border-radius: 6px !important;
+  transition: transform 0.3s ease !important;
 }
+
 
 .redes-sociales img:hover {
   transform: scale(1.1);
 }
 @media(max-width:600px) {
   .redes-sociales img {
-    height: 28px;
-    width: 28px;
+    height: 28px !important;
+    width: 28px !important;
   }
 }
