@@ -213,15 +213,29 @@
       carritoBtn.style.top = `${alturaHeader + 12}px`;
     }
   }
+document.addEventListener("DOMContentLoaded", async () => {
+  activarBuscadorGlobal();
 
-document.addEventListener("DOMContentLoaded", () => {
-  requestIdleCallback(async () => {
-    const header = await fetch("HEADER.HTML").then(res => res.text());
-    document.getElementById("header-container").insertAdjacentHTML("afterbegin", header);
-    await new Promise(resolve => requestAnimationFrame(resolve));
-    ajustarCarrito();
+  // 🔹 Carga inmediata de catálogo base (solo tipos)
+  const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json";
+  const respuesta = await fetch(url);
+  const productos = await respuesta.json();
+  window.catalogoGlobal = productos;
+  renderTipos(productos); // ✅ Esto sí debe ir directo
+
+  // 🔸 Carga diferida del resto (carrusel, temporizador, etc.)
+  requestIdleCallback(() => {
+    renderCarruselPromosDesdePromos(productos);
+    cargarTemporizadorPromos();
   });
+
+  // 🔹 Resto del flujo
+  window.catalogo = productos;
+  if (typeof window.actualizarContadorCarrito === "function") window.actualizarContadorCarrito();
+  if (typeof window.renderizarCarrito === "function") window.renderizarCarrito();
 });
+
+
 
 
     const carritoBtn = document.querySelector(".btn_shopping");
