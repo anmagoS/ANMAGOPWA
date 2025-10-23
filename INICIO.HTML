@@ -214,11 +214,15 @@
     }
   }
 
-  document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", () => {
+  requestIdleCallback(async () => {
     const header = await fetch("HEADER.HTML").then(res => res.text());
     document.getElementById("header-container").insertAdjacentHTML("afterbegin", header);
     await new Promise(resolve => requestAnimationFrame(resolve));
     ajustarCarrito();
+  });
+});
+
 
     const carritoBtn = document.querySelector(".btn_shopping");
     carritoBtn?.addEventListener("click", e => {
@@ -231,7 +235,9 @@
     });
 
     activarBuscadorGlobal();
-    await cargarCatalogo();
+    requestIdleCallback(async () => {
+  await cargarCatalogo();
+});
     window.catalogo = window.catalogoGlobal || [];
 
     if (typeof window.actualizarContadorCarrito === "function") {
@@ -241,8 +247,11 @@
       window.renderizarCarrito();
     }
 
-    const footer = await fetch("footer.html").then(res => res.text());
-    document.getElementById("footer-container").innerHTML = footer;
+    requestIdleCallback(async () => {
+  const footer = await fetch("footer.html").then(res => res.text());
+  document.getElementById("footer-container").innerHTML = footer;
+});
+
 
     try {
       const urlTemporizador = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json?nocache=${Date.now()}`;
