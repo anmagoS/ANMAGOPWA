@@ -41,3 +41,9 @@ details[open]>summary::after{transform:rotate(90deg)}
 .redes-sociales img:hover {
   transform: scale(1.1);
 }
+@media(max-width:600px) {
+  .redes-sociales img {
+    height: 28px;
+    width: 28px;
+  }
+}
