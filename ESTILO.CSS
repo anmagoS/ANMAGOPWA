@@ -20,4 +20,4 @@ details details .nav-link{padding-left:16px;font-size:15px}
 /* Indicador visual de despliegue */
 summary::marker{display:none}
 summary::after{content:"▸";float:right;transition:transform .3s ease}
-details[open]>summary::after{transform:rotate(90deg)}
+details[open]>summary::after{transform:rotate(90deg)} 
