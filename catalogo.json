@@ -2400,5 +2400,20 @@
     "promo": false,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_152/PRODUCTOS_Images_53df353f.IMAGEN_1.184817.png?tr=w-600,q-80",
     "proveedor": "FAMS"
+  },
+  {
+    "id": "F9AEAFB6",
+    "tipo": "ROPA",
+    "subtipo": "DAMA",
+    "categoria": "CONJUNTOS",
+    "subcategoria": "HILO LICRADO",
+    "producto": "CONJUNTO BROOKLYN",
+    "material": "HILO LICRADO",
+    "tallas": "UNICA",
+    "precio": 105000,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_153/PRODUCTOS_Images_f9aeafb6.IMAGEN_1.215757.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_153/PRODUCTOS_Images_f9aeafb6.IMAGEN_1.215757.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_153/PRODUCTOS_Images_f9aeafb6.IMAGEN_2.215757.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_153/PRODUCTOS_Images_f9aeafb6.IMAGEN_3.215757.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_153/PRODUCTOS_Images_f9aeafb6.IMAGEN_4.215800.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_153/PRODUCTOS_Images_f9aeafb6.IMAGEN_5.215800.jpg?tr=w-600,q-80",
+    "proveedor": "AZALEA BODEGA MAYORISTA"
   }
 ]
