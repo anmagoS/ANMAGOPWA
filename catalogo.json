@@ -2434,5 +2434,21 @@
     "url": "https://ik.imagekit.io/mbsk9dati/producto_154/PRODUCTOS_Images_bc75368d.IMAGEN_1.221509.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_154/PRODUCTOS_Images_bc75368d.IMAGEN_2.221509.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_154/PRODUCTOS_Images_bc75368d.IMAGEN_3.221509.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_154/PRODUCTOS_Images_bc75368d.IMAGEN_4.221512.jpg?tr=w-600,q-80",
     "proveedor": "AZALEA BODEGA MAYORISTA",
     "descripcion": "PUEDES REALIZAR TODO EL PROCESO DE COMPRA DIRECTAMENTE DESDE ESTE CANAL, Y DURANTE EL CHAT VERIFICAMOS JUNTOS LA DISPONIBILIDAD DE TALLA Y COLOR PARA ASEGURAR UNA EXPERIENCIA PERFECTA."
+  },
+  {
+    "id": "7AD35EE2",
+    "tipo": "NAVIDAD",
+    "subtipo": "DAMA",
+    "categoria": "BUSOS",
+    "subcategoria": "SACO NAVIDEÑO",
+    "producto": "SACO NAVIDEÑO DAMA",
+    "material": "HILO PREMIUM",
+    "tallas": "UNICA",
+    "precio": 62000,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_155/PRODUCTOS_Images_7ad35ee2.IMAGEN_1.222704.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_155/PRODUCTOS_Images_7ad35ee2.IMAGEN_1.222704.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_155/PRODUCTOS_Images_7ad35ee2.IMAGEN_2.222704.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_155/PRODUCTOS_Images_7ad35ee2.IMAGEN_3.222704.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_155/PRODUCTOS_Images_7ad35ee2.IMAGEN_4.222707.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_155/PRODUCTOS_Images_7ad35ee2.IMAGEN_5.222707.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_155/PRODUCTOS_Images_7ad35ee2.IMAGEN_6.222708.jpg?tr=w-600,q-80",
+    "proveedor": "AZALEA BODEGA MAYORISTA",
+    "descripcion": "PUEDES REALIZAR TODO EL PROCESO DE COMPRA DIRECTAMENTE DESDE ESTE CANAL, Y DURANTE EL CHAT VERIFICAMOS JUNTOS LA DISPONIBILIDAD DE TALLA Y COLOR PARA ASEGURAR UNA EXPERIENCIA PERFECTA."
   }
 ]
