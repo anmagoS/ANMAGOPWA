@@ -2384,7 +2384,8 @@
     "imagen": "https://ik.imagekit.io/mbsk9dati/producto_151/PRODUCTOS_Images_e982df66.IMAGEN_1.232608.jpg",
     "promo": false,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_151/PRODUCTOS_Images_e982df66.IMAGEN_1.232608.jpg?tr=w-600,q-80",
-    "proveedor": "FAMS"
+    "proveedor": "FAMS",
+    "descripcion": "PUEDES REALIZAR TODO EL PROCESO DE COMPRA DIRECTAMENTE DESDE ESTE CANAL, Y DURANTE EL CHAT VERIFICAMOS JUNTOS LA DISPONIBILIDAD DE TALLA Y COLOR PARA ASEGURAR UNA EXPERIENCIA PERFECTA."
   },
   {
     "id": "53DF353F",
@@ -2399,7 +2400,8 @@
     "imagen": "https://ik.imagekit.io/mbsk9dati/producto_152/PRODUCTOS_Images_53df353f.IMAGEN_1.184817.png",
     "promo": false,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_152/PRODUCTOS_Images_53df353f.IMAGEN_1.184817.png?tr=w-600,q-80",
-    "proveedor": "FAMS"
+    "proveedor": "FAMS",
+    "descripcion": "PUEDES REALIZAR TODO EL PROCESO DE COMPRA DIRECTAMENTE DESDE ESTE CANAL, Y DURANTE EL CHAT VERIFICAMOS JUNTOS LA DISPONIBILIDAD DE TALLA Y COLOR PARA ASEGURAR UNA EXPERIENCIA PERFECTA."
   },
   {
     "id": "F9AEAFB6",
@@ -2414,6 +2416,23 @@
     "imagen": "https://ik.imagekit.io/mbsk9dati/producto_153/PRODUCTOS_Images_f9aeafb6.IMAGEN_1.215757.jpg?tr=w-600,q-80",
     "promo": true,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_153/PRODUCTOS_Images_f9aeafb6.IMAGEN_1.215757.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_153/PRODUCTOS_Images_f9aeafb6.IMAGEN_2.215757.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_153/PRODUCTOS_Images_f9aeafb6.IMAGEN_3.215757.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_153/PRODUCTOS_Images_f9aeafb6.IMAGEN_4.215800.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_153/PRODUCTOS_Images_f9aeafb6.IMAGEN_5.215800.jpg?tr=w-600,q-80",
-    "proveedor": "AZALEA BODEGA MAYORISTA"
+    "proveedor": "AZALEA BODEGA MAYORISTA",
+    "descripcion": "PUEDES REALIZAR TODO EL PROCESO DE COMPRA DIRECTAMENTE DESDE ESTE CANAL, Y DURANTE EL CHAT VERIFICAMOS JUNTOS LA DISPONIBILIDAD DE TALLA Y COLOR PARA ASEGURAR UNA EXPERIENCIA PERFECTA."
+  },
+  {
+    "id": "BC75368D",
+    "tipo": "ROPA",
+    "subtipo": "DAMA",
+    "categoria": "CONJUNTOS",
+    "subcategoria": "TELA LICRADA",
+    "producto": "CONJUNTO ALO",
+    "material": "TELA LICRADA SUPER FRESCA",
+    "tallas": "SM,ML,LXL",
+    "precio": 75000,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_154/PRODUCTOS_Images_bc75368d.IMAGEN_1.221509.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_154/PRODUCTOS_Images_bc75368d.IMAGEN_1.221509.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_154/PRODUCTOS_Images_bc75368d.IMAGEN_2.221509.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_154/PRODUCTOS_Images_bc75368d.IMAGEN_3.221509.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_154/PRODUCTOS_Images_bc75368d.IMAGEN_4.221512.jpg?tr=w-600,q-80",
+    "proveedor": "AZALEA BODEGA MAYORISTA",
+    "descripcion": "PUEDES REALIZAR TODO EL PROCESO DE COMPRA DIRECTAMENTE DESDE ESTE CANAL, Y DURANTE EL CHAT VERIFICAMOS JUNTOS LA DISPONIBILIDAD DE TALLA Y COLOR PARA ASEGURAR UNA EXPERIENCIA PERFECTA."
   }
 ]
