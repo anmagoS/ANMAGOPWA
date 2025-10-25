@@ -521,3 +521,6 @@ details[open] > summary::after {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
   background: linear-gradient(135deg, #163544, #2e5c6e, #157a4f);
 }
+.video-producto {
+  margin-top: 20px;
+}
