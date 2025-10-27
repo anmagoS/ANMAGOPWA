@@ -2483,5 +2483,20 @@
     "promo": false,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_157/PRODUCTOS_Images_c9362a0f.IMAGEN_1.190610.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_157/PRODUCTOS_Images_c9362a0f.IMAGEN_2.190610.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_157/PRODUCTOS_Images_c9362a0f.IMAGEN_3.190610.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_157/PRODUCTOS_Images_c9362a0f.IMAGEN_4.190614.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_157/PRODUCTOS_Images_c9362a0f.IMAGEN_5.190614.jpg?tr=w-600,q-80",
     "proveedor": "TAMMY"
+  },
+  {
+    "id": "8B6ED28D",
+    "tipo": "ROPA",
+    "subtipo": "DAMA",
+    "categoria": "VESTIDOS",
+    "subcategoria": "VESTIDOS TIRA",
+    "producto": "VESTIDO RIB TIRA FALDA LARGA",
+    "material": "RIB",
+    "tallas": "UNICA",
+    "precio": 58000,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_158/PRODUCTOS_Images_8b6ed28d.IMAGEN_1.191144.jpg?tr=w-600,q-80",
+    "promo": false,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_158/PRODUCTOS_Images_8b6ed28d.IMAGEN_1.191144.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_158/PRODUCTOS_Images_8b6ed28d.IMAGEN_2.191144.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_158/PRODUCTOS_Images_8b6ed28d.IMAGEN_3.191144.jpg?tr=w-600,q-80",
+    "proveedor": "TAMMY"
   }
 ]
