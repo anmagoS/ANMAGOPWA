@@ -2468,5 +2468,20 @@
     "promo": true,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_156/PRODUCTOS_Images_1b761e02.IMAGEN_1.175055.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_156/PRODUCTOS_Images_1b761e02.IMAGEN_2.175055.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_156/PRODUCTOS_Images_1b761e02.IMAGEN_3.175055.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_156/PRODUCTOS_Images_1b761e02.IMAGEN_4.175058.jpg?tr=w-600,q-80",
     "proveedor": "ESTAMPADOS JYM CARLOS TORRES"
+  },
+  {
+    "id": "C9362A0F",
+    "tipo": "ROPA",
+    "subtipo": "DAMA",
+    "categoria": "VESTIDO",
+    "subcategoria": "RIB",
+    "producto": "VESTIDO RIB 01",
+    "material": "RIB LICRADO",
+    "tallas": "UNICA",
+    "precio": 58000,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_157/PRODUCTOS_Images_c9362a0f.IMAGEN_1.190610.jpg?tr=w-600,q-80",
+    "promo": false,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_157/PRODUCTOS_Images_c9362a0f.IMAGEN_1.190610.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_157/PRODUCTOS_Images_c9362a0f.IMAGEN_2.190610.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_157/PRODUCTOS_Images_c9362a0f.IMAGEN_3.190610.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_157/PRODUCTOS_Images_c9362a0f.IMAGEN_4.190614.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_157/PRODUCTOS_Images_c9362a0f.IMAGEN_5.190614.jpg?tr=w-600,q-80",
+    "proveedor": "TAMMY"
   }
 ]
