@@ -166,7 +166,7 @@
       tarjeta.className = "producto";
       tarjeta.innerHTML = `
         <a href="SUBTIPOS.HTML?tipo=${encodeURIComponent(tipo)}" class="imagen-producto">
-          <img src="${imagenRef}" alt="${tipo}" loading="lazy" width="140" height="152">
+          <img src="${imagenRef}" alt="${tipo}" loading="lazy" width="140" height="152" decoding="async">
         </a>
         <div class="nombre-producto">${tipo}</div>
         <a class="boton-comprar" href="SUBTIPOS.HTML?tipo=${encodeURIComponent(tipo)}">Ver más</a>
@@ -192,7 +192,7 @@
       item.innerHTML = `
         <div class="d-flex justify-content-center">
           <div class="card" style="width: 18rem;">
-            <img src="${p.imagen}" class="card-img-top" alt="${p.producto}" fetchpriority="${index === 0 ? 'high' : 'auto'}" width="288" height="288">
+            <img src="${p.imagen}" class="card-img-top" alt="${p.producto}" fetchpriority="${index === 0 ? 'high' : 'auto'}" width="288" height="288" decoding="async">
             <div class="card-body text-center">
               <h5 class="card-title">${p.producto}</h5>
               <p class="card-text">
