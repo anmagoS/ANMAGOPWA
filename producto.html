@@ -145,15 +145,25 @@
 
       const descripcionCorta = `¡Descubre lo nuevo en ${producto.categoria?.toUpperCase() || "CATÁLOGO"} para ${producto.subtipo?.toLowerCase() || "todos"}! Presentamos ${producto.producto?.toUpperCase()} en ${producto.material?.toUpperCase() || "material especial"}${producto.tallas ? `, disponible en tallas ${producto.tallas}` : ""}. Calidad profesional y entrega inmediata. Solo en ANMAGO Store.`;
       document.getElementById("descripcion-corta").textContent = descripcionCorta;
-      if (producto.video_url && producto.video_url.trim() !== "") {
+      if (producto.video_url && producto.video_url.includes("youtube.com/shorts")) {
   const contenedorVideo = document.getElementById("video-producto");
-  contenedorVideo.innerHTML = `
-    <video controls preload="metadata" style="width:100%; max-width:720px; border-radius: 8px; box-shadow: 0 0 8px rgba(0,0,0,0.1);">
-      <source src="${producto.video_url}" type="video/mp4">
-      Tu navegador no soporta el video.
-    </video>
-  `;
+  const videoID = producto.video_url.split("/shorts/")[1]?.split("?")[0];
+  if (videoID) {
+    contenedorVideo.innerHTML = `
+      <div class="ratio ratio-9x16" style="max-width: 360px; margin: 0 auto;">
+        <iframe
+          loading="lazy"
+          src="https://www.youtube.com/embed/${videoID}?rel=0"
+          title="Video del producto"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          style="border-radius: 8px; box-shadow: 0 0 8px rgba(0,0,0,0.1);">
+        </iframe>
+      </div>
+    `;
+  }
 }
+
 
 
       const galeria = document.getElementById("galeria");
