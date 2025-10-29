@@ -145,8 +145,7 @@
 
       const descripcionCorta = `¡Descubre lo nuevo en ${producto.categoria?.toUpperCase() || "CATÁLOGO"} para ${producto.subtipo?.toLowerCase() || "todos"}! Presentamos ${producto.producto?.toUpperCase()} en ${producto.material?.toUpperCase() || "material especial"}${producto.tallas ? `, disponible en tallas ${producto.tallas}` : ""}. Calidad profesional y entrega inmediata. Solo en ANMAGO Store.`;
       document.getElementById("descripcion-corta").textContent = descripcionCorta;
-      if (producto.video_url && producto.video_url.includes("youtube.com/shorts")) {
- const contenedorVideo = document.getElementById("video-producto");
+     const contenedorVideo = document.getElementById("video-producto");
 
 if (producto.video_url?.includes("youtube.com/shorts")) {
   const videoID = producto.video_url.split("/shorts/")[1]?.split("?")[0];
