@@ -150,22 +150,19 @@
   const videoID = producto.video_url.split("/shorts/")[1]?.split("?")[0];
   if (videoID) {
     contenedorVideo.innerHTML = `
-      <div class="ratio ratio-9x16" style="max-width: 360px; margin: 0 auto;">
-        <iframe
-          loading="lazy"
-          src="https://www.youtube.com/embed/${videoID}?rel=0"
-          title="Video del producto"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-          style="border-radius: 8px; box-shadow: 0 0 8px rgba(0,0,0,0.1);">
-        </iframe>
-      </div>
-    `;
+  <div class="ratio ratio-9x16" style="max-width: 360px; margin: 0 auto;">
+    <iframe
+      loading="lazy"
+      src="https://www.youtube.com/embed/${videoID}?rel=0"
+      title="Video del producto"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      style="border-radius: 8px; box-shadow: 0 0 8px rgba(0,0,0,0.1);">
+    </iframe>
+  </div>
+`;
   }
 }
-
-
-
       const galeria = document.getElementById("galeria");
       const imagenes = producto.url?.split("[]").map(url => url.trim()).filter(Boolean) || [];
 
