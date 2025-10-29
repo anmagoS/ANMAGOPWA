@@ -147,22 +147,30 @@
       document.getElementById("descripcion-corta").textContent = descripcionCorta;
      const contenedorVideo = document.getElementById("video-producto");
 
-if (producto.video_url?.includes("youtube.com/shorts")) {
-  const videoID = producto.video_url.split("/shorts/")[1]?.split("?")[0];
-  if (videoID) {
-    contenedorVideo.innerHTML = `
-      <div class="ratio ratio-9x16" style="max-width: 360px; margin: 0 auto;">
+function extraerIDYouTube(url) {
+  if (!url.includes("/shorts/")) return null;
+  const partes = url.split("/shorts/");
+  const id = partes[1]?.split(/[?&]/)[0];
+  return id?.length === 11 ? id : null;
+}
+
+const videoID = extraerIDYouTube(producto.video_url);
+
+if (videoID) {
+  contenedorVideo.innerHTML = `
+    <div style="max-width: 480px; margin: 0 auto;">
+      <div class="ratio ratio-9x16">
         <iframe
           loading="lazy"
           src="https://www.youtube.com/embed/${videoID}?rel=0"
           title="Video del producto"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
-          style="border-radius: 8px; box-shadow: 0 0 8px rgba(0,0,0,0.1);">
+          style="width: 100%; height: 100%; border-radius: 8px; box-shadow: 0 0 8px rgba(0,0,0,0.1);">
         </iframe>
       </div>
-    `;
-  }
+    </div>
+  `;
 } else if (producto.video_url?.endsWith(".mp4")) {
   contenedorVideo.innerHTML = `
     <video controls preload="metadata" style="width:100%; max-width:720px; border-radius: 8px; box-shadow: 0 0 8px rgba(0,0,0,0.1);">
@@ -171,6 +179,8 @@ if (producto.video_url?.includes("youtube.com/shorts")) {
     </video>
   `;
 }
+
+
 
       const galeria = document.getElementById("galeria");
       const imagenes = producto.url?.split("[]").map(url => url.trim()).filter(Boolean) || [];
