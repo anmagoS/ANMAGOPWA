@@ -147,11 +147,12 @@
      const contenedorVideo = document.getElementById("video-producto");
 
 function extraerIDYouTube(url) {
-  if (!url.includes("/shorts/")) return null;
+  if (typeof url !== "string" || !url.includes("/shorts/")) return null;
   const partes = url.split("/shorts/");
   const id = partes[1]?.split(/[?&]/)[0];
   return id?.length === 11 ? id : null;
 }
+
 
 const videoID = extraerIDYouTube(producto.video_url);
 
