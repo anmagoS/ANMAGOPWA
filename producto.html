@@ -159,7 +159,7 @@ const videoID = extraerIDYouTube(producto.video_url);
 if (videoID) {
   contenedorVideo.innerHTML = `
     <div style="max-width: 480px; margin: 0 auto;">
-      <div class="ratio ratio-9x16">
+      <div class="ratio ratio-9x16" style="min-height: 320px;">
         <iframe
           loading="lazy"
           src="https://www.youtube.com/embed/${videoID}?rel=0"
