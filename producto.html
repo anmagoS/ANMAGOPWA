@@ -118,7 +118,6 @@
       const finPromoGlobal = new Date(temporizador.finPromo);
       const indiceActual = parseInt(temporizador.indicePromoActual);
       const cantidadPorCiclo = 4;
-
       const promociones = productos.filter(p => {
         const promo = typeof p.promo === "string" ? p.promo.toLowerCase().trim() : p.promo;
         return promo === true || promo === "true" || promo === "sí" || promo === "activo";
