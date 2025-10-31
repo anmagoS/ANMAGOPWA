@@ -27,7 +27,7 @@ export async function activarBuscadorGlobal() {
       );
     });
 
-    coincidencias.slice(0, 6).forEach(p => {
+    coincidencias.forEach(p => {
       const item = document.createElement("a");
       item.className = "dropdown-item d-flex align-items-center gap-2";
       item.href = `producto.html?id=${p.id}`;
