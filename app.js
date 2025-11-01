@@ -34,7 +34,7 @@ async function cargarAccesosGlobal() {
 
 // === Mostrar temporizador de promociones ===
 async function mostrarTemporizadorPromos() {
-  const contenedor = document.getElementById("temporizador");
+  const contenedor = document.getElementById("temporizador-promos");
   if (!contenedor) return;
 
   let fin = null;
@@ -50,16 +50,12 @@ async function mostrarTemporizadorPromos() {
     return;
   }
 
+  // 🕒 Mostrar temporizador siempre, incluso si ya venció
   setInterval(() => {
     if (!fin) return;
 
     const ahora = new Date();
     const restante = fin - ahora;
-
-    if (isNaN(restante)) {
-      contenedor.textContent = "⏳ Temporizador inválido";
-      return;
-    }
 
     if (restante <= 0) {
       contenedor.textContent = "⏳ Promociones actualizadas";
@@ -163,6 +159,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   await cargarAccesosGlobal();
   window.catalogo = window.catalogoGlobal || [];
 
+  // ✅ Cargar encabezado
   const headerContainer = document.getElementById("header-container");
   if (!headerContainer.querySelector(".header")) {
     const header = await fetch("HEADER.HTML").then(res => res.text());
@@ -170,15 +167,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     await new Promise(resolve => requestAnimationFrame(resolve));
   }
 
+  // ✅ Ahora que el header está listo, renderizar menú lateral
   if (Array.isArray(window.catalogoGlobal) && window.catalogoGlobal.length > 0) {
     renderizarMenuLateral(window.catalogoGlobal);
     renderCarruselPromosDesdePromos(window.catalogoGlobal);
   }
 
+  // ✅ Activar buscador si existe
   if (typeof activarBuscadorGlobal === "function") {
     activarBuscadorGlobal();
   }
 
+  // ✅ Activar botón flotante del carrito
   const carritoBtn = document.querySelector(".btn_shopping");
   carritoBtn?.addEventListener("click", e => {
     e.preventDefault();
@@ -189,29 +189,35 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
+  // ✅ Mostrar temporizador
   mostrarTemporizadorPromos();
 
+  // ✅ Cargar pie de página
   const footer = await fetch("footer.html").then(res => res.text());
   document.getElementById("footer-container").innerHTML = footer;
 
+  // ✅ Activar menú lateral si existe
   const toggle = document.getElementById("toggle-categorias");
   const menu = document.getElementById("menu-categorias");
   toggle?.addEventListener("click", () => {
     menu.style.display = menu.style.display === "none" ? "flex" : "none";
   });
 
+  // ✅ Renderizar productos si aplica
   if (document.getElementById("contenido-productos")) {
     const rutaActual = window.location.pathname;
     const accesosRuta = window.accesosGlobal?.filter(a => a.ruta === rutaActual) || [];
     const idsRuta = accesosRuta.map(a => a.id_producto);
     const productosFiltrados = window.catalogoGlobal.filter(p => idsRuta.includes(p.id));
-    renderizarProductos(productosFiltrados.length ? productosFiltrados : window.catalogoGlobal);
+       renderizarProductos(productosFiltrados.length ? productosFiltrados : window.catalogoGlobal);
   }
 
+  // ✅ Actualizar contador del carrito si la función está disponible
   if (typeof window.actualizarContadorCarrito === "function") {
     window.actualizarContadorCarrito();
   }
 
+  // ✅ Renderizar contenido del carrito si la función está disponible y el catálogo está listo
   if (
     typeof window.renderizarCarrito === "function" &&
     Array.isArray(window.catalogoGlobal) &&
