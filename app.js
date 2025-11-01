@@ -37,31 +37,37 @@ async function mostrarTemporizadorPromos() {
   const contenedor = document.getElementById("temporizador-promos");
   if (!contenedor) return;
 
+  let fin = null;
+
   try {
     const url = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json?nocache=${Date.now()}`;
     const res = await fetch(url);
     const { finPromo } = await res.json();
-    const fin = new Date(finPromo);
-
-    setInterval(() => {
-      const ahora = new Date();
-      const restante = fin - ahora;
-
-      if (restante <= 0) {
-        contenedor.textContent = "⏳ Promociones actualizadas";
-        return;
-      }
-
-      const horas = Math.floor(restante / (1000 * 60 * 60));
-      const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
-      const segundos = Math.floor((restante % (1000 * 60)) / 1000);
-
-      contenedor.textContent = `⏰ Cambia en ${horas}h ${minutos}m ${segundos}s`;
-    }, 1000);
+    fin = new Date(finPromo);
   } catch (err) {
     console.error("❌ Error al mostrar temporizador:", err);
     contenedor.textContent = "⏳ Temporizador no disponible";
+    return;
   }
+
+  // 🕒 Mostrar temporizador siempre, incluso si ya venció
+  setInterval(() => {
+    if (!fin) return;
+
+    const ahora = new Date();
+    const restante = fin - ahora;
+
+    if (restante <= 0) {
+      contenedor.textContent = "⏳ Promociones actualizadas";
+      return;
+    }
+
+    const horas = Math.floor(restante / (1000 * 60 * 60));
+    const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
+    const segundos = Math.floor((restante % (1000 * 60)) / 1000);
+
+    contenedor.textContent = `⏰ Cambia en ${horas}h ${minutos}m ${segundos}s`;
+  }, 1000);
 }
 
 // === Renderizar menú lateral desde catálogo ===
