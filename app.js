@@ -34,7 +34,7 @@ async function cargarAccesosGlobal() {
 
 // === Mostrar temporizador de promociones ===
 async function mostrarTemporizadorPromos() {
-  const contenedor = document.getElementById("temporizador-promos");
+  const contenedor = document.getElementById("temporizador");
   if (!contenedor) return;
 
   let fin = null;
