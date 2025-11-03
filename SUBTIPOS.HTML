@@ -71,6 +71,37 @@
   <!-- INICIALIZACIÓN -->
   <script type="module">
     import { activarBuscadorGlobal } from './buscador.js';
+const imagenesPorSubtipo = {
+  // 🧵 ROPA
+  "dama": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/dama.jpg?tr=w-300,q-80",
+  "caballero": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/caballero.jpg?tr=w-300,q-80",
+  "unisex": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/unisex.jpg?tr=w-300,q-80",
+  "niños": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/ninos.jpg?tr=w-300,q-80",
+  "niñas": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/ninas.jpg?tr=w-300,q-80",
+
+  // ⌚ RELOJERIA
+  "digital": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/reloj_digital.jpg?tr=w-300,q-80",
+  "analógico": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/reloj_analogico.jpg?tr=w-300,q-80",
+  "smartwatch": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/smartwatch.jpg?tr=w-300,q-80",
+
+  // 🏠 HOGAR
+  "cocina": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/cocina.jpg?tr=w-300,q-80",
+  "decoración": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/decoracion.jpg?tr=w-300,q-80",
+  "iluminación": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/iluminacion.jpg?tr=w-300,q-80",
+
+  // 💄 BELLEZA
+  "maquillaje": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/maquillaje.jpg?tr=w-300,q-80",
+  "cuidado facial": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/facial.jpg?tr=w-300,q-80",
+
+  // 🎒 ESCOLAR
+  "mochilas": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/mochilas.jpg?tr=w-300,q-80",
+  "útiles": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/utiles.jpg?tr=w-300,q-80",
+
+  // 🎄 NAVIDAD
+  "luces": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/navidad_luces.jpg?tr=w-300,q-80",
+  "decoración navideña": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/navidad_decoracion.jpg?tr=w-300,q-80"
+};
+
 
     function getTipoDesdeURL() {
       const params = new URLSearchParams(window.location.search);
@@ -111,8 +142,7 @@
 
       subtiposUnicos.forEach(subtipo => {
         const productoRef = productosFiltrados.find(p => p.subtipo?.trim() === subtipo);
-        const imagen = productoRef?.imagen || "REDES_IMAGES/default-subtipo.jpg";
-
+       const imagen = imagenesPorSubtipo[subtipo.toLowerCase()]?.trim() || productoRef?.imagen?.trim() || "REDES_IMAGES/default-subtipo.jpg";
         const tarjeta = document.createElement("div");
         tarjeta.className = "producto";
         tarjeta.innerHTML = `
