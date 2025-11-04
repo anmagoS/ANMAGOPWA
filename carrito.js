@@ -177,32 +177,60 @@ document.addEventListener("DOMContentLoaded", async () => {
       instancia.hide();
     }
   }
+async function generarPedidoWhatsApp() {
+  const ciudadSelect = document.getElementById("ciudadCliente");
+  const cedula = document.getElementById("cedulaCliente")?.value.trim();
+  const nombre = document.getElementById("nombreCliente")?.value.trim();
+  const apellido = document.getElementById("apellidoCliente")?.value.trim();
+  const codigoPais = document.getElementById("codigoPais")?.value;
+  const telefono = document.getElementById("telefonoCliente")?.value.trim();
+  const tipoVia = document.getElementById("tipoVia")?.value;
+  const numeroVia = document.getElementById("numeroVia")?.value.trim();
+  const complementoVia = document.getElementById("complementoVia1")?.value.trim();
+  const numeroAdicional1 = document.getElementById("numeroAdicional1")?.value.trim();
+  const complementoVia2 = document.getElementById("complementoVia2")?.value.trim();
+  const numeroAdicional2 = document.getElementById("numeroAdicional2")?.value.trim();
+  const tipoUnidad = document.getElementById("tipoUnidad")?.value;
+  const numeroApto = document.getElementById("numeroApto")?.value.trim();
+  const barrio = document.getElementById("barrio")?.value.trim();
+  const ciudad = ciudadSelect?.value.trim();
+  const observaciones = document.getElementById("observacionesDireccion")?.value.trim();
+  const email = "ANMAGOSTORE@GMAIL.COM";
 
-  async function generarPedidoWhatsApp() {
-    const ciudadSelect = document.getElementById("ciudadCliente");
-    const cedula = document.getElementById("cedulaCliente")?.value.trim();
-    const nombre = document.getElementById("nombreCliente")?.value.trim();
-    const apellido = document.getElementById("apellidoCliente")?.value.trim();
-    const codigoPais = document.getElementById("codigoPais")?.value;
-    const telefono = document.getElementById("telefonoCliente")?.value.trim();
-    const tipoVia = document.getElementById("tipoVia")?.value;
-    const numeroVia = document.getElementById("numeroVia")?.value.trim();
-    const complementoVia = document.getElementById("complementoVia1")?.value.trim();
-    const numeroAdicional1 = document.getElementById("numeroAdicional1")?.value.trim();
-    const complementoVia2 = document.getElementById("complementoVia2")?.value.trim();
-    const numeroAdicional2 = document.getElementById("numeroAdicional2")?.value.trim();
-    const tipoUnidad = document.getElementById("tipoUnidad")?.value;
-    const numeroApto = document.getElementById("numeroApto")?.value.trim();
-    const barrio = document.getElementById("barrio")?.value.trim();
-    const ciudad = ciudadSelect?.value.trim();
-    const observaciones = document.getElementById("observacionesDireccion")?.value.trim();
-    const departamento = ciudadSelect?.selectedOptions[0]?.dataset.departamento || "No definido";
-    const email = "ANMAGOSTORE@GMAIL.COM";
+  // ✅ Corrección: obtener departamento desde datalist
+  const optionMatch = Array.from(document.querySelectorAll("#listaCiudades option"))
+    .find(opt => opt.value === ciudad);
+  const departamento = optionMatch?.dataset.departamento || "No definido";
 
-    if (!nombre || !apellido || !telefono || !ciudad || !tipoVia || !numeroVia || !barrio || !cedula || !/^\d+$/.test(cedula)) {
-      alert("Por favor completa todos los campos obligatorios y asegúrate que la cédula solo tenga números.");
-      return;
-    }
+  // ✅ Validación de campos obligatorios
+  if (
+    !nombre || !apellido || !telefono || !ciudad ||
+    !tipoVia || !numeroVia || !barrio || !cedula || !/^\d+$/.test(cedula)
+  ) {
+    alert("Por favor completa todos los campos obligatorios y asegúrate que la cédula solo tenga números.");
+    return;
+  }
+
+  // ✅ Dirección compuesta
+  const direccion = [
+    tipoVia,
+    numeroVia,
+    complementoVia,
+    "N°",
+    numeroAdicional1,
+    complementoVia2,
+    "-",
+    numeroAdicional2,
+    tipoUnidad === "Apartamento" ? `Apto ${numeroApto}` : tipoUnidad,
+    barrio ? `Barrio ${barrio}` : null,
+    ciudad,
+    observaciones ? `📝 Observaciones: ${observaciones}` : null
+  ].filter(Boolean).join(" ");
+
+  const telefonoCompleto = `${codigoPais}${telefono}`;
+
+  // ✅ Continúa con el envío a Apps Script, WhatsApp y Telegram...
+}
 
       const direccion = [
       tipoVia,
