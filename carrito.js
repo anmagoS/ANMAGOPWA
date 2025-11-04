@@ -219,6 +219,29 @@ document.addEventListener("DOMContentLoaded", async () => {
       alert("Por favor completa todos los campos obligatorios.");
       return;
     }
+ try {
+      await fetch("http://localhost:5678/webhook/registro-cliente", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          NOMBRECLIENTE: nombre,
+          "APELLIDO COMPL.": apellido,
+          DIRECCIONCLIENTE: direccion,
+          TELEFONOCLIENTE: telefonoCompleto,
+          CEDULA: "",
+          "COMPLEMENTO DE DIR": complementoVia || "",
+          "CIUDAD DESTINO": ciudad,
+          CORREO: email,
+          USUARIO: "",
+          ROTULAR: "",
+          ROTULO: "",
+          MENSAJECOBRO: ""
+        })
+      });
+      console.log("✅ Registro enviado a n8n");
+    } catch (error) {
+      console.error("❌ Error al enviar a n8n:", error);
+    }
 
     articulosCarrito.forEach(producto => {
       if (!producto.proveedor && producto.id && catalogo.length > 0) {
@@ -247,30 +270,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     enviarPedidoTelegram(mensajeTelegram);
 
-    try {
-      await fetch("http://localhost:5678/webhook/registro-cliente", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          NOMBRECLIENTE: nombre,
-          "APELLIDO COMPL.": apellido,
-          DIRECCIONCLIENTE: direccion,
-          TELEFONOCLIENTE: telefonoCompleto,
-          CEDULA: "",
-          "COMPLEMENTO DE DIR": complementoVia || "",
-          "CIUDAD DESTINO": ciudad,
-          CORREO: email,
-          USUARIO: "",
-          ROTULAR: "",
-          ROTULO: "",
-          MENSAJECOBRO: ""
-        })
-      });
-      console.log("✅ Registro enviado a n8n");
-    } catch (error) {
-      console.error("❌ Error al enviar a n8n:", error);
-    }
-
+   
     articulosCarrito = [];
     guardarCarrito();
     renderizarCarrito();
