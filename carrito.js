@@ -221,6 +221,9 @@ async function generarPedidoWhatsApp() {
   ].filter(Boolean).join(" ");
 
   const telefonoCompleto = `${codigoPais}${telefono}`;
+  const rotular = "ANMAGO STORE";
+  const rotulo = `${nombre} ${apellido}`;
+  const usuario = "web";
   const mensajeCobro = articulosCarrito.map((p, i) =>
     `🛍️ ${i + 1}. ${p.nombre} (${p.talla || "sin talla"}) x${p.cantidad} - $${p.precio.toLocaleString("es-CO")}`
   ).join("\n");
@@ -237,7 +240,11 @@ async function generarPedidoWhatsApp() {
         CEDULA: cedula,
         "COMPLEMENTO DE DIR": observaciones,
         "CIUDAD DESTINO": ciudad,
-        CORREO: email
+        CORREO: email,
+        USUARIO: usuario,
+        ROTULAR: rotular,
+        ROTULO: rotulo,
+        MENSAJECOBRO: mensajeCobro
       })
     });
 
@@ -289,78 +296,8 @@ async function generarPedidoWhatsApp() {
     actualizarEstadoBotonWhatsApp();
     modalFormulario?.hide();
 
- } catch (error) {
-  console.error("❌ Error al generar pedido:", error);
-  alert(`❌ Error al generar el pedido: ${error.message || error}`);
-}
-}
-
-  async function enviarPedidoTelegram(mensaje) {
-    const token = "8320682242:AAG4h89_8WVmljeEvYHjzRxmnJDt-HoxcAY";
-    const chatId = "-1003044241716";
-    const url = `https://api.telegram.org/bot${token}/sendMessage`;
-
-    const payload = {
-      chat_id: chatId,
-      text: mensaje
-    };
-
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-
-      const data = await response.json();
-      if (!data.ok) {
-        console.error("❌ Telegram error:", data);
-      } else {
-        console.log("✅ Pedido enviado a Telegram");
-      }
-    } catch (error) {
-      console.error("❌ Error de red al enviar a Telegram:", error);
-    }
+  } catch (error) {
+    console.error("❌ Error al generar pedido:", error);
+    alert(`❌ Error al generar el pedido: ${error.message || error}`);
   }
-
-  btn_shopping?.addEventListener("click", () => {
-    const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasCarrito);
-    bsOffcanvas.toggle();
-    btn_shopping.classList.toggle("balanceo");
-  });
-
-  closeButton?.addEventListener("click", () => cerrarCarrito());
-
-  document.addEventListener("click", (e) => {
-    if (e.target?.id === "btn-comprar" && modalFormulario) {
-      modalFormulario.show();
-    }
-  });
-
-  formCliente?.addEventListener("input", () => {
-    const nombre = document.getElementById("nombreCliente")?.value.trim();
-    const apellido = document.getElementById("apellidoCliente")?.value.trim();
-    const telefono = document.getElementById("telefonoCliente")?.value.trim();
-    const ciudad = document.getElementById("ciudadCliente")?.value;
-    const cedula = document.getElementById("cedulaCliente")?.value.trim();
-    const telefonoValido = /^\d{10}$/.test(telefono);
-    const cedulaValida = /^\d+$/.test(cedula);
-    const valido = nombre && apellido && telefonoValido && ciudad && cedulaValida;
-
-    if (btnEnviarPedido) {
-      btnEnviarPedido.disabled = !valido;
-    }
-  });
-
-  btnEnviarPedido?.addEventListener("click", generarPedidoWhatsApp);
-
-  renderizarCarrito();
-  actualizarSubtotal();
-  actualizarContadorCarrito();
-  actualizarEstadoBotonWhatsApp();
-
-  window.agregarAlCarrito = agregarAlCarrito;
-  window.generarPedidoWhatsApp = generarPedidoWhatsApp;
-  window.renderizarCarrito = renderizarCarrito;
-  window.actualizarContadorCarrito = actualizarContadorCarrito;
-});
+}
