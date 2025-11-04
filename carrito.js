@@ -31,7 +31,6 @@ async function cargarCiudades() {
     console.error("❌ Error al cargar ciudades:", error);
   }
 }
-
 document.addEventListener("DOMContentLoaded", async () => {
   await cargarCatalogo();
   await cargarCiudades();
