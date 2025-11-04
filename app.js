@@ -19,7 +19,6 @@ async function cargarCatalogoGlobal() {
     console.error("❌ Error al cargar catálogo:", err);
   }
 }
-
 // === Cargar accesos globales ===
 async function cargarAccesosGlobal() {
   try {
