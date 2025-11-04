@@ -179,88 +179,89 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
 async function generarPedidoWhatsApp() {
-  const ciudadSelect = document.getElementById("ciudadCliente");
-  const cedula = document.getElementById("cedulaCliente")?.value.trim();
-  const nombre = document.getElementById("nombreCliente")?.value.trim();
-  const apellido = document.getElementById("apellidoCliente")?.value.trim();
-  const codigoPais = document.getElementById("codigoPais")?.value;
-  const telefono = document.getElementById("telefonoCliente")?.value.trim();
-  const tipoVia = document.getElementById("tipoVia")?.value;
-  const numeroVia = document.getElementById("numeroVia")?.value.trim();
-  const complementoVia = document.getElementById("complementoVia1")?.value.trim();
-  const numeroAdicional1 = document.getElementById("numeroAdicional1")?.value.trim();
-  const complementoVia2 = document.getElementById("complementoVia2")?.value.trim();
-  const numeroAdicional2 = document.getElementById("numeroAdicional2")?.value.trim();
-  const tipoUnidad = document.getElementById("tipoUnidad")?.value;
-  const numeroApto = document.getElementById("numeroApto")?.value.trim();
-  const barrio = document.getElementById("barrio")?.value.trim();
-  const ciudad = ciudadSelect?.value.trim();
-  const observaciones = document.getElementById("observacionesDireccion")?.value.trim();
-  const email = document.getElementById("emailCliente")?.value.trim();
+  try {
+    const ciudadSelect = document.getElementById("ciudadCliente");
+    const cedula = document.getElementById("cedulaCliente")?.value.trim();
+    const nombre = document.getElementById("nombreCliente")?.value.trim();
+    const apellido = document.getElementById("apellidoCliente")?.value.trim();
+    const codigoPais = document.getElementById("codigoPais")?.value;
+    const telefono = document.getElementById("telefonoCliente")?.value.trim();
+    const tipoVia = document.getElementById("tipoVia")?.value;
+    const numeroVia = document.getElementById("numeroVia")?.value.trim();
+    const complementoVia = document.getElementById("complementoVia1")?.value.trim();
+    const numeroAdicional1 = document.getElementById("numeroAdicional1")?.value.trim();
+    const complementoVia2 = document.getElementById("complementoVia2")?.value.trim();
+    const numeroAdicional2 = document.getElementById("numeroAdicional2")?.value.trim();
+    const tipoUnidad = document.getElementById("tipoUnidad")?.value;
+    const numeroApto = document.getElementById("numeroApto")?.value.trim();
+    const barrio = document.getElementById("barrio")?.value.trim();
+    const ciudad = ciudadSelect?.value.trim();
+    const observaciones = document.getElementById("observacionesDireccion")?.value.trim();
+    const email = document.getElementById("emailCliente")?.value.trim();
 
-  const optionMatch = Array.from(document.querySelectorAll("#listaCiudades option"))
-    .find(opt => opt.value === ciudad);
-  const departamento = optionMatch?.dataset.departamento || "No definido";
+    const optionMatch = Array.from(document.querySelectorAll("#listaCiudades option"))
+      .find(opt => opt.value === ciudad);
+    const departamento = optionMatch?.dataset.departamento || "No definido";
 
-  const camposObligatorios = [nombre, apellido, telefono, ciudad, tipoVia, numeroVia, barrio, cedula];
-  const cedulaValida = /^\d+$/.test(cedula);
-  const telefonoValido = /^\d{10}$/.test(telefono);
+    const camposObligatorios = [nombre, apellido, telefono, ciudad, tipoVia, numeroVia, barrio, cedula];
+    const cedulaValida = /^\d+$/.test(cedula);
+    const telefonoValido = /^\d{10}$/.test(telefono);
 
-  if (camposObligatorios.some(c => !c) || !cedulaValida || !telefonoValido) {
-    alert("Por favor completa todos los campos obligatorios. La cédula debe contener solo números y el teléfono debe tener 10 dígitos.");
-    return;
-  }
-
-  const direccion = [
-    tipoVia, numeroVia, complementoVia, "N°", numeroAdicional1, complementoVia2,
-    "-", numeroAdicional2,
-    tipoUnidad === "Apartamento" ? `Apto ${numeroApto}` : tipoUnidad,
-    barrio ? `Barrio ${barrio}` : null,
-    ciudad,
-    observaciones ? `📝 Observaciones: ${observaciones}` : null
-  ].filter(Boolean).join(" ");
-
-  const telefonoCompleto = `${codigoPais}${telefono}`;
-
-  // Enriquecer productos con proveedor si falta
-  articulosCarrito.forEach(producto => {
-    if (!producto.proveedor && producto.id && catalogo.length > 0) {
-      const desdeCatalogo = catalogo.find(p => producto.id.includes(p.id));
-      if (desdeCatalogo?.proveedor) {
-        producto.proveedor = desdeCatalogo.proveedor;
-      }
+    if (camposObligatorios.some(c => !c) || !cedulaValida || !telefonoValido) {
+      alert("Por favor completa todos los campos obligatorios. La cédula debe contener solo números y el teléfono debe tener 10 dígitos.");
+      return;
     }
-  });
 
-  // Mensaje para WhatsApp y Telegram
-  let mensajeWhatsApp = `🛍️ *¡Hola! Soy ${nombre} y quiero realizar el siguiente pedido:*\n\n`;
-  let mensajeTelegram = `🕒 Pedido registrado el ${new Date().toLocaleString("es-CO")}\n`;
-  mensajeTelegram += `👤 Nombre: ${nombre} ${apellido}\n📞 Teléfono: ${telefonoCompleto}\n🏠 Dirección: ${direccion}\n📍 Ciudad: ${ciudad} - ${departamento}\n📧 Email: ${email}\n\n`;
+    const direccion = [
+      tipoVia, numeroVia, complementoVia, "N°", numeroAdicional1, complementoVia2,
+      "-", numeroAdicional2,
+      tipoUnidad === "Apartamento" ? `Apto ${numeroApto}` : tipoUnidad,
+      barrio ? `Barrio ${barrio}` : null,
+      ciudad,
+      observaciones ? `📝 Observaciones: ${observaciones}` : null
+    ].filter(Boolean).join(" ");
 
-  const total = articulosCarrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
+    const telefonoCompleto = `${codigoPais}${telefono}`;
 
-  articulosCarrito.forEach((producto, index) => {
-    mensajeWhatsApp += `*${index + 1}.* ${producto.nombre}\n🖼️ Imagen: ${producto.imagen}\n📏 Talla: ${producto.talla || "No especificada"}\n💲 Precio: $${producto.precio.toLocaleString("es-CO")}\n🔢 Cantidad: ${producto.cantidad}\n\n`;
-    mensajeTelegram += `🖼️ Imagen:\n${producto.imagen}\n📏 Talla: ${producto.talla || "No especificada"}\n🔢 Cantidad: ${producto.cantidad}\n🏬 Proveedor: ${limpiarTextoTelegram(producto.proveedor || "No definido")}\n\n`;
-  });
+    // Enriquecer productos con proveedor si falta
+    articulosCarrito.forEach(producto => {
+      if (!producto.proveedor && producto.id && catalogo.length > 0) {
+        const desdeCatalogo = catalogo.find(p => producto.id.includes(p.id));
+        if (desdeCatalogo?.proveedor) {
+          producto.proveedor = desdeCatalogo.proveedor;
+        }
+      }
+    });
 
-  mensajeWhatsApp += `*🧾 Total del pedido:* $${total.toLocaleString("es-CO")}\n\n✅ *¡Gracias por tu atención!*`;
+    // Mensaje para WhatsApp y Telegram
+    let mensajeWhatsApp = `🛍️ *¡Hola! Soy ${nombre} y quiero realizar el siguiente pedido:*\n\n`;
+    let mensajeTelegram = `🕒 Pedido registrado el ${new Date().toLocaleString("es-CO")}\n`;
+    mensajeTelegram += `👤 Nombre: ${nombre} ${apellido}\n📞 Teléfono: ${telefonoCompleto}\n🏠 Dirección: ${direccion}\n📍 Ciudad: ${ciudad} - ${departamento}\n📧 Email: ${email}\n\n`;
 
-  const mensajeCodificado = encodeURIComponent(mensajeWhatsApp);
-  const urlWhatsApp = `https://wa.me/573006498710?text=${mensajeCodificado}`;
-  window.open(urlWhatsApp, "_blank");
+    const total = articulosCarrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
 
-  await enviarPedidoTelegram(mensajeTelegram);
+    articulosCarrito.forEach((producto, index) => {
+      mensajeWhatsApp += `*${index + 1}.* ${producto.nombre}\n🖼️ Imagen: ${producto.imagen}\n📏 Talla: ${producto.talla || "No especificada"}\n💲 Precio: $${producto.precio.toLocaleString("es-CO")}\n🔢 Cantidad: ${producto.cantidad}\n\n`;
+      mensajeTelegram += `🖼️ Imagen:\n${producto.imagen}\n📏 Talla: ${producto.talla || "No especificada"}\n🔢 Cantidad: ${producto.cantidad}\n🏬 Proveedor: ${limpiarTextoTelegram(producto.proveedor || "No definido")}\n\n`;
+    });
 
-  // Limpiar carrito y cerrar modal
-  articulosCarrito = [];
-  guardarCarrito();
-  renderizarCarrito();
-  actualizarSubtotal();
-  actualizarContadorCarrito();
-  actualizarEstadoBotonWhatsApp();
-  modalFormulario?.hide();
-}
+    mensajeWhatsApp += `*🧾 Total del pedido:* $${total.toLocaleString("es-CO")}\n\n✅ *¡Gracias por tu atención!*`;
+
+    const mensajeCodificado = encodeURIComponent(mensajeWhatsApp);
+    const urlWhatsApp = `https://wa.me/573006498710?text=${mensajeCodificado}`;
+    window.open(urlWhatsApp, "_blank");
+
+    await enviarPedidoTelegram(mensajeTelegram);
+
+    // Limpiar carrito y cerrar modal
+    articulosCarrito = [];
+    guardarCarrito();
+    renderizarCarrito();
+    actualizarSubtotal();
+    actualizarContadorCarrito();
+    actualizarEstadoBotonWhatsApp();
+    modalFormulario?.hide();
+
   } catch (error) {
     console.error("❌ Error al generar pedido:", error);
     alert(`❌ Error al generar el pedido: ${error.message || error}`);
