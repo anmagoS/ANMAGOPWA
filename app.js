@@ -157,7 +157,29 @@ document.addEventListener("DOMContentLoaded", async () => {
   await cargarCatalogoGlobal();
   await cargarAccesosGlobal();
   window.catalogo = window.catalogoGlobal || [];
+// ✅ Mostrar botón de instalación PWA si no está instalado
+const esPWAInstalado = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 
+if (!esPWAInstalado) {
+  const contenedor = document.getElementById("instalar-container");
+  if (contenedor) contenedor.classList.remove("d-none");
+}
+
+let deferredPrompt;
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  const boton = document.getElementById("boton-instalar");
+  boton?.addEventListener("click", async () => {
+    deferredPrompt.prompt();
+    const resultado = await deferredPrompt.userChoice;
+    console.log("📲 Resultado instalación:", resultado.outcome);
+    deferredPrompt = null;
+    document.getElementById("instalar-container")?.classList.add("d-none");
+  });
+});
   // ✅ Cargar encabezado
   const headerContainer = document.getElementById("header-container");
   if (!headerContainer.querySelector(".header")) {
