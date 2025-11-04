@@ -368,14 +368,25 @@ if (videoID) {
 
 
 
-  <!-- Ciudad -->
-  <div class="mb-3">
-    <label for="ciudadCliente" class="form-label">Ciudad</label>
-    <select id="ciudadCliente" class="form-select" required>
-      <option value="">Selecciona ciudad</option>
-      <!-- Se cargan dinámicamente desde JSON -->
-    </select>
-  </div>
+  <!-- Ciudad con autocompletado -->
+<div class="mb-3">
+  <label for="ciudadCliente" class="form-label">Ciudad</label>
+  <input list="listaCiudades" id="ciudadCliente" name="ciudadCliente" class="form-control" placeholder="Escribe tu ciudad" required />
+  <datalist id="listaCiudades">
+    <option value="Bogotá">
+    <option value="Medellín">
+    <option value="Cali">
+    <option value="Barranquilla">
+    <option value="Cartagena">
+    <option value="Bucaramanga">
+    <option value="Santa Marta">
+    <option value="Villavicencio">
+    <option value="Pereira">
+    <option value="Manizales">
+    <!-- Puedes agregar más o cargarlas dinámicamente -->
+  </datalist>
+</div>
+
 
   <!-- Email -->
   <div class="mb-3">
