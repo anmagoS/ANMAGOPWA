@@ -77,20 +77,24 @@
           <form id="formCliente">
             <!-- Nombre y Apellido -->
             <div class="mb-3">
-              <label for="nombreCliente" class="form-label">Nombre</label>
+              <label for="nombreCliente" class="form-label">Cedula</label>
+            <input type="text" id="cedulaCliente" placeholder="Cédula" required /></div>
+
+            <div class="mb-3">
+              <label for="nombreCliente" class="form-label">Nombres</label>
               <input type="text" class="form-control" id="nombreCliente" required>
             </div>
             <div class="mb-3">
-              <label for="apellidoCliente" class="form-label">Apellido</label>
+              <label for="apellidoCliente" class="form-label">Apellidos</label>
               <input type="text" class="form-control" id="apellidoCliente" required>
             </div>
 
             <!-- Teléfono con código de país -->
             <div class="mb-3">
-              <label for="telefonoCliente" class="form-label">Teléfono</label>
+              <label for="telefonoCliente" class="form-label">Celular</label>
               <div class="input-group">
                 <select id="codigoPais" class="form-select" required>
-                  <option value="+57" selected>🇨🇴 +57</option>
+                  <option value="+57" selected>🇨🇴l +57</option>
                   <option value="+1">🇺🇸 +1</option>
                   <option value="+52">🇲🇽 +52</option>
                 </select>
