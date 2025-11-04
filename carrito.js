@@ -226,7 +226,7 @@ async function generarPedidoWhatsApp() {
   ).join("\n");
 
   try {
-    const response = await fetch("https://script.google.com/macros/s/AKfycbxa3etLxnD1SZlTaNhPTNrcrAfl9XWB7_1H3HMcX-NwvF1z4fOKUy8HT9QNtEtrRByU/exec", {
+    const response = await fetch("https://script.google.com/macros/s/AKfycby_14dzPzJuzJNBrlpjmIhY4EscKxlXAquZIOUSFzNwEWfb8QXfhwo2JQf7ZDPZSEET/exec", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
