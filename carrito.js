@@ -227,23 +227,34 @@ document.addEventListener("DOMContentLoaded", async () => {
       `🛍️ ${i + 1}. ${p.nombre} (${p.talla || "sin talla"}) x${p.cantidad} - $${p.precio.toLocaleString("es-CO")}`
     ).join("\n");
 
-    try {
-     await fetch("https://script.google.com/macros/s/AKfycbxa3etLxnD1SZlTaNhPTNrcrAfl9XWB7_1H3HMcX-NwvF1z4fOKUy8HT9QNtEtrRByU/exec", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    NOMBRECLIENTE: nombre,
-    "APELLIDO COMPL.": apellido,
-    DIRECCIONCLIENTE: direccion,
-    TELEFONOCLIENTE: telefonoCompleto,
-    CEDULA: cedula,
-    "COMPLEMENTO DE DIR": observaciones,
-   "CIUDAD DESTINO": ciudad,
-    CORREO: email
-  })
-});
+   try {
+  const response = await fetch("https://script.google.com/macros/s/AKfycbxa3etLxnD1SZlTaNhPTNrcrAfl9XWB7_1H3HMcX-NwvF1z4fOKUy8HT9QNtEtrRByU/exec", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      NOMBRECLIENTE: nombre,
+      "APELLIDO COMPL.": apellido,
+      DIRECCIONCLIENTE: direccion,
+      TELEFONOCLIENTE: telefonoCompleto,
+      CEDULA: cedula,
+      "COMPLEMENTO DE DIR": observaciones,
+      "CIUDAD DESTINO": ciudad,
+      CORREO: email
+    })
+  });
 
-      console.log("✅ Registro enviado a Apps Script");
+  const texto = await response.text();
+  console.log("📥 Respuesta del servidor:", texto);
+  alert(`Respuesta del servidor: ${texto}`);
+
+  // Aquí puedes continuar con el resto del flujo si fue exitoso
+  // Por ejemplo: redirigir a WhatsApp, limpiar formulario, etc.
+
+} catch (error) {
+  console.error("❌ Error en el fetch:", error);
+  alert("❌ Error al enviar el pedido. Revisa la consola.");
+}
+
 
       // Enriquecer productos con proveedor si falta
       articulosCarrito.forEach(producto => {
