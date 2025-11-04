@@ -191,9 +191,10 @@ function generarPedidoWhatsApp() {
   const tipoUnidad = document.getElementById("tipoUnidad")?.value;
   const numeroApto = document.getElementById("numeroApto")?.value.trim();
   const barrio = document.getElementById("barrio")?.value.trim();
-  const ciudadSelect = document.getElementById("ciudadCliente");
-  const ciudad = ciudadSelect?.value;
-  const departamento = ciudadSelect?.selectedOptions[0]?.dataset.departamento || "No definido";
+  const ciudad = ciudadSelect?.value.trim();
+  const optionMatch = Array.from(document.querySelectorAll("#listaCiudades option"))
+  .find(opt => opt.value === ciudad);
+  const departamento = optionMatch?.dataset.departamento || "No definido";
   const email = document.getElementById("emailCliente")?.value.trim();
 
   // 🧠 Dirección robusta que omite campos vacíos
