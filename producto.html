@@ -307,28 +307,66 @@ if (videoID) {
     </div>
   </div>
 
-  <!-- Dirección estructurada -->
-  <div class="mb-3">
-    <label for="tipoVia" class="form-label">Tipo de vía</label>
-    <select id="tipoVia" class="form-select" required>
-      <option value="">Selecciona tipo</option>
-      <option value="Calle">Calle</option>
-      <option value="Carrera">Carrera</option>
-      <option value="Avenida">Avenida</option>
+ <!-- Dirección estructurada -->
+<div class="mb-3">
+  <label for="tipoVia" class="form-label">Tipo de vía</label>
+  <select id="tipoVia" class="form-select" required>
+    <option value="">Selecciona tipo</option>
+    <option value="Calle">Calle</option>
+    <option value="Carrera">Carrera</option>
+    <option value="Avenida">Avenida</option>
+    <option value="Diagonal">Diagonal</option>
+    <option value="Transversal">Transversal</option>
+  </select>
+</div>
+
+<div class="row mb-3">
+  <div class="col-3">
+    <label for="numeroVia" class="form-label">Número</label>
+    <input type="text" class="form-control" id="numeroVia" maxlength="3" required>
+  </div>
+  <div class="col-3">
+    <label for="complementoVia1" class="form-label">Letra/Bis</label>
+    <input type="text" class="form-control" id="complementoVia1">
+  </div>
+  <div class="col-1 d-flex align-items-end justify-content-center">
+    <span class="fw-bold">N°</span>
+  </div>
+  <div class="col-2">
+    <label for="numeroAdicional1" class="form-label">Número</label>
+    <input type="text" class="form-control" id="numeroAdicional1" maxlength="3">
+  </div>
+  <div class="col-3">
+    <label for="complementoVia2" class="form-label">Letra/Bis</label>
+    <input type="text" class="form-control" id="complementoVia2">
+  </div>
+</div>
+
+<div class="row mb-3">
+  <div class="col-4">
+    <label for="numeroAdicional2" class="form-label">Número final</label>
+    <input type="text" class="form-control" id="numeroAdicional2" maxlength="3">
+  </div>
+  <div class="col-4">
+    <label for="tipoUnidad" class="form-label">Tipo de unidad</label>
+    <select id="tipoUnidad" class="form-select">
+      <option value="">Selecciona</option>
+      <option value="Casa">Casa</option>
+      <option value="Apartamento">Apartamento</option>
     </select>
   </div>
-  <div class="mb-3">
-    <label for="numeroVia" class="form-label">Número</label>
-    <input type="text" class="form-control" id="numeroVia" required>
+  <div class="col-4">
+    <label for="numeroApto" class="form-label">Número de apto</label>
+    <input type="text" class="form-control" id="numeroApto">
   </div>
-  <div class="mb-3">
-    <label for="complementoVia" class="form-label">Complemento (Letra/Bis)</label>
-    <input type="text" class="form-control" id="complementoVia">
-  </div>
-  <div class="mb-3">
-    <label for="barrio" class="form-label">Barrio</label>
-    <input type="text" class="form-control" id="barrio" required>
-  </div>
+</div>
+
+<div class="mb-3">
+  <label for="barrio" class="form-label">Barrio</label>
+  <input type="text" class="form-control" id="barrio" required>
+</div>
+
+
 
   <!-- Ciudad -->
   <div class="mb-3">
