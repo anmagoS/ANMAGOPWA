@@ -221,81 +221,46 @@ async function generarPedidoWhatsApp() {
   ].filter(Boolean).join(" ");
 
   const telefonoCompleto = `${codigoPais}${telefono}`;
-  const rotular = "ANMAGO STORE";
-  const rotulo = `${nombre} ${apellido}`;
-  const usuario = "web";
-  const mensajeCobro = articulosCarrito.map((p, i) =>
-    `🛍️ ${i + 1}. ${p.nombre} (${p.talla || "sin talla"}) x${p.cantidad} - $${p.precio.toLocaleString("es-CO")}`
-  ).join("\n");
 
-  try {
-    const response = await fetch("https://script.google.com/macros/s/AKfycby_14dzPzJuzJNBrlpjmIhY4EscKxlXAquZIOUSFzNwEWfb8QXfhwo2JQf7ZDPZSEET/exec", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        NOMBRECLIENTE: nombre,
-        "APELLIDO COMPL.": apellido,
-        DIRECCIONCLIENTE: direccion,
-        TELEFONOCLIENTE: telefonoCompleto,
-        CEDULA: cedula,
-        "COMPLEMENTO DE DIR": observaciones,
-        "CIUDAD DESTINO": ciudad,
-        CORREO: email,
-        USUARIO: usuario,
-        ROTULAR: rotular,
-        ROTULO: rotulo,
-        MENSAJECOBRO: mensajeCobro
-      })
-    });
-
-    const texto = await response.text();
-    console.log("📥 Respuesta del servidor:", texto);
-    alert(`Respuesta del servidor: ${texto}`);
-
-    if (!texto.includes("✅")) {
-      console.warn("⚠️ Registro no exitoso. Se detiene el flujo.");
-      return;
-    }
-
-    // Enriquecer productos con proveedor si falta
-    articulosCarrito.forEach(producto => {
-      if (!producto.proveedor && producto.id && catalogo.length > 0) {
-        const desdeCatalogo = catalogo.find(p => producto.id.includes(p.id));
-        if (desdeCatalogo?.proveedor) {
-          producto.proveedor = desdeCatalogo.proveedor;
-        }
+  // Enriquecer productos con proveedor si falta
+  articulosCarrito.forEach(producto => {
+    if (!producto.proveedor && producto.id && catalogo.length > 0) {
+      const desdeCatalogo = catalogo.find(p => producto.id.includes(p.id));
+      if (desdeCatalogo?.proveedor) {
+        producto.proveedor = desdeCatalogo.proveedor;
       }
-    });
+    }
+  });
 
-    // Mensaje para WhatsApp y Telegram
-    let mensajeWhatsApp = `🛍️ *¡Hola! Soy ${nombre} y quiero realizar el siguiente pedido:*\n\n`;
-    let mensajeTelegram = `🕒 Pedido registrado el ${new Date().toLocaleString("es-CO")}\n`;
-    mensajeTelegram += `👤 Nombre: ${nombre} ${apellido}\n📞 Teléfono: ${telefonoCompleto}\n🏠 Dirección: ${direccion}\n📍 Ciudad: ${ciudad} - ${departamento}\n📧 Email: ${email}\n\n`;
+  // Mensaje para WhatsApp y Telegram
+  let mensajeWhatsApp = `🛍️ *¡Hola! Soy ${nombre} y quiero realizar el siguiente pedido:*\n\n`;
+  let mensajeTelegram = `🕒 Pedido registrado el ${new Date().toLocaleString("es-CO")}\n`;
+  mensajeTelegram += `👤 Nombre: ${nombre} ${apellido}\n📞 Teléfono: ${telefonoCompleto}\n🏠 Dirección: ${direccion}\n📍 Ciudad: ${ciudad} - ${departamento}\n📧 Email: ${email}\n\n`;
 
-    const total = articulosCarrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
+  const total = articulosCarrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
 
-    articulosCarrito.forEach((producto, index) => {
-      mensajeWhatsApp += `*${index + 1}.* ${producto.nombre}\n🖼️ Imagen: ${producto.imagen}\n📏 Talla: ${producto.talla || "No especificada"}\n💲 Precio: $${producto.precio.toLocaleString("es-CO")}\n🔢 Cantidad: ${producto.cantidad}\n\n`;
-      mensajeTelegram += `🖼️ Imagen:\n${producto.imagen}\n📏 Talla: ${producto.talla || "No especificada"}\n🔢 Cantidad: ${producto.cantidad}\n🏬 Proveedor: ${limpiarTextoTelegram(producto.proveedor || "No definido")}\n\n`;
-    });
+  articulosCarrito.forEach((producto, index) => {
+    mensajeWhatsApp += `*${index + 1}.* ${producto.nombre}\n🖼️ Imagen: ${producto.imagen}\n📏 Talla: ${producto.talla || "No especificada"}\n💲 Precio: $${producto.precio.toLocaleString("es-CO")}\n🔢 Cantidad: ${producto.cantidad}\n\n`;
+    mensajeTelegram += `🖼️ Imagen:\n${producto.imagen}\n📏 Talla: ${producto.talla || "No especificada"}\n🔢 Cantidad: ${producto.cantidad}\n🏬 Proveedor: ${limpiarTextoTelegram(producto.proveedor || "No definido")}\n\n`;
+  });
 
-    mensajeWhatsApp += `*🧾 Total del pedido:* $${total.toLocaleString("es-CO")}\n\n✅ *¡Gracias por tu atención!*`;
+  mensajeWhatsApp += `*🧾 Total del pedido:* $${total.toLocaleString("es-CO")}\n\n✅ *¡Gracias por tu atención!*`;
 
-    const mensajeCodificado = encodeURIComponent(mensajeWhatsApp);
-    const urlWhatsApp = `https://wa.me/573006498710?text=${mensajeCodificado}`;
-    window.open(urlWhatsApp, "_blank");
+  const mensajeCodificado = encodeURIComponent(mensajeWhatsApp);
+  const urlWhatsApp = `https://wa.me/573006498710?text=${mensajeCodificado}`;
+  window.open(urlWhatsApp, "_blank");
 
-    await enviarPedidoTelegram(mensajeTelegram);
+  await enviarPedidoTelegram(mensajeTelegram);
 
-    // Limpiar carrito y cerrar modal
-    articulosCarrito = [];
-    guardarCarrito();
-    renderizarCarrito();
-    actualizarSubtotal();
-    actualizarContadorCarrito();
-    actualizarEstadoBotonWhatsApp();
-    modalFormulario?.hide();
-
+  // Limpiar carrito y cerrar modal
+  articulosCarrito = [];
+  guardarCarrito();
+  renderizarCarrito();
+  actualizarSubtotal();
+  actualizarContadorCarrito();
+  actualizarEstadoBotonWhatsApp();
+  modalFormulario?.hide();
+}
   } catch (error) {
     console.error("❌ Error al generar pedido:", error);
     alert(`❌ Error al generar el pedido: ${error.message || error}`);
