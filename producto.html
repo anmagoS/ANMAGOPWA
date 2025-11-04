@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Productos | Anmago Store</title>
+  <title>Producto | Anmago Store</title>
   <link rel="icon" href="logo.jpg" type="image/x-icon" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
   <link rel="stylesheet" href="https://ik.imagekit.io/mbsk9dati/CODIGOS/ESTILO.CSS">
@@ -13,12 +13,6 @@
   <!-- HEADER -->
   <div id="header-container"></div>
 
-  <!-- BUSCADOR -->
-  <div class="container mt-4 position-relative" style="max-width: 500px;">
-    <input id="buscador" class="form-control" placeholder="Buscar productos, categorías, precios..." autocomplete="off">
-    <div id="sugerencias" class="dropdown-menu position-absolute mt-1 w-100 z-3"></div>
-  </div>
-
   <!-- BOTÓN FLOTANTE DEL CARRITO -->
   <a href="#" class="btn btn_shopping" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
     <i class="bi bi-bag-heart"></i>
@@ -26,9 +20,23 @@
   </a>
 
   <!-- CONTENIDO PRINCIPAL -->
-  <main class="contenedor-categoria">
-    <h1 class="titulo-categoria text-center">Todos los productos</h1>
-    <div id="grid-productos" class="grid-productos"></div>
+  <main class="vista-producto">
+    <div class="container mt-4">
+      <a href="javascript:history.back()" class="btn btn-outline-dark mb-3">
+        <i class="bi bi-arrow-left"></i> Atrás
+      </a>
+      <h1 id="nombre" class="titulo-categoria">Cargando...</h1>
+      <p class="precio" id="precio"></p>
+      <p id="descripcion-corta" class="descripcion-corta text-muted fst-italic mt-2"></p>
+      <div id="video-producto" class="video-producto video-wrapper"></div>
+      <div id="galeria" class="grid-productos"></div>
+      <div id="descripcion-completa" class="descripcion-producto mt-4"></div>
+    </div>
+
+    <section class="contenedor-categoria mt-5">
+      <h2 class="titulo-categoria text-center">Variantes del mismo subtipo</h2>
+      <div id="variantes-subtipo" class="grid-productos"></div>
+    </section>
   </main>
 
   <!-- CARRITO OFFCANVAS -->
@@ -43,42 +51,113 @@
         <span class="fw-bold px-3">SUBTOTAL:</span>
         <span id="subtotal" class="fw-bold float-end px-2 fs-2">$0.00</span>
       </h5>
+      <div class="text-center mt-3">
+        <button class="btn btn-success w-100" id="btn-comprar">Comprar</button>
+      </div>
     </div>
   </div>
 
   <!-- FOOTER -->
   <div id="footer-container"></div>
 
-  <!-- SCRIPTS -->
+  <!-- MODAL ZOOM -->
+  <div class="modal fade" id="zoomModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content bg-transparent border-0">
+        <div class="modal-body text-center">
+          <img id="zoomImagen" src="" class="img-fluid rounded shadow" alt="Zoom" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL FORMULARIO CLIENTE -->
+  <div class="modal fade" id="modalFormularioCliente" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Datos del cliente</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <form id="formCliente">
+            <div class="mb-3">
+              <label for="nombreCliente" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombreCliente" required>
+            </div>
+            <div class="mb-3">
+              <label for="telefonoCliente" class="form-label">Teléfono</label>
+              <input type="tel" class="form-control" id="telefonoCliente" required>
+            </div>
+            <div class="mb-3">
+              <label for="direccionCliente" class="form-label">Dirección</label>
+              <input type="text" class="form-control" id="direccionCliente" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button id="btnEnviarPedido" class="btn btn-gradient" disabled>Enviar pedido</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="carrito.js"></script>
-  <script src="app.js"></script>
   <script src="buscador.js" type="module"></script>
 
-  <!-- INICIALIZACIÓN -->
   <script type="module">
     import { activarBuscadorGlobal } from './buscador.js';
 
     async function cargarCatalogo() {
-      try {
-        const res = await fetch("https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json");
-        const productos = await res.json();
-        renderizarProductos(productos);
-      } catch (error) {
-        document.getElementById("grid-productos").innerHTML = `<p class="text-center text-danger">Error al cargar productos.</p>`;
-      }
+      const res = await fetch("https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json");
+      return await res.json();
     }
 
-    function renderizarProductos(productos) {
-      const contenedor = document.getElementById("grid-productos");
-      contenedor.innerHTML = "";
+    function renderProducto(producto) {
+      document.getElementById("nombre").textContent = producto.producto || "Sin nombre";
+      document.getElementById("precio").textContent = `$${producto.precio.toLocaleString("es-CO")}`;
+      document.getElementById("descripcion-corta").textContent = producto.descripcion || "";
 
-      if (!productos || productos.length === 0) {
-        contenedor.innerHTML = `<p class="text-center text-muted">No hay productos disponibles.</p>`;
+      const galeria = document.getElementById("galeria");
+      const imagenes = producto.url?.split("[]") || [];
+      galeria.innerHTML = imagenes.map(src => `
+        <img src="${src}" alt="Imagen del producto" class="img-fluid rounded shadow m-2" style="max-width: 300px; cursor: zoom-in;" onclick="mostrarZoom('${src}')">
+      `).join("");
+
+      const videoWrapper = document.getElementById("video-producto");
+      if (producto.video_url?.includes("youtube.com") || producto.video_url?.includes("youtu.be")) {
+        const videoId = producto.video_url.split("/").pop().split("?")[0];
+        videoWrapper.innerHTML = `
+          <div class="ratio ratio-16x9">
+            <iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>
+          </div>
+        `;
+      }
+
+      document.getElementById("descripcion-completa").innerHTML = `
+        <h5 class="mt-4">Detalles del producto</h5>
+        <ul class="list-group list-group-flush text-start">
+          ${producto.categoria ? `<li class="list-group-item">Categoría: ${producto.categoria}</li>` : ""}
+          ${producto.subtipo ? `<li class="list-group-item">Subtipo: ${producto.subtipo}</li>` : ""}
+          ${producto.material ? `<li class="list-group-item">Material: ${producto.material}</li>` : ""}
+          ${producto.tallas ? `<li class="list-group-item">Tallas disponibles: ${producto.tallas}</li>` : ""}
+          ${producto.variables ? `<li class="list-group-item">Variantes: ${producto.variables}</li>` : ""}
+          ${producto.proveedor ? `<li class="list-group-item">Proveedor: ${producto.proveedor}</li>` : ""}
+        </ul>
+      `;
+    }
+
+    function renderVariantes(productos, subtipo, idActual) {
+      const contenedor = document.getElementById("variantes-subtipo");
+      const variantes = productos.filter(p => p.subtipo?.trim() === subtipo && p.id !== idActual);
+
+      if (variantes.length === 0) {
+        contenedor.innerHTML = `<p class="text-center text-muted">No hay variantes disponibles para este subtipo.</p>`;
         return;
       }
 
-      productos.forEach(producto => {
+      variantes.forEach(producto => {
         const imagen = producto.url?.split("[]")[0] || "REDES_IMAGES/default.jpg";
         const tarjeta = document.createElement("div");
         tarjeta.className = "producto";
@@ -94,6 +173,12 @@
       });
     }
 
+    function mostrarZoom(src) {
+      const modal = new bootstrap.Modal(document.getElementById("zoomModal"));
+      document.getElementById("zoomImagen").src = src;
+      modal.show();
+    }
+
     async function cargarHeaderFooter() {
       const header = await fetch("HEADER.HTML").then(res => res.text());
       document.getElementById("header-container").insertAdjacentHTML("afterbegin", header);
@@ -104,7 +189,27 @@
     document.addEventListener("DOMContentLoaded", async () => {
       await cargarHeaderFooter();
       activarBuscadorGlobal();
-      await cargarCatalogo();
+
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+      const catalogo = await cargarCatalogo();
+      const producto = catalogo.find(p => p.id === id);
+
+      if (!producto) {
+        document.getElementById("nombre").textContent = "Producto no encontrado";
+        document.getElementById("galeria").innerHTML = "<p class='text-muted'>Este producto no está disponible o fue eliminado del catálogo.</p>";
+        return;
+      }
+
+      renderProducto(producto);
+      renderVariantes(catalogo, producto.subtipo, producto.id);
+    });
+
+    document.addEventListener("click", (e) => {
+      if (e.target?.id === "btn-comprar") {
+        const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById("modalFormularioCliente"));
+        modal.show();
+      }
     });
   </script>
 </body>
