@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
- function generarPedidoWhatsApp() {
+function generarPedidoWhatsApp() {
   const nombre = document.getElementById("nombreCliente")?.value.trim();
   const apellido = document.getElementById("apellidoCliente")?.value.trim();
   const codigoPais = document.getElementById("codigoPais")?.value;
@@ -186,17 +186,37 @@ document.addEventListener("DOMContentLoaded", async () => {
   const tipoVia = document.getElementById("tipoVia")?.value;
   const numeroVia = document.getElementById("numeroVia")?.value.trim();
   const complementoVia = document.getElementById("complementoVia")?.value.trim();
+  const numeroAdicional1 = document.getElementById("numeroAdicional1")?.value.trim();
+  const complementoVia2 = document.getElementById("complementoVia2")?.value.trim();
+  const numeroAdicional2 = document.getElementById("numeroAdicional2")?.value.trim();
+  const tipoUnidad = document.getElementById("tipoUnidad")?.value;
+  const numeroApto = document.getElementById("numeroApto")?.value.trim();
   const barrio = document.getElementById("barrio")?.value.trim();
   const ciudadSelect = document.getElementById("ciudadCliente");
   const ciudad = ciudadSelect?.value;
   const departamento = ciudadSelect?.selectedOptions[0]?.dataset.departamento || "No definido";
   const email = document.getElementById("emailCliente")?.value.trim();
 
-  const direccion = `${tipoVia} ${numeroVia} ${complementoVia}, Barrio ${barrio}, ${ciudad}`;
+  // 🧠 Dirección robusta que omite campos vacíos
+  const direccion = [
+    tipoVia,
+    numeroVia,
+    complementoVia,
+    "N°",
+    numeroAdicional1,
+    complementoVia2,
+    "-",
+    numeroAdicional2,
+    tipoUnidad === "Apartamento" ? `Apto ${numeroApto}` : tipoUnidad,
+    barrio ? `Barrio ${barrio}` : null,
+    ciudad
+  ].filter(Boolean).join(" ");
+
   const telefonoCompleto = `${codigoPais}${telefono}`;
 
+  // Validación de campos obligatorios
   if (!nombre || !apellido || !telefono || !ciudad || !tipoVia || !numeroVia || !barrio || !email) {
-    alert("Por favor completa todos los campos.");
+    alert("Por favor completa todos los campos obligatorios.");
     return;
   }
 
@@ -211,13 +231,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     let mensajeWhatsApp = `🛍️ *¡Hola! Soy ${nombre} y quiero realizar el siguiente pedido:*\n\n`;
     let mensajeTelegram = `🕒 Pedido registrado el ${new Date().toLocaleString("es-CO")}\n`;
-mensajeTelegram += `👤 Nombre: ${nombre} ${apellido}\n📞 Teléfono: ${codigoPais}${telefono}\n🏠 Dirección: ${direccion}\n📍 Ciudad: ${ciudad}\n📧 Email: ${email}\n\n`;
-
+mensajeTelegram += `👤 Nombre: ${nombre} ${apellido}\n📞 Teléfono: ${codigoPais}${telefono}\n🏠 Dirección: ${direccion}\n📍 Ciudad: ${ciudad} - ${departamento}\n📧 Email: ${email}\n\n`;
 
     articulosCarrito.forEach((producto, index) => {
       mensajeWhatsApp += `*${index + 1}.* ${producto.nombre}\n🖼️ Imagen: ${producto.imagen}\n📏 Talla: ${producto.talla || "No especificada"}\n💲 Precio: $${producto.precio.toLocaleString("es-CO")}\n🔢 Cantidad: ${producto.cantidad}\n\n`;
-      mensajeTelegram += `🖼️ Imagen:\n${producto.imagen}\n📏 Talla: ${producto.talla || "No especificada"}\n🔢 Cantidad: ${producto.cantidad}\n🏬 Proveedor: ${limpiarTextoTelegram(producto.proveedor || "No definido")}\n📍 Ciudad: ${ciudad} - ${departamento}\n\n`;
-    });
+      mensajeTelegram += `🖼️ Imagen:\n${producto.imagen}\n📏 Talla: ${producto.talla || "No especificada"}\n🔢 Cantidad: ${producto.cantidad}\n🏬 Proveedor: ${limpiarTextoTelegram(producto.proveedor || "No definido")}\n\n`;
+});
 
     const total = articulosCarrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
     mensajeWhatsApp += `*🧾 Total del pedido:* $${total.toLocaleString("es-CO")}\n\n✅ *¡Gracias por tu atención!*`;
