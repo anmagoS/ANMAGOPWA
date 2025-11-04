@@ -222,28 +222,26 @@ document.addEventListener("DOMContentLoaded", async () => {
 }
 
  try {
-      await fetch("http://localhost:5678/webhook/registro-cliente", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          NOMBRECLIENTE: nombre,
-          "APELLIDO COMPL.": apellido,
-          DIRECCIONCLIENTE: direccion,
-          TELEFONOCLIENTE: telefonoCompleto,
-          CEDULA: cedula,
-          "COMPLEMENTO DE DIR": complementoVia || "",
-          "CIUDAD DESTINO": ciudad,
-          CORREO: email,
-          USUARIO: "",
-          ROTULAR: "",
-          ROTULO: "",
-          MENSAJECOBRO: ""
-        })
-      });
-      console.log("✅ Registro enviado a n8n");
-    } catch (error) {
-      console.error("❌ Error al enviar a n8n:", error);
-    }
+     await fetch("https://script.google.com/macros/s/AKfycbxa3etLxnD1SZlTaNhPTNrcrAfl9XWB7_1H3HMcX-NwvF1z4fOKUy8HT9QNtEtrRByU/exec", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    NOMBRECLIENTE: nombre,
+    "APELLIDO COMPL.": apellido,
+    DIRECCIONCLIENTE: direccion,
+    TELEFONOCLIENTE: telefonoCompleto,
+    CEDULA: cedula,
+    "COMPLEMENTO DE DIR": complementoVia || "",
+    "CIUDAD DESTINO": ciudad,
+    CORREO: email,
+    USUARIO: "",
+    ROTULAR: "",
+    ROTULO: "",
+    MENSAJECOBRO: ""
+  })
+});
+console.log("✅ Registro enviado a Apps Script");
+
 
     articulosCarrito.forEach(producto => {
       if (!producto.proveedor && producto.id && catalogo.length > 0) {
