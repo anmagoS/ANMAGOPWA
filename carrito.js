@@ -180,6 +180,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function generarPedidoWhatsApp() {
     const ciudadSelect = document.getElementById("ciudadCliente");
+    const cedula = document.getElementById("cedulaCliente")?.value.trim();
     const nombre = document.getElementById("nombreCliente")?.value.trim();
     const apellido = document.getElementById("apellidoCliente")?.value.trim();
     const codigoPais = document.getElementById("codigoPais")?.value;
@@ -215,10 +216,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const telefonoCompleto = `${codigoPais}${telefono}`;
 
-    if (!nombre || !apellido || !telefono || !ciudad || !tipoVia     || !numeroVia || !barrio || !email) {
-      alert("Por favor completa todos los campos obligatorios.");
-      return;
-    }
+   if (!nombre || !apellido || !telefono || !ciudad || !tipoVia || !numeroVia || !barrio || !email || !cedula) {
+  alert("Por favor completa todos los campos obligatorios.");
+  return;
+}
+
  try {
       await fetch("http://localhost:5678/webhook/registro-cliente", {
         method: "POST",
