@@ -11,7 +11,7 @@ async function cargarCatalogo() {
     console.error("❌ Error al cargar catálogo en carrito.js:", error);
   }
 }
-// 🔗 Cargar ciudades desde JSON institucional
+
 async function cargarCiudades() {
   try {
     const res = await fetch("https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/ciudades.json");
@@ -20,9 +20,9 @@ async function cargarCiudades() {
 
     ciudades.forEach(({ departamento, ciudad }) => {
       const option = document.createElement("option");
-    option.value = ciudad;
-    option.textContent = `${ciudad} (${departamento})`;
-    option.dataset.departamento = departamento;
+      option.value = ciudad;
+      option.textContent = `${ciudad} (${departamento})`;
+      option.dataset.departamento = departamento;
       selectCiudad.appendChild(option);
     });
 
@@ -31,6 +31,7 @@ async function cargarCiudades() {
     console.error("❌ Error al cargar ciudades:", error);
   }
 }
+
 document.addEventListener("DOMContentLoaded", async () => {
   await cargarCatalogo();
   await cargarCiudades();
@@ -41,12 +42,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   const subtotalElement = document.getElementById("subtotal");
   const contadorCarrito = document.getElementById("contador-carrito");
   const closeButton = document.querySelector(".btn-close");
-  const btnWhatsApp = document.querySelector("button[onclick='generarPedidoWhatsApp()']");
+  const btnEnviarPedido = document.getElementById("btnEnviarPedido");
+  const formCliente = document.getElementById("formCliente");
   const modalFormulario = document.getElementById("modalFormularioCliente")
     ? new bootstrap.Modal(document.getElementById("modalFormularioCliente"))
     : null;
-  const formCliente = document.getElementById("formCliente");
-  const btnEnviarPedido = document.getElementById("btnEnviarPedido");
 
   function limpiarTextoTelegram(texto) {
     return texto.replace(/[*_`[\]()~>#+=|{}.!]/g, '').replace(/\n/g, ' ').trim();
@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     if (!producto.proveedor && producto.id && catalogo.length > 0) {
-      const desdeCatalogo = catalogo.find(p => p.id === producto.id);
+      const desdeCatalogo = catalogo.find(p => producto.id.includes(p.id));
       if (desdeCatalogo?.proveedor) {
         producto.proveedor = desdeCatalogo.proveedor;
       }
@@ -154,6 +154,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function actualizarEstadoBotonWhatsApp() {
+    const btnWhatsApp = document.querySelector("button[onclick='generarPedidoWhatsApp()']");
     if (btnWhatsApp) {
       btnWhatsApp.disabled = articulosCarrito.length === 0;
     }
@@ -177,52 +178,51 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-function generarPedidoWhatsApp() {
-  const nombre = document.getElementById("nombreCliente")?.value.trim();
-  const apellido = document.getElementById("apellidoCliente")?.value.trim();
-  const codigoPais = document.getElementById("codigoPais")?.value;
-  const telefono = document.getElementById("telefonoCliente")?.value.trim();
-  const tipoVia = document.getElementById("tipoVia")?.value;
-  const numeroVia = document.getElementById("numeroVia")?.value.trim();
-  const complementoVia = document.getElementById("complementoVia")?.value.trim();
-  const numeroAdicional1 = document.getElementById("numeroAdicional1")?.value.trim();
-  const complementoVia2 = document.getElementById("complementoVia2")?.value.trim();
-  const numeroAdicional2 = document.getElementById("numeroAdicional2")?.value.trim();
-  const tipoUnidad = document.getElementById("tipoUnidad")?.value;
-  const numeroApto = document.getElementById("numeroApto")?.value.trim();
-  const barrio = document.getElementById("barrio")?.value.trim();
-  const ciudad = ciudadSelect?.value.trim();
-  const optionMatch = Array.from(document.querySelectorAll("#listaCiudades option"))
-  .find(opt => opt.value === ciudad);
-  const departamento = optionMatch?.dataset.departamento || "No definido";
-  const email = document.getElementById("emailCliente")?.value.trim();
+  async function generarPedidoWhatsApp() {
+    const ciudadSelect = document.getElementById("ciudadCliente");
+    const nombre = document.getElementById("nombreCliente")?.value.trim();
+    const apellido = document.getElementById("apellidoCliente")?.value.trim();
+    const codigoPais = document.getElementById("codigoPais")?.value;
+    const telefono = document.getElementById("telefonoCliente")?.value.trim();
+    const tipoVia = document.getElementById("tipoVia")?.value;
+    const numeroVia = document.getElementById("numeroVia")?.value.trim();
+    const complementoVia = document.getElementById("complementoVia1")?.value.trim();
+    const numeroAdicional1 = document.getElementById("numeroAdicional1")?.value.trim();
+    const complementoVia2 = document.getElementById("complementoVia2")?.value.trim();
+    const numeroAdicional2 = document.getElementById("numeroAdicional2")?.value.trim();
+    const tipoUnidad = document.getElementById("tipoUnidad")?.value;
+    const numeroApto = document.getElementById("numeroApto")?.value.trim();
+    const barrio = document.getElementById("barrio")?.value.trim();
+    const ciudad = ciudadSelect?.value.trim();
+    const optionMatch = Array.from(document.querySelectorAll("#listaCiudades option"))
+      .find(opt => opt.value === ciudad);
+    const departamento = optionMatch?.dataset.departamento || "No definido";
+    const email = document.getElementById("emailCliente")?.value.trim();
 
-  // 🧠 Dirección robusta que omite campos vacíos
-  const direccion = [
-    tipoVia,
-    numeroVia,
-    complementoVia,
-    "N°",
-    numeroAdicional1,
-    complementoVia2,
-    "-",
-    numeroAdicional2,
-    tipoUnidad === "Apartamento" ? `Apto ${numeroApto}` : tipoUnidad,
-    barrio ? `Barrio ${barrio}` : null,
-    ciudad
-  ].filter(Boolean).join(" ");
+    const direccion = [
+      tipoVia,
+      numeroVia,
+      complementoVia,
+      "N°",
+      numeroAdicional1,
+      complementoVia2,
+      "-",
+      numeroAdicional2,
+      tipoUnidad === "Apartamento" ? `Apto ${numeroApto}` : tipoUnidad,
+      barrio ? `Barrio ${barrio}` : null,
+      ciudad
+    ].filter(Boolean).join(" ");
 
-  const telefonoCompleto = `${codigoPais}${telefono}`;
+    const telefonoCompleto = `${codigoPais}${telefono}`;
 
-  // Validación de campos obligatorios
-  if (!nombre || !apellido || !telefono || !ciudad || !tipoVia || !numeroVia || !barrio || !email) {
-    alert("Por favor completa todos los campos obligatorios.");
-    return;
-  }
+    if (!nombre || !apellido || !telefono || !ciudad || !tipoVia     || !numeroVia || !barrio || !email) {
+      alert("Por favor completa todos los campos obligatorios.");
+      return;
+    }
 
     articulosCarrito.forEach(producto => {
       if (!producto.proveedor && producto.id && catalogo.length > 0) {
-        const desdeCatalogo = catalogo.find(p => p.id === producto.id);
+        const desdeCatalogo = catalogo.find(p => producto.id.includes(p.id));
         if (desdeCatalogo?.proveedor) {
           producto.proveedor = desdeCatalogo.proveedor;
         }
@@ -231,12 +231,12 @@ function generarPedidoWhatsApp() {
 
     let mensajeWhatsApp = `🛍️ *¡Hola! Soy ${nombre} y quiero realizar el siguiente pedido:*\n\n`;
     let mensajeTelegram = `🕒 Pedido registrado el ${new Date().toLocaleString("es-CO")}\n`;
-mensajeTelegram += `👤 Nombre: ${nombre} ${apellido}\n📞 Teléfono: ${codigoPais}${telefono}\n🏠 Dirección: ${direccion}\n📍 Ciudad: ${ciudad} - ${departamento}\n📧 Email: ${email}\n\n`;
+    mensajeTelegram += `👤 Nombre: ${nombre} ${apellido}\n📞 Teléfono: ${telefonoCompleto}\n🏠 Dirección: ${direccion}\n📍 Ciudad: ${ciudad} - ${departamento}\n📧 Email: ${email}\n\n`;
 
     articulosCarrito.forEach((producto, index) => {
       mensajeWhatsApp += `*${index + 1}.* ${producto.nombre}\n🖼️ Imagen: ${producto.imagen}\n📏 Talla: ${producto.talla || "No especificada"}\n💲 Precio: $${producto.precio.toLocaleString("es-CO")}\n🔢 Cantidad: ${producto.cantidad}\n\n`;
       mensajeTelegram += `🖼️ Imagen:\n${producto.imagen}\n📏 Talla: ${producto.talla || "No especificada"}\n🔢 Cantidad: ${producto.cantidad}\n🏬 Proveedor: ${limpiarTextoTelegram(producto.proveedor || "No definido")}\n\n`;
-});
+    });
 
     const total = articulosCarrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
     mensajeWhatsApp += `*🧾 Total del pedido:* $${total.toLocaleString("es-CO")}\n\n✅ *¡Gracias por tu atención!*`;
@@ -246,30 +246,30 @@ mensajeTelegram += `👤 Nombre: ${nombre} ${apellido}\n📞 Teléfono: ${codigo
     window.open(urlWhatsApp, "_blank");
 
     enviarPedidoTelegram(mensajeTelegram);
-    // 📤 Enviar datos al Webhook de n8n
-try {
-  await fetch("http://localhost:5678/webhook/registro-cliente", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      NOMBRECLIENTE: nombre,
-      "APELLIDO COMPL.": apellido,
-      DIRECCIONCLIENTE: direccion,
-      TELEFONOCLIENTE: telefonoCompleto,
-      CEDULA: "", // puedes agregar si tienes campo
-      "COMPLEMENTO DE DIR": complementoVia || "",
-      "CIUDAD DESTINO": ciudad,
-      CORREO: email,
-      USUARIO: "", // si tienes campo de usuario
-      ROTULAR: "", // si tienes opción de rotular
-      ROTULO: "", // si tienes campo de rotulo
-      MENSAJECOBRO: "" // si tienes mensaje de cobro
-    })
-  });
-  console.log("✅ Registro enviado a n8n");
-} catch (error) {
-  console.error("❌ Error al enviar a n8n:", error);
-}
+
+    try {
+      await fetch("http://localhost:5678/webhook/registro-cliente", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          NOMBRECLIENTE: nombre,
+          "APELLIDO COMPL.": apellido,
+          DIRECCIONCLIENTE: direccion,
+          TELEFONOCLIENTE: telefonoCompleto,
+          CEDULA: "",
+          "COMPLEMENTO DE DIR": complementoVia || "",
+          "CIUDAD DESTINO": ciudad,
+          CORREO: email,
+          USUARIO: "",
+          ROTULAR: "",
+          ROTULO: "",
+          MENSAJECOBRO: ""
+        })
+      });
+      console.log("✅ Registro enviado a n8n");
+    } catch (error) {
+      console.error("❌ Error al enviar a n8n:", error);
+    }
 
     articulosCarrito = [];
     guardarCarrito();
@@ -280,7 +280,7 @@ try {
     modalFormulario?.hide();
   }
 
-    async function enviarPedidoTelegram(mensaje) {
+  async function enviarPedidoTelegram(mensaje) {
     const token = "8320682242:AAG4h89_8WVmljeEvYHjzRxmnJDt-HoxcAY";
     const chatId = "-1003044241716";
     const url = `https://api.telegram.org/bot${token}/sendMessage`;
@@ -308,48 +308,42 @@ try {
     }
   }
 
-  // 🛍️ Activar botón flotante del carrito
   btn_shopping?.addEventListener("click", () => {
     const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasCarrito);
     bsOffcanvas.toggle();
     btn_shopping.classList.toggle("balanceo");
   });
 
-  // ❌ Cerrar carrito al hacer clic en la X
   closeButton?.addEventListener("click", () => cerrarCarrito());
 
-  // 🧩 Mostrar modal al hacer clic en "Comprar"
   document.addEventListener("click", (e) => {
     if (e.target?.id === "btn-comprar" && modalFormulario) {
       modalFormulario.show();
     }
   });
 
- // 🧠 Validar campos del formulario
-formCliente?.addEventListener("input", () => {
-  const nombre = document.getElementById("nombreCliente")?.value.trim();
-  const apellido = document.getElementById("apellidoCliente")?.value.trim();
-  const telefono = document.getElementById("telefonoCliente")?.value.trim();
-  const ciudad = document.getElementById("ciudadCliente")?.value;
-  const email = document.getElementById("emailCliente")?.value.trim();
+  formCliente?.addEventListener("input", () => {
+    const nombre = document.getElementById("nombreCliente")?.value.trim();
+    const apellido = document.getElementById("apellidoCliente")?.value.trim();
+    const telefono = document.getElementById("telefonoCliente")?.value.trim();
+    const ciudad = document.getElementById("ciudadCliente")?.value;
+    const email = document.getElementById("emailCliente")?.value.trim();
 
-  const telefonoValido = /^\d{10}$/.test(telefono);
-  const valido = nombre && apellido && telefonoValido && ciudad && email;
+    const telefonoValido = /^\d{10}$/.test(telefono);
+    const valido = nombre && apellido && telefonoValido && ciudad && email;
 
-  if (btnEnviarPedido) {
-    btnEnviarPedido.disabled = !valido;
-  }
-});
-  // 📦 Enviar pedido al hacer clic en el botón del modal
+    if (btnEnviarPedido) {
+      btnEnviarPedido.disabled = !valido;
+    }
+  });
+
   btnEnviarPedido?.addEventListener("click", generarPedidoWhatsApp);
 
-  // 🔁 Inicializar interfaz
   renderizarCarrito();
   actualizarSubtotal();
   actualizarContadorCarrito();
   actualizarEstadoBotonWhatsApp();
 
-  // 🔗 Exponer funciones globales
   window.agregarAlCarrito = agregarAlCarrito;
   window.generarPedidoWhatsApp = generarPedidoWhatsApp;
   window.renderizarCarrito = renderizarCarrito;
