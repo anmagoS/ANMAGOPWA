@@ -10,7 +10,6 @@ async function cargarCatalogo() {
     console.error("❌ Error al cargar catálogo:", error);
   }
 }
-
 async function cargarCiudades() {
   try {
     const res = await fetch("https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/ciudades.json");
