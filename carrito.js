@@ -11,6 +11,7 @@ async function cargarCatalogo() {
     console.error("❌ Error al cargar catálogo en carrito.js:", error);
   }
 }
+
 async function cargarCiudades() {
   try {
     const res = await fetch("https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/ciudades.json");
@@ -194,12 +195,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     const numeroApto = document.getElementById("numeroApto")?.value.trim();
     const barrio = document.getElementById("barrio")?.value.trim();
     const ciudad = ciudadSelect?.value.trim();
-    const optionMatch = Array.from(document.querySelectorAll("#listaCiudades option"))
-      .find(opt => opt.value === ciudad);
-    const departamento = optionMatch?.dataset.departamento || "No definido";
-    const email = document.getElementById("emailCliente")?.value.trim();
+    const observaciones = document.getElementById("observacionesDireccion")?.value.trim();
+    const departamento = ciudadSelect?.selectedOptions[0]?.dataset.departamento || "No definido";
+    const email = "ANMAGOSTORE@GMAIL.COM";
 
-    const direccion = [
+    if (!nombre || !apellido || !telefono || !ciudad || !tipoVia || !numeroVia || !barrio || !cedula || !/^\d+$/.test(cedula)) {
+      alert("Por favor completa todos los campos obligatorios y asegúrate que la cédula solo tenga números.");
+      return;
+    }
+
+      const direccion = [
       tipoVia,
       numeroVia,
       complementoVia,
@@ -210,73 +215,70 @@ document.addEventListener("DOMContentLoaded", async () => {
       numeroAdicional2,
       tipoUnidad === "Apartamento" ? `Apto ${numeroApto}` : tipoUnidad,
       barrio ? `Barrio ${barrio}` : null,
-      ciudad
+      ciudad,
+      observaciones ? `📝 Observaciones: ${observaciones}` : null
     ].filter(Boolean).join(" ");
 
     const telefonoCompleto = `${codigoPais}${telefono}`;
 
-   if (!nombre || !apellido || !telefono || !ciudad || !tipoVia || !numeroVia || !barrio || !email || !cedula) {
-  alert("Por favor completa todos los campos obligatorios.");
-  return;
-}
+    try {
+      await fetch("https://script.google.com/macros/s/AKfycbxa3etLxnD1SZlTaNhPTNrcrAfl9XWB7_1H3HMcX-NwvF1z4fOKUy8HT9QNtEtrRByU/exec", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          NOMBRECLIENTE: nombre,
+          "APELLIDO COMPL.": apellido,
+          DIRECCIONCLIENTE: direccion,
+          TELEFONOCLIENTE: telefonoCompleto,
+          CEDULA: cedula,
+          "COMPLEMENTO DE DIR": complementoVia || "",
+          "CIUDAD DESTINO": ciudad,
+          CORREO: email,
+          USUARIO: email,
+          ROTULAR: "",
+          ROTULO: "",
+          MENSAJECOBRO: ""
+        })
+      });
+      console.log("✅ Registro enviado a Apps Script");
 
- try {
-     await fetch("https://script.google.com/macros/s/AKfycbxa3etLxnD1SZlTaNhPTNrcrAfl9XWB7_1H3HMcX-NwvF1z4fOKUy8HT9QNtEtrRByU/exec", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    NOMBRECLIENTE: nombre,
-    "APELLIDO COMPL.": apellido,
-    DIRECCIONCLIENTE: direccion,
-    TELEFONOCLIENTE: telefonoCompleto,
-    CEDULA: cedula,
-    "COMPLEMENTO DE DIR": complementoVia || "",
-    "CIUDAD DESTINO": ciudad,
-    CORREO: email,
-    USUARIO: "",
-    ROTULAR: "",
-    ROTULO: "",
-    MENSAJECOBRO: ""
-  })
-});
-console.log("✅ Registro enviado a Apps Script");
-
-
-    articulosCarrito.forEach(producto => {
-      if (!producto.proveedor && producto.id && catalogo.length > 0) {
-        const desdeCatalogo = catalogo.find(p => producto.id.includes(p.id));
-        if (desdeCatalogo?.proveedor) {
-          producto.proveedor = desdeCatalogo.proveedor;
+      articulosCarrito.forEach(producto => {
+        if (!producto.proveedor && producto.id && catalogo.length > 0) {
+          const desdeCatalogo = catalogo.find(p => producto.id.includes(p.id));
+          if (desdeCatalogo?.proveedor) {
+            producto.proveedor = desdeCatalogo.proveedor;
+          }
         }
-      }
-    });
+      });
 
-    let mensajeWhatsApp = `🛍️ *¡Hola! Soy ${nombre} y quiero realizar el siguiente pedido:*\n\n`;
-    let mensajeTelegram = `🕒 Pedido registrado el ${new Date().toLocaleString("es-CO")}\n`;
-    mensajeTelegram += `👤 Nombre: ${nombre} ${apellido}\n📞 Teléfono: ${telefonoCompleto}\n🏠 Dirección: ${direccion}\n📍 Ciudad: ${ciudad} - ${departamento}\n📧 Email: ${email}\n\n`;
+      let mensajeWhatsApp = `🛍️ *¡Hola! Soy ${nombre} y quiero realizar el siguiente pedido:*\n\n`;
+      let mensajeTelegram = `🕒 Pedido registrado el ${new Date().toLocaleString("es-CO")}\n`;
+      mensajeTelegram += `👤 Nombre: ${nombre} ${apellido}\n📞 Teléfono: ${telefonoCompleto}\n🏠 Dirección: ${direccion}\n📍 Ciudad: ${ciudad} - ${departamento}\n📧 Email: ${email}\n\n`;
 
-    articulosCarrito.forEach((producto, index) => {
-      mensajeWhatsApp += `*${index + 1}.* ${producto.nombre}\n🖼️ Imagen: ${producto.imagen}\n📏 Talla: ${producto.talla || "No especificada"}\n💲 Precio: $${producto.precio.toLocaleString("es-CO")}\n🔢 Cantidad: ${producto.cantidad}\n\n`;
-      mensajeTelegram += `🖼️ Imagen:\n${producto.imagen}\n📏 Talla: ${producto.talla || "No especificada"}\n🔢 Cantidad: ${producto.cantidad}\n🏬 Proveedor: ${limpiarTextoTelegram(producto.proveedor || "No definido")}\n\n`;
-    });
+      articulosCarrito.forEach((producto, index) => {
+        mensajeWhatsApp += `*${index + 1}.* ${producto.nombre}\n🖼️ Imagen: ${producto.imagen}\n📏 Talla: ${producto.talla || "No especificada"}\n💲 Precio: $${producto.precio.toLocaleString("es-CO")}\n🔢 Cantidad: ${producto.cantidad}\n\n`;
+        mensajeTelegram += `🖼️ Imagen:\n${producto.imagen}\n📏 Talla: ${producto.talla || "No especificada"}\n🔢 Cantidad: ${producto.cantidad}\n🏬 Proveedor: ${limpiarTextoTelegram(producto.proveedor || "No definido")}\n\n`;
+      });
 
-    const total = articulosCarrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
-    mensajeWhatsApp += `*🧾 Total del pedido:* $${total.toLocaleString("es-CO")}\n\n✅ *¡Gracias por tu atención!*`;
+      const total = articulosCarrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
+      mensajeWhatsApp += `*🧾 Total del pedido:* $${total.toLocaleString("es-CO")}\n\n✅ *¡Gracias por tu atención!*`;
 
-    const mensajeCodificado = encodeURIComponent(mensajeWhatsApp);
-    const urlWhatsApp = `https://wa.me/573006498710?text=${mensajeCodificado}`;
-    window.open(urlWhatsApp, "_blank");
+      const mensajeCodificado = encodeURIComponent(mensajeWhatsApp);
+      const urlWhatsApp = `https://wa.me/573006498710?text=${mensajeCodificado}`;
+      window.open(urlWhatsApp, "_blank");
 
-    enviarPedidoTelegram(mensajeTelegram);
+      enviarPedidoTelegram(mensajeTelegram);
 
-   
-    articulosCarrito = [];
-    guardarCarrito();
-    renderizarCarrito();
-    actualizarSubtotal();
-    actualizarContadorCarrito();
-    actualizarEstadoBotonWhatsApp();
-    modalFormulario?.hide();
+      articulosCarrito = [];
+      guardarCarrito();
+      renderizarCarrito();
+      actualizarSubtotal();
+      actualizarContadorCarrito();
+      actualizarEstadoBotonWhatsApp();
+      modalFormulario?.hide();
+    } catch (error) {
+      console.error("❌ Error al generar pedido:", error);
+    }
   }
 
   async function enviarPedidoTelegram(mensaje) {
@@ -326,10 +328,10 @@ console.log("✅ Registro enviado a Apps Script");
     const apellido = document.getElementById("apellidoCliente")?.value.trim();
     const telefono = document.getElementById("telefonoCliente")?.value.trim();
     const ciudad = document.getElementById("ciudadCliente")?.value;
-    const email = document.getElementById("emailCliente")?.value.trim();
-
+    const cedula = document.getElementById("cedulaCliente")?.value.trim();
     const telefonoValido = /^\d{10}$/.test(telefono);
-    const valido = nombre && apellido && telefonoValido && ciudad && email;
+    const cedulaValida = /^\d+$/.test(cedula);
+    const valido = nombre && apellido && telefonoValido && ciudad && cedulaValida;
 
     if (btnEnviarPedido) {
       btnEnviarPedido.disabled = !valido;
