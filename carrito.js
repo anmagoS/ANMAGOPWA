@@ -228,24 +228,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     ).join("\n");
 
     try {
-      await fetch("https://script.google.com/macros/s/AKfycbxa3etLxnD1SZlTaNhPTNrcrAfl9XWB7_1H3HMcX-NwvF1z4fOKUy8HT9QNtEtrRByU/exec", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          NOMBRECLIENTE: nombre,
-          "APELLIDO COMPL.": apellido,
-          DIRECCIONCLIENTE: direccion,
-          TELEFONOCLIENTE: telefonoCompleto,
-          CEDULA: cedula,
-          "COMPLEMENTO DE DIR": complementoVia || "",
-          "CIUDAD DESTINO": ciudad,
-          CORREO: email,
-          USUARIO: email,
-          ROTULAR: rotular,
-          ROTULO: rotulo,
-          MENSAJECOBRO: mensajeCobro
-        })
-      });
+     await fetch("https://script.google.com/macros/s/AKfycbxa3etLxnD1SZlTaNhPTNrcrAfl9XWB7_1H3HMcX-NwvF1z4fOKUy8HT9QNtEtrRByU/exec", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    NOMBRECLIENTE: nombre,
+    "APELLIDO COMPL.": apellido,
+    DIRECCIONCLIENTE: direccion,
+    TELEFONOCLIENTE: telefonoCompleto,
+    CEDULA: cedula,
+   "CIUDAD DESTINO": ciudad,
+    CORREO: email
+  })
+});
+
       console.log("✅ Registro enviado a Apps Script");
 
       // Enriquecer productos con proveedor si falta
