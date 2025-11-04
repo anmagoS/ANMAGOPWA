@@ -285,23 +285,15 @@ formCliente?.addEventListener("input", () => {
   const apellido = document.getElementById("apellidoCliente")?.value.trim();
   const telefono = document.getElementById("telefonoCliente")?.value.trim();
   const ciudad = document.getElementById("ciudadCliente")?.value;
-  const tipoVia = document.getElementById("tipoVia")?.value;
-  const numeroVia = document.getElementById("numeroVia")?.value.trim();
-  const numeroAdicional1 = document.getElementById("numeroAdicional1")?.value.trim(); // ← este es el nuevo campo obligatorio
-  const barrio = document.getElementById("barrio")?.value.trim();
   const email = document.getElementById("emailCliente")?.value.trim();
 
   const telefonoValido = /^\d{7}$/.test(telefono);
-
-  const valido = nombre && apellido && telefonoValido && ciudad && tipoVia && numeroVia && numeroAdicional1;
+  const valido = nombre && apellido && telefonoValido && ciudad && email;
 
   if (btnEnviarPedido) {
     btnEnviarPedido.disabled = !valido;
   }
 });
-
-
-
   // 📦 Enviar pedido al hacer clic en el botón del modal
   btnEnviarPedido?.addEventListener("click", generarPedidoWhatsApp);
 
