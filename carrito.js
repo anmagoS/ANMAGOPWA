@@ -279,24 +279,27 @@ mensajeTelegram += `👤 Nombre: ${nombre} ${apellido}\n📞 Teléfono: ${codigo
     }
   });
 
-  // 🧠 Validar campos del formulario
-  formCliente?.addEventListener("input", () => {
+ // 🧠 Validar campos del formulario
+formCliente?.addEventListener("input", () => {
   const nombre = document.getElementById("nombreCliente")?.value.trim();
   const apellido = document.getElementById("apellidoCliente")?.value.trim();
   const telefono = document.getElementById("telefonoCliente")?.value.trim();
   const ciudad = document.getElementById("ciudadCliente")?.value;
   const tipoVia = document.getElementById("tipoVia")?.value;
   const numeroVia = document.getElementById("numeroVia")?.value.trim();
+  const numeroAdicional1 = document.getElementById("numeroAdicional1")?.value.trim(); // ← este es el nuevo campo obligatorio
   const barrio = document.getElementById("barrio")?.value.trim();
   const email = document.getElementById("emailCliente")?.value.trim();
 
   const telefonoValido = /^\d{7}$/.test(telefono);
-  const valido = nombre && apellido && telefonoValido && ciudad && tipoVia && numeroVia && barrio && email;
+
+  const valido = nombre && apellido && telefonoValido && ciudad && tipoVia && numeroVia && numeroAdicional1;
 
   if (btnEnviarPedido) {
     btnEnviarPedido.disabled = !valido;
   }
 });
+
 
 
   // 📦 Enviar pedido al hacer clic en el botón del modal
