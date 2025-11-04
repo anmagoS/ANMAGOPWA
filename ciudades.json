@@ -1,0 +1,4482 @@
+[
+  {
+    "departamento": "AMAZONAS",
+    "ciudad": "EL ENCANTO"
+  },
+  {
+    "departamento": "AMAZONAS",
+    "ciudad": "EL ENCANTO"
+  },
+  {
+    "departamento": "AMAZONAS",
+    "ciudad": "LA CHORRERA"
+  },
+  {
+    "departamento": "AMAZONAS",
+    "ciudad": "LA PEDRERA"
+  },
+  {
+    "departamento": "AMAZONAS",
+    "ciudad": "LA VICTORIA"
+  },
+  {
+    "departamento": "AMAZONAS",
+    "ciudad": "LETICIA"
+  },
+  {
+    "departamento": "AMAZONAS",
+    "ciudad": "MIRITI  PARANÁ"
+  },
+  {
+    "departamento": "AMAZONAS",
+    "ciudad": "PUERTO ALEGRIA"
+  },
+  {
+    "departamento": "AMAZONAS",
+    "ciudad": "PUERTO ARICA"
+  },
+  {
+    "departamento": "AMAZONAS",
+    "ciudad": "PUERTO NARIÑO"
+  },
+  {
+    "departamento": "AMAZONAS",
+    "ciudad": "PUERTO SANTANDER"
+  },
+  {
+    "departamento": "AMAZONAS",
+    "ciudad": "TARAPACÁ"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "CÁCERES"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "CAUCASIA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "EL BAGRE"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "NECHÍ"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "TARAZÁ"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "ZARAGOZA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "CARACOLÍ"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "MACEO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "PUERTO BERRIO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "PUERTO NARE"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "PUERTO TRIUNFO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "YONDÓ"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "AMALFI"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "ANORÍ"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "CISNEROS"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "REMEDIOS"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "SAN ROQUE"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "SANTO DOMINGO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "SEGOVIA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "VEGACHÍ"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "YALÍ"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "YOLOMBÓ"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "ANGOSTURA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "BELMIRA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "BRICEÑO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "CAMPAMENTO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "CAROLINA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "DON MATIAS"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "ENTRERRIOS"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "GÓMEZ PLATA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "GUADALUPE"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "ITUANGO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "SAN ANDRÉS"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "SAN JOSÉ DE LA MONTAÑA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "SAN PEDRO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "SANTA ROSA DE OSOS"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "TOLEDO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "VALDIVIA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "YARUMAL"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "ABRIAQUÍ"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "ANZA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "ARMENIA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "BURITICÁ"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "CAÑASGORDAS"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "DABEIBA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "EBÉJICO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "FRONTINO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "GIRALDO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "HELICONIA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "LIBORINA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "OLAYA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "PEQUE"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "SABANALARGA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "SAN JERÓNIMO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "SANTAFÉ DE ANTIOQUIA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "SOPETRAN"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "URAMITA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "ABEJORRAL"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "ALEJANDRÍA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "ARGELIA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "CARMEN DE VIBORAL"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "COCORNÁ"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "CONCEPCIÓN"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "GRANADA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "GUARNE"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "GUATAPE"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "LA CEJA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "LA UNIÓN"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "MARINILLA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "NARIÑO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "PEÑOL"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "RETIRO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "RIONEGRO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "SAN CARLOS"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "SAN FRANCISCO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "SAN LUIS"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "SAN RAFAEL"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "SAN VICENTE"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "SANTUARIO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "SONSON"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "AMAGA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "ANDES"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "ANGELOPOLIS"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "BETANIA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "BETULIA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "CAICEDO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "CARAMANTA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "CIUDAD BOLÍVAR"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "CONCORDIA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "FREDONIA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "HISPANIA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "JARDÍN"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "JERICÓ"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "LA PINTADA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "MONTEBELLO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "PUEBLORRICO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "SALGAR"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "SANTA BARBARA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "TÁMESIS"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "TARSO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "TITIRIBÍ"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "URRAO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "VALPARAISO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "VENECIA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "APARTADÓ"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "ARBOLETES"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "CAREPA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "CHIGORODÓ"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "MURINDÓ"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "MUTATA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "NECOCLÍ"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "SAN JUAN DE URABA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "SAN PEDRO DE URABA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "TURBO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "VIGÍA DEL FUERTE"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "BARBOSA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "BELLO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "CALDAS"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "COPACABANA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "ENVIGADO"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "GIRARDOTA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "ITAGUI"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "LA ESTRELLA"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "MEDELLÍN"
+  },
+  {
+    "departamento": "ANTIOQUIA",
+    "ciudad": "SABANETA"
+  },
+  {
+    "departamento": "ARAUCA",
+    "ciudad": "ARAUCA"
+  },
+  {
+    "departamento": "ARAUCA",
+    "ciudad": "ARAUQUITA"
+  },
+  {
+    "departamento": "ARAUCA",
+    "ciudad": "CRAVO NORTE"
+  },
+  {
+    "departamento": "ARAUCA",
+    "ciudad": "FORTUL"
+  },
+  {
+    "departamento": "ARAUCA",
+    "ciudad": "PUERTO RONDÓN"
+  },
+  {
+    "departamento": "ARAUCA",
+    "ciudad": "SARAVENA"
+  },
+  {
+    "departamento": "ARAUCA",
+    "ciudad": "TAME"
+  },
+  {
+    "departamento": "ARCHIPIELAGO DE SAN ANDRES",
+    "ciudad": "PROVIDENCIA Y SANTA CATALINA"
+  },
+  {
+    "departamento": "ARCHIPIELAGO DE SAN ANDRES",
+    "ciudad": "SAN ANDRES"
+  },
+  {
+    "departamento": "ATLÁNTICO",
+    "ciudad": "BARRANQUILLA"
+  },
+  {
+    "departamento": "ATLÁNTICO",
+    "ciudad": "GALAPA"
+  },
+  {
+    "departamento": "ATLÁNTICO",
+    "ciudad": "MALAMBO"
+  },
+  {
+    "departamento": "ATLÁNTICO",
+    "ciudad": "PUERTO COLOMBIA"
+  },
+  {
+    "departamento": "ATLÁNTICO",
+    "ciudad": "SOLEDAD"
+  },
+  {
+    "departamento": "ATLÁNTICO",
+    "ciudad": "CAMPO DE LA CRUZ"
+  },
+  {
+    "departamento": "ATLÁNTICO",
+    "ciudad": "CANDELARIA"
+  },
+  {
+    "departamento": "ATLÁNTICO",
+    "ciudad": "LURUACO"
+  },
+  {
+    "departamento": "ATLÁNTICO",
+    "ciudad": "MANATI"
+  },
+  {
+    "departamento": "ATLÁNTICO",
+    "ciudad": "REPELON"
+  },
+  {
+    "departamento": "ATLÁNTICO",
+    "ciudad": "SANTA LUCIA"
+  },
+  {
+    "departamento": "ATLÁNTICO",
+    "ciudad": "SUAN"
+  },
+  {
+    "departamento": "ATLÁNTICO",
+    "ciudad": "BARANOA"
+  },
+  {
+    "departamento": "ATLÁNTICO",
+    "ciudad": "PALMAR DE VARELA"
+  },
+  {
+    "departamento": "ATLÁNTICO",
+    "ciudad": "POLONUEVO"
+  },
+  {
+    "departamento": "ATLÁNTICO",
+    "ciudad": "PONEDERA"
+  },
+  {
+    "departamento": "ATLÁNTICO",
+    "ciudad": "SABANAGRANDE"
+  },
+  {
+    "departamento": "ATLÁNTICO",
+    "ciudad": "SABANALARGA"
+  },
+  {
+    "departamento": "ATLÁNTICO",
+    "ciudad": "SANTO TOMAS"
+  },
+  {
+    "departamento": "ATLÁNTICO",
+    "ciudad": "JUAN DE ACOSTA"
+  },
+  {
+    "departamento": "ATLÁNTICO",
+    "ciudad": "PIOJÓ"
+  },
+  {
+    "departamento": "ATLÁNTICO",
+    "ciudad": "TUBARA"
+  },
+  {
+    "departamento": "ATLÁNTICO",
+    "ciudad": "USIACURI"
+  },
+  {
+    "departamento": "BOGOTA",
+    "ciudad": "D.C"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "CICUCO"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "HATILLO DE LOBA"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "MARGARITA"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "MOMPÓS"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "SAN FERNANDO"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "TALAIGUA NUEVO"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "ARJONA"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "ARROYOHONDO"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "CALAMAR"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "CARTAGENA"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "CLEMENCIA"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "MAHATES"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "SAN CRISTOBAL"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "SAN ESTANISLAO"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "SANTA CATALINA"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "SANTA ROSA DE LIMA"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "SOPLAVIENTO"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "TURBACO"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "TURBANA"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "VILLANUEVA"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "ALTOS DEL ROSARIO"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "BARRANCO DE LOBA"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "EL PEÑON"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "REGIDOR"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "RÍO VIEJO"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "SAN MARTIN DE LOBA"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "ARENAL"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "CANTAGALLO"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "MORALES"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "SAN PABLO"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "SANTA ROSA DEL SUR"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "SIMITÍ"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "ACHÍ"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "MAGANGUÉ"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "MONTECRISTO"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "PINILLOS"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "SAN JACINTO DEL CAUCA"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "TIQUISIO"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "CARMEN DE BOLÍVAR"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "CÓRDOBA"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "EL GUAMO"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "MARÍA LA BAJA"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "SAN JACINTO"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "SAN JUAN NEPOMUCENO"
+  },
+  {
+    "departamento": "BOLIVAR",
+    "ciudad": "ZAMBRANO"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "CHÍQUIZA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "CHIVATÁ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "CÓMBITA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "CUCAITA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "MOTAVITA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "OICATÁ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SAMACÁ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SIACHOQUE"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SORA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SORACÁ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SOTAQUIRÁ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "TOCA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "TUNJA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "TUTA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "VENTAQUEMADA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "CHISCAS"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "CUBARÁ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "EL COCUY"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "EL ESPINO"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "GUACAMAYAS"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "GÜICÁN"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "PANQUEBA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "LABRANZAGRANDE"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "PAJARITO"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "PAYA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "PISBA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "BERBEO"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "CAMPOHERMOSO"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "MIRAFLORES"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "PÁEZ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SAN EDUARDO"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "ZETAQUIRA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "BOYACÁ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "CIÉNEGA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "JENESANO"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "NUEVO COLÓN"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "RAMIRIQUÍ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "RONDÓN"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "TIBANÁ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "TURMEQUÉ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "UMBITA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "VIRACACHÁ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "CHINAVITA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "GARAGOA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "MACANAL"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "PACHAVITA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SAN LUIS DE GACENO"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SANTA MARÍA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "BOAVITA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "COVARACHÍA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "LA UVITA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SAN MATEO"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SATIVANORTE"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SATIVASUR"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SOATÁ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SUSACÓN"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "TIPACOQUE"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "BRICEÑO"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "BUENAVISTA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "CALDAS"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "CHIQUINQUIRÁ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "COPER"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "LA VICTORIA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "MARIPÍ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "MUZO"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "OTANCHE"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "PAUNA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "PUERTO BOYACA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "QUÍPAMA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SABOYÁ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SAN MIGUEL DE SEMA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SAN PABLO BORBUR"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "TUNUNGUÁ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "ALMEIDA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "CHIVOR"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "GUATEQUE"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "GUAYATÁ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "LA CAPILLA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SOMONDOCO"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SUTATENZA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "TENZA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "ARCABUCO"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "CHITARAQUE"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "GACHANTIVÁ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "MONIQUIRÁ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "RÁQUIRA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SÁCHICA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SAN JOSÉ DE PARE"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SANTA SOFÍA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SANTANA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SUTAMARCHÁN"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "TINJACÁ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "TOGÜÍ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "VILLA DE LEYVA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "AQUITANIA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "CUÍTIVA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "FIRAVITOBA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "GAMEZA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "IZA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "MONGUA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "MONGUÍ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "NOBSA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "PESCA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SOGAMOSO"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "TIBASOSA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "TÓPAGA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "TOTA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "BELÉN"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "BUSBANZÁ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "CERINZA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "CORRALES"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "DUITAMA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "FLORESTA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "PAIPA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SAN ROSA VITERBO"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "TUTAZÁ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "BETÉITIVA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "CHITA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "JERICÓ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "PAZ DE RÍO"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SOCHA"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "SOCOTÁ"
+  },
+  {
+    "departamento": "BOYACÁ",
+    "ciudad": "TASCO"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "FILADELFIA"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "LA MERCED"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "MARMATO"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "RIOSUCIO"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "SUPÍA"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "MANZANARES"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "MARQUETALIA"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "MARULANDA"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "PENSILVANIA"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "ANSERMA"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "BELALCÁZAR"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "RISARALDA"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "SAN JOSÉ"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "VITERBO"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "CHINCHINA"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "MANIZALES"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "NEIRA"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "PALESTINA"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "VILLAMARIA"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "AGUADAS"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "ARANZAZU"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "PÁCORA"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "SALAMINA"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "LA DORADA"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "NORCASIA"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "SAMANÁ"
+  },
+  {
+    "departamento": "CALDAS",
+    "ciudad": "VICTORIA"
+  },
+  {
+    "departamento": "CAQUETA",
+    "ciudad": "ALBANIA"
+  },
+  {
+    "departamento": "CAQUETA",
+    "ciudad": "BELÉN DE LOS ANDAQUIES"
+  },
+  {
+    "departamento": "CAQUETA",
+    "ciudad": "CARTAGENA DEL CHAIRÁ"
+  },
+  {
+    "departamento": "CAQUETA",
+    "ciudad": "CURRILLO"
+  },
+  {
+    "departamento": "CAQUETA",
+    "ciudad": "EL DONCELLO"
+  },
+  {
+    "departamento": "CAQUETA",
+    "ciudad": "EL PAUJIL"
+  },
+  {
+    "departamento": "CAQUETA",
+    "ciudad": "FLORENCIA"
+  },
+  {
+    "departamento": "CAQUETA",
+    "ciudad": "LA MONTAÑITA"
+  },
+  {
+    "departamento": "CAQUETA",
+    "ciudad": "MILAN"
+  },
+  {
+    "departamento": "CAQUETA",
+    "ciudad": "MORELIA"
+  },
+  {
+    "departamento": "CAQUETA",
+    "ciudad": "PUERTO RICO"
+  },
+  {
+    "departamento": "CAQUETA",
+    "ciudad": "SAN JOSE DEL FRAGUA"
+  },
+  {
+    "departamento": "CAQUETA",
+    "ciudad": "SAN VICENTE DEL CAGUÁN"
+  },
+  {
+    "departamento": "CAQUETA",
+    "ciudad": "SOLANO"
+  },
+  {
+    "departamento": "CAQUETA",
+    "ciudad": "SOLITA"
+  },
+  {
+    "departamento": "CAQUETA",
+    "ciudad": "VALPARAISO"
+  },
+  {
+    "departamento": "CASANARE",
+    "ciudad": "AGUAZUL"
+  },
+  {
+    "departamento": "CASANARE",
+    "ciudad": "CHAMEZA"
+  },
+  {
+    "departamento": "CASANARE",
+    "ciudad": "HATO COROZAL"
+  },
+  {
+    "departamento": "CASANARE",
+    "ciudad": "LA SALINA"
+  },
+  {
+    "departamento": "CASANARE",
+    "ciudad": "MANÍ"
+  },
+  {
+    "departamento": "CASANARE",
+    "ciudad": "MONTERREY"
+  },
+  {
+    "departamento": "CASANARE",
+    "ciudad": "NUNCHÍA"
+  },
+  {
+    "departamento": "CASANARE",
+    "ciudad": "OROCUÉ"
+  },
+  {
+    "departamento": "CASANARE",
+    "ciudad": "PAZ DE ARIPORO"
+  },
+  {
+    "departamento": "CASANARE",
+    "ciudad": "PORE"
+  },
+  {
+    "departamento": "CASANARE",
+    "ciudad": "RECETOR"
+  },
+  {
+    "departamento": "CASANARE",
+    "ciudad": "SABANALARGA"
+  },
+  {
+    "departamento": "CASANARE",
+    "ciudad": "SÁCAMA"
+  },
+  {
+    "departamento": "CASANARE",
+    "ciudad": "SAN LUIS DE PALENQUE"
+  },
+  {
+    "departamento": "CASANARE",
+    "ciudad": "TÁMARA"
+  },
+  {
+    "departamento": "CASANARE",
+    "ciudad": "TAURAMENA"
+  },
+  {
+    "departamento": "CASANARE",
+    "ciudad": "TRINIDAD"
+  },
+  {
+    "departamento": "CASANARE",
+    "ciudad": "VILLANUEVA"
+  },
+  {
+    "departamento": "CASANARE",
+    "ciudad": "YOPAL"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "CAJIBÍO"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "EL TAMBO"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "LA SIERRA"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "MORALES"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "PIENDAMO"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "POPAYÁN"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "ROSAS"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "SOTARA"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "TIMBIO"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "BUENOS AIRES"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "CALOTO"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "CORINTO"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "MIRANDA"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "PADILLA"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "PUERTO TEJADA"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "SANTANDER DE QUILICHAO"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "SUAREZ"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "VILLA RICA"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "GUAPI"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "LOPEZ"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "TIMBIQUI"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "CALDONO"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "INZÁ"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "JAMBALO"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "PAEZ"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "PURACE"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "SILVIA"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "TORIBIO"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "TOTORO"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "ALMAGUER"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "ARGELIA"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "BALBOA"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "BOLÍVAR"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "FLORENCIA"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "LA VEGA"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "MERCADERES"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "PATIA"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "PIAMONTE"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "SAN SEBASTIAN"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "SANTA ROSA"
+  },
+  {
+    "departamento": "CAUCA",
+    "ciudad": "SUCRE"
+  },
+  {
+    "departamento": "CESAR",
+    "ciudad": "BECERRIL"
+  },
+  {
+    "departamento": "CESAR",
+    "ciudad": "CHIMICHAGUA"
+  },
+  {
+    "departamento": "CESAR",
+    "ciudad": "CHIRIGUANA"
+  },
+  {
+    "departamento": "CESAR",
+    "ciudad": "CURUMANÍ"
+  },
+  {
+    "departamento": "CESAR",
+    "ciudad": "LA JAGUA DE IBIRICO"
+  },
+  {
+    "departamento": "CESAR",
+    "ciudad": "PAILITAS"
+  },
+  {
+    "departamento": "CESAR",
+    "ciudad": "TAMALAMEQUE"
+  },
+  {
+    "departamento": "CESAR",
+    "ciudad": "ASTREA"
+  },
+  {
+    "departamento": "CESAR",
+    "ciudad": "BOSCONIA"
+  },
+  {
+    "departamento": "CESAR",
+    "ciudad": "EL COPEY"
+  },
+  {
+    "departamento": "CESAR",
+    "ciudad": "EL PASO"
+  },
+  {
+    "departamento": "CESAR",
+    "ciudad": "AGUSTÍN CODAZZI"
+  },
+  {
+    "departamento": "CESAR",
+    "ciudad": "LA PAZ"
+  },
+  {
+    "departamento": "CESAR",
+    "ciudad": "MANAURE"
+  },
+  {
+    "departamento": "CESAR",
+    "ciudad": "PUEBLO BELLO"
+  },
+  {
+    "departamento": "CESAR",
+    "ciudad": "SAN DIEGO"
+  },
+  {
+    "departamento": "CESAR",
+    "ciudad": "VALLEDUPAR"
+  },
+  {
+    "departamento": "CESAR",
+    "ciudad": "AGUACHICA"
+  },
+  {
+    "departamento": "CESAR",
+    "ciudad": "GAMARRA"
+  },
+  {
+    "departamento": "CESAR",
+    "ciudad": "GONZÁLEZ"
+  },
+  {
+    "departamento": "CESAR",
+    "ciudad": "LA GLORIA"
+  },
+  {
+    "departamento": "CESAR",
+    "ciudad": "PELAYA"
+  },
+  {
+    "departamento": "CESAR",
+    "ciudad": "RÍO DE ORO"
+  },
+  {
+    "departamento": "CESAR",
+    "ciudad": "SAN ALBERTO"
+  },
+  {
+    "departamento": "CESAR",
+    "ciudad": "SAN MARTÍN"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "ATRATO"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "BAGADÓ"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "BOJAYA"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "EL CARMEN DE ATRATO"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "LLORÓ"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "MEDIO ATRATO"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "QUIBDÓ"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "RIO QUITO"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "ACANDÍ"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "BELÉN DE BAJIRA"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "CARMÉN DEL DARIÉN"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "RIOSUCIO"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "UNGUÍA"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "BAHÍA SOLANO"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "JURADÓ"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "NUQUÍ"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "ALTO BAUDÓ"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "BAJO BAUDÓ"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "EL LITORAL DEL SAN JUAN"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "MEDIO BAUDÓ"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "CANTON DE SAN PABLO"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "CERTEGUI"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "CONDOTO"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "ITSMINA"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "MEDIO SAN JUAN"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "NÓVITA"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "RÍO FRÍO"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "SAN JOSÉ DEL PALMAR"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "SIPÍ"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "TADÓ"
+  },
+  {
+    "departamento": "CHOCO",
+    "ciudad": "UNION PANAMERICANA"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "TIERRALTA"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "VALENCIA"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "CHIMÁ"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "COTORRA"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "LORICA"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "MOMIL"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "PURÍSIMA"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "MONTERÍA"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "CANALETE"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "LOS CÓRDOBAS"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "MOÑITOS"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "PUERTO ESCONDIDO"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "SAN ANTERO"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "SAN BERNARDO DEL VIENTO"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "CHINÚ"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "SAHAGÚN"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "SAN ANDRÉS SOTAVENTO"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "AYAPEL"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "BUENAVISTA"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "LA APARTADA"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "MONTELÍBANO"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "PLANETA RICA"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "PUEBLO NUEVO"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "PUERTO LIBERTADOR"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "CERETÉ"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "CIÉNAGA DE ORO"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "SAN CARLOS"
+  },
+  {
+    "departamento": "CORDOBA",
+    "ciudad": "SAN PELAYO"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "CHOCONTÁ"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "MACHETA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "MANTA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "SESQUILÉ"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "SUESCA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "TIBIRITA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "VILLAPINZÓN"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "AGUA DE DIOS"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "GIRARDOT"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "GUATAQUÍ"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "JERUSALÉN"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "NARIÑO"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "NILO"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "RICAURTE"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "TOCAIMA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "CAPARRAPÍ"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "GUADUAS"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "PUERTO SALGAR"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "ALBÁN"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "LA PEÑA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "LA VEGA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "NIMAIMA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "NOCAIMA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "QUEBRADANEGRA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "SAN FRANCISCO"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "SASAIMA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "SUPATÁ"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "ÚTICA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "VERGARA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "VILLETA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "GACHALA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "GACHETA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "GAMA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "GUASCA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "GUATAVITA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "JUNÍN"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "LA CALERA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "UBALÁ"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "BELTRÁN"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "BITUIMA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "CHAGUANÍ"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "GUAYABAL DE SIQUIMA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "PULI"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "SAN JUAN DE RÍO SECO"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "VIANÍ"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "MEDINA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "PARATEBUENO"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "CAQUEZA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "CHIPAQUE"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "CHOACHÍ"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "FOMEQUE"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "FOSCA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "GUAYABETAL"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "GUTIÉRREZ"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "QUETAME"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "UBAQUE"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "UNE"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "EL PEÑÓN"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "LA PALMA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "PACHO"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "PAIME"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "SAN CAYETANO"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "TOPAIPI"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "VILLAGOMEZ"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "YACOPÍ"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "CAJICÁ"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "CHÍA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "COGUA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "GACHANCIPÁ"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "NEMOCON"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "SOPÓ"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "TABIO"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "TOCANCIPÁ"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "ZIPAQUIRÁ"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "BOJACÁ"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "COTA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "EL ROSAL"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "FACATATIVÁ"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "FUNZA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "MADRID"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "MOSQUERA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "SUBACHOQUE"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "TENJO"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "ZIPACON"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "SIBATÉ"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "SOACHA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "ARBELÁEZ"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "CABRERA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "FUSAGASUGÁ"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "GRANADA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "PANDI"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "PASCA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "SAN BERNARDO"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "SILVANIA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "TIBACUY"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "VENECIA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "ANAPOIMA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "ANOLAIMA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "APULO"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "CACHIPAY"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "EL COLEGIO"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "LA MESA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "QUIPILE"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "SAN ANTONIO DE TEQUENDAMA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "TENA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "VIOTÁ"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "CARMEN DE CARUPA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "CUCUNUBÁ"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "FÚQUENE"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "GUACHETÁ"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "LENGUAZAQUE"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "SIMIJACA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "SUSA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "SUTATAUSA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "TAUSA"
+  },
+  {
+    "departamento": "CUNDINAMARCA",
+    "ciudad": "UBATE"
+  },
+  {
+    "departamento": "GUAINIA",
+    "ciudad": "BARRANCO MINA"
+  },
+  {
+    "departamento": "GUAINIA",
+    "ciudad": "CACAHUAL"
+  },
+  {
+    "departamento": "GUAINIA",
+    "ciudad": "INÍRIDA"
+  },
+  {
+    "departamento": "GUAINIA",
+    "ciudad": "LA GUADALUPE"
+  },
+  {
+    "departamento": "GUAINIA",
+    "ciudad": "MAPIRIPAN"
+  },
+  {
+    "departamento": "GUAINIA",
+    "ciudad": "MORICHAL"
+  },
+  {
+    "departamento": "GUAINIA",
+    "ciudad": "PANA PANA"
+  },
+  {
+    "departamento": "GUAINIA",
+    "ciudad": "PUERTO COLOMBIA"
+  },
+  {
+    "departamento": "GUAINIA",
+    "ciudad": "SAN FELIPE"
+  },
+  {
+    "departamento": "GUAVIARE",
+    "ciudad": "CALAMAR"
+  },
+  {
+    "departamento": "GUAVIARE",
+    "ciudad": "EL RETORNO"
+  },
+  {
+    "departamento": "GUAVIARE",
+    "ciudad": "MIRAFLORES"
+  },
+  {
+    "departamento": "GUAVIARE",
+    "ciudad": "SAN JOSÉ DEL GUAVIARE"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "AGRADO"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "ALTAMIRA"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "GARZÓN"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "GIGANTE"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "GUADALUPE"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "PITAL"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "SUAZA"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "TARQUI"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "AIPE"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "ALGECIRAS"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "BARAYA"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "CAMPOALEGRE"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "COLOMBIA"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "HOBO"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "IQUIRA"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "NEIVA"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "PALERMO"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "RIVERA"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "SANTA MARÍA"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "TELLO"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "TERUEL"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "VILLAVIEJA"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "YAGUARÁ"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "LA ARGENTINA"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "LA PLATA"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "NÁTAGA"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "PAICOL"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "TESALIA"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "ACEVEDO"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "ELÍAS"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "ISNOS"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "OPORAPA"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "PALESTINA"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "PITALITO"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "SALADOBLANCO"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "SAN AGUSTÍN"
+  },
+  {
+    "departamento": "HUILA",
+    "ciudad": "TIMANÁ"
+  },
+  {
+    "departamento": "LA GUAJIRA",
+    "ciudad": "ALBANIA"
+  },
+  {
+    "departamento": "LA GUAJIRA",
+    "ciudad": "DIBULLA"
+  },
+  {
+    "departamento": "LA GUAJIRA",
+    "ciudad": "MAICAO"
+  },
+  {
+    "departamento": "LA GUAJIRA",
+    "ciudad": "MANAURE"
+  },
+  {
+    "departamento": "LA GUAJIRA",
+    "ciudad": "RIOHACHA"
+  },
+  {
+    "departamento": "LA GUAJIRA",
+    "ciudad": "URIBIA"
+  },
+  {
+    "departamento": "LA GUAJIRA",
+    "ciudad": "BARRANCAS"
+  },
+  {
+    "departamento": "LA GUAJIRA",
+    "ciudad": "DISTRACCION"
+  },
+  {
+    "departamento": "LA GUAJIRA",
+    "ciudad": "EL MOLINO"
+  },
+  {
+    "departamento": "LA GUAJIRA",
+    "ciudad": "FONSECA"
+  },
+  {
+    "departamento": "LA GUAJIRA",
+    "ciudad": "HATONUEVO"
+  },
+  {
+    "departamento": "LA GUAJIRA",
+    "ciudad": "LA JAGUA DEL PILAR"
+  },
+  {
+    "departamento": "LA GUAJIRA",
+    "ciudad": "SAN JUAN DEL CESAR"
+  },
+  {
+    "departamento": "LA GUAJIRA",
+    "ciudad": "URUMITA"
+  },
+  {
+    "departamento": "LA GUAJIRA",
+    "ciudad": "VILLANUEVA"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "ARIGUANÍ"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "CHIBOLO"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "NUEVA GRANADA"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "PLATO"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "SABANAS DE SAN ANGEL"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "TENERIFE"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "ALGARROBO"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "ARACATACA"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "CIÉNAGA"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "EL RETEN"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "FUNDACION"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "PUEBLO VIEJO"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "ZONA BANANERA"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "CERRO SAN ANTONIO"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "CONCORDIA"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "EL PIÑON"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "PEDRAZA"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "PIVIJAY"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "REMOLINO"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "SALAMINA"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "SITIONUEVO"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "ZAPAYAN"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "SANTA MARTA"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "EL BANCO"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "GUAMAL"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "PIJIÑO DEL CARMEN"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "SAN SEBASTIAN DE BUENAVISTA"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "SAN ZENON"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "SANTA ANA"
+  },
+  {
+    "departamento": "MAGDALENA",
+    "ciudad": "SANTA BARBARA DE PINTO"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "EL CASTILLO"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "EL DORADO"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "FUENTE DE ORO"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "GRANADA"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "LA MACARENA"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "LA URIBE"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "LEJANÍAS"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "MAPIRIPAN"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "MESETAS"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "PUERTO CONCORDIA"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "PUERTO LLERAS"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "PUERTO RICO"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "SAN JUAN DE ARAMA"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "VISTA HERMOSA"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "VILLAVICENCIO"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "ACACIAS"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "BARRANCA DE UPIA"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "CASTILLA LA NUEVA"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "CUMARAL"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "EL CALVARIO"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "GUAMAL"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "RESTREPO"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "SAN CARLOS GUAROA"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "SAN JUANITO"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "SAN LUIS DE CUBARRAL"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "SAN MARTÍN"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "CABUYARO"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "PUERTO GAITÁN"
+  },
+  {
+    "departamento": "META",
+    "ciudad": "PUERTO LOPEZ"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "CHACHAGUI"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "CONSACA"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "EL PEÑOL"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "EL TAMBO"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "LA FLORIDA"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "NARIÑO"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "PASTO"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "SANDONÁ"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "TANGUA"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "YACUANQUER"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "ANCUYA"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "GUAITARILLA"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "LA LLANADA"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "LINARES"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "LOS ANDES"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "MALLAMA"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "OSPINA"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "PROVIDENCIA"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "RICAURTE"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "SAMANIEGO"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "SANTA CRUZ"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "SAPUYES"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "TUQUERRES"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "BARBACOAS"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "EL CHARCO"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "FRANCISCO PIZARRO"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "LA TOLA"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "MAGUI"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "MOSQUERA"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "OLAYA HERRERA"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "ROBERTO PAYAN"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "SANTA BARBARA"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "TUMACO"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "ALBAN"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "ARBOLEDA"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "BELEN"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "BUESACO"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "COLON"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "CUMBITARA"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "EL ROSARIO"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "EL TABLON DE GOMEZ"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "LA CRUZ"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "LA UNION"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "LEIVA"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "POLICARPA"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "SAN BERNARDO"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "SAN LORENZO"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "SAN PABLO"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "SAN PEDRO DE CARTAGO"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "TAMINANGO"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "ALDANA"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "CONTADERO"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "CÓRDOBA"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "CUASPUD"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "CUMBAL"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "FUNES"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "GUACHUCAL"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "GUALMATAN"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "ILES"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "IMUES"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "IPIALES"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "POTOSÍ"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "PUERRES"
+  },
+  {
+    "departamento": "NARIÑO",
+    "ciudad": "PUPIALES"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "ARBOLEDAS"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "CUCUTILLA"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "GRAMALOTE"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "LOURDES"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "SALAZAR"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "SANTIAGO"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "VILLA CARO"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "BUCARASICA"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "EL TARRA"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "SARDINATA"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "TIBÚ"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "ABREGO"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "CACHIRÁ"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "CONVENCIÓN"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "EL CARMEN"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "HACARÍ"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "LA ESPERANZA"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "LA PLAYA"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "OCAÑA"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "SAN CALIXTO"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "TEORAMA"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "CÚCUTA"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "EL ZULIA"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "LOS PATIOS"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "PUERTO SANTANDER"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "SAN CAYETANO"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "VILLA DEL ROSARIO"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "CÁCOTA"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "CHITAGÁ"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "MUTISCUA"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "PAMPLONA"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "PAMPLONITA"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "SILOS"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "BOCHALEMA"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "CHINÁCOTA"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "DURANIA"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "HERRÁN"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "LABATECA"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "RAGONVALIA"
+  },
+  {
+    "departamento": "NORTE DE SANTANDER",
+    "ciudad": "TOLEDO"
+  },
+  {
+    "departamento": "PUTUMAYO",
+    "ciudad": "COLÓN"
+  },
+  {
+    "departamento": "PUTUMAYO",
+    "ciudad": "MOCOA"
+  },
+  {
+    "departamento": "PUTUMAYO",
+    "ciudad": "ORITO"
+  },
+  {
+    "departamento": "PUTUMAYO",
+    "ciudad": "PUERTO ASIS"
+  },
+  {
+    "departamento": "PUTUMAYO",
+    "ciudad": "PUERTO CAICEDO"
+  },
+  {
+    "departamento": "PUTUMAYO",
+    "ciudad": "PUERTO GUZMAN"
+  },
+  {
+    "departamento": "PUTUMAYO",
+    "ciudad": "PUERTO LEGUIZAMO"
+  },
+  {
+    "departamento": "PUTUMAYO",
+    "ciudad": "SAN FRANCISCO"
+  },
+  {
+    "departamento": "PUTUMAYO",
+    "ciudad": "SAN MIGUEL"
+  },
+  {
+    "departamento": "PUTUMAYO",
+    "ciudad": "SANTIAGO"
+  },
+  {
+    "departamento": "PUTUMAYO",
+    "ciudad": "SIBUNDOY"
+  },
+  {
+    "departamento": "PUTUMAYO",
+    "ciudad": "VALLE DEL GUAMUEZ"
+  },
+  {
+    "departamento": "PUTUMAYO",
+    "ciudad": "VILLA GARZON"
+  },
+  {
+    "departamento": "QUINDIO",
+    "ciudad": "ARMENIA"
+  },
+  {
+    "departamento": "QUINDIO",
+    "ciudad": "BUENAVISTA"
+  },
+  {
+    "departamento": "QUINDIO",
+    "ciudad": "CALARCA"
+  },
+  {
+    "departamento": "QUINDIO",
+    "ciudad": "CORDOBA"
+  },
+  {
+    "departamento": "QUINDIO",
+    "ciudad": "GENOVA"
+  },
+  {
+    "departamento": "QUINDIO",
+    "ciudad": "PIJAO"
+  },
+  {
+    "departamento": "QUINDIO",
+    "ciudad": "FILANDIA"
+  },
+  {
+    "departamento": "QUINDIO",
+    "ciudad": "SALENTO"
+  },
+  {
+    "departamento": "QUINDIO",
+    "ciudad": "CIRCASIA"
+  },
+  {
+    "departamento": "QUINDIO",
+    "ciudad": "LA TEBAIDA"
+  },
+  {
+    "departamento": "QUINDIO",
+    "ciudad": "MONTENGRO"
+  },
+  {
+    "departamento": "QUINDIO",
+    "ciudad": "QUIMBAYA"
+  },
+  {
+    "departamento": "RISARALDA",
+    "ciudad": "DOSQUEBRADAS"
+  },
+  {
+    "departamento": "RISARALDA",
+    "ciudad": "LA VIRGINIA"
+  },
+  {
+    "departamento": "RISARALDA",
+    "ciudad": "MARSELLA"
+  },
+  {
+    "departamento": "RISARALDA",
+    "ciudad": "PEREIRA"
+  },
+  {
+    "departamento": "RISARALDA",
+    "ciudad": "SANTA ROSA DE CABAL"
+  },
+  {
+    "departamento": "RISARALDA",
+    "ciudad": "APÍA"
+  },
+  {
+    "departamento": "RISARALDA",
+    "ciudad": "BALBOA"
+  },
+  {
+    "departamento": "RISARALDA",
+    "ciudad": "BELÉN DE UMBRÍA"
+  },
+  {
+    "departamento": "RISARALDA",
+    "ciudad": "GUÁTICA"
+  },
+  {
+    "departamento": "RISARALDA",
+    "ciudad": "LA CELIA"
+  },
+  {
+    "departamento": "RISARALDA",
+    "ciudad": "QUINCHIA"
+  },
+  {
+    "departamento": "RISARALDA",
+    "ciudad": "SANTUARIO"
+  },
+  {
+    "departamento": "RISARALDA",
+    "ciudad": "MISTRATÓ"
+  },
+  {
+    "departamento": "RISARALDA",
+    "ciudad": "PUEBLO RICO"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "CHIMA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "CONFINES"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "CONTRATACIÓN"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "EL GUACAMAYO"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "GALÁN"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "GAMBITA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "GUADALUPE"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "GUAPOTÁ"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "HATO"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "OIBA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "PALMAR"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "PALMAS DEL SOCORRO"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "SANTA HELENA DEL OPÓN"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "SIMACOTA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "SOCORRO"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "SUAITA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "CAPITANEJO"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "CARCASÍ"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "CEPITÁ"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "CERRITO"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "CONCEPCIÓN"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "ENCISO"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "GUACA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "MACARAVITA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "MÁLAGA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "MOLAGAVITA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "SAN ANDRÉS"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "SAN JOSÉ DE MIRANDA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "SAN MIGUEL"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "ARATOCA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "BARICHARA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "CABRERA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "CHARALÁ"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "COROMORO"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "CURITÍ"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "ENCINO"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "JORDÁN"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "MOGOTES"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "OCAMONTE"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "ONZAGA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "PÁRAMO"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "PINCHOTE"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "SAN GIL"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "SAN JOAQUÍN"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "VALLE DE SAN JOSÉ"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "VILLANUEVA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "BARRANCABERMEJA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "BETULIA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "EL CARMEN DE CHUCURÍ"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "PUERTO WILCHES"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "SABANA DE TORRES"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "SAN VICENTE DE CHUCURÍ"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "ZAPATOCA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "BUCARAMANGA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "CALIFORNIA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "CHARTA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "EL PLAYÓN"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "FLORIDABLANCA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "GIRÓN"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "LEBRÍJA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "LOS SANTOS"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "MATANZA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "PIEDECUESTA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "RIONEGRO"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "SANTA BÁRBARA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "SURATA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "TONA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "VETAS"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "AGUADA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "ALBANIA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "BARBOSA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "BOLÍVAR"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "CHIPATÁ"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "CIMITARRA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "EL PEÑÓN"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "FLORIÁN"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "GUAVATÁ"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "GUEPSA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "JESÚS MARÍA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "LA BELLEZA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "LA PAZ"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "LANDÁZURI"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "PUENTE NACIONAL"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "PUERTO PARRA"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "SAN BENITO"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "SUCRE"
+  },
+  {
+    "departamento": "SANTANDER",
+    "ciudad": "VÉLEZ"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "GUARANDA"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "MAJAGUAL"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "SUCRE"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "CHALÁN"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "COLOSO"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "MORROA"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "OVEJAS"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "SINCELEJO"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "COVEÑAS"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "PALMITO"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "SAN ONOFRE"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "SANTIAGO DE TOLÚ"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "TOLÚ VIEJO"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "BUENAVISTA"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "COROZAL"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "EL ROBLE"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "GALERAS"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "LOS PALMITOS"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "SAMPUÉS"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "SAN JUAN BETULIA"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "SAN PEDRO"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "SINCÉ"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "CAIMITO"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "LA UNIÓN"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "SAN BENITO ABAD"
+  },
+  {
+    "departamento": "SUCRE",
+    "ciudad": "SAN MARCOS"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "AMBALEMA"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "ARMERO"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "FALAN"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "FRESNO"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "HONDA"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "MARIQUITA"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "PALOCABILDO"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "CARMEN DE APICALÁ"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "CUNDAY"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "ICONONZO"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "MELGAR"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "VILLARRICA"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "ATACO"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "CHAPARRAL"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "COYAIMA"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "NATAGAIMA"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "ORTEGA"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "PLANADAS"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "RIOBLANCO"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "RONCESVALLES"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "SAN ANTONIO"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "ALVARADO"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "ANZOÁTEGUI"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "CAJAMARCA"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "COELLO"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "ESPINAL"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "FLANDES"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "IBAGUE"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "PIEDRAS"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "ROVIRA"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "SAN LUIS"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "VALLE DE SAN JUAN"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "ALPUJARRA"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "DOLORES"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "GUAMO"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "PRADO"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "PURIFICACIÓN"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "SALDAÑA"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "SUÁREZ"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "CASABIANCA"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "HERVEO"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "LERIDA"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "LIBANO"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "MURILLO"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "SANTA ISABEL"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "VENADILLO"
+  },
+  {
+    "departamento": "TOLIMA",
+    "ciudad": "VILLAHERMOSA"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "ANDALUCÍA"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "BUGA"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "BUGALAGRANDE"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "CALIMA"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "EL CERRITO"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "GINEBRA"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "GUACARÍ"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "RESTREPO"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "RIOFRIO"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "SAN PEDRO"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "TRUJILLO"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "TULUÁ"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "YOTOCO"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "ALCALA"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "ANSERMANUEVO"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "ARGELIA"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "BOLÍVAR"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "CARTAGO"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "EL ÁGUILA"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "EL CAIRO"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "EL DOVIO"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "LA UNIÓN"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "LA VICTORIA"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "OBANDO"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "ROLDANILLO"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "TORO"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "ULLOA"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "VERSALLES"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "ZARZAL"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "BUENAVENTURA"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "CAICEDONIA"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "SEVILLA"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "CALI"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "CANDELARIA"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "DAGUA"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "FLORIDA"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "JAMUNDÍ"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "LA CUMBRE"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "PALMIRA"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "PRADERA"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "VIJES"
+  },
+  {
+    "departamento": "VALLE DEL CAUCA",
+    "ciudad": "YUMBO"
+  },
+  {
+    "departamento": "VAUPES",
+    "ciudad": "CARURU"
+  },
+  {
+    "departamento": "VAUPES",
+    "ciudad": "MITÚ"
+  },
+  {
+    "departamento": "VAUPES",
+    "ciudad": "PACOA"
+  },
+  {
+    "departamento": "VAUPES",
+    "ciudad": "PAPUNAHUA"
+  },
+  {
+    "departamento": "VAUPES",
+    "ciudad": "TARAIRA"
+  },
+  {
+    "departamento": "VAUPES",
+    "ciudad": "YAVARATÉ"
+  },
+  {
+    "departamento": "VICHADA",
+    "ciudad": "CUMARIBO"
+  },
+  {
+    "departamento": "VICHADA",
+    "ciudad": "LA PRIMAVERA"
+  },
+  {
+    "departamento": "VICHADA",
+    "ciudad": "PUERTO CARREÑO"
+  },
+  {
+    "departamento": "VICHADA",
+    "ciudad": "SANTA ROSALÍA"
+  }
+]
