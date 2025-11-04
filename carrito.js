@@ -20,8 +20,8 @@ async function cargarCiudades() {
 
     ciudades.forEach(({ departamento, ciudad }) => {
       const option = document.createElement("option");
-      option.value = ciudad;
-      option.textContent = `${departamento} - ${ciudad}`;
+     option.value = ciudad;
+     option.textContent = `${ciudad} (${departamento})`;
       selectCiudad.appendChild(option);
     });
 
