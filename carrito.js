@@ -289,12 +289,11 @@ async function generarPedidoWhatsApp() {
     actualizarEstadoBotonWhatsApp();
     modalFormulario?.hide();
 
-  } catch (error) {
-    console.error("❌ Error al generar pedido:", error);
-    alert("Hubo un error al generar el pedido. Intenta nuevamente.");
-  }
+ } catch (error) {
+  console.error("❌ Error al generar pedido:", error);
+  alert(`❌ Error al generar el pedido: ${error.message || error}`);
 }
-
+}
 
   async function enviarPedidoTelegram(mensaje) {
     const token = "8320682242:AAG4h89_8WVmljeEvYHjzRxmnJDt-HoxcAY";
