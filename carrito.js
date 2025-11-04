@@ -101,7 +101,19 @@ function renderizarCarrito() {
       <button class="btn btn-success w-100" id="btn-comprar">Comprar</button>
     </div>
   `);
-
+// ⬇️ Este bloque abre el formulario al hacer clic en "Comprar"
+const btnComprar = document.getElementById("btn-comprar");
+if (btnComprar) {
+  btnComprar.addEventListener("click", () => {
+    const modalFormulario = document.getElementById("modalFormularioCliente");
+    if (modalFormulario) {
+      const instanciaModal = bootstrap.Modal.getOrCreateInstance(modalFormulario);
+      instanciaModal.show();
+    } else {
+      alert("⚠️ No se encontró el formulario del cliente.");
+    }
+  });
+}
   document.querySelectorAll(".boton-comprar[data-index]").forEach(btn => {
     btn.addEventListener("click", e => {
       const index = parseInt(e.currentTarget.dataset.index);
