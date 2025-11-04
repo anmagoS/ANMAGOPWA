@@ -20,8 +20,9 @@ async function cargarCiudades() {
 
     ciudades.forEach(({ departamento, ciudad }) => {
       const option = document.createElement("option");
-     option.value = ciudad;
-     option.textContent = `${ciudad} (${departamento})`;
+    option.value = ciudad;
+    option.textContent = `${ciudad} (${departamento})`;
+    option.dataset.departamento = departamento;
       selectCiudad.appendChild(option);
     });
 
@@ -186,7 +187,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   const numeroVia = document.getElementById("numeroVia")?.value.trim();
   const complementoVia = document.getElementById("complementoVia")?.value.trim();
   const barrio = document.getElementById("barrio")?.value.trim();
-  const ciudad = document.getElementById("ciudadCliente")?.value;
+  const ciudadSelect = document.getElementById("ciudadCliente");
+  const ciudad = ciudadSelect?.value;
+  const departamento = ciudadSelect?.selectedOptions[0]?.dataset.departamento || "No definido";
   const email = document.getElementById("emailCliente")?.value.trim();
 
   const direccion = `${tipoVia} ${numeroVia} ${complementoVia}, Barrio ${barrio}, ${ciudad}`;
@@ -213,7 +216,7 @@ mensajeTelegram += `👤 Nombre: ${nombre} ${apellido}\n📞 Teléfono: ${codigo
 
     articulosCarrito.forEach((producto, index) => {
       mensajeWhatsApp += `*${index + 1}.* ${producto.nombre}\n🖼️ Imagen: ${producto.imagen}\n📏 Talla: ${producto.talla || "No especificada"}\n💲 Precio: $${producto.precio.toLocaleString("es-CO")}\n🔢 Cantidad: ${producto.cantidad}\n\n`;
-      mensajeTelegram += `🖼️ Imagen:\n${producto.imagen}\n📏 Talla: ${producto.talla || "No especificada"}\n🔢 Cantidad: ${producto.cantidad}\n🏬 Proveedor: ${limpiarTextoTelegram(producto.proveedor || "No definido")}\n\n`;
+      mensajeTelegram += `🖼️ Imagen:\n${producto.imagen}\n📏 Talla: ${producto.talla || "No especificada"}\n🔢 Cantidad: ${producto.cantidad}\n🏬 Proveedor: ${limpiarTextoTelegram(producto.proveedor || "No definido")}\n📍 Ciudad: ${ciudad} - ${departamento}\n\n`;
     });
 
     const total = articulosCarrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
