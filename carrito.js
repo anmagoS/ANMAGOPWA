@@ -246,6 +246,30 @@ mensajeTelegram += `👤 Nombre: ${nombre} ${apellido}\n📞 Teléfono: ${codigo
     window.open(urlWhatsApp, "_blank");
 
     enviarPedidoTelegram(mensajeTelegram);
+    // 📤 Enviar datos al Webhook de n8n
+try {
+  await fetch("http://localhost:5678/webhook/registro-cliente", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      NOMBRECLIENTE: nombre,
+      "APELLIDO COMPL.": apellido,
+      DIRECCIONCLIENTE: direccion,
+      TELEFONOCLIENTE: telefonoCompleto,
+      CEDULA: "", // puedes agregar si tienes campo
+      "COMPLEMENTO DE DIR": complementoVia || "",
+      "CIUDAD DESTINO": ciudad,
+      CORREO: email,
+      USUARIO: "", // si tienes campo de usuario
+      ROTULAR: "", // si tienes opción de rotular
+      ROTULO: "", // si tienes campo de rotulo
+      MENSAJECOBRO: "" // si tienes mensaje de cobro
+    })
+  });
+  console.log("✅ Registro enviado a n8n");
+} catch (error) {
+  console.error("❌ Error al enviar a n8n:", error);
+}
 
     articulosCarrito = [];
     guardarCarrito();
