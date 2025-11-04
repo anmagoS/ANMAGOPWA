@@ -287,7 +287,7 @@ formCliente?.addEventListener("input", () => {
   const ciudad = document.getElementById("ciudadCliente")?.value;
   const email = document.getElementById("emailCliente")?.value.trim();
 
-  const telefonoValido = /^\d{7}$/.test(telefono);
+  const telefonoValido = /^\d{10}$/.test(telefono);
   const valido = nombre && apellido && telefonoValido && ciudad && email;
 
   if (btnEnviarPedido) {
