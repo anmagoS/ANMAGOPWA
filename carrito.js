@@ -11,9 +11,29 @@ async function cargarCatalogo() {
     console.error("❌ Error al cargar catálogo en carrito.js:", error);
   }
 }
+// 🔗 Cargar ciudades desde JSON institucional
+async function cargarCiudades() {
+  try {
+    const res = await fetch("https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/ciudades.json");
+    const ciudades = await res.json();
+    const selectCiudad = document.getElementById("ciudadCliente");
+
+    ciudades.forEach(({ departamento, ciudad }) => {
+      const option = document.createElement("option");
+      option.value = ciudad;
+      option.textContent = `${departamento} - ${ciudad}`;
+      selectCiudad.appendChild(option);
+    });
+
+    console.log("✅ Ciudades cargadas en formulario");
+  } catch (error) {
+    console.error("❌ Error al cargar ciudades:", error);
+  }
+}
 
 document.addEventListener("DOMContentLoaded", async () => {
   await cargarCatalogo();
+  await cargarCiudades();
 
   const carritoContainer = document.getElementById("carrito-contenido");
   const offcanvasCarrito = document.getElementById("offcanvasCarrito");
@@ -157,15 +177,25 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  function generarPedidoWhatsApp() {
-    const nombre = document.getElementById("nombreCliente")?.value.trim();
-    const telefono = document.getElementById("telefonoCliente")?.value.trim();
-    const direccion = document.getElementById("direccionCliente")?.value.trim();
+ function generarPedidoWhatsApp() {
+  const nombre = document.getElementById("nombreCliente")?.value.trim();
+  const apellido = document.getElementById("apellidoCliente")?.value.trim();
+  const codigoPais = document.getElementById("codigoPais")?.value;
+  const telefono = document.getElementById("telefonoCliente")?.value.trim();
+  const tipoVia = document.getElementById("tipoVia")?.value;
+  const numeroVia = document.getElementById("numeroVia")?.value.trim();
+  const complementoVia = document.getElementById("complementoVia")?.value.trim();
+  const barrio = document.getElementById("barrio")?.value.trim();
+  const ciudad = document.getElementById("ciudadCliente")?.value;
+  const email = document.getElementById("emailCliente")?.value.trim();
 
-    if (!nombre || !telefono || !direccion) {
-      alert("Por favor completa todos los campos.");
-      return;
-    }
+  const direccion = `${tipoVia} ${numeroVia} ${complementoVia}, Barrio ${barrio}, ${ciudad}`;
+  const telefonoCompleto = `${codigoPais}${telefono}`;
+
+  if (!nombre || !apellido || !telefono || !ciudad || !tipoVia || !numeroVia || !barrio || !email) {
+    alert("Por favor completa todos los campos.");
+    return;
+  }
 
     articulosCarrito.forEach(producto => {
       if (!producto.proveedor && producto.id && catalogo.length > 0) {
@@ -178,7 +208,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     let mensajeWhatsApp = `🛍️ *¡Hola! Soy ${nombre} y quiero realizar el siguiente pedido:*\n\n`;
     let mensajeTelegram = `🕒 Pedido registrado el ${new Date().toLocaleString("es-CO")}\n`;
-    mensajeTelegram += `👤 Nombre: ${nombre}\n📞 Teléfono: ${telefono}\n🏠 Dirección: ${direccion}\n\n`;
+mensajeTelegram += `👤 Nombre: ${nombre} ${apellido}\n📞 Teléfono: ${codigoPais}${telefono}\n🏠 Dirección: ${direccion}\n📍 Ciudad: ${ciudad}\n📧 Email: ${email}\n\n`;
+
 
     articulosCarrito.forEach((producto, index) => {
       mensajeWhatsApp += `*${index + 1}.* ${producto.nombre}\n🖼️ Imagen: ${producto.imagen}\n📏 Talla: ${producto.talla || "No especificada"}\n💲 Precio: $${producto.precio.toLocaleString("es-CO")}\n🔢 Cantidad: ${producto.cantidad}\n\n`;
@@ -250,13 +281,23 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // 🧠 Validar campos del formulario
   formCliente?.addEventListener("input", () => {
-    const nombre = document.getElementById("nombreCliente")?.value.trim();
-    const telefono = document.getElementById("telefonoCliente")?.value.trim();
-    const direccion = document.getElementById("direccionCliente")?.value.trim();
-    if (btnEnviarPedido) {
-      btnEnviarPedido.disabled = !(nombre && telefono && direccion);
-    }
-  });
+  const nombre = document.getElementById("nombreCliente")?.value.trim();
+  const apellido = document.getElementById("apellidoCliente")?.value.trim();
+  const telefono = document.getElementById("telefonoCliente")?.value.trim();
+  const ciudad = document.getElementById("ciudadCliente")?.value;
+  const tipoVia = document.getElementById("tipoVia")?.value;
+  const numeroVia = document.getElementById("numeroVia")?.value.trim();
+  const barrio = document.getElementById("barrio")?.value.trim();
+  const email = document.getElementById("emailCliente")?.value.trim();
+
+  const telefonoValido = /^\d{7}$/.test(telefono);
+  const valido = nombre && apellido && telefonoValido && ciudad && tipoVia && numeroVia && barrio && email;
+
+  if (btnEnviarPedido) {
+    btnEnviarPedido.disabled = !valido;
+  }
+});
+
 
   // 📦 Enviar pedido al hacer clic en el botón del modal
   btnEnviarPedido?.addEventListener("click", generarPedidoWhatsApp);
