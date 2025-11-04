@@ -230,7 +230,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           "APELLIDO COMPL.": apellido,
           DIRECCIONCLIENTE: direccion,
           TELEFONOCLIENTE: telefonoCompleto,
-          CEDULA: "",
+          CEDULA: cedula,
           "COMPLEMENTO DE DIR": complementoVia || "",
           "CIUDAD DESTINO": ciudad,
           CORREO: email,
