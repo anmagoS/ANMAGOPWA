@@ -1,0 +1,130 @@
+<!-- MODAL FORMULARIO CLIENTE -->
+<div class="modal fade" id="modalFormularioCliente" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Datos del cliente</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+
+      <div class="modal-body">
+        <form id="formCliente">
+
+          <!-- Cédula -->
+          <div class="mb-3">
+            <label for="cedulaCliente" class="form-label">Cédula</label>
+            <input type="text" id="cedulaCliente" class="form-control" placeholder="Cédula">
+          </div>
+
+          <!-- Nombre -->
+          <div class="mb-3">
+            <label for="nombreCliente" class="form-label">Nombres</label>
+            <input type="text" class="form-control" id="nombreCliente">
+          </div>
+
+          <!-- Apellido -->
+          <div class="mb-3">
+            <label for="apellidoCliente" class="form-label">Apellidos</label>
+            <input type="text" class="form-control" id="apellidoCliente">
+          </div>
+
+          <!-- Celular principal -->
+          <div class="mb-3">
+            <label for="telefonoCliente" class="form-label">Celular</label>
+            <input type="tel" class="form-control" id="telefonoCliente" placeholder="Ej: 3001234567" maxlength="10">
+            <div class="form-text">Debe comenzar por 3 y tener 10 dígitos.</div>
+          </div>
+
+          <!-- Celular secundario -->
+          <div class="mb-3">
+            <label for="telefonoSecundario" class="form-label">Otro celular (opcional)</label>
+            <input type="tel" class="form-control" id="telefonoSecundario" placeholder="Ej: 3012345678" maxlength="10">
+            <div class="form-text">Solo si deseas agregar otro número.</div>
+          </div>
+
+          <!-- Tipo de vía -->
+          <div class="mb-3">
+            <label for="tipoVia" class="form-label">Tipo de vía</label>
+            <select id="tipoVia" class="form-select">
+              <option value="">Selecciona tipo</option>
+              <option value="Calle">Calle</option>
+              <option value="Carrera">Carrera</option>
+              <option value="Avenida">Avenida</option>
+              <option value="Diagonal">Diagonal</option>
+              <option value="Transversal">Transversal</option>
+            </select>
+          </div>
+
+          <!-- Segmento principal de dirección -->
+          <div class="row mb-3">
+            <div class="col-3">
+              <label for="numeroVia" class="form-label">Número</label>
+              <input type="text" class="form-control" id="numeroVia" maxlength="3">
+            </div>
+            <div class="col-3">
+              <label for="complementoVia1" class="form-label">Letra/Bis</label>
+              <input type="text" class="form-control" id="complementoVia1" maxlength="5">
+            </div>
+            <div class="col-1 d-flex align-items-end justify-content-center">
+              <span class="fw-bold">N°</span>
+            </div>
+            <div class="col-2">
+              <label for="numeroAdicional1" class="form-label">Número</label>
+              <input type="text" class="form-control" id="numeroAdicional1" maxlength="3">
+            </div>
+            <div class="col-3">
+              <label for="complementoVia2" class="form-label">Letra/Bis</label>
+              <input type="text" class="form-control" id="complementoVia2" maxlength="5">
+            </div>
+          </div>
+
+          <!-- Segmento final de dirección -->
+          <div class="row mb-3">
+            <div class="col-4">
+              <label for="numeroAdicional2" class="form-label">Número final</label>
+              <input type="text" class="form-control" id="numeroAdicional2" maxlength="3">
+            </div>
+            <div class="col-4">
+              <label for="tipoUnidad" class="form-label">Tipo de unidad</label>
+              <select id="tipoUnidad" class="form-select">
+                <option value="">Selecciona</option>
+                <option value="Casa">Casa</option>
+                <option value="Apartamento">Apartamento</option>
+              </select>
+            </div>
+            <div class="col-4">
+              <label for="numeroApto" class="form-label">Número de apto</label>
+              <input type="text" class="form-control" id="numeroApto" maxlength="5">
+            </div>
+          </div>
+
+          <!-- Barrio -->
+          <div class="mb-3">
+            <label for="barrio" class="form-label">Barrio (opcional)</label>
+            <input type="text" class="form-control" id="barrio" maxlength="50">
+          </div>
+
+          <!-- Ciudad con autocompletado -->
+          <div class="mb-3 position-relative">
+            <label for="ciudadCliente" class="form-label">Ciudad</label>
+            <input type="text" id="ciudadCliente" class="form-control" placeholder="Escribe tu ciudad" autocomplete="off">
+            <ul id="sugerenciasCiudades" class="dropdown-menu w-100 mt-0 z-3"></ul>
+          </div>
+
+          <!-- Correo electrónico -->
+          <div class="mb-3">
+            <label for="emailCliente" class="form-label">Correo electrónico</label>
+            <input type="email" class="form-control" id="emailCliente">
+          </div>
+
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button id="btnEnviarPedido" class="btn btn-gradient" disabled>Enviar pedido</button>
+      </div>
+
+    </div>
+  </div>
+</div>
