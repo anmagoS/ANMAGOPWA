@@ -226,35 +226,34 @@
       });
     }
   </script>
-<!-- MODAL FORMULARIO CLIENTE -->
-<div class="modal fade" id="modalFormularioCliente" tabindex="-1" aria-labelledby="modalFormularioLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalFormularioLabel">Datos del cliente</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        <form id="formCliente">
-          <div class="mb-3">
-            <label for="nombreCliente" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="nombreCliente" required>
-          </div>
-          <div class="mb-3">
-            <label for="telefonoCliente" class="form-label">Teléfono</label>
-            <input type="tel" class="form-control" id="telefonoCliente" required>
-          </div>
-          <div class="mb-3">
-            <label for="direccionCliente" class="form-label">Dirección</label>
-            <input type="text" class="form-control" id="direccionCliente" required>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button id="btnEnviarPedido" class="btn btn-primary" disabled>Enviar pedido</button>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- 📋 Lógica del formulario cliente -->
+<script src="modalformulario.js" defer></script>
+<!-- 📥 Carga modular del modal del formulario cliente -->
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    try {
+      const modalHTML = await fetch("modalformulario.html").then(res => res.text());
+      const contenedor = document.createElement("div");
+      contenedor.innerHTML = modalHTML;
+      document.body.appendChild(contenedor);
+
+      // ✅ Conectar eventos de validación y envío DESPUÉS de insertar el modal
+      document.querySelectorAll("#formCliente input, #formCliente select").forEach(el => {
+        el.addEventListener("input", validarFormularioCliente);
+      });
+
+      const btnEnviar = document.getElementById("btnEnviarPedido");
+      if (btnEnviar) {
+        btnEnviar.addEventListener("click", () => {
+          enviarPedidoWhatsApp();
+          enviarPedidoTelegramBot();
+        });
+      }
+
+    } catch (error) {
+      console.error("❌ Error al cargar modalformulario.html:", error);
+    }
+  });
+</script>
 </body>
 </html>
