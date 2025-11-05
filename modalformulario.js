@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const listaSugerencias = document.getElementById("sugerenciasCiudades");
   const btnEnviar = document.getElementById("btnEnviarPedido");
   let ciudades = [];
-
   // 🔹 Cargar ciudades desde JSON
   try {
     const res = await fetch("https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/ciudades.json");
