@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const listaSugerencias = document.getElementById("sugerenciasCiudades");
   const btnEnviar = document.getElementById("btnEnviarPedido");
   let ciudades = [];
+
   // 🔹 Cargar ciudades desde JSON
   try {
     const res = await fetch("https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/ciudades.json");
@@ -50,12 +51,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     validarFormularioCliente();
   });
 
-  // 🔹 Validar también al perder foco
   inputCiudad.addEventListener("blur", () => {
     validarFormularioCliente();
   });
 
-  // 🔹 Cerrar sugerencias si se hace clic fuera del campo o lista
   document.addEventListener("click", e => {
     if (!e.target.closest("#ciudadCliente") && !e.target.closest("#sugerenciasCiudades")) {
       listaSugerencias.classList.remove("show");
@@ -63,14 +62,47 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  // 🔹 Validación de formulario
   document.querySelectorAll("#formCliente input, #formCliente select").forEach(el => {
     el.addEventListener("input", validarFormularioCliente);
   });
 
-  // 🔹 Envío del pedido
+  // 🔹 Envío del pedido con Sheets + WhatsApp + Telegram
   if (btnEnviar) {
-    btnEnviar.addEventListener("click", () => {
+    btnEnviar.addEventListener("click", async (event) => {
+      event.preventDefault();
+      console.log("✅ Botón clickeado. Iniciando envío...");
+
+      const datos = {
+        cedulaCliente: document.getElementById("cedulaCliente").value.trim(),
+        nombreCliente: document.getElementById("nombreCliente").value.trim(),
+        apellidoCliente: document.getElementById("apellidoCliente").value.trim(),
+        telefonoCliente: document.getElementById("telefonoCliente").value.trim(),
+        emailCliente: document.getElementById("emailCliente").value.trim(),
+        ciudadCliente: document.getElementById("ciudadCliente").value.trim(),
+        tipoVia: document.getElementById("tipoVia").value.trim(),
+        numeroVia: document.getElementById("numeroVia").value.trim(),
+        complementoVia1: document.getElementById("complementoVia1").value.trim(),
+        numeroAdicional1: document.getElementById("numeroAdicional1").value.trim(),
+        complementoVia2: document.getElementById("complementoVia2").value.trim(),
+        numeroAdicional2: document.getElementById("numeroAdicional2").value.trim(),
+        tipoUnidad: document.getElementById("tipoUnidad").value.trim(),
+        numeroApto: document.getElementById("numeroApto").value.trim(),
+        barrio: document.getElementById("barrio").value.trim()
+      };
+
+      try {
+        const respuesta = await fetch("https://script.google.com/macros/s/AKfycbwnPGj_wiKMe4CH_jK6YAMPhEfBrldedi4jdEK7aT8LQE-KVsx2F3kIXtVZNb7nJHyn/exec", {
+          method: "POST",
+          body: JSON.stringify(datos),
+          headers: { "Content-Type": "application/json" }
+        });
+
+        const texto = await respuesta.text();
+        console.log("📄 Respuesta de Sheets:", texto);
+      } catch (error) {
+        console.error("❌ Error al enviar a Sheets:", error);
+      }
+
       enviarPedidoWhatsApp();
       enviarPedidoTelegramBot();
     });
@@ -89,21 +121,16 @@ function validarFormularioCliente() {
 
   const todosLlenos = camposObligatorios.every(id => {
     const el = document.getElementById(id);
-    const lleno = el && el.value.trim() !== "";
-    console.log(`🧪 ${id}: ${lleno ? "✔️" : "❌"}`);
-    return lleno;
+    return el && el.value.trim() !== "";
   });
 
   const cedulaValida = /^\d+$/.test(document.getElementById("cedulaCliente")?.value.trim());
   const telefonoValido = /^3\d{9}$/.test(document.getElementById("telefonoCliente")?.value.trim());
   const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById("emailCliente")?.value.trim());
 
-  console.log({ todosLlenos, cedulaValida, telefonoValido, emailValido });
-
   const btnEnviar = document.getElementById("btnEnviarPedido");
   if (btnEnviar) {
     btnEnviar.disabled = !(todosLlenos && cedulaValida && telefonoValido && emailValido);
-    console.log(`🔘 Botón activado: ${!btnEnviar.disabled}`);
   }
 }
 
@@ -123,7 +150,6 @@ function construirDireccionEstructurada() {
   let direccion = `${tipoVia} ${numeroVia}${complementoVia1 ? ' ' + complementoVia1 : ''} # ${numeroAdicional1}${complementoVia2 ? ' ' + complementoVia2 : ''} - ${numeroAdicional2}`;
   if (tipoUnidad && numeroApto) direccion += `, ${tipoUnidad} ${numeroApto}`;
   if (barrio) direccion += `, Barrio ${barrio}`;
-
   return direccion;
 }
 
@@ -152,22 +178,12 @@ function generarTextoTelegram() {
     hour: "2-digit", minute: "2-digit", second: "2-digit"
   });
 
-  const productos = (window.articulosCarrito || []).map((p, i) => {
+   const productos = (window.articulosCarrito || []).map((p, i) => {
     return `${i + 1}. ${p.nombre.toUpperCase()}\n${p.imagen}\n📏 Talla: ${p.talla || "No especificada"}\n🔢 Cantidad: ${p.cantidad}\n🏬 Proveedor: ${p.proveedor || "No especificado"}`;
   }).join("\n\n");
 
   return `🕒 Pedido registrado el ${fecha}\n\n👤 Nombre: ${nombre}\n📞 Teléfono: ${telefono}\n🏙️ Ciudad: ${ciudad}\n🏠 Dirección: ${direccion}\n\n${productos}`;
 }
-
-// 📤 Envío a WhatsApp
-function enviarPedidoWhatsApp() {
-  const mensaje = generarTextoWhatsApp();
-  const url = `https://wa.me/573006498710?text=${encodeURIComponent(mensaje)}`;
-  window.open(url, "_blank");
-}
-
-
-// 📤 Envío automático a Telegram
 function enviarPedidoTelegramBot() {
   const mensaje = generarTextoTelegram();
   const token = "8320682242:AAG4h89_8WVmljeEvYHjzRxmnJDt-HoxcAY";
@@ -185,4 +201,9 @@ function enviarPedidoTelegramBot() {
   .then(res => res.json())
   .then(data => console.log("✅ Pedido enviado a Telegram:", data))
   .catch(err => console.error("❌ Error al enviar a Telegram:", err));
+}
+function enviarPedidoWhatsApp() {
+  const mensaje = generarTextoWhatsApp();
+  const url = `https://wa.me/573006498710?text=${encodeURIComponent(mensaje)}`;
+  window.open(url, "_blank");
 }
