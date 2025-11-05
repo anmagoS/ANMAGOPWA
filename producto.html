@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Detalle del Producto | ANMAGO STORE</title>
+
   <!-- Estilos institucionales -->
   <link rel="stylesheet" href="https://ik.imagekit.io/mbsk9dati/CODIGOS/ESTILO.CSS">
   <link rel="icon" href="logo.jpg" type="image/x-icon" />
@@ -77,24 +78,20 @@
           <h5 class="modal-title">Datos del cliente</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
         </div>
-
         <div class="modal-body">
           <form id="formCliente">
             <div class="mb-3">
               <label for="cedulaCliente" class="form-label">Cédula</label>
               <input type="text" id="cedulaCliente" class="form-control" required>
             </div>
-
             <div class="mb-3">
               <label for="nombreCliente" class="form-label">Nombres</label>
               <input type="text" id="nombreCliente" class="form-control" required>
             </div>
-
             <div class="mb-3">
               <label for="apellidoCliente" class="form-label">Apellidos</label>
-              <input type="text" id="apellidoCliente" class="form-control">
+              <input type="text" id="apellidoCliente" class="form-control" required>
             </div>
-
             <div class="mb-3">
               <label for="telefonoCliente" class="form-label">Celular</label>
               <div class="input-group">
@@ -106,10 +103,9 @@
                 <input type="tel" id="telefonoCliente" class="form-control" placeholder="Teléfono (10 dígitos)" pattern="\d{10}" required>
               </div>
             </div>
-
             <div class="mb-3">
               <label for="tipoVia" class="form-label">Tipo de vía</label>
-              <select id="tipoVia" class="form-select">
+              <select id="tipoVia" class="form-select" required>
                 <option value="">Selecciona tipo</option>
                 <option value="Calle">Calle</option>
                 <option value="Carrera">Carrera</option>
@@ -118,11 +114,10 @@
                 <option value="Transversal">Transversal</option>
               </select>
             </div>
-
             <div class="row mb-3">
               <div class="col-3">
                 <label for="numeroVia" class="form-label">Número</label>
-                <input type="text" id="numeroVia" class="form-control" maxlength="3">
+                <input type="text" id="numeroVia" class="form-control" maxlength="3" required>
               </div>
               <div class="col-3">
                 <label for="complementoVia1" class="form-label">Letra/Bis</label>
@@ -140,7 +135,6 @@
                 <input type="text" id="complementoVia2" class="form-control">
               </div>
             </div>
-
             <div class="row mb-3">
               <div class="col-4">
                 <label for="numeroAdicional2" class="form-label">Número final</label>
@@ -159,78 +153,91 @@
                 <input type="text" id="numeroApto" class="form-control">
               </div>
             </div>
-
             <div class="mb-3">
               <label for="barrio" class="form-label">Barrio</label>
-              <input type="text" id="barrio" class="form-control">
+              <input type="text" id="barrio" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label for="observacionesDireccion" class="form-label">Observaciones de dirección</label>
+              <textarea id="observacionesDireccion" class="form-control" rows="2"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="ciudadCliente" class="form-label">Ciudad</label>
+              <select id="ciudadCliente" class="form-select" required></select>
+            </div>
+                        <div class="mb-3">
+              <label for="ciudadCliente" class="form-label">Ciudad</label>
+              <select id="ciudadCliente" class="form-select" required></select>
             </div>
 
-           <div class="mb-3">
-  <label for="observacionesDireccion" class="form-label">Observaciones de dirección</label>
-  <textarea id="observacionesDireccion" class="form-control" rows="2" placeholder="Piso, portería, referencias..."></textarea>
-</div>
+            <div class="mb-3">
+              <label for="emailCliente" class="form-label">Correo electrónico</label>
+              <input type="email" id="emailCliente" class="form-control" required>
+            </div>
+          </form>
+        </div>
 
-<!-- Ciudad (corregido como SELECT para cargar desde JSON) -->
-<div class="mb-3">
-  <label for="ciudadCliente" class="form-label">Ciudad</label>
-  <select id="ciudadCliente" class="form-select" required></select>
-</div>
-
-<!-- Correo electrónico -->
-<div class="mb-3">
-  <label for="emailCliente" class="form-label">Correo electrónico</label>
-  <input type="email" id="emailCliente" class="form-control" required>
-</div>
-                    </form>
-      </div>
-
-      <div class="modal-footer">
-        <button id="btnEnviarPedido" class="btn btn-gradient" disabled>Enviar pedido</button>
+        <div class="modal-footer">
+          <button id="btnEnviarPedido" class="btn btn-gradient" disabled>Enviar pedido</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Scripts institucionales -->
-<script src="carrito.js"></script>
-<script src="buscador.js" type="module"></script>
+  <!-- Scripts institucionales -->
+  <script src="carrito.js"></script>
+  <script src="buscador.js" type="module"></script>
 
-<!-- Script embebido -->
-<script type="module">
-  import { activarBuscadorGlobal } from './buscador.js';
+  <!-- Script embebido -->
+  <script type="module">
+    import { activarBuscadorGlobal } from './buscador.js';
 
-  function ajustarCarrito() {
-    const header = document.querySelector(".header");
-    const carritoBtn = document.querySelector(".btn_shopping");
-    if (header && carritoBtn) {
-      const alturaHeader = header.offsetHeight;
-      carritoBtn.style.top = `${alturaHeader + 12}px`;
-    }
-  }
-
-  document.addEventListener("DOMContentLoaded", async () => {
-    const header = await fetch("HEADER.HTML").then(res => res.text());
-    document.getElementById("header-container").insertAdjacentHTML("afterbegin", header);
-    await new Promise(resolve => requestAnimationFrame(resolve));
-
-    ajustarCarrito();
-    activarBuscadorGlobal();
-
-    document.querySelector(".btn_shopping")?.addEventListener("click", e => {
-      e.preventDefault();
-      const offcanvas = document.getElementById("offcanvasCarrito");
-      if (offcanvas) {
-        const instancia = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
-        instancia.show();
+    function ajustarCarrito() {
+      const header = document.querySelector(".header");
+      const carritoBtn = document.querySelector(".btn_shopping");
+      if (header && carritoBtn) {
+        const alturaHeader = header.offsetHeight;
+        carritoBtn.style.top = `${alturaHeader + 12}px`;
       }
-    });
+    }
 
-    const footer = await fetch("footer.html").then(res => res.text());
-    document.getElementById("footer-container").innerHTML = footer;
-  });
-</script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const header = await fetch("HEADER.HTML").then(res => res.text());
+      document.getElementById("header-container").insertAdjacentHTML("afterbegin", header);
+      await new Promise(resolve => requestAnimationFrame(resolve));
+
+      ajustarCarrito();
+      activarBuscadorGlobal();
+
+      document.querySelector(".btn_shopping")?.addEventListener("click", e => {
+        e.preventDefault();
+        const offcanvas = document.getElementById("offcanvasCarrito");
+        if (offcanvas) {
+          const instancia = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
+          instancia.show();
+        }
+      });
+
+      const footer = await fetch("footer.html").then(res => res.text());
+      document.getElementById("footer-container").innerHTML = footer;
+
+      // Cargar producto principal
+      if (typeof cargarProducto === "function") {
+        await cargarProducto();
+      }
+
+      // Activar zoom al hacer clic en imagen
+      document.addEventListener("click", function (e) {
+        if (e.target.classList.contains("zoomable")) {
+          const src = e.target.getAttribute("src");
+          document.getElementById("zoomImagen").setAttribute("src", src);
+          const modal = new bootstrap.Modal(document.getElementById("zoomModal"));
+          modal.show();
+        }
+      });
+    });
+  </script>
 </body>
 </html>
-
