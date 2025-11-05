@@ -3,46 +3,51 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Subtipos | Anmago Store</title> 
+  <title>Detalle del Producto | ANMAGO STORE</title>
   <link rel="icon" href="logo.jpg" type="image/x-icon" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
- <link rel="stylesheet" href="https://ik.imagekit.io/mbsk9dati/CODIGOS/ESTILO.CSS">
+  <link rel="stylesheet" href="https://ik.imagekit.io/mbsk9dati/CODIGOS/ESTILO.CSS" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
   <!-- HEADER -->
   <div id="header-container"></div>
-  <!-- BUSCADOR MODULAR -->
+
+  <!-- BUSCADOR -->
   <div class="container mt-4 position-relative" style="max-width: 500px;">
     <input id="buscador" class="form-control" placeholder="Buscar productos, categorías, precios..." autocomplete="off">
     <div id="sugerencias" class="dropdown-menu position-absolute mt-1 w-100 z-3"></div>
   </div>
+
   <!-- BOTÓN FLOTANTE DEL CARRITO -->
   <a href="#" class="btn btn_shopping" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
     <i class="bi bi-bag-heart"></i>
     <span id="contador-carrito" class="contador-carrito">0</span>
   </a>
-<div class="container mt-3">
-  <a href="javascript:history.back()" class="btn btn-outline-dark">
-    <i class="bi bi-arrow-left"></i> Atrás
-  </a>
-</div>
-<div class="container-fluid text-center mt-3 px-3">
-  <a href="PROMOS.HTML" class="btn btn-gradient fw-bold">
-    🎁 Ver promociones exclusivas
-  </a>
-</div>
+
+  <!-- BOTÓN ATRÁS -->
+  <div class="container mt-3">
+    <a href="javascript:history.back()" class="btn btn-outline-dark">
+      <i class="bi bi-arrow-left"></i> Atrás
+    </a>
+  </div>
+
+  <!-- PROMOCIÓN -->
+  <div class="container-fluid text-center mt-3 px-3">
+    <a href="PROMOS.HTML" class="btn btn-gradient fw-bold">
+      🎁 Ver promociones exclusivas
+    </a>
+  </div>
+
   <!-- CONTENIDO PRINCIPAL -->
   <main class="contenedor-categoria">
-    <h1 class="titulo-categoria text-center" id="titulo-subtipos">Subtipos</h1>
-    <div id="grid-subtipos" class="grid-productos"></div>
+    <h1 id="nombre" class="titulo-categoria text-center">Cargando...</h1>
+    <p class="precio text-center" id="precio"></p>
+    <p id="descripcion-corta" class="descripcion-corta text-muted fst-italic text-center mt-2"></p>
+    <div id="video-producto" class="video-producto mb-4 text-center"></div>
+    <div id="galeria" class="grid-productos"></div>
+    <div id="descripcion-completa" class="descripcion-producto mt-4"></div>
   </main>
-
-  <!-- SECCIÓN INFERIOR: TIPOS -->
-  <section class="contenedor-categoria">
-    <h2 class="titulo-categoria text-center">Explora más productos</h2>
-    <div id="seccion-tipos" class="grid-productos"></div>
-  </section>
 
   <!-- CARRITO OFFCANVAS -->
   <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito">
@@ -56,137 +61,60 @@
         <span class="fw-bold px-3">SUBTOTAL:</span>
         <span id="subtotal" class="fw-bold float-end px-2 fs-2">$0.00</span>
       </h5>
-      </div>
+    </div>
   </div>
 
   <!-- FOOTER -->
-  <div id="footer-container"></div>
+  <div id="footer-container" class="mt-5"></div>
 
-  <!-- SCRIPTS EXTERNOS -->
+  <!-- MODAL ZOOM -->
+  <div class="modal fade" id="zoomModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content bg-transparent border-0">
+        <div class="modal-body text-center">
+          <img id="zoomImagen" src="" class="img-fluid rounded shadow" alt="Zoom" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- MODAL FORMULARIO CLIENTE -->
+  <div class="modal fade" id="modalFormularioCliente" tabindex="-1" aria-labelledby="modalFormularioLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalFormularioLabel">Datos del cliente</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <form id="formCliente">
+            <div class="mb-3">
+              <label for="nombreCliente" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombreCliente" required>
+            </div>
+            <div class="mb-3">
+              <label for="telefonoCliente" class="form-label">Teléfono</label>
+              <input type="tel" class="form-control" id="telefonoCliente" required>
+            </div>
+            <div class="mb-3">
+              <label for="direccionCliente" class="form-label">Dirección</label>
+              <input type="text" class="form-control" id="direccionCliente" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button id="btnEnviarPedido" class="btn btn-gradient" disabled>Enviar pedido</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="carrito.js"></script>
-  <script src="app.js"></script>
   <script src="buscador.js" type="module"></script>
 
-  <!-- INICIALIZACIÓN -->
   <script type="module">
     import { activarBuscadorGlobal } from './buscador.js';
-const imagenesPorSubtipo = {
-  // 🧵 ROPA
-  "dama": "https://ik.imagekit.io/mbsk9dati/subtipos/%C3%ADcono%20realista%20para%20.png?tr=w-300,q-80",
-  "caballero": "https://ik.imagekit.io/mbsk9dati/subtipos/%C3%ADcono%20realista%20para%20h.png?tr=w-300,q-80",
-  "unisex": "https://ik.imagekit.io/mbsk9dati/subtipos/%C3%ADcono%20estilizado%20parej.png?tr=w-300,q-80",
-  "niños": "https://ik.imagekit.io/mbsk9dati/subtipos/%C3%ADcono%20realista%20para%20n%C3%B1o.png?tr=w-300,q-80",
-  "niñas": "https://ik.imagekit.io/mbsk9dati/subtipos/%C3%ADcono%20realista%20para%20ni%C3%B1a.png?tr=w-300,q-80",
-
-  // ⌚ RELOJERIA
-  "hogar": "https://ik.imagekit.io/mbsk9dati/subtipos/%C3%ADcono%20realista%20para%20hogar.png?tr=w-300,q-80",
-  "analógico": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/reloj_analogico.jpg?tr=w-300,q-80",
-  "smartwatch": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/smartwatch.jpg?tr=w-300,q-80",
-
-  // 🏠 HOGAR
-  "cocina": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/cocina.jpg?tr=w-300,q-80",
-  "decoración": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/decoracion.jpg?tr=w-300,q-80",
-  "iluminación": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/iluminacion.jpg?tr=w-300,q-80",
-
-  // 💄 BELLEZA
-  "maquillaje": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/maquillaje.jpg?tr=w-300,q-80",
-  "cuidado facial": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/facial.jpg?tr=w-300,q-80",
-
-  // 🎒 ESCOLAR
-  "mochilas": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/mochilas.jpg?tr=w-300,q-80",
-  "útiles": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/utiles.jpg?tr=w-300,q-80",
-
-  // 🎄 NAVIDAD
-  "luces": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/navidad_luces.jpg?tr=w-300,q-80",
-  "decoración navideña": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/navidad_decoracion.jpg?tr=w-300,q-80"
-};
-
-
-    function getTipoDesdeURL() {
-      const params = new URLSearchParams(window.location.search);
-      return params.get("tipo")?.trim();
-    }
-
-    async function cargarCatalogo() {
-      try {
-        const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json";
-        const respuesta = await fetch(url);
-        const productos = await respuesta.json();
-        window.catalogoGlobal = productos;
-        renderSubtipos(productos);
-        renderizarTiposDesdeCatalogo(productos);
-      } catch (error) {
-        document.getElementById("grid-subtipos").innerHTML = `<p class="text-center text-danger">Error al cargar el catálogo.</p>`;
-      }
-    }
-
-    function renderSubtipos(productos) {
-      const tipoSeleccionado = getTipoDesdeURL();
-      const contenedor = document.getElementById("grid-subtipos");
-      if (!tipoSeleccionado || !contenedor) {
-        contenedor.innerHTML = `<p class="text-center text-muted">No se ha seleccionado ningún tipo.</p>`;
-        return;
-      }
-
-      document.getElementById("titulo-subtipos").textContent = `SELECCIÓN DE ${tipoSeleccionado}`;
-      contenedor.innerHTML = "";
-
-      const productosFiltrados = productos.filter(p => p.tipo?.trim() === tipoSeleccionado);
-      const subtiposUnicos = [...new Set(productosFiltrados.map(p => p.subtipo?.trim()).filter(Boolean))];
-
-      if (subtiposUnicos.length === 0) {
-        contenedor.innerHTML = `<p class="text-center text-muted">No hay subtipos disponibles para este tipo.</p>`;
-        return;
-      }
-
-      subtiposUnicos.forEach(subtipo => {
-        const productoRef = productosFiltrados.find(p => p.subtipo?.trim() === subtipo);
-       const imagen = imagenesPorSubtipo[subtipo.toLowerCase()]?.trim() || productoRef?.imagen?.trim() || "REDES_IMAGES/default-subtipo.jpg";
-        const tarjeta = document.createElement("div");
-        tarjeta.className = "producto";
-        tarjeta.innerHTML = `
-          <a href="CATEGORIAS.HTML?tipo=${encodeURIComponent(tipoSeleccionado)}&subtipo=${encodeURIComponent(subtipo)}" class="imagen-producto">
-            <img src="${imagen}" alt="${subtipo}">
-          </a>
-          <div class="nombre-producto">${subtipo}</div>
-          <a class="boton-comprar" href="CATEGORIAS.HTML?tipo=${encodeURIComponent(tipoSeleccionado)}&subtipo=${encodeURIComponent(subtipo)}">Ver más</a>
-        `;
-        contenedor.appendChild(tarjeta);
-      });
-    }
-
-    function renderizarTiposDesdeCatalogo(productos) {
-      const tipoActual = getTipoDesdeURL();
-      const contenedor = document.getElementById("seccion-tipos");
-      if (!contenedor) return;
-
-      const tiposUnicos = [...new Set(productos.map(p => p.tipo?.trim()).filter(Boolean))]
-        .filter(tipo => tipo && tipo !== tipoActual);
-
-      contenedor.innerHTML = "";
-
-      if (tiposUnicos.length === 0) {
-        contenedor.innerHTML = `<p class="text-center text-muted">No hay otros tipos disponibles en este momento.</p>`;
-        return;
-      }
-
-      tiposUnicos.forEach(tipo => {
-        const productoRef = productos.find(p => p.tipo?.trim() === tipo);
-        const imagen = productoRef?.imagen || "REDES_IMAGES/default-categoria.jpg";
-
-        const tarjeta = document.createElement("div");
-        tarjeta.className = "producto";
-        tarjeta.innerHTML = `
-          <a href="SUBTIPOS.HTML?tipo=${encodeURIComponent(tipo)}" class="imagen-producto">
-            <img src="${imagen}" alt="${tipo}">
-          </a>
-          <div class="nombre-producto">${tipo}</div>
-          <a class="boton-comprar" href="SUBTIPOS.HTML?tipo=${encodeURIComponent(tipo)}">Ver Más</a>
-        `;
-        contenedor.appendChild(tarjeta);
-      });
-    }
 
     function ajustarCarrito() {
       const header = document.querySelector(".header");
@@ -197,62 +125,144 @@ const imagenesPorSubtipo = {
       }
     }
 
+    async function cargarProducto() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+      const res = await fetch("https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json");
+      const productos = await res.json();
+      const producto = productos.find(p => p.id === id);
+      if (!producto) return;
+
+      document.getElementById("nombre").textContent = producto.producto;
+      document.getElementById("precio").textContent = `$${producto.precio.toLocaleString("es-CO")}`;
+      document.getElementById("descripcion-corta").textContent = producto.descripcion || "";
+
+      // VIDEO
+      const contenedorVideo = document.getElementById("video-producto");
+      const videoID = producto.video_url?.includes("/shorts/")
+        ? producto.video_url.split("/shorts/")[1]?.split(/[?&]/)[0]
+        : null;
+
+      if (videoID?.length === 11) {
+        contenedorVideo.innerHTML = `
+          <div class="ratio ratio-9x16">
+            <iframe src="https://www.youtube.com/embed/${videoID}?rel=0"
+              title="Video del producto" allowfullscreen
+              class="rounded shadow" loading="lazy"></iframe>
+          </div>
+        `;
+      } else if (producto.video_url?.endsWith(".mp4")) {
+        contenedorVideo.innerHTML = `
+          <video controls preload="metadata" class="w-100 rounded shadow">
+            <source src="${producto.video_url}" type="video/mp4">
+            Tu navegador no soporta el video.
+          </video>
+        `;
+      }
+
+      // GALERÍA
+      const galeria = document.getElementById("galeria");
+      const imagenes = producto.url?.split("[]").map(u => u.trim()).filter(Boolean) || [];
+      const tallas = producto.tallas?.split(",").map(t => t.trim()) || [];
+      const variantes = producto.variables?.split(",").map(v => v.trim()) || [];
+
+      imagenes.forEach((img, i) => {
+        const tarjeta = document.createElement("div");
+        tarjeta.className = "producto";
+
+        let selectorHTML = "";
+        if (tallas.length > 0 && !tallas.includes("única")) {
+          selectorHTML = `
+            <label class="form-label mt-2">Talla:</label>
+            <select class="form-select mb-2 selector-talla">
+              ${tallas.map(t => `<option value="${t}">${t}</option>`).join("")}
+            </select>
+          `;
+        } else if (variantes.length > 0) {
+          selectorHTML = `
+            <label class="form-label mt-2">Variante:</label>
+            <select class="form-select mb-2 selector-variable">
+              ${variantes.map(v => `<option value="${v}">${v}</option>`).join("")}
+            </select>
+          `;
+        }
+
+        tarjeta.innerHTML = `
+          <div class="imagen-producto">
+            <img src="${img}" alt="${producto.producto} - Variante ${i + 1}" class="zoomable" style="cursor: zoom-in;" onerror="this.src='REDES_IMAGES/default.jpg'">
+          </div>
+          ${selectorHTML}
+          <button class="boton-comprar btn-cart">Agregar al carrito</button>
+        `;
+
+        const boton = tarjeta.querySelector(".btn-cart");
+        const selectorTalla = tarjeta.querySelector(".selector-talla");
+        const selectorVariable = tarjeta.querySelector(".selector-variable");
+
+        boton.addEventListener("click", () => {
+          let tallaSeleccionada = "No especificada";
+          if (selectorTalla) tallaSeleccionada = selectorTalla.value;
+          else if (selectorVariable) tallaSeleccionada = selectorVariable.value;
+
+          const productoFinal = {
+            id: img + "-" + tallaSeleccionada,
+            nombre: producto.producto,
+            precio: producto.precio,
+            imagen: img,
+            talla: tallaSeleccionada,
+            cantidad: 1,
+            proveedor: producto.proveedor || "No definido"
+          };
+
+          if (typeof window.agregarAlCarrito === "function") {
+            window.agregarAlCarrito(productoFinal);
+          }
+
+          const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(document.getElementById("offcanvasCarrito"));
+          bsOffcanvas.show();
+        });
+
+        galeria.appendChild(tarjeta);
+      });
+
+      if (producto.descripcion) {
+        document.getElementById("descripcion-completa").innerHTML = `
+          <h4 class="mt-4 mb-2">Descripción del producto</h4>
+          <p>${producto.descripcion.replace(/\n/g, "<br>")}</p>
+        `;
+      }
+    }
+
     document.addEventListener("DOMContentLoaded", async () => {
       const header = await fetch("HEADER.HTML").then(res => res.text());
       document.getElementById("header-container").insertAdjacentHTML("afterbegin", header);
       await new Promise(resolve => requestAnimationFrame(resolve));
       ajustarCarrito();
-  await new Promise(resolve => requestAnimationFrame(resolve));
-  ajustarCarrito();
-
-  // 🔒 Reforzar apertura del carrito si el contenedor ya está cargado
-  const carritoBtn = document.querySelector(".btn_shopping");
-  carritoBtn?.addEventListener("click", e => {
-    e.preventDefault();
-    const offcanvas = document.getElementById("offcanvasCarrito");
-    if (offcanvas) {
-      const instancia = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
-      instancia.show();
-    }
-  });
-
       activarBuscadorGlobal();
+
+      document.querySelector(".btn_shopping")?.addEventListener("click", e => {
+        e.preventDefault();
+        const offcanvas = document.getElementById("offcanvasCarrito");
+        if (offcanvas) {
+          const instancia = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
+          instancia.show();
+        }
+      });
 
       const footer = await fetch("footer.html").then(res => res.text());
       document.getElementById("footer-container").innerHTML = footer;
 
-      await cargarCatalogo();
+      await cargarProducto();
+
+      document.addEventListener("click", function (e) {
+        if (e.target.classList.contains("zoomable")) {
+          const src = e.target.getAttribute("src");
+          document.getElementById("zoomImagen").setAttribute("src", src);
+          const modal = new bootstrap.Modal(document.getElementById("zoomModal"));
+          modal.show();
+        }
+      });
     });
   </script>
-<!-- MODAL FORMULARIO CLIENTE -->
-<div class="modal fade" id="modalFormularioCliente" tabindex="-1" aria-labelledby="modalFormularioLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalFormularioLabel">Datos del cliente</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        <form id="formCliente">
-          <div class="mb-3">
-            <label for="nombreCliente" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="nombreCliente" required>
-          </div>
-          <div class="mb-3">
-            <label for="telefonoCliente" class="form-label">Teléfono</label>
-            <input type="tel" class="form-control" id="telefonoCliente" required>
-          </div>
-          <div class="mb-3">
-            <label for="direccionCliente" class="form-label">Dirección</label>
-            <input type="text" class="form-control" id="direccionCliente" required>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button id="btnEnviarPedido" class="btn btn-gradient" disabled>Enviar pedido</button>
-      </div>
-    </div>
-  </div>
-</div>
 </body>
 </html>
