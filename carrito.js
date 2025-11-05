@@ -1,4 +1,19 @@
+// ✅ Función para corregir el formato visual del enlace de imagen
+function corregirFormatoImagen(url) {
+  return url
+    .replace(/producto(\d+)/, "producto_$1")
+    .replace(/PRODUCTOSImages/, "PRODUCTOS_Images")
+    .replace(/IMAGEN(\d+)/, "IMAGEN_$1");
+}
+
+// ✅ Carga inicial del carrito con corrección de enlaces
 let articulosCarrito = JSON.parse(localStorage.getItem("carritoAnmago")) || [];
+articulosCarrito = articulosCarrito.map(p => {
+  if (p.imagen) p.imagen = corregirFormatoImagen(p.imagen);
+  return p;
+});
+window.articulosCarrito = articulosCarrito;
+
 let catalogo = [];
 
 async function cargarCatalogo() {
@@ -11,29 +26,10 @@ async function cargarCatalogo() {
   }
 }
 
-async function cargarCiudades() {
-  try {
-    const res = await fetch("https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/ciudades.json");
-    const ciudades = await res.json();
-    const selectCiudad = document.getElementById("ciudadCliente");
-
-    ciudades.forEach(({ departamento, ciudad }) => {
-      const option = document.createElement("option");
-      option.value = ciudad;
-      option.textContent = `${ciudad} (${departamento})`;
-      option.dataset.departamento = departamento;
-      selectCiudad.appendChild(option);
-    });
-
-    console.log("✅ Ciudades cargadas");
-  } catch (error) {
-    console.error("❌ Error al cargar ciudades:", error);
-  }
-}
-
 function guardarCarrito() {
   try {
     localStorage.setItem("carritoAnmago", JSON.stringify(articulosCarrito));
+    window.articulosCarrito = articulosCarrito;
   } catch (e) {
     console.error("❌ Error al guardar carrito:", e);
   }
@@ -137,6 +133,10 @@ function agregarAlCarrito(producto) {
     if (desdeCatalogo?.proveedor) producto.proveedor = desdeCatalogo.proveedor;
   }
 
+  if (producto.imagen) {
+    producto.imagen = corregirFormatoImagen(producto.imagen);
+  }
+
   const existe = articulosCarrito.find(p => p.id === producto.id);
   if (existe) {
     existe.cantidad = (existe.cantidad || 1) + 1;
@@ -153,39 +153,10 @@ function agregarAlCarrito(producto) {
   abrirCarrito();
 }
 
-function limpiarTextoTelegram(texto) {
-  return texto.replace(/[*_`[\]()~>#+=|{}.!]/g, '').replace(/\n/g, ' ').trim();
-}
-
-function validarFormularioCliente() {
-  const campos = [
-    "nombreCliente", "apellidoCliente", "telefonoCliente",
-    "ciudadCliente", "tipoVia", "numeroVia", "barrio", "cedulaCliente"
-  ];
-
-  const todosLlenos = campos.every(id => {
-    const el = document.getElementById(id);
-    return el && el.value.trim() !== "";
-  });
-
-  const cedulaValida = /^\d+$/.test(document.getElementById("cedulaCliente")?.value.trim());
-  const telefonoValido = /^\d{10}$/.test(document.getElementById("telefonoCliente")?.value.trim());
-
-  const btnEnviar = document.getElementById("btnEnviarPedido");
-  if (btnEnviar) {
-    btnEnviar.disabled = !(todosLlenos && cedulaValida && telefonoValido);
-  }
-}
-
 document.addEventListener("DOMContentLoaded", async () => {
   await cargarCatalogo();
-  await cargarCiudades();
   renderizarCarrito();
   actualizarSubtotal();
   actualizarContadorCarrito();
   actualizarEstadoBotonWhatsApp();
-
-  document.querySelectorAll("#formCliente input, #formCliente select").forEach(el => {
-    el.addEventListener("input", validarFormularioCliente);
-  });
 });
