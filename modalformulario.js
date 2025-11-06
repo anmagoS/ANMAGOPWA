@@ -114,7 +114,7 @@ function enviarPedidoInstitucional() {
   }, 500);
 });
    }
-
+});
 
 
 // 🔍 Validación epistémica
