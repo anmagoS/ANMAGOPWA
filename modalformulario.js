@@ -102,26 +102,19 @@ document.addEventListener("DOMContentLoaded", async () => {
       } catch (error) {
         console.error("❌ Error al enviar a Sheets:", error);
       }
-// 🔁 Enviar al Web App intermedio
+// 🔁 Enviar al Web App intermedio usando GET sin CORS
 try {
-  const mensajeTelegram = generarTextoTelegram();
-  const payload = {
-    message: {
-      chat: { id: -1003044241716 },
-      text: mensajeTelegram
-    }
-  };
+  const mensajeCompleto = generarTextoTelegram();
+  const mensajeReducido = mensajeCompleto.split("🛍️ Productos:")[0]; // Solo hasta el correo
+  const url = `https://script.google.com/macros/s/AKfycbwawyVDveTS_Uj2UJV6oOxntSnKHHVycT5Dvjtmek2ekUrZujZL9Qo8ob86t-Uhj88/exec?mensaje=${encodeURIComponent(mensajeReducido)}`;
 
-  await fetch("https://script.google.com/macros/s/AKfycbwawyVDveTS_Uj2UJV6oOxntSnKHHVycT5Dvjtmek2ekUrZujZL9Qo8ob86t-Uhj88/exec", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  });
-
-  console.log("📤 Pedido enviado al Web App intermedio");
+  await fetch(url)
+    .then(res => res.text())
+    .then(texto => console.log("📤 GET enviado al Web App intermedio:", texto));
 } catch (error) {
   console.error("❌ Error al enviar al Web App intermedio:", error);
 }
+
       enviarPedidoWhatsApp();
       enviarPedidoTelegramBot();
     });
