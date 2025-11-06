@@ -1,3 +1,4 @@
+// 🔁 Registro institucional en hoja vía iframe
 function enviarPedidoInstitucional() {
   try {
     const mensajeCompleto = generarTextoTelegram();
@@ -13,119 +14,11 @@ function enviarPedidoInstitucional() {
   } catch (error) {
     console.error("❌ Error al enviar al Web App intermedio:", error);
   }
-}document.addEventListener("DOMContentLoaded", async () => {
-  const inputCiudad = document.getElementById("ciudadCliente");
-  const listaSugerencias = document.getElementById("sugerenciasCiudades");
-  const btnEnviar = document.getElementById("btnEnviarPedido");
-  let ciudades = [];
-
-  // 🔹 Cargar ciudades desde JSON
-  try {
-    const res = await fetch("https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/ciudades.json");
-    const data = await res.json();
-    ciudades = data.map(({ ciudad, departamento }) => ({
-      nombre: ciudad.trim(),
-      departamento: departamento.trim()
-    }));
-    console.log("✅ Ciudades cargadas");
-  } catch (error) {
-    console.error("❌ Error al cargar ciudades:", error);
-  }
-
-  // 🔹 Autocompletado filtrado con validación activa
-  inputCiudad.addEventListener("input", () => {
-    const valor = inputCiudad.value.trim().toLowerCase();
-    listaSugerencias.innerHTML = "";
-
-    if (valor.length < 2) {
-      validarFormularioCliente();
-      return;
-    }
-
-    const filtradas = ciudades.filter(c =>
-      c.nombre.toLowerCase().includes(valor)
-    ).slice(0, 8);
-
-    filtradas.forEach(ciudad => {
-      const item = document.createElement("li");
-      item.className = "dropdown-item";
-      item.textContent = `${ciudad.nombre} (${ciudad.departamento})`;
-      item.addEventListener("click", () => {
-        inputCiudad.value = ciudad.nombre;
-        listaSugerencias.innerHTML = "";
-        listaSugerencias.classList.remove("show");
-        validarFormularioCliente();
-      });
-      listaSugerencias.appendChild(item);
-    });
-
-    if (filtradas.length > 0) {
-      listaSugerencias.classList.add("show");
-    }
-
-    validarFormularioCliente();
-  });
-
-  inputCiudad.addEventListener("blur", () => {
-    validarFormularioCliente();
-  });
-
-  document.addEventListener("click", e => {
-    if (!e.target.closest("#ciudadCliente") && !e.target.closest("#sugerenciasCiudades")) {
-      listaSugerencias.classList.remove("show");
-      listaSugerencias.innerHTML = "";
-    }
-  });
-
-  document.querySelectorAll("#formCliente input, #formCliente select").forEach(el => {
-    el.addEventListener("input", validarFormularioCliente);
-  });
-
-  // 🔹 Envío del pedido con Sheets + WhatsApp + Telegram
- btnEnviar.addEventListener("click", async (event) => {
-  event.preventDefault();
-  console.log("✅ Botón clickeado. Iniciando envío...");
-
- 
-      const datos = {
-        cedulaCliente: document.getElementById("cedulaCliente").value.trim(),
-        nombreCliente: document.getElementById("nombreCliente").value.trim(),
-        apellidoCliente: document.getElementById("apellidoCliente").value.trim(),
-        telefonoCliente: document.getElementById("telefonoCliente").value.trim(),
-        emailCliente: document.getElementById("emailCliente").value.trim(),
-        ciudadCliente: document.getElementById("ciudadCliente").value.trim(),
-        tipoVia: document.getElementById("tipoVia").value.trim(),
-        numeroVia: document.getElementById("numeroVia").value.trim(),
-        complementoVia1: document.getElementById("complementoVia1").value.trim(),
-        numeroAdicional1: document.getElementById("numeroAdicional1").value.trim(),
-        complementoVia2: document.getElementById("complementoVia2").value.trim(),
-        numeroAdicional2: document.getElementById("numeroAdicional2").value.trim(),
-        tipoUnidad: document.getElementById("tipoUnidad").value.trim(),
-        numeroApto: document.getElementById("numeroApto").value.trim(),
-        barrio: document.getElementById("barrio").value.trim()
-      };
- // 1. Ejecutar el iframe primero
-  enviarPedidoInstitucional();
-
-  // 2. Esperar 500 ms para que el iframe se cargue
-  setTimeout(() => {
-    enviarPedidoWhatsApp();
-    enviarPedidoTelegramBot();
-  }, 500);
-});
-   }
-});
-
+}
 
 // 🔍 Validación epistémica
 function validarFormularioCliente() {
-  const camposObligatorios = [
-    "nombreCliente",
-    "telefonoCliente",
-    "cedulaCliente",
-    "emailCliente"
-  ];
-
+  const camposObligatorios = ["nombreCliente", "telefonoCliente", "cedulaCliente", "emailCliente"];
   const todosLlenos = camposObligatorios.every(id => {
     const el = document.getElementById(id);
     return el && el.value.trim() !== "";
@@ -140,7 +33,6 @@ function validarFormularioCliente() {
     btnEnviar.disabled = !(todosLlenos && cedulaValida && telefonoValido && emailValido);
   }
 }
-
 
 // 🧱 Construcción de dirección estructurada
 function construirDireccionEstructurada() {
@@ -160,7 +52,6 @@ function construirDireccionEstructurada() {
   return direccion;
 }
 
-
 // 🧾 Generar texto para WhatsApp
 function generarTextoWhatsApp() {
   const nombre = document.getElementById("nombreCliente")?.value.trim();
@@ -172,7 +63,6 @@ function generarTextoWhatsApp() {
 
   return `🛍️ ¡Hola! Soy ${nombre} y quiero realizar el siguiente pedido:\n\n${productos}\n\n🧾 Total del pedido: $${total.toLocaleString("es-CO")}\n\n✅ ¡Gracias por tu atención!`;
 }
-
 
 // 🧾 Generar texto para Telegram
 function generarTextoTelegram() {
@@ -206,6 +96,8 @@ function generarTextoTelegram() {
 🛍️ Productos:
 ${productos}`;
 }
+
+// 📤 Envío a Telegram
 function enviarPedidoTelegramBot() {
   const mensaje = generarTextoTelegram();
   const token = "8320682242:AAG4h89_8WVmljeEvYHjzRxmnJDt-HoxcAY";
@@ -214,18 +106,98 @@ function enviarPedidoTelegramBot() {
   fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      chat_id: chatId,
-      text: mensaje,
-      parse_mode: ""
-    })
+    body: JSON.stringify({ chat_id: chatId, text: mensaje, parse_mode: "" })
   })
   .then(res => res.json())
   .then(data => console.log("✅ Pedido enviado a Telegram:", data))
   .catch(err => console.error("❌ Error al enviar a Telegram:", err));
 }
+
+// 📤 Envío a WhatsApp
 function enviarPedidoWhatsApp() {
   const mensaje = generarTextoWhatsApp();
   const url = `https://wa.me/573006498710?text=${encodeURIComponent(mensaje)}`;
   window.open(url, "_blank");
 }
+
+// 🚀 Inicialización
+document.addEventListener("DOMContentLoaded", async () => {
+  const inputCiudad = document.getElementById("ciudadCliente");
+  const listaSugerencias = document.getElementById("sugerenciasCiudades");
+  const btnEnviar = document.getElementById("btnEnviarPedido");
+  let ciudades = [];
+
+  // 🔹 Cargar ciudades desde JSON
+  try {
+    const res = await fetch("https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/ciudades.json");
+    const data = await res.json();
+    ciudades = data.map(({ ciudad, departamento }) => ({
+      nombre: ciudad.trim(),
+      departamento: departamento.trim()
+    }));
+    console.log("✅ Ciudades cargadas");
+  } catch (error) {
+    console.error("❌ Error al cargar ciudades:", error);
+  }
+
+  // 🔹 Autocompletado filtrado
+  inputCiudad.addEventListener("input", () => {
+    const valor = inputCiudad.value.trim().toLowerCase();
+    listaSugerencias.innerHTML = "";
+
+    if (valor.length < 2) {
+      validarFormularioCliente();
+      return;
+    }
+
+    const filtradas = ciudades.filter(c => c.nombre.toLowerCase().includes(valor)).slice(0, 8);
+    filtradas.forEach(ciudad => {
+      const item = document.createElement("li");
+      item.className = "dropdown-item";
+      item.textContent = `${ciudad.nombre} (${ciudad.departamento})`;
+      item.addEventListener("click", () => {
+        inputCiudad.value = ciudad.nombre;
+        listaSugerencias.innerHTML = "";
+        listaSugerencias.classList.remove("show");
+        validarFormularioCliente();
+      });
+      listaSugerencias.appendChild(item);
+    });
+
+   if (filtradas.length > 0) {
+     if (filtradas.length > 0) {
+      listaSugerencias.classList.add("show");
+    }
+
+    validarFormularioCliente();
+  });
+
+  inputCiudad.addEventListener("blur", () => {
+    validarFormularioCliente();
+  });
+
+  document.addEventListener("click", e => {
+    if (!e.target.closest("#ciudadCliente") && !e.target.closest("#sugerenciasCiudades")) {
+      listaSugerencias.classList.remove("show");
+      listaSugerencias.innerHTML = "";
+    }
+  });
+
+  document.querySelectorAll("#formCliente input, #formCliente select").forEach(el => {
+    el.addEventListener("input", validarFormularioCliente);
+  });
+
+  if (btnEnviar) {
+    btnEnviar.addEventListener("click", async (event) => {
+      event.preventDefault();
+      console.log("✅ Botón clickeado. Iniciando envío...");
+
+      enviarPedidoInstitucional();
+
+      setTimeout(() => {
+        enviarPedidoWhatsApp();
+        enviarPedidoTelegramBot();
+      }, 500);
+    });
+  }
+});
