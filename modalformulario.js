@@ -1,4 +1,19 @@
-document.addEventListener("DOMContentLoaded", async () => {
+function enviarPedidoInstitucional() {
+  try {
+    const mensajeCompleto = generarTextoTelegram();
+    const mensajeReducido = mensajeCompleto.split("🛍️ Productos:")[0];
+    const url = `https://script.google.com/macros/s/AKfycbzS4IFkO8g8GDx4RSzRSVDCteJGaszXs-U3OwJyi9pT4ZUsZUI38fKXqiElQVKB8Opo/exec?mensaje=${encodeURIComponent(mensajeReducido)}`;
+
+    const iframe = document.createElement("iframe");
+    iframe.style.display = "none";
+    iframe.src = url;
+    document.body.appendChild(iframe);
+
+    console.log("📤 GET enviado al Web App intermedio mediante iframe");
+  } catch (error) {
+    console.error("❌ Error al enviar al Web App intermedio:", error);
+  }
+}document.addEventListener("DOMContentLoaded", async () => {
   const inputCiudad = document.getElementById("ciudadCliente");
   const listaSugerencias = document.getElementById("sugerenciasCiudades");
   const btnEnviar = document.getElementById("btnEnviarPedido");
@@ -90,24 +105,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         barrio: document.getElementById("barrio").value.trim()
       };
 
-     
-// 🔁 Enviar al Web App intermedio usando GET con iframe (sin CORS)
-try {
-  const mensajeCompleto = generarTextoTelegram();
-  const mensajeReducido = mensajeCompleto.split("🛍️ Productos:")[0]; // Solo hasta el correo
-  const url = `https://script.google.com/macros/s/AKfycbzS4IFkO8g8GDx4RSzRSVDCteJGaszXs-U3OwJyi9pT4ZUsZUI38fKXqiElQVKB8Opo/exec?mensaje=${encodeURIComponent(mensajeReducido)}`;
+   
 
-  const iframe = document.createElement("iframe");
-  iframe.style.display = "none";
-  iframe.src = url;
-  document.body.appendChild(iframe);
-
-  console.log("📤 GET enviado al Web App intermedio mediante iframe");
-} catch (error) {
-  console.error("❌ Error al enviar al Web App intermedio:", error);
-}
-
-
+      enviarPedidoInstitucional();
       enviarPedidoWhatsApp();
       enviarPedidoTelegramBot();
     });
