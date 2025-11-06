@@ -8,10 +8,12 @@ function corregirFormatoImagen(url) {
 
 // ✅ Carga inicial del carrito con corrección de enlaces
 window.articulosCarrito = window.articulosCarrito || JSON.parse(localStorage.getItem("carritoAnmago")) || [];
-articulosCarrito = articulosCarrito.map(p => {
+
+window.articulosCarrito = window.articulosCarrito.map(p => {
   if (p.imagen) p.imagen = corregirFormatoImagen(p.imagen);
   return p;
 });
+
 window.articulosCarrito = articulosCarrito;
 
 let catalogo = [];
