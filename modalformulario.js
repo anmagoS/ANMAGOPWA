@@ -82,11 +82,11 @@ function enviarPedidoInstitucional() {
   });
 
   // 🔹 Envío del pedido con Sheets + WhatsApp + Telegram
-  if (btnEnviar) {
-    btnEnviar.addEventListener("click", async (event) => {
-      event.preventDefault();
-      console.log("✅ Botón clickeado. Iniciando envío...");
+ btnEnviar.addEventListener("click", async (event) => {
+  event.preventDefault();
+  console.log("✅ Botón clickeado. Iniciando envío...");
 
+ 
       const datos = {
         cedulaCliente: document.getElementById("cedulaCliente").value.trim(),
         nombreCliente: document.getElementById("nombreCliente").value.trim(),
@@ -104,14 +104,16 @@ function enviarPedidoInstitucional() {
         numeroApto: document.getElementById("numeroApto").value.trim(),
         barrio: document.getElementById("barrio").value.trim()
       };
+ // 1. Ejecutar el iframe primero
+  enviarPedidoInstitucional();
 
-   
-
-      enviarPedidoInstitucional();
-      enviarPedidoWhatsApp();
-      enviarPedidoTelegramBot();
-    });
-  }
+  // 2. Esperar 500 ms para que el iframe se cargue
+  setTimeout(() => {
+    enviarPedidoWhatsApp();
+    enviarPedidoTelegramBot();
+  }, 500);
+});
+   }
 });
 
 
