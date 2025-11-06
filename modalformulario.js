@@ -1,21 +1,3 @@
-// 🔁 Registro institucional en hoja vía iframe
-function enviarPedidoInstitucional() {
-  try {
-    const mensajeCompleto = generarTextoTelegram();
-    const mensajeReducido = mensajeCompleto.split("🛍️ Productos:")[0];
-    const url = `https://script.google.com/macros/s/AKfycbzS4IFkO8g8GDx4RSzRSVDCteJGaszXs-U3OwJyi9pT4ZUsZUI38fKXqiElQVKB8Opo/exec?mensaje=${encodeURIComponent(mensajeReducido)}`;
-
-    const iframe = document.createElement("iframe");
-    iframe.style.display = "none";
-    iframe.src = url;
-    document.body.appendChild(iframe);
-
-    console.log("📤 GET enviado al Web App intermedio mediante iframe");
-  } catch (error) {
-    console.error("❌ Error al enviar al Web App intermedio:", error);
-  }
-}
-
 // 🔍 Validación epistémica
 function validarFormularioCliente() {
   const camposObligatorios = ["nombreCliente", "telefonoCliente", "cedulaCliente", "emailCliente"];
@@ -97,6 +79,24 @@ function generarTextoTelegram() {
 ${productos}`;
 }
 
+// 📤 Envío institucional a hoja
+function enviarPedidoInstitucional() {
+  try {
+    const mensajeCompleto = generarTextoTelegram();
+    const mensajeReducido = mensajeCompleto.split("🛍️ Productos:")[0];
+    const url = `https://script.google.com/macros/s/AKfycbzS4IFkO8g8GDx4RSzRSVDCteJGaszXs-U3OwJyi9pT4ZUsZUI38fKXqiElQVKB8Opo/exec?mensaje=${encodeURIComponent(mensajeReducido)}`;
+
+    const iframe = document.createElement("iframe");
+    iframe.style.display = "none";
+    iframe.src = url;
+    document.body.appendChild(iframe);
+
+    console.log("📤 GET enviado al Web App intermedio mediante iframe");
+  } catch (error) {
+    console.error("❌ Error al enviar al Web App intermedio:", error);
+  }
+}
+
 // 📤 Envío a Telegram
 function enviarPedidoTelegramBot() {
   const mensaje = generarTextoTelegram();
@@ -120,84 +120,28 @@ function enviarPedidoWhatsApp() {
   window.open(url, "_blank");
 }
 
-// 🚀 Inicialización
-document.addEventListener("DOMContentLoaded", async () => {
-  const inputCiudad = document.getElementById("ciudadCliente");
-  const listaSugerencias = document.getElementById("sugerenciasCiudades");
-  const btnEnviar = document.getElementById("btnEnviarPedido");
-  let ciudades = [];
+// 🚀 Conexión de eventos cuando el modal ya está en el DOM
+document.addEventListener("DOMContentLoaded", () => {
+  const esperarModal = setInterval(() => {
+    const form = document.getElementById("formCliente");
+    if (form) {
+      clearInterval(esperarModal);
 
-  // 🔹 Cargar ciudades desde JSON
-  try {
-    const res = await fetch("https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/ciudades.json");
-    const data = await res.json();
-    ciudades = data.map(({ ciudad, departamento }) => ({
-      nombre: ciudad.trim(),
-      departamento: departamento.trim()
-    }));
-    console.log("✅ Ciudades cargadas");
-  } catch (error) {
-    console.error("❌ Error al cargar ciudades:", error);
-  }
-
-  // 🔹 Autocompletado filtrado
-  inputCiudad.addEventListener("input", () => {
-    const valor = inputCiudad.value.trim().toLowerCase();
-    listaSugerencias.innerHTML = "";
-
-    if (valor.length < 2) {
-      validarFormularioCliente();
-      return;
-    }
-
-    const filtradas = ciudades.filter(c => c.nombre.toLowerCase().includes(valor)).slice(0, 8);
-    filtradas.forEach(ciudad => {
-      const item = document.createElement("li");
-      item.className = "dropdown-item";
-      item.textContent = `${ciudad.nombre} (${ciudad.departamento})`;
-      item.addEventListener("click", () => {
-        inputCiudad.value = ciudad.nombre;
-        listaSugerencias.innerHTML = "";
-        listaSugerencias.classList.remove("show");
-        validarFormularioCliente();
+      document.querySelectorAll("#formCliente input, #formCliente select").forEach(el => {
+        el.addEventListener("input", validarFormularioCliente);
       });
-      listaSugerencias.appendChild(item);
-    });
 
-   if (filtradas.length > 0) {
-     if (filtradas.length > 0) {
-      listaSugerencias.classList.add("show");
+      const btnEnviar = document.getElementById("btnEnviarPedido");
+      if (btnEnviar) {
+        btnEnviar.addEventListener("click", (e) => {
+          e.preventDefault();
+          enviarPedidoInstitucional();
+          setTimeout(() => {
+            enviarPedidoWhatsApp();
+            enviarPedidoTelegramBot();
+          }, 500);
+        });
+      }
     }
-
-    validarFormularioCliente();
-  });
-
-  inputCiudad.addEventListener("blur", () => {
-    validarFormularioCliente();
-  });
-
-  document.addEventListener("click", e => {
-    if (!e.target.closest("#ciudadCliente") && !e.target.closest("#sugerenciasCiudades")) {
-      listaSugerencias.classList.remove("show");
-      listaSugerencias.innerHTML = "";
-    }
-  });
-
-  document.querySelectorAll("#formCliente input, #formCliente select").forEach(el => {
-    el.addEventListener("input", validarFormularioCliente);
-  });
-
-  if (btnEnviar) {
-    btnEnviar.addEventListener("click", async (event) => {
-      event.preventDefault();
-      console.log("✅ Botón clickeado. Iniciando envío...");
-
-      enviarPedidoInstitucional();
-
-      setTimeout(() => {
-        enviarPedidoWhatsApp();
-        enviarPedidoTelegramBot();
-      }, 500);
-    });
-  }
+  }, 100);
 });
