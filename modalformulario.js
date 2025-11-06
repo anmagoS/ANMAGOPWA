@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 try {
   const mensajeCompleto = generarTextoTelegram();
   const mensajeReducido = mensajeCompleto.split("🛍️ Productos:")[0]; // Solo hasta el correo
-  const url = `https://script.google.com/macros/s/AKfycbwawyVDveTS_Uj2UJV6oOxntSnKHHVycT5Dvjtmek2ekUrZujZL9Qo8ob86t-Uhj88/exec?mensaje=${encodeURIComponent(mensajeReducido)}`;
+  const url = `https://script.google.com/macros/s/AKfycbzS4IFkO8g8GDx4RSzRSVDCteJGaszXs-U3OwJyi9pT4ZUsZUI38fKXqiElQVKB8Opo/exec?mensaje=${encodeURIComponent(mensajeReducido)}`;
 
   const iframe = document.createElement("iframe");
   iframe.style.display = "none";
