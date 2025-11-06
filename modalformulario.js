@@ -102,18 +102,22 @@ document.addEventListener("DOMContentLoaded", async () => {
       } catch (error) {
         console.error("❌ Error al enviar a Sheets:", error);
       }
-// 🔁 Enviar al Web App intermedio usando GET sin CORS
+// 🔁 Enviar al Web App intermedio usando GET con iframe (sin CORS)
 try {
   const mensajeCompleto = generarTextoTelegram();
   const mensajeReducido = mensajeCompleto.split("🛍️ Productos:")[0]; // Solo hasta el correo
   const url = `https://script.google.com/macros/s/AKfycbwawyVDveTS_Uj2UJV6oOxntSnKHHVycT5Dvjtmek2ekUrZujZL9Qo8ob86t-Uhj88/exec?mensaje=${encodeURIComponent(mensajeReducido)}`;
 
-  await fetch(url)
-    .then(res => res.text())
-    .then(texto => console.log("📤 GET enviado al Web App intermedio:", texto));
+  const iframe = document.createElement("iframe");
+  iframe.style.display = "none";
+  iframe.src = url;
+  document.body.appendChild(iframe);
+
+  console.log("📤 GET enviado al Web App intermedio mediante iframe");
 } catch (error) {
   console.error("❌ Error al enviar al Web App intermedio:", error);
 }
+
 
       enviarPedidoWhatsApp();
       enviarPedidoTelegramBot();
