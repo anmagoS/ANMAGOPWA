@@ -90,18 +90,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         barrio: document.getElementById("barrio").value.trim()
       };
 
-      try {
-        const respuesta = await fetch("https://script.google.com/macros/s/AKfycbwnPGj_wiKMe4CH_jK6YAMPhEfBrldedi4jdEK7aT8LQE-KVsx2F3kIXtVZNb7nJHyn/exec", {
-          method: "POST",
-          body: JSON.stringify(datos),
-          headers: { "Content-Type": "application/json" }
-        });
-
-        const texto = await respuesta.text();
-        console.log("📄 Respuesta de Sheets:", texto);
-      } catch (error) {
-        console.error("❌ Error al enviar a Sheets:", error);
-      }
+     
 // 🔁 Enviar al Web App intermedio usando GET con iframe (sin CORS)
 try {
   const mensajeCompleto = generarTextoTelegram();
