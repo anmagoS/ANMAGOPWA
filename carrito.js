@@ -14,10 +14,6 @@ window.articulosCarrito = window.articulosCarrito.map(p => {
   return p;
 });
 
-window.articulosCarrito = articulosCarrito;
-
-let catalogo = [];
-
 async function cargarCatalogo() {
   try {
     const res = await fetch("https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json");
