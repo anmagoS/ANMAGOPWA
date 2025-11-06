@@ -169,20 +169,35 @@ function generarTextoWhatsApp() {
 
 // 🧾 Generar texto para Telegram
 function generarTextoTelegram() {
+  const cedula = document.getElementById("cedulaCliente")?.value.trim();
   const nombre = document.getElementById("nombreCliente")?.value.trim();
+  const apellido = document.getElementById("apellidoCliente")?.value.trim();
   const telefono = document.getElementById("telefonoCliente")?.value.trim();
+  const telefono2 = document.getElementById("telefonoSecundario")?.value.trim();
   const ciudad = document.getElementById("ciudadCliente")?.value.trim();
+  const email = document.getElementById("emailCliente")?.value.trim();
   const direccion = construirDireccionEstructurada();
   const fecha = new Date().toLocaleString("es-CO", {
     day: "2-digit", month: "2-digit", year: "numeric",
     hour: "2-digit", minute: "2-digit", second: "2-digit"
   });
 
-   const productos = (window.articulosCarrito || []).map((p, i) => {
+  const productos = (window.articulosCarrito || []).map((p, i) => {
     return `${i + 1}. ${p.nombre.toUpperCase()}\n${p.imagen}\n📏 Talla: ${p.talla || "No especificada"}\n🔢 Cantidad: ${p.cantidad}\n🏬 Proveedor: ${p.proveedor || "No especificado"}`;
   }).join("\n\n");
 
-  return `🕒 Pedido registrado el ${fecha}\n\n👤 Nombre: ${nombre}\n📞 Teléfono: ${telefono}\n🏙️ Ciudad: ${ciudad}\n🏠 Dirección: ${direccion}\n\n${productos}`;
+  return `🕒 Pedido registrado el ${fecha}
+
+🧾 Cédula: ${cedula}
+👤 Nombre: ${nombre} ${apellido}
+📞 Teléfono: ${telefono}
+📞 Otro: ${telefono2 || "No aplica"}
+🏠 Dirección: ${direccion}
+🏙️ Ciudad: ${ciudad}
+📧 Correo: ${email}
+
+🛍️ Productos:
+${productos}`;
 }
 function enviarPedidoTelegramBot() {
   const mensaje = generarTextoTelegram();
