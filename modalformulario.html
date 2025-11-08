@@ -222,5 +222,25 @@
     });
   });
 </script>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const campoTelefono = document.getElementById("telefonoCliente");
+
+    campoTelefono.addEventListener("input", () => {
+      const valor = campoTelefono.value.trim();
+      const esValido = /^3\d{9}$/.test(valor);
+
+      // Si no es válido, muestra alerta visual
+      if (!esValido && valor.length === 10) {
+        campoTelefono.classList.add("is-invalid");
+        campoTelefono.setCustomValidity("El número debe comenzar por 3 y tener 10 dígitos.");
+      } else {
+        campoTelefono.classList.remove("is-invalid");
+        campoTelefono.setCustomValidity("");
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
