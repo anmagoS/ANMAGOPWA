@@ -155,3 +155,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   actualizarContadorCarrito();
   actualizarEstadoBotonWhatsApp();
 });
+window.addEventListener("message", (event) => {
+  if (event.data === "limpiarCarrito") {
+    window.articulosCarrito = [];
+    guardarCarrito();
+    renderizarCarrito?.();
+    actualizarSubtotal?.();
+    actualizarContadorCarrito?.();
+    actualizarEstadoBotonWhatsApp?.();
+  }
+});
