@@ -130,18 +130,32 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelectorAll("#formCliente input, #formCliente select").forEach(el => {
         el.addEventListener("input", validarFormularioCliente);
       });
+const btnEnviar = document.getElementById("btnEnviarPedido");
+if (btnEnviar) {
+  btnEnviar.addEventListener("click", (e) => {
+    e.preventDefault();
+    enviarPedidoInstitucional();
 
-      const btnEnviar = document.getElementById("btnEnviarPedido");
-      if (btnEnviar) {
-        btnEnviar.addEventListener("click", (e) => {
-          e.preventDefault();
-          enviarPedidoInstitucional();
-          setTimeout(() => {
-            enviarPedidoWhatsApp();
-            enviarPedidoTelegramBot();
-          }, 500);
-        });
-      }
+    setTimeout(() => {
+      enviarPedidoWhatsApp();
+      enviarPedidoTelegramBot();
+
+      // 🔒 Cierre de modales
+      const modalFormulario = document.getElementById("modalFormularioCliente");
+      if (modalFormulario) bootstrap.Modal.getOrCreateInstance(modalFormulario).hide();
+      if (typeof cerrarCarrito === "function") cerrarCarrito();
+
+      // 🧹 Limpieza del carrito
+      window.articulosCarrito = [];
+      guardarCarrito();
+      renderizarCarrito();
+      actualizarSubtotal();
+      actualizarContadorCarrito();
+      actualizarEstadoBotonWhatsApp();
+    }, 500);
+  });
+}
+    
     }
   }, 100);
 });
