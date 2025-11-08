@@ -250,22 +250,6 @@ if (producto.video_url?.includes("youtube.com/shorts/")) {
       });
     });
   </script>
- <!-- 📋 Lógica del formulario cliente -->
-<script src="modalformulario.js" defer></script>
 
-<!-- 📥 Carga modular del modal del formulario cliente -->
-<script>
-  document.addEventListener("DOMContentLoaded", async () => {
-    try {
-      const modalHTML = await fetch("modalformulario.html").then(res => res.text());
-      const contenedor = document.createElement("div");
-      contenedor.innerHTML = modalHTML;
-      document.body.appendChild(contenedor);
-      console.log("✅ Modal insertado correctamente");
-    } catch (error) {
-      console.error("❌ Error al cargar modalformulario.html:", error);
-    }
-  });
-</script>
 </body>
 </html>
