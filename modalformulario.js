@@ -1,3 +1,6 @@
+if (window.opener && Array.isArray(window.opener.articulosCarrito)) {
+  window.articulosCarrito = window.opener.articulosCarrito;
+}
 // 🔍 Validación epistémica
 function validarFormularioCliente() {
   const camposObligatorios = ["nombreCliente", "telefonoCliente", "cedulaCliente", "emailCliente"];
