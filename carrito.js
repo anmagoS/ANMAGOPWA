@@ -112,18 +112,13 @@ function renderizarCarrito() {
     });
   });
 
-  const btnComprar = document.getElementById("btn-comprar");
-  if (btnComprar) {
-    btnComprar.addEventListener("click", () => {
-      const modalFormulario = document.getElementById("modalFormularioCliente");
-      if (modalFormulario) {
-        const instanciaModal = bootstrap.Modal.getOrCreateInstance(modalFormulario);
-        instanciaModal.show();
-      } else {
-        alert("⚠️ No se encontró el formulario del cliente.");
-      }
-    });
-  }
+ const btnComprar = document.getElementById("btn-comprar");
+if (btnComprar) {
+  btnComprar.addEventListener("click", () => {
+    // Redirige al formulario externo
+    window.location.href = "modalformulario.html"; // Ajusta el nombre si usas otro archivo
+  });
+}
 }
 
 function agregarAlCarrito(producto) {
