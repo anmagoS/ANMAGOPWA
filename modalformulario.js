@@ -158,8 +158,6 @@ document.addEventListener("DOMContentLoaded", () => {
         actualizarSubtotal();
         actualizarContadorCarrito();
         actualizarEstadoBotonWhatsApp();
-         window.location.href = "INICIO.HTML"; // O usa history.back();
-
       }, 500);
     });
   
