@@ -163,5 +163,6 @@ window.addEventListener("message", (event) => {
     actualizarSubtotal?.();
     actualizarContadorCarrito?.();
     actualizarEstadoBotonWhatsApp?.();
+    cerrarCarrito?.();
   }
 });
