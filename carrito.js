@@ -5,6 +5,7 @@ function corregirFormatoImagen(url) {
     .replace(/PRODUCTOSImages/, "PRODUCTOS_Images")
     .replace(/IMAGEN(\d+)/, "IMAGEN_$1");
 }
+
 // ✅ Carga inicial del carrito con corrección de enlaces
 window.articulosCarrito = window.articulosCarrito || JSON.parse(localStorage.getItem("carritoAnmago")) || [];
 
@@ -111,7 +112,7 @@ function renderizarCarrito() {
     });
   });
 
- const btnComprar = document.getElementById("btn-comprar");
+const btnComprar = document.getElementById("btn-comprar");
 if (btnComprar) {
   btnComprar.addEventListener("click", () => {
     // Redirige al formulario externo
