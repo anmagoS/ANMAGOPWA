@@ -115,7 +115,7 @@ const btnComprar = document.getElementById("btn-comprar");
 if (btnComprar) {
   btnComprar.addEventListener("click", () => {
     // Redirige al formulario externo
-    window.location.href = "modalformulario.html"; // Ajusta el nombre si usas otro archivo
+   window.open("modalformulario.html", "_blank", "width=800,height=700");
   });
 }
 }
