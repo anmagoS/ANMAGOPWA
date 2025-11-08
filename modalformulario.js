@@ -167,13 +167,17 @@ document.addEventListener("DOMContentLoaded", () => {
         enviarPedidoWhatsApp();
         enviarPedidoTelegramBot();
 
+        // 🔒 Cierre del modal si existe
         const modalFormulario = document.getElementById("modalFormularioCliente");
         if (modalFormulario) bootstrap.Modal.getOrCreateInstance(modalFormulario).hide();
 
+        // 🔁 Comunicación con ventana principal
         if (window.opener) {
-  window.opener.postMessage("limpiarCarrito", "*");
-            window.close();
+          window.opener.postMessage("limpiarCarrito", "*");
+          window.close();
+        }
 
+        // 🧹 Limpieza local del carrito si hay productos
         const hayProductos = Array.isArray(window.articulosCarrito) && window.articulosCarrito.length > 0;
         if (hayProductos) {
           window.articulosCarrito = [];
