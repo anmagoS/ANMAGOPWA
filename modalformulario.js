@@ -120,19 +120,49 @@ function enviarPedidoWhatsApp() {
   window.open(url, "_blank");
 }
 
-btnEnviar.addEventListener("click", (e) => {
-  e.preventDefault();
-  enviarPedidoInstitucional();
+// 🚀 Conexión de eventos cuando el modal ya está en el DOM
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("formCliente");
+  if (!form) return;
 
-  setTimeout(() => {
-    enviarPedidoWhatsApp();
-    enviarPedidoTelegramBot();
+  // Validación epistémica en tiempo real
+  document.querySelectorAll("#formCliente input, #formCliente select").forEach(el => {
+    el.addEventListener("input", validarFormularioCliente);
+  });
 
-    alert("✅ Pedido enviado correctamente. Gracias por tu compra.");
+  // ✅ Ejecutar validación inicial al cargar
+  validarFormularioCliente();
 
-    window.articulosCarrito = [];
-    guardarCarrito();
+  // Envío del pedido
+  const btnEnviar = document.getElementById("btnEnviarPedido");
+  if (btnEnviar) {
+    btnEnviar.addEventListener("click", (e) => {
+      e.preventDefault();
+      enviarPedidoInstitucional();
 
-    window.location.href = "index.html"; // O usa history.back();
-  }, 500);
-});
+      setTimeout(() => {
+        enviarPedidoWhatsApp();
+        enviarPedidoTelegramBot();
+
+         alert("✅ Pedido enviado correctamente. Gracias por tu compra.");
+
+
+        // 🔒 Cierre de modal si existe
+        const modalFormulario = document.getElementById("modalFormularioCliente");
+        if (modalFormulario) bootstrap.Modal.getOrCreateInstance(modalFormulario).hide();
+
+        // 🔒 Cierre de ventana si es vista externa
+        if (window.opener) window.close();
+
+        // 🧹 Limpieza del carrito
+        window.articulosCarrito = [];
+        guardarCarrito();
+        renderizarCarrito();
+        actualizarSubtotal();
+        actualizarContadorCarrito();
+        actualizarEstadoBotonWhatsApp();
+         window.location.href = "INICIO.HTML"; // O usa history.back();
+
+      }, 500);
+    });
+  
