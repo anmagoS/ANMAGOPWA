@@ -170,7 +170,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const modalFormulario = document.getElementById("modalFormularioCliente");
         if (modalFormulario) bootstrap.Modal.getOrCreateInstance(modalFormulario).hide();
 
-        if (window.opener) window.close();
+        if (window.opener) {
+  window.opener.postMessage("limpiarCarrito", "*");
+            window.close();
 
         const hayProductos = Array.isArray(window.articulosCarrito) && window.articulosCarrito.length > 0;
         if (hayProductos) {
