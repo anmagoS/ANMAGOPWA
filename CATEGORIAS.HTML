@@ -193,34 +193,6 @@
     });
   </script>
 
-<!-- 📋 Lógica del formulario cliente -->
-<script src="modalformulario.js" defer></script>
-<!-- 📥 Carga modular del modal del formulario cliente -->
-<script>
-  document.addEventListener("DOMContentLoaded", async () => {
-    try {
-      const modalHTML = await fetch("modalformulario.html").then(res => res.text());
-      const contenedor = document.createElement("div");
-      contenedor.innerHTML = modalHTML;
-      document.body.appendChild(contenedor);
 
-      // ✅ Conectar eventos de validación y envío DESPUÉS de insertar el modal
-      document.querySelectorAll("#formCliente input, #formCliente select").forEach(el => {
-        el.addEventListener("input", validarFormularioCliente);
-      });
-
-      const btnEnviar = document.getElementById("btnEnviarPedido");
-      if (btnEnviar) {
-        btnEnviar.addEventListener("click", () => {
-          enviarPedidoWhatsApp();
-          enviarPedidoTelegramBot();
-        });
-      }
-
-    } catch (error) {
-      console.error("❌ Error al cargar modalformulario.html:", error);
-    }
-  });
-</script>>
 </body>
 </html>
