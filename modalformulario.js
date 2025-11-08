@@ -5,7 +5,6 @@ function validarFormularioCliente() {
     const el = document.getElementById(id);
     return el && el.value.trim() !== "";
   });
-
   const cedulaValida = /^\d+$/.test(document.getElementById("cedulaCliente")?.value.trim());
   const telefonoValido = /^3\d{9}$/.test(document.getElementById("telefonoCliente")?.value.trim());
   const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById("emailCliente")?.value.trim());
