@@ -130,6 +130,9 @@ document.addEventListener("DOMContentLoaded", () => {
     el.addEventListener("input", validarFormularioCliente);
   });
 
+  // ✅ Ejecutar validación inicial al cargar
+  validarFormularioCliente();
+
   // Envío del pedido
   const btnEnviar = document.getElementById("btnEnviarPedido");
   if (btnEnviar) {
