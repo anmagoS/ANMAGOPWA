@@ -15,7 +15,6 @@ function validarFormularioCliente() {
     btnEnviar.disabled = !(todosLlenos && cedulaValida && telefonoValido && emailValido);
   }
 }
-
 // 🧱 Construcción de dirección estructurada
 function construirDireccionEstructurada() {
   const tipoVia = document.getElementById("tipoVia")?.value.trim();
@@ -176,7 +175,6 @@ document.addEventListener("DOMContentLoaded", () => {
           window.opener.postMessage("limpiarCarrito", "*");
           window.close();
         }
-
         // 🧹 Limpieza local del carrito si hay productos
         const hayProductos = Array.isArray(window.articulosCarrito) && window.articulosCarrito.length > 0;
         if (hayProductos) {
