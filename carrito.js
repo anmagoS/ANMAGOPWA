@@ -37,7 +37,10 @@ function abrirCarrito() {
   const offcanvas = document.getElementById("offcanvasCarrito");
   if (offcanvas) bootstrap.Offcanvas.getOrCreateInstance(offcanvas).show();
 }
-
+function cerrarCarrito() {
+  const offcanvas = document.getElementById("offcanvasCarrito");
+  if (offcanvas) bootstrap.Offcanvas.getOrCreateInstance(offcanvas).hide();
+}
 function actualizarSubtotal() {
   const subtotal = articulosCarrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
   const opciones = {
