@@ -164,4 +164,4 @@ document.addEventListener("DOMContentLoaded", () => {
         actualizarEstadoBotonWhatsApp();
       }, 500);
     });
-  
+  }
