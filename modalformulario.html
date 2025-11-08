@@ -1,15 +1,21 @@
-<!-- MODAL FORMULARIO CLIENTE -->
-<div class="modal fade" id="modalFormularioCliente" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro de cliente</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Estilos institucionales -->
+  <link rel="stylesheet" href="estilos.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <!-- Scripts institucionales -->
+  <script src="modalFormulario.js" defer></script>
+</head>
+<body>
+  <main class="container py-4">
+    <h2 class="mb-4 text-center">Registro de cliente</h2>
 
-      <div class="modal-header">
-        <h5 class="modal-title">Datos del cliente</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
+    <form id="formCliente">
 
-      <div class="modal-body">
-        <form id="formCliente">
 
           <!-- Cédula -->
           <div class="mb-3">
@@ -119,12 +125,12 @@
           </div>
 
         </form>
-      </div>
-
-      <div class="modal-footer">
-        <button id="btnEnviarPedido" class="btn btn-gradient" disabled>Enviar pedido</button>
-      </div>
-
+          <div class="text-center mt-3">
+      <button id="btnEnviarPedido" class="btn btn-gradient" disabled>Enviar pedido</button>
     </div>
-  </div>
-</div>
+  </main>
+
+  <!-- Bootstrap JS (si usas componentes como dropdowns o autocompletado) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
