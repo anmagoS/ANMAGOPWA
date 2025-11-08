@@ -126,9 +126,13 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!form) return;
 
   // Validación epistémica en tiempo real
-  document.querySelectorAll("#formCliente input, #formCliente select").forEach(el => {
-    el.addEventListener("input", validarFormularioCliente);
+ document.querySelectorAll("#formCliente input, #formCliente select").forEach(el => {
+  el.addEventListener("input", validarFormularioCliente);
+  el.addEventListener("change", validarFormularioCliente);
+  el.addEventListener("paste", () => {
+    setTimeout(validarFormularioCliente, 50); // espera a que se pegue el valor
   });
+});
 
   // ✅ Ejecutar validación inicial al cargar
   validarFormularioCliente();
