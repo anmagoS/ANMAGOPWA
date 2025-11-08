@@ -1,6 +1,6 @@
 // 🔗 Vincular carrito desde ventana principal si existe
 if (window.opener && Array.isArray(window.opener.articulosCarrito)) {
-  window.articulosCarrito = window.opener.articulosCarrito;
+  window.articulosCarrito = JSON.parse(JSON.stringify(window.opener.articulosCarrito));
 }
 
 // 🔍 Validación epistémica
