@@ -144,10 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
         enviarPedidoWhatsApp();
         enviarPedidoTelegramBot();
 
-         alert("✅ Pedido enviado correctamente. Gracias por tu compra.");
-
-
-        // 🔒 Cierre de modal si existe
+              // 🔒 Cierre de modal si existe
         const modalFormulario = document.getElementById("modalFormularioCliente");
         if (modalFormulario) bootstrap.Modal.getOrCreateInstance(modalFormulario).hide();
 
