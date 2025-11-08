@@ -23,7 +23,6 @@ async function cargarCatalogo() {
     console.error("❌ Error al cargar catálogo:", error);
   }
 }
-
 function guardarCarrito() {
   try {
     localStorage.setItem("carritoAnmago", JSON.stringify(articulosCarrito));
