@@ -130,7 +130,7 @@ function enviarPedidoTelegramBot() {
   fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ chat_id: chatId, text: mensaje, parse_mode: "" })
+    body: JSON.stringify({ chat_id: chatId, text: mensaje })
   })
   .then(res => res.json())
   .then(data => console.log("✅ Pedido enviado a Telegram:", data))
