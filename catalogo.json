@@ -2564,5 +2564,20 @@
     "promo": false,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_162/PRODUCTOS_Images_cd0e7c68.IMAGEN_1.203648.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_162/PRODUCTOS_Images_cd0e7c68.IMAGEN_2.203648.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_162/PRODUCTOS_Images_cd0e7c68.IMAGEN_3.203648.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_162/PRODUCTOS_Images_cd0e7c68.IMAGEN_4.203651.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_162/PRODUCTOS_Images_cd0e7c68.IMAGEN_5.203651.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_162/PRODUCTOS_Images_cd0e7c68.IMAGEN_6.203651.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_162/PRODUCTOS_Images_cd0e7c68.IMAGEN_7.203653.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_162/PRODUCTOS_Images_cd0e7c68.IMAGEN_8.203653.jpg?tr=w-600,q-80",
     "proveedor": "DAMAR"
+  },
+  {
+    "id": "1335A8DF",
+    "tipo": "ROPA",
+    "subtipo": "DAMA",
+    "categoria": "VESTIDOS",
+    "subcategoria": "VELO",
+    "producto": "CESTIDO DALIA",
+    "material": "MAYA TEX Y POLILICRA",
+    "tallas": "UNICA",
+    "precio": 75000,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_163/PRODUCTOS_Images_1335a8df.IMAGEN_1.204557.jpg?tr=w-600,q-80",
+    "promo": false,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_163/PRODUCTOS_Images_1335a8df.IMAGEN_1.204557.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_163/PRODUCTOS_Images_1335a8df.IMAGEN_2.204557.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_163/PRODUCTOS_Images_1335a8df.IMAGEN_3.204557.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_163/PRODUCTOS_Images_1335a8df.IMAGEN_4.204600.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_163/PRODUCTOS_Images_1335a8df.IMAGEN_5.204600.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_163/PRODUCTOS_Images_1335a8df.IMAGEN_6.204601.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_163/PRODUCTOS_Images_1335a8df.IMAGEN_7.204602.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_163/PRODUCTOS_Images_1335a8df.IMAGEN_8.204603.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_163/PRODUCTOS_Images_1335a8df.IMAGEN_9.204603.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_163/PRODUCTOS_Images_1335a8df.IMAGEN_10.204604.jpg?tr=w-600,q-80",
+    "proveedor": "DAMAR"
   }
 ]
