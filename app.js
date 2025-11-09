@@ -9,13 +9,15 @@ function getParametrosDesdeURL() {
 }
 
 // === Función compartida para índice promocional ===
-function obtenerIndicePromocional(cantidadPorCiclo = 4, ciclosPorDia = 4) {
+function obtenerIndicePromocional(cantidadPorCiclo = 4, ciclosPorDia = 4, totalPromos = 0) {
   const ahora = new Date();
   const inicio = new Date("2025-11-08T00:00:00");
   const diferenciaHoras = Math.floor((ahora - inicio) / (1000 * 60 * 60));
   const cicloActual = diferenciaHoras % (ciclosPorDia * 365);
-  return (cicloActual * cantidadPorCiclo);
+  const indice = cicloActual * cantidadPorCiclo;
+  return totalPromos > 0 ? indice % totalPromos : 0;
 }
+
 
 // === Mostrar temporizador de promociones ===
 function mostrarTemporizadorPromos() {
@@ -144,10 +146,26 @@ function renderPromocionesPorCiclo() {
 
   const cantidadPorCiclo = 4;
   const ciclosPorDia = 4;
-  const indiceActual = obtenerIndicePromocional(cantidadPorCiclo, ciclosPorDia);
+  const totalPromos = window.promocionesGlobal.length;
+
+  if (totalPromos === 0) {
+    contenedor.innerHTML = `<div class="text-center text-muted">No hay promociones disponibles.</div>`;
+    console.warn("⚠️ promocionesGlobal está vacío.");
+    return;
+  }
+
+  const indiceActual = obtenerIndicePromocional(cantidadPorCiclo, ciclosPorDia, totalPromos);
   const bloque = window.promocionesGlobal.slice(indiceActual, indiceActual + cantidadPorCiclo);
 
+  if (bloque.length === 0) {
+    contenedor.innerHTML = `<div class="text-center text-muted">No hay promociones activas en este momento.</div>`;
+    console.warn("⚠️ Bloque vacío. índiceActual:", indiceActual);
+    return;
+  }
+
   contenedor.innerHTML = "";
+  contenedor.classList.toggle("bloque-incompleto", bloque.length < cantidadPorCiclo);
+  console.log("🔁 Bloque activo:", bloque.map(p => p.id));
 
   bloque.forEach(p => {
     const precioOriginal = Number(p.precio) || 0;
@@ -174,6 +192,7 @@ function renderPromocionesPorCiclo() {
     contenedor.appendChild(tarjeta);
   });
 }
+
 
 // === Inicialización principal ===
 document.addEventListener("DOMContentLoaded", async () => {
