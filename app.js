@@ -231,7 +231,9 @@ window.addEventListener("beforeinstallprompt", (e) => {
   // ✅ Ahora que el header está listo, renderizar menú lateral
   if (Array.isArray(window.catalogoGlobal) && window.catalogoGlobal.length > 0) {
     renderizarMenuLateral(window.catalogoGlobal);
-   renderPromocionesPorCiclo(window.catalogoGlobal);
+    renderCarruselPromosDesdePromos(window.catalogoGlobal);
+    renderPromocionesPorCiclo(window.catalogoGlobal);
+  
   }
 
   // ✅ Activar buscador si existe
