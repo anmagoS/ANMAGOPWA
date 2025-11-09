@@ -2503,5 +2503,20 @@
     "url": "https://ik.imagekit.io/mbsk9dati/producto_158/PRODUCTOS_Images_a90f33fb.IMAGEN_1.144645.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_158/PRODUCTOS_Images_a90f33fb.IMAGEN_2.144645.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_158/PRODUCTOS_Images_a90f33fb.IMAGEN_3.144645.jpg?tr=w-600,q-80",
     "proveedor": "NECOG",
     "descripcion": "🪐🖊️ ESFERO GRAVITACIONAL\n¡ESCRIBE CON ESTILO Y TECNOLOGÍA!\nESFERO FLOTANTE CON BASE MAGNÉTICA QUE LEVITA Y GIRA EN EL AIRE ✨. IDEAL PARA ESCRITORIO, DECORACIÓN O REGALO 🎁. DISEÑO ÚNICO Y FUTURISTA 🚀."
+  },
+  {
+    "id": "8BF9D236",
+    "tipo": "ROPA",
+    "subtipo": "DAMA",
+    "categoria": "PANTALONES",
+    "subcategoria": "PALAZZO",
+    "producto": "PANTALON MEDELLIN",
+    "material": "DRIL ESTAMPADO",
+    "tallas": "UNICA",
+    "precio": 80000,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_159/PRODUCTOS_Images_8bf9d236.IMAGEN_1.202403.jpg?tr=w-600,q-80",
+    "promo": false,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_159/PRODUCTOS_Images_8bf9d236.IMAGEN_1.202403.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_159/PRODUCTOS_Images_8bf9d236.IMAGEN_2.202403.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_159/PRODUCTOS_Images_8bf9d236.IMAGEN_3.202403.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_159/PRODUCTOS_Images_8bf9d236.IMAGEN_4.202405.jpg?tr=w-600,q-80",
+    "proveedor": "DAMAR"
   }
 ]
