@@ -28,16 +28,21 @@ function construirNombreCliente() {
 
 // 🧱 Construcción de dirección estructurada
 function construirDireccionEstructurada() {
+  const direccionBase = document.getElementById("DireccionCompleta")?.value.trim();
+  const puntoReferencia = document.getElementById("observacionDireccion")?.value.trim();
   const tipoUnidad = document.getElementById("tipoUnidad")?.value.trim();
   const numeroApto = document.getElementById("numeroApto")?.value.trim();
   const barrio = document.getElementById("barrio")?.value.trim();
-  const observacionDireccion = document.getElementById("observacionDireccion")?.value.trim();
 
-  let direccion = observacionDireccion || "";
+  let direccion = direccionBase || "";
+
   if (tipoUnidad && numeroApto) direccion += `, ${tipoUnidad} ${numeroApto}`;
   if (barrio) direccion += `, Barrio ${barrio}`;
+  if (puntoReferencia) direccion += `, Punto de referencia: ${puntoReferencia}`;
+
   return direccion.trim();
 }
+
 
 // 🧾 Generar texto para WhatsApp
 function generarTextoWhatsApp() {
