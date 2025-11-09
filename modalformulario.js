@@ -11,46 +11,37 @@ function validarFormularioCliente() {
     return el && el.value.trim() !== "";
   });
 
-  const cedulaValida = /^\d+$/.test(document.getElementById("cedulaCliente")?.value.trim());
   const telefonoValido = /^3\d{9}$/.test(document.getElementById("telefonoCliente")?.value.trim());
   const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById("emailCliente")?.value.trim());
 
   const btnEnviar = document.getElementById("btnEnviarPedido");
   if (btnEnviar) {
-    btnEnviar.disabled = !(todosLlenos && cedulaValida && telefonoValido && emailValido);
+    btnEnviar.disabled = !(todosLlenos && telefonoValido && emailValido);
   }
 }
+
+// 🧠 Construcción de nombre completo
 function construirNombreCliente() {
   const nombre = document.getElementById("nombreCliente")?.value.trim();
-  const apellido = document.getElementById("apellidoCliente")?.value.trim();
-
-  return `${nombre} ${apellido}`.trim();
+  return nombre;
 }
 
 // 🧱 Construcción de dirección estructurada
 function construirDireccionEstructurada() {
-  const tipoVia = document.getElementById("tipoVia")?.value.trim();
-  const numeroVia = document.getElementById("numeroVia")?.value.trim();
-  const complementoVia1 = document.getElementById("complementoVia1")?.value.trim();
-  const numeroAdicional1 = document.getElementById("numeroAdicional1")?.value.trim();
-  const complementoVia2 = document.getElementById("complementoVia2")?.value.trim();
-  const numeroAdicional2 = document.getElementById("numeroAdicional2")?.value.trim();
   const tipoUnidad = document.getElementById("tipoUnidad")?.value.trim();
   const numeroApto = document.getElementById("numeroApto")?.value.trim();
   const barrio = document.getElementById("barrio")?.value.trim();
   const observacionDireccion = document.getElementById("observacionDireccion")?.value.trim();
 
-  let direccion = `${tipoVia} ${numeroVia}${complementoVia1 ? ' ' + complementoVia1 : ''} # ${numeroAdicional1}${complementoVia2 ? ' ' + complementoVia2 : ''} - ${numeroAdicional2}`;
+  let direccion = observacionDireccion || "";
   if (tipoUnidad && numeroApto) direccion += `, ${tipoUnidad} ${numeroApto}`;
   if (barrio) direccion += `, Barrio ${barrio}`;
-  if (observacionDireccion) direccion += `, Observación: ${observacionDireccion}`;
-  return direccion;
+  return direccion.trim();
 }
-
 
 // 🧾 Generar texto para WhatsApp
 function generarTextoWhatsApp() {
- const nombreCliente = construirNombreCliente();
+  const nombreCliente = construirNombreCliente();
   const hayProductos = Array.isArray(window.articulosCarrito) && window.articulosCarrito.length > 0;
 
   if (!hayProductos) {
@@ -63,16 +54,14 @@ function generarTextoWhatsApp() {
 
   const total = window.articulosCarrito.reduce((sum, p) => sum + (p.precio * p.cantidad), 0);
 
-  return `🛍️ ¡Hola! Soy ${nombre} y quiero realizar el siguiente pedido:\n\n${productos}\n\n🧾 Total del pedido: $${total.toLocaleString("es-CO")}\n\n✅ ¡Gracias por tu atención!`;
+  return `🛍️ ¡Hola! Soy ${nombreCliente} y quiero realizar el siguiente pedido:\n\n${productos}\n\n🧾 Total del pedido: $${total.toLocaleString("es-CO")}\n\n✅ ¡Gracias por tu atención!`;
 }
 
 // 📤 Envío institucional a hoja
 function enviarPedidoInstitucional() {
   try {
-   const nombreCliente = construirNombreCliente();
-    const cedula = document.getElementById("cedulaCliente")?.value.trim();
+    const nombreCliente = construirNombreCliente();
     const telefono = document.getElementById("telefonoCliente")?.value.trim();
-    const telefono2 = document.getElementById("telefonoSecundario")?.value.trim();
     const ciudad = document.getElementById("ciudadCliente")?.value.trim();
     const email = document.getElementById("emailCliente")?.value.trim();
     const direccion = construirDireccionEstructurada();
@@ -83,10 +72,8 @@ function enviarPedidoInstitucional() {
 
     const mensajeReducido = `🕒 Registro de cliente el ${fecha}
 
-🧾 Cédula: ${cedula}
 👤 Nombre: ${nombreCliente}
 📞 Teléfono: ${telefono}
-📞 Otro: ${telefono2 || "No aplica"}
 🏠 Dirección: ${direccion}
 🏙️ Ciudad: ${ciudad}
 📧 Correo: ${email}`;
@@ -116,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("formCliente");
   if (!form) return;
 
-  document.querySelectorAll("#formCliente input, #formCliente select").forEach(el => {
+  document.querySelectorAll("#formCliente input, #formCliente select, #formCliente textarea").forEach(el => {
     el.addEventListener("input", validarFormularioCliente);
     el.addEventListener("change", validarFormularioCliente);
     el.addEventListener("paste", () => {
