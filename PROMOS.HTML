@@ -121,18 +121,29 @@
       });
     }
 
-    async function iniciarTemporizador() {
-      const { finPromo: finGlobal, indiceActual: indiceGlobal } = await obtenerTemporizadorGlobal();
-      finPromo = finGlobal;
-      indiceActual = indiceGlobal;
+   function iniciarTemporizador() {
+  renderPromocionesPorCiclo();
 
-      renderPromocionesPorCiclo();
+  const temporizador = document.getElementById("temporizador");
+  const ciclosPorDia = 4; // cada 6 horas
 
-      const temporizador = document.getElementById("temporizador");
+  setInterval(() => {
+    const ahora = new Date();
+    const horasActuales = ahora.getHours();
+    const siguienteCorte = Math.ceil(horasActuales / (24 / ciclosPorDia)) * (24 / ciclosPorDia);
+    const siguienteFecha = new Date(ahora);
+    siguienteFecha.setHours(siguienteCorte, 0, 0, 0);
 
-      setInterval(() => {
-        const ahora = new Date();
-        const restante = finPromo - ahora;
+    const restante = siguienteFecha - ahora;
+
+    const horas = Math.floor(restante / (1000 * 60 * 60));
+    const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
+    const segundos = Math.floor((restante % (1000 * 60)) / 1000);
+
+    temporizador.textContent = `⏰ Cambia en ${horas}h ${minutos}m ${segundos}s`;
+  }, 1000);
+}
+
 
         if (restante <= 0) {
           temporizador.textContent = "⏳ ¡Promociones actualizadas!";
