@@ -38,7 +38,7 @@ function construirDireccionEstructurada() {
   if (tipoUnidad) direccion += `, ${tipoUnidad}`;
   if (numeroApto) direccion += ` ${numeroApto}`;
   if (barrio) direccion += `, Barrio ${barrio}`;
-  if (puntoReferencia) direccion += `, Punto de referencia: ${puntoReferencia}`;
+  if (puntoReferencia) direccion += `,  ${puntoReferencia}`;
 
   return direccion.trim();
 }
