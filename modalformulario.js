@@ -20,6 +20,12 @@ function validarFormularioCliente() {
     btnEnviar.disabled = !(todosLlenos && cedulaValida && telefonoValido && emailValido);
   }
 }
+function construirNombreCliente() {
+  const nombre = document.getElementById("nombreCliente")?.value.trim();
+  const apellido = document.getElementById("apellidoCliente")?.value.trim();
+
+  return `${nombre} ${apellido}`.trim();
+}
 
 // 🧱 Construcción de dirección estructurada
 function construirDireccionEstructurada() {
@@ -63,8 +69,7 @@ function generarTextoWhatsApp() {
 // 📤 Envío institucional a hoja
 function enviarPedidoInstitucional() {
   try {
-    const nombre = document.getElementById("nombreCliente")?.value.trim();
-    const apellido = document.getElementById("apellidoCliente")?.value.trim();
+   const nombreCliente = construirNombreCliente();
     const cedula = document.getElementById("cedulaCliente")?.value.trim();
     const telefono = document.getElementById("telefonoCliente")?.value.trim();
     const telefono2 = document.getElementById("telefonoSecundario")?.value.trim();
@@ -79,7 +84,7 @@ function enviarPedidoInstitucional() {
     const mensajeReducido = `🕒 Registro de cliente el ${fecha}
 
 🧾 Cédula: ${cedula}
-👤 Nombre: ${nombre} ${apellido}
+👤 Nombre: ${nombreCliente}
 📞 Teléfono: ${telefono}
 📞 Otro: ${telefono2 || "No aplica"}
 🏠 Dirección: ${direccion}
