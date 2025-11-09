@@ -96,15 +96,38 @@ function renderizarMenuLateral(catalogo) {
 }
 
 // === Renderizar carrusel de promociones con rotación automática cada 3 horas ===
-async function renderCarruselPromosDesdePromos(productos) {
+function renderCarruselPromosDesdePromos() {
   const contenedor = document.getElementById("carousel-promos-contenido");
-  if (!contenedor) return;
+  if (!contenedor || !Array.isArray(promocionesGlobal)) return;
 
-  // 🔎 Filtrar productos en promoción
-  const promociones = productos.filter(p => {
-    const promo = typeof p.promo === "string" ? p.promo.toLowerCase().trim() : p.promo;
-    return promo === true || promo === "true" || promo === "sí" || promo === "activo";
+  const cantidadPorCiclo = 4;
+  const ciclosPorDia = 4;
+  const indiceActual = obtenerIndicePromocional(cantidadPorCiclo, ciclosPorDia);
+  const bloqueCarrusel = promocionesGlobal.slice(indiceActual, indiceActual + cantidadPorCiclo);
+
+  contenedor.innerHTML = "";
+
+  bloqueCarrusel.forEach((p, index) => {
+    const item = document.createElement("div");
+    item.className = `carousel-item ${index === 0 ? "active" : ""}`;
+    item.innerHTML = `
+      <div class="d-flex justify-content-center">
+        <div class="card" style="width: 18rem;">
+          <img src="${p.imagen}" class="card-img-top" alt="${p.producto}">
+          <div class="card-body text-center">
+            <h5 class="card-title">${p.producto}</h5>
+            <p class="card-text">
+              <s class="text-muted me-2">$${p.precio.toLocaleString("es-CO")}</s>
+              <span class="text-success fw-bold">$${(p.precio * 0.9).toLocaleString("es-CO")}</span>
+            </p>
+            <a href="producto.html?id=${p.id}" class="boton-comprar">Ver producto</a>
+          </div>
+        </div>
+      </div>
+    `;
+    contenedor.appendChild(item);
   });
+}
 function renderPromocionesPorCiclo(productos) {
   const contenedor = document.getElementById("contenedor-promos");
   if (!contenedor) return;
