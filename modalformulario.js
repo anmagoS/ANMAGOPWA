@@ -32,6 +32,7 @@ function construirDireccionEstructurada() {
   const tipoUnidad = document.getElementById("tipoUnidad")?.value.trim();
   const numeroApto = document.getElementById("numeroApto")?.value.trim();
   const barrio = document.getElementById("barrio")?.value.trim();
+  const barrio = document.getElementById("observacionDireccion")?.value.trim();
 
   let direccion = `${tipoVia} ${numeroVia}${complementoVia1 ? ' ' + complementoVia1 : ''} # ${numeroAdicional1}${complementoVia2 ? ' ' + complementoVia2 : ''} - ${numeroAdicional2}`;
   if (tipoUnidad && numeroApto) direccion += `, ${tipoUnidad} ${numeroApto}`;
