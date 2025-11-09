@@ -50,7 +50,7 @@ function construirDireccionEstructurada() {
 
 // 🧾 Generar texto para WhatsApp
 function generarTextoWhatsApp() {
-  const nombre = document.getElementById("nombreCliente")?.value.trim();
+ const nombreCliente = construirNombreCliente();
   const hayProductos = Array.isArray(window.articulosCarrito) && window.articulosCarrito.length > 0;
 
   if (!hayProductos) {
