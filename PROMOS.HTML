@@ -129,27 +129,28 @@
     function iniciarTemporizador() {
       const temporizador = document.getElementById("temporizador");
 
-      setInterval(() => {
-        const ahora = new Date();
-       const horas = ahora.getHours();
-const siguienteCorte = horas % 6 === 0 ? horas + 6 : Math.ceil(horas / 6) * 6;
-        const siguienteFecha = new Date(ahora);
-        siguienteFecha.setHours(siguienteCorte, 0, 0, 0);
+     setInterval(() => {
+  const ahora = new Date();
+  const horaActual = ahora.getHours();
+  const siguienteCorte = horaActual % 6 === 0 ? horaActual + 6 : Math.ceil(horaActual / 6) * 6;
 
-        const restante = siguienteFecha - ahora;
+  const siguienteFecha = new Date(ahora);
+  siguienteFecha.setHours(siguienteCorte, 0, 0, 0);
 
-        if (restante <= 0) {
-          temporizador.textContent = "⏳ ¡Promociones actualizadas!";
-          return;
-        }
+  const restante = siguienteFecha - ahora;
 
-        const horas = Math.floor(restante / (1000 * 60 * 60));
-        const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
-        const segundos = Math.floor((restante % (1000 * 60)) / 1000);
+  if (restante <= 0) {
+    temporizador.textContent = "⏳ ¡Promociones actualizadas!";
+    return;
+  }
 
-        temporizador.textContent = `⏰ Cambia en ${horas}h ${minutos}m ${segundos}s`;
-      }, 1000);
-    }
+  const h = Math.floor(restante / (1000 * 60 * 60));
+  const m = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
+  const s = Math.floor((restante % (1000 * 60)) / 1000);
+
+  temporizador.textContent = `⏰ Cambia en ${h}h ${m}m ${s}s`;
+}, 1000);
+
 
     function renderPromocionesPorCiclo() {
       const contenedor = document.getElementById("contenedor-promos");
