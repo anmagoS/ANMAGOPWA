@@ -11,10 +11,14 @@ function getParametrosDesdeURL() {
 // === Función compartida para índice promocional ===
 function obtenerIndicePromocional(cantidadPorCiclo = 4, ciclosPorDia = 4, totalPromos = 0) {
   const ahora = new Date();
-  const inicio = new Date("2025-11-08T00:00:00");
+  ahora.setMinutes(0, 0, 0); // elimina minutos, segundos y milisegundos
+
+  const inicio = new Date(Date.UTC(2025, 10, 8, 0, 0, 0)); // noviembre = 10, UTC fijo
+
   const diferenciaHoras = Math.floor((ahora - inicio) / (1000 * 60 * 60));
   const cicloActual = diferenciaHoras % (ciclosPorDia * 365);
   const indice = cicloActual * cantidadPorCiclo;
+
   return totalPromos > 0 ? indice % totalPromos : 0;
 }
 
@@ -27,7 +31,7 @@ function mostrarTemporizadorPromos() {
   setInterval(() => {
     const ahora = new Date();
     const horas = ahora.getHours();
-    const siguienteCorte = Math.ceil(horas / 6) * 6;
+    const siguienteCorte = horas % 6 === 0 ? horas + 6 : Math.ceil(horas / 6) * 6;
     const siguienteFecha = new Date(ahora);
     siguienteFecha.setHours(siguienteCorte, 0, 0, 0);
 
