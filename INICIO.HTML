@@ -12,6 +12,7 @@
 <!-- 📦 Bootstrap y íconos con carga diferida -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" media="print" onload="this.media='all'" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" media="print" onload="this.media='all'" />
+
 <!-- 📱 PWA y favicon -->
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="https://ik.imagekit.io/mbsk9dati/logo.jpg?tr=w-560,q-80" type="image/x-icon" />
@@ -124,7 +125,7 @@
   </script>
 
   <!-- INICIALIZACIÓN -->
-<script type="module">
+ <script type="module">
   import { activarBuscadorGlobal } from './buscador.js';
 
   const imagenesPorTipo = {
@@ -134,15 +135,22 @@
     "BELLEZA": "https://ik.imagekit.io/mbsk9dati/R.jpg?tr=w-140,h-152,q-80",
     "ESCOLAR": "fondo-vuelta-al-cole-elementos_23-2147848492.jpg",
     "NAVIDAD": "https://ik.imagekit.io/mbsk9dati/4-im%C3%A1genes-navide%C3%B1as-christmas-pictures-postales-de-Navidad-Joyeux-Noel-Bon-Nadal-Merry-Christmas%20(2).png?tr=w-140,h-152,q-80"  };
-  
 
-  function obtenerIndicePromocional(totalPromos = 0, cantidadPorCiclo = 4, ciclosPorDia = 4) {
-    const ahora = new Date();
-    const inicio = new Date("2025-11-08T00:00:00");
-    const diferenciaHoras = Math.floor((ahora - inicio) / (1000 * 60 * 60));
-    const cicloActual = diferenciaHoras % (ciclosPorDia * 365);
-    const indice = cicloActual * cantidadPorCiclo;
-    return totalPromos > 0 ? indice % totalPromos : 0;
+  // ✅ Carga diferida del header institucional
+  requestIdleCallback(async () => {
+    const header = await fetch("HEADER.HTML").then(res => res.text());
+    document.getElementById("header-container").innerHTML = header;
+    await new Promise(resolve => requestAnimationFrame(resolve));
+    ajustarCarrito();
+  });
+
+  function ajustarCarrito() {
+    const header = document.querySelector(".header");
+    const carritoBtn = document.querySelector(".btn_shopping");
+    if (header && carritoBtn) {
+      const alturaHeader = header.offsetHeight;
+      carritoBtn.style.top = `${alturaHeader + 12}px`;
+    }
   }
 
   function renderTipos(productos) {
@@ -175,14 +183,9 @@
       return promo === true || promo === "true" || promo === "sí" || promo === "activo";
     });
 
-    const totalPromos = promociones.length;
-    const indiceActual = obtenerIndicePromocional(totalPromos);
-   let bloque = promociones.slice(indiceActual, indiceActual + 4);
-if (bloque.length < 4 && promociones.length >= 4) {
-  bloque = promociones.slice(0, 4); // fallback si el índice se desborda
     contenedor.innerHTML = "";
 
-    bloque.forEach((p, index) => {
+    promociones.slice(0, 4).forEach((p, index) => {
       const item = document.createElement("div");
       item.className = `carousel-item ${index === 0 ? "active" : ""}`;
       item.innerHTML = `
@@ -204,53 +207,243 @@ if (bloque.length < 4 && promociones.length >= 4) {
     });
   }
 
-  function iniciarTemporizadorPromos() {
-    const temporizador = document.getElementById("temporizador-promos");
-    if (!temporizador) return;
-
-    setInterval(() => {
-      const ahora = new Date();
-      const siguienteCorte = Math.ceil(ahora.getHours() / 6) * 6;
-      const siguienteFecha = new Date(ahora);
-      siguienteFecha.setHours(siguienteCorte, 0, 0, 0);
-
-      const restante = siguienteFecha - ahora;
-      if (restante <= 0) {
-        temporizador.textContent = "⏳ ¡Promociones actualizadas!";
-        return;
-      }
-
-      const horas = Math.floor(restante / (1000 * 60 * 60));
-      const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
-      const segundos = Math.floor((restante % (1000 * 60)) / 1000);
-
-      temporizador.textContent = `⏰ Cambia en ${horas}h ${minutos}m ${segundos}s`;
-    }, 1000);
+  function cargarTemporizadorPromos() {
+    try {
+      const urlTemporizador = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json?nocache=${Date.now()}`;
+      fetch(urlTemporizador)
+        .then(res => res.json())
+        .then(({ finPromo }) => {
+          const tiempoRestante = new Date(finPromo) - new Date();
+          if (tiempoRestante > 0) {
+            setTimeout(() => {
+              renderCarruselPromosDesdePromos(window.catalogoGlobal);
+              console.log("🔄 Carrusel actualizado automáticamente");
+            }, tiempoRestante);
+          }
+        });
+    } catch (err) {
+      console.warn("⚠️ No se pudo cargar temporizador de promociones:", err);
+    }
   }
 
   document.addEventListener("DOMContentLoaded", async () => {
     activarBuscadorGlobal();
 
+    // 🔹 Carga inmediata del catálogo base
     const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json";
     const respuesta = await fetch(url);
     const productos = await respuesta.json();
     window.catalogoGlobal = productos;
     window.catalogo = productos;
 
-    renderTipos(productos);
-    renderCarruselPromosDesdePromos(productos);
-    iniciarTemporizadorPromos();
+    renderTipos(productos); // ✅ Esto sí debe ir directo
 
+    // 🔸 Carga diferida del carrusel y temporizador
+    requestIdleCallback(() => {
+      renderCarruselPromosDesdePromos(productos);
+      cargarTemporizadorPromos();
+    });
+
+    // 🔹 Carga diferida del footer
     requestIdleCallback(async () => {
       const footer = await fetch("footer.html").then(res => res.text());
       document.getElementById("footer-container").innerHTML = footer;
     });
 
+    // 🔹 Carrito
     const carritoBtn = document.querySelector(".btn_shopping");
     carritoBtn?.addEventListener("click", e => {
-      e.preventDefault();
+      e.preventDefault();// ✅ Función para corregir el formato visual del enlace de imagen
+function corregirFormatoImagen(url) {
+  return url
+    .replace(/producto(\d+)/, "producto_$1")
+    .replace(/PRODUCTOSImages/, "PRODUCTOS_Images")
+    .replace(/IMAGEN(\d+)/, "IMAGEN_$1");
+}
+
+// ✅ Carga inicial del carrito con corrección de enlaces
+let articulosCarrito = JSON.parse(localStorage.getItem("carritoAnmago")) || [];
+articulosCarrito = articulosCarrito.map(p => {
+  if (p.imagen) p.imagen = corregirFormatoImagen(p.imagen);
+  return p;
+});
+window.articulosCarrito = articulosCarrito;
+
+let catalogo = [];
+
+async function cargarCatalogo() {
+  try {
+    const res = await fetch("https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json");
+    catalogo = await res.json();
+    console.log("✅ Catálogo cargado");
+  } catch (error) {
+    console.error("❌ Error al cargar catálogo:", error);
+  }
+}
+
+function guardarCarrito() {
+  try {
+    localStorage.setItem("carritoAnmago", JSON.stringify(articulosCarrito));
+    window.articulosCarrito = articulosCarrito;
+  } catch (e) {
+    console.error("❌ Error al guardar carrito:", e);
+  }
+}
+
+function abrirCarrito() {
+  const offcanvas = document.getElementById("offcanvasCarrito");
+  if (offcanvas) bootstrap.Offcanvas.getOrCreateInstance(offcanvas).show();
+}
+
+function actualizarSubtotal() {
+  const subtotal = articulosCarrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
+  const opciones = {
+    minimumFractionDigits: subtotal % 1 === 0 ? 0 : 2,
+    maximumFractionDigits: 2
+  };
+  const subtotalElement = document.getElementById("subtotal");
+  if (subtotalElement) subtotalElement.textContent = `$${subtotal.toLocaleString("es-CO", opciones)}`;
+}
+
+function actualizarContadorCarrito() {
+  const contador = document.getElementById("contador-carrito");
+  if (contador) contador.textContent = articulosCarrito.length;
+}
+
+function actualizarEstadoBotonWhatsApp() {
+  const btn = document.querySelector("button[onclick='generarPedidoWhatsApp()']");
+  if (btn) btn.disabled = articulosCarrito.length === 0;
+}
+
+function renderizarCarrito() {
+  const contenedor = document.getElementById("carrito-contenido");
+  if (!contenedor) return;
+  contenedor.innerHTML = "";
+
+  if (articulosCarrito.length === 0) {
+    contenedor.innerHTML = "<p class='text-center'>El carrito está vacío.</p>";
+    return;
+  }
+
+  articulosCarrito.forEach((producto, index) => {
+    contenedor.insertAdjacentHTML("beforeend", `
+      <div class="container mb-3">
+        <div class="row align-items-center border-bottom py-2">
+          <div class="col-3">
+            <img class="img-fluid rounded" src="${producto.imagen}" alt="${producto.nombre}" />
+          </div>
+          <div class="col-6">
+            <h6 class="mb-1 title-product">${producto.nombre}</h6>
+            <p class="mb-0 detalles-product">Talla: ${producto.talla || "No especificada"}</p>
+            <p class="mb-0 detalles-product">Cantidad: ${producto.cantidad}</p>
+            <p class="mb-0 detalles-product">Precio: $${producto.precio.toLocaleString("es-CO")}</p>
+          </div>
+          <div class="col-3 text-end">
+            <button class="boton-comprar" data-index="${index}" title="Eliminar">
+              <i class="bi bi-trash3"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    `);
+  });
+
+  contenedor.insertAdjacentHTML("beforeend", `
+    <div class="text-center mt-3">
+      <button class="btn btn-success w-100" id="btn-comprar">Comprar</button>
+    </div>
+  `);
+
+  document.querySelectorAll(".boton-comprar[data-index]").forEach(btn => {
+    btn.addEventListener("click", e => {
+      const index = parseInt(e.currentTarget.dataset.index);
+      articulosCarrito.splice(index, 1);
+      guardarCarrito();
+      renderizarCarrito();
+      actualizarSubtotal();
+      actualizarContadorCarrito();
+      actualizarEstadoBotonWhatsApp();
+    });
+  });
+
+  const btnComprar = document.getElementById("btn-comprar");
+  if (btnComprar) {
+    btnComprar.addEventListener("click", () => {
+      const modalFormulario = document.getElementById("modalFormularioCliente");
+      if (modalFormulario) {
+        const instanciaModal = bootstrap.Modal.getOrCreateInstance(modalFormulario);
+        instanciaModal.show();
+      } else {
+        alert("⚠️ No se encontró el formulario del cliente.");
+      }
+    });
+  }
+}
+
+function agregarAlCarrito(producto) {
+  if (producto.precioDescuento) producto.precio = producto.precioDescuento;
+
+  if (!producto.proveedor && producto.id && catalogo.length > 0) {
+    const desdeCatalogo = catalogo.find(p => producto.id.includes(p.id));
+    if (desdeCatalogo?.proveedor) producto.proveedor = desdeCatalogo.proveedor;
+  }
+
+  if (producto.imagen) {
+    producto.imagen = corregirFormatoImagen(producto.imagen);
+  }
+
+  const existe = articulosCarrito.find(p => p.id === producto.id);
+  if (existe) {
+    existe.cantidad = (existe.cantidad || 1) + 1;
+  } else {
+    producto.cantidad = 1;
+    articulosCarrito.push(producto);
+  }
+
+  guardarCarrito();
+  renderizarCarrito();
+  actualizarSubtotal();
+  actualizarContadorCarrito();
+  actualizarEstadoBotonWhatsApp();
+  abrirCarrito();
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  await cargarCatalogo();
+  renderizarCarrito();
+  actualizarSubtotal();
+  actualizarContadorCarrito();
+  actualizarEstadoBotonWhatsApp();
+});
+
       const offcanvas = document.getElementById("offcanvasCarrito");
-      if (offcanvas) bootstrap.Offcanvas.getOrCreateInstance(offcanvas).show();
+      if (offcanvas) {
+        const instancia = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
+        instancia.show();
+      }
+    });
+
+    if (typeof window.actualizarContadorCarrito === "function") window.actualizarContadorCarrito();
+    if (typeof window.renderizarCarrito === "function") window.renderizarCarrito();
+  });
+
+  // 🔔 Instalación PWA
+  let deferredPrompt;
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+
+    const contenedor = document.getElementById("instalar-container");
+    const boton = document.getElementById("boton-instalar");
+
+    contenedor.style.display = "block";
+
+    boton.addEventListener("click", async () => {
+      deferredPrompt.prompt();
+      const resultado = await deferredPrompt.userChoice;
+      console.log("Resultado instalación:", resultado.outcome);
+      deferredPrompt = null;
+      contenedor.style.display = "none";
     });
   });
 </script>
