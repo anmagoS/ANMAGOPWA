@@ -144,19 +144,7 @@
   }, 1000);
 }
 
-
-        if (restante <= 0) {
-          temporizador.textContent = "⏳ ¡Promociones actualizadas!";
-          return;
-        }
-
-        const horas = Math.floor(restante / (1000 * 60 * 60));
-        const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
-        const segundos = Math.floor((restante % (1000 * 60)) / 1000);
-
-        temporizador.textContent = `⏰ Por tiempo limitado: ${horas}h ${minutos}m ${segundos}s`;
-      }, 1000);
-
+       
       const tiempoRestante = finPromo - new Date();
       if (tiempoRestante > 0) {
         setTimeout(async () => {
@@ -189,7 +177,7 @@
         return;
       }
 
-      const ciclosPorDia = 8; // 24 / 3
+      const ciclosPorDia = 4; // 24 / 6
 const ahora = new Date();
 const inicio = new Date("2025-11-08T00:00:00"); // fecha base institucional
 const diferenciaHoras = Math.floor((ahora - inicio) / (1000 * 60 * 60));
