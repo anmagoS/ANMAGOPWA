@@ -178,8 +178,9 @@
 
     const totalPromos = promociones.length;
     const indiceActual = obtenerIndicePromocional(totalPromos);
-    const bloque = promociones.slice(indiceActual, indiceActual + 4);
-
+   let bloque = promociones.slice(indiceActual, indiceActual + 4);
+if (bloque.length < 4 && promociones.length >= 4) {
+  bloque = promociones.slice(0, 4); // fallback si el índice se desborda
     contenedor.innerHTML = "";
 
     bloque.forEach((p, index) => {
