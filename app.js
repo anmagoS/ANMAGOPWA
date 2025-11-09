@@ -105,21 +105,27 @@ function renderizarMenuLateral(catalogo) {
   });
 }
 
-// === Renderizar carrusel de promociones ===
+// === Renderizar carrusel de promociones con rotación automática cada 3 horas ===
 async function renderCarruselPromosDesdePromos(productos) {
   const contenedor = document.getElementById("carousel-promos-contenido");
   if (!contenedor) return;
 
-  const url = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json?nocache=${Date.now()}`;
-  const res = await fetch(url);
-  const { indicePromoActual } = await res.json();
-
+  // 🔎 Filtrar productos en promoción
   const promociones = productos.filter(p => {
     const promo = typeof p.promo === "string" ? p.promo.toLowerCase().trim() : p.promo;
     return promo === true || promo === "true" || promo === "sí" || promo === "activo";
   });
 
-  const bloqueCarrusel = promociones.slice(indicePromoActual, indicePromoActual + 4);
+  // 🔁 Calcular índice dinámico según ciclo de 3 horas
+  const cantidadPorCiclo = 4;
+  const ciclosPorDia = 8; // 24 / 3
+  const ahora = new Date();
+  const inicio = new Date("2025-11-08T00:00:00"); // fecha base institucional
+  const diferenciaHoras = Math.floor((ahora - inicio) / (1000 * 60 * 60));
+  const cicloActual = diferenciaHoras % (ciclosPorDia * 365); // rotación para 1 año
+  const indiceActual = (cicloActual * cantidadPorCiclo) % promociones.length;
+
+  const bloqueCarrusel = promociones.slice(indiceActual, indiceActual + cantidadPorCiclo);
   contenedor.innerHTML = "";
 
   bloqueCarrusel.forEach((p, index) => {
