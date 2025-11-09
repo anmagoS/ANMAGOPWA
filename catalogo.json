@@ -2549,5 +2549,20 @@
     "url": "https://ik.imagekit.io/mbsk9dati/producto_161/PRODUCTOS_Images_bc3fde01.IMAGEN_1.203403.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_161/PRODUCTOS_Images_bc3fde01.IMAGEN_2.203403.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_161/PRODUCTOS_Images_bc3fde01.IMAGEN_3.203403.jpg?tr=w-600,q-80",
     "proveedor": "DAMAR",
     "descripcion": "SOLO FALDA"
+  },
+  {
+    "id": "CD0E7C68",
+    "tipo": "ROPA",
+    "subtipo": "DAMA",
+    "categoria": "VESTIDOS",
+    "subcategoria": "SATIN",
+    "producto": "VESTIDO LOVE",
+    "material": "LICRA SATINADA",
+    "tallas": "UNICA",
+    "precio": 55000,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_162/PRODUCTOS_Images_cd0e7c68.IMAGEN_1.203648.jpg?tr=w-600,q-80",
+    "promo": false,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_162/PRODUCTOS_Images_cd0e7c68.IMAGEN_1.203648.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_162/PRODUCTOS_Images_cd0e7c68.IMAGEN_2.203648.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_162/PRODUCTOS_Images_cd0e7c68.IMAGEN_3.203648.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_162/PRODUCTOS_Images_cd0e7c68.IMAGEN_4.203651.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_162/PRODUCTOS_Images_cd0e7c68.IMAGEN_5.203651.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_162/PRODUCTOS_Images_cd0e7c68.IMAGEN_6.203651.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_162/PRODUCTOS_Images_cd0e7c68.IMAGEN_7.203653.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_162/PRODUCTOS_Images_cd0e7c68.IMAGEN_8.203653.jpg?tr=w-600,q-80",
+    "proveedor": "DAMAR"
   }
 ]
