@@ -646,5 +646,13 @@
   {
     "id_producto": "95BF5E7B",
     "ruta": "/ROPA/DAMA/BLUSAS/CROP"
+  },
+  {
+    "id_producto": "A90F33FB",
+    "ruta": "/ESCOLAR/HOGAR/ESCOLAR/ESFEROS"
+  },
+  {
+    "id_producto": "A90F33FB",
+    "ruta": "/HOGAR/ESCOLAR/ESFEROS"
   }
 ]
