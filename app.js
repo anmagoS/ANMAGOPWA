@@ -112,9 +112,12 @@ function renderCarruselPromosDesdePromos() {
 
   const cantidadPorCiclo = 4;
   const ciclosPorDia = 4;
-  const indiceActual = obtenerIndicePromocional(cantidadPorCiclo, ciclosPorDia);
-  const bloqueCarrusel = window.promocionesGlobal.slice(indiceActual, indiceActual + cantidadPorCiclo);
-
+const totalPromos = window.promocionesGlobal.length;
+const indiceActual = obtenerIndicePromocional(cantidadPorCiclo, ciclosPorDia, totalPromos);
+ let bloqueCarrusel = window.promocionesGlobal.slice(indiceActual, indiceActual + cantidadPorCiclo);
+  if (bloqueCarrusel.length < cantidadPorCiclo && totalPromos >= cantidadPorCiclo) {
+    bloqueCarrusel = window.promocionesGlobal.slice(0, cantidadPorCiclo); // fallback si el índice se desborda
+  }
   contenedor.innerHTML = "";
 
   bloqueCarrusel.forEach((p, index) => {
