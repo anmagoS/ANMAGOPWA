@@ -2579,5 +2579,20 @@
     "promo": false,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_163/PRODUCTOS_Images_1335a8df.IMAGEN_1.204557.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_163/PRODUCTOS_Images_1335a8df.IMAGEN_2.204557.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_163/PRODUCTOS_Images_1335a8df.IMAGEN_3.204557.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_163/PRODUCTOS_Images_1335a8df.IMAGEN_4.204600.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_163/PRODUCTOS_Images_1335a8df.IMAGEN_5.204600.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_163/PRODUCTOS_Images_1335a8df.IMAGEN_6.204601.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_163/PRODUCTOS_Images_1335a8df.IMAGEN_7.204602.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_163/PRODUCTOS_Images_1335a8df.IMAGEN_8.204603.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_163/PRODUCTOS_Images_1335a8df.IMAGEN_9.204603.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_163/PRODUCTOS_Images_1335a8df.IMAGEN_10.204604.jpg?tr=w-600,q-80",
     "proveedor": "DAMAR"
+  },
+  {
+    "id": "D4D44A7A",
+    "tipo": "ROPA",
+    "subtipo": "DAMA",
+    "categoria": "VESTIDOS",
+    "subcategoria": "VELVET",
+    "producto": "VESTIDO VELVET",
+    "material": "VELO CREPE",
+    "tallas": "UNICA",
+    "precio": 70000,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_164/PRODUCTOS_Images_d4d44a7a.IMAGEN_1.204906.jpg?tr=w-600,q-80",
+    "promo": false,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_164/PRODUCTOS_Images_d4d44a7a.IMAGEN_1.204906.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_164/PRODUCTOS_Images_d4d44a7a.IMAGEN_2.204906.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_164/PRODUCTOS_Images_d4d44a7a.IMAGEN_3.204906.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_164/PRODUCTOS_Images_d4d44a7a.IMAGEN_4.204908.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_164/PRODUCTOS_Images_d4d44a7a.IMAGEN_5.204908.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_164/PRODUCTOS_Images_d4d44a7a.IMAGEN_6.204909.jpg?tr=w-600,q-80",
+    "proveedor": "DAMAR"
   }
 ]
