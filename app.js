@@ -44,7 +44,7 @@ function mostrarTemporizadorPromos() {
     const horas = ahora.getHours();
 
     // Calcular siguiente corte de 3 horas
-    const siguienteCorte = Math.ceil(horas / 3) * 3;
+    const siguienteCorte = Math.ceil(horas / 6) * 6;
     const siguienteFecha = new Date(ahora);
     siguienteFecha.setHours(siguienteCorte, 0, 0, 0);
 
@@ -115,7 +115,7 @@ function renderPromocionesPorCiclo(productos) {
   });
 
   const cantidadPorCiclo = 4;
-  const ciclosPorDia = 8; // 24 / 3
+  const ciclosPorDia = 4; // 24 / 6
   const ahora = new Date();
   const inicio = new Date("2025-11-08T00:00:00");
   const diferenciaHoras = Math.floor((ahora - inicio) / (1000 * 60 * 60));
@@ -152,7 +152,7 @@ function renderPromocionesPorCiclo(productos) {
 }
   // 🔁 Calcular índice dinámico según ciclo de 3 horas
   const cantidadPorCiclo = 4;
-  const ciclosPorDia = 8; // 24 / 3
+  const ciclosPorDia = 4; // 24 / 3
   const ahora = new Date();
   const inicio = new Date("2025-11-08T00:00:00"); // fecha base institucional
   const diferenciaHoras = Math.floor((ahora - inicio) / (1000 * 60 * 60));
