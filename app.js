@@ -54,7 +54,18 @@ async function mostrarTemporizadorPromos() {
     if (!fin) return;
 
     const ahora = new Date();
-    const restante = fin - ahora;
+    const ahora = new Date();
+const minutosActuales = ahora.getMinutes();
+const segundosActuales = ahora.getSeconds();
+const horasActuales = ahora.getHours();
+
+// Calcular cuántas horas faltan para el próximo ciclo de 3h
+const siguienteCorte = Math.ceil(horasActuales / 3) * 3;
+const siguienteFecha = new Date(ahora);
+siguienteFecha.setHours(siguienteCorte, 0, 0, 0);
+
+const restante = siguienteFecha - ahora;
+
 
     if (restante <= 0) {
       contenedor.textContent = "⏳ Promociones actualizadas";
