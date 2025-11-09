@@ -32,53 +32,32 @@ async function cargarAccesosGlobal() {
 }
 
 // === Mostrar temporizador de promociones ===
-async function mostrarTemporizadorPromos() {
+// === Mostrar temporizador de promociones alineado con ciclos de 3 horas ===
+function mostrarTemporizadorPromos() {
   const contenedor = document.getElementById("temporizador-promos");
   if (!contenedor) return;
 
-  let fin = null;
-
-  try {
-    const url = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json?nocache=${Date.now()}`;
-    const res = await fetch(url);
-    const { finPromo } = await res.json();
-    fin = new Date(finPromo);
-  } catch (err) {
-    console.error("❌ Error al mostrar temporizador:", err);
-    contenedor.textContent = "⏳ Temporizador no disponible";
-    return;
-  }
-
-  // 🕒 Mostrar temporizador siempre, incluso si ya venció
   setInterval(() => {
-    if (!fin) return;
-
     const ahora = new Date();
-    const ahora = new Date();
-const minutosActuales = ahora.getMinutes();
-const segundosActuales = ahora.getSeconds();
-const horasActuales = ahora.getHours();
+    const minutos = ahora.getMinutes();
+    const segundos = ahora.getSeconds();
+    const horas = ahora.getHours();
 
-// Calcular cuántas horas faltan para el próximo ciclo de 3h
-const siguienteCorte = Math.ceil(horasActuales / 3) * 3;
-const siguienteFecha = new Date(ahora);
-siguienteFecha.setHours(siguienteCorte, 0, 0, 0);
+    // Calcular siguiente corte de 3 horas
+    const siguienteCorte = Math.ceil(horas / 3) * 3;
+    const siguienteFecha = new Date(ahora);
+    siguienteFecha.setHours(siguienteCorte, 0, 0, 0);
 
-const restante = siguienteFecha - ahora;
+    const restante = siguienteFecha - ahora;
 
+    const horasRestantes = Math.floor(restante / (1000 * 60 * 60));
+    const minutosRestantes = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
+    const segundosRestantes = Math.floor((restante % (1000 * 60)) / 1000);
 
-    if (restante <= 0) {
-      contenedor.textContent = "⏳ Promociones actualizadas";
-      return;
-    }
-
-    const horas = Math.floor(restante / (1000 * 60 * 60));
-    const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
-    const segundos = Math.floor((restante % (1000 * 60)) / 1000);
-
-    contenedor.textContent = `⏰ Cambia en ${horas}h ${minutos}m ${segundos}s`;
+    contenedor.textContent = `⏰ Cambia en ${horasRestantes}h ${minutosRestantes}m ${segundosRestantes}s`;
   }, 1000);
 }
+
 
 // === Renderizar menú lateral desde catálogo ===
 function renderizarMenuLateral(catalogo) {
