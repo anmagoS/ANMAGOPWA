@@ -48,16 +48,10 @@
             <div class="form-text">Debe comenzar por 3 y tener 10 dígitos.</div>
           </div>
 
-          <!-- Celular secundario -->
-          <div class="mb-3">
-            <label for="telefonoSecundario" class="form-label">Otro celular (opcional)</label>
-            <input type="tel" class="form-control" id="telefonoSecundario" placeholder="Ej: 3012345678" maxlength="10">
-            <div class="form-text">Solo si deseas agregar otro número.</div>
-          </div>
-
+      
          <!-- Tipo de vía -->
 <div class="mb-3">
-  <label for="tipoVia" class="form-label">Tipo de vía</label>
+  <label for="tipoVia" class="form-label">Dirección</label>
   <select id="tipoVia" class="form-select">
     <option value="">Selecciona tipo</option>
     <option value="Calle">Calle</option>
@@ -146,6 +140,34 @@
     <label for="numeroAdicional2" class="form-label">Número final</label>
     <input type="text" class="form-control" id="numeroAdicional2" maxlength="3" inputmode="numeric" pattern="\d{1,3}" title="Solo números entre 0 y 999">
   </div>
+   <div class="col-3">
+    <label for="complementoVia1" class="form-label">Letra/Bis</label>
+    <select id="complementoVia1" class="form-select">
+     <option value="">—</option>
+      <option value="A">A</option>
+      <option value="B">B</option>
+      <option value="C">C</option>
+      <option value="C">D</option>
+      <option value="C">E</option>
+      <option value="C">F</option>
+      <option value="C">G</option>
+      <option value="C">H</option>
+      <option value="C">I</option>
+      <option value="C">J</option>
+      <option value="C">K</option>
+      <option value="C">L</option>
+       <option value="C">M</option>
+       <option value="C">N</option>
+       <option value="C">Ñ</option>
+       <option value="C">O</option>
+       <option value="C">P</option>
+       <option value="C">Q</option>
+      <option value="Bis">Bis</option>
+      <option value="Sur">Sur</option>
+      <option value="Norte">Norte</option>
+      <option value="Este">Este</option>
+      <option value="Oeste">Oeste</option>
+    </select>
   <div class="col-4">
     <label for="tipoUnidad" class="form-label">Tipo de unidad</label>
     <select id="tipoUnidad" class="form-select">
