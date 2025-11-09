@@ -54,7 +54,7 @@ function generarTextoWhatsApp() {
   const hayProductos = Array.isArray(window.articulosCarrito) && window.articulosCarrito.length > 0;
 
   if (!hayProductos) {
-    return `🛍️ ¡Hola! Soy ${nombre} y quiero registrarme como cliente.\n\n✅ ¡Gracias por tu atención!`;
+    return `🛍️ ¡Hola! Soy ${nombreCliente} y quiero registrarme como cliente.\n\n✅ ¡Gracias por tu atención!`;
   }
 
   const productos = window.articulosCarrito.map((p, i) => {
