@@ -2533,5 +2533,21 @@
     "promo": false,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_160/PRODUCTOS_Images_c3eeb2e6.IMAGEN_1.202945.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_160/PRODUCTOS_Images_c3eeb2e6.IMAGEN_2.202945.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_160/PRODUCTOS_Images_c3eeb2e6.IMAGEN_3.202945.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_160/PRODUCTOS_Images_c3eeb2e6.IMAGEN_4.202948.jpg?tr=w-600,q-80",
     "proveedor": "DAMAR"
+  },
+  {
+    "id": "BC3FDE01",
+    "tipo": "ROPA",
+    "subtipo": "DAMA",
+    "categoria": "FALDAS",
+    "subcategoria": "SHORTS",
+    "producto": "FALDA SHORT ELSA",
+    "material": "NOCHES DE VIENA",
+    "tallas": "UNICA",
+    "precio": 55000,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_161/PRODUCTOS_Images_bc3fde01.IMAGEN_1.203403.jpg?tr=w-600,q-80",
+    "promo": false,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_161/PRODUCTOS_Images_bc3fde01.IMAGEN_1.203403.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_161/PRODUCTOS_Images_bc3fde01.IMAGEN_2.203403.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_161/PRODUCTOS_Images_bc3fde01.IMAGEN_3.203403.jpg?tr=w-600,q-80",
+    "proveedor": "DAMAR",
+    "descripcion": "SOLO FALDA"
   }
 ]
