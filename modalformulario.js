@@ -19,7 +19,6 @@ function validarFormularioCliente() {
   }
 }
 
-
 // 🧠 Construcción de nombre completo
 function construirNombreCliente() {
   const nombre = document.getElementById("nombreCliente")?.value.trim();
