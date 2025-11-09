@@ -62,12 +62,13 @@
     const cantidadPorCiclo = 4;
     const ciclosPorDia = 4;
 
-    function obtenerIndicePromocional() {
+    function obtenerIndicePromocional(totalPromos = 0) {
       const ahora = new Date();
       const inicio = new Date("2025-11-08T00:00:00");
       const diferenciaHoras = Math.floor((ahora - inicio) / (1000 * 60 * 60));
       const cicloActual = diferenciaHoras % (ciclosPorDia * 365);
-      return cicloActual * cantidadPorCiclo;
+      const indice = cicloActual * cantidadPorCiclo;
+      return totalPromos > 0 ? indice % totalPromos : 0;
     }
 
     document.addEventListener("DOMContentLoaded", async () => {
@@ -119,11 +120,11 @@
         const promo = typeof p.promo === "string" ? p.promo.toLowerCase().trim() : p.promo;
         return promo === true || promo === "true" || promo === "sí" || promo === "activo";
       });
+
+      renderPromocionesPorCiclo();
     }
 
     function iniciarTemporizador() {
-      renderPromocionesPorCiclo();
-
       const temporizador = document.getElementById("temporizador");
 
       setInterval(() => {
@@ -151,20 +152,15 @@
       const contenedor = document.getElementById("contenedor-promos");
       contenedor.innerHTML = "";
 
-      if (!Array.isArray(promocionesGlobal) || promocionesGlobal.length === 0) {
+      const totalPromos = promocionesGlobal.length;
+      if (totalPromos === 0) {
         contenedor.innerHTML = `<div class="text-center text-muted">No hay promociones disponibles.</div>`;
-        console.warn("⚠️ promocionesGlobal está vacío o no definido.");
+        console.warn("⚠️ promocionesGlobal está vacío.");
         return;
       }
 
-      const indiceActual = obtenerIndicePromocional();
+      const indiceActual = obtenerIndicePromocional(totalPromos);
       const bloque = promocionesGlobal.slice(indiceActual, indiceActual + cantidadPorCiclo);
-
-      if (bloque.length === 0) {
-        contenedor.innerHTML = `<div class="text-center text-muted">No hay promociones activas en este momento.</div>`;
-        console.warn("⚠️ Bloque vacío. índiceActual:", indiceActual);
-        return;
-      }
 
       contenedor.classList.toggle("bloque-incompleto", bloque.length < cantidadPorCiclo);
       console.log("🔁 Bloque activo:", bloque.map(p => p.id));
@@ -172,7 +168,6 @@
       bloque.forEach(p => {
         const precioOriginal = Number(p.precio) || 0;
         const precioDescuento = Math.round(precioOriginal * 0.9);
-
         const producto = p.producto || "Producto sin nombre";
         const material = p.material || "";
         const tallas = p.tallas || "";
@@ -192,9 +187,9 @@
           <div class="nombre-producto">${material}</div>
           <div class="nombre-producto">${tallas}</div>
           <div class="precio-producto">
-            <s>$${precioOriginal.toLocaleString("es-CO")} COP</s>
+                     <s>$${precioOriginal.toLocaleString("es-CO")} COP</s>
             <span class="text-success fw-bold">$${precioDescuento.toLocaleString("es-CO")} COP</span>
-                   </div>
+          </div>
           <a href="producto.html?id=${id}" class="boton-comprar">Ver más</a>
         </div>
       `;
