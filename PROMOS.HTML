@@ -11,10 +11,12 @@
 </head>
 <body>
   <div id="header-container"></div>
+
   <div class="container mt-4 position-relative" style="max-width: 500px;">
     <input id="buscador" class="form-control" placeholder="Buscar productos, categorías, precios..." autocomplete="off">
     <div id="sugerencias" class="dropdown-menu position-absolute mt-1 w-100 z-3"></div>
   </div>
+
   <a href="#" class="btn btn_shopping" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
     <i class="bi bi-bag-heart"></i>
     <span id="contador-carrito" class="contador-carrito">0</span>
@@ -25,6 +27,7 @@
       <i class="bi bi-arrow-left"></i> Atrás
     </a>
   </div>
+
   <main class="contenedor-categoria">
     <h1 class="titulo-categoria">🔥 Productos en Promoción</h1>
     <div id="temporizador" class="descripcion-producto text-center"></div>
@@ -56,18 +59,15 @@
     import { activarBuscadorGlobal } from './buscador.js';
 
     let promocionesGlobal = [];
-    let indiceActual = 0;
     const cantidadPorCiclo = 4;
-    let finPromo;
+    const ciclosPorDia = 4;
 
-    async function obtenerTemporizadorGlobal() {
-      const url = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json?nocache=${Date.now()}`;
-      const res = await fetch(url);
-      const data = await res.json();
-      return {
-        finPromo: new Date(data.finPromo),
-        indiceActual: Number(data.indicePromoActual) || 0
-      };
+    function obtenerIndicePromocional() {
+      const ahora = new Date();
+      const inicio = new Date("2025-11-08T00:00:00");
+      const diferenciaHoras = Math.floor((ahora - inicio) / (1000 * 60 * 60));
+      const cicloActual = diferenciaHoras % (ciclosPorDia * 365);
+      return cicloActual * cantidadPorCiclo;
     }
 
     document.addEventListener("DOMContentLoaded", async () => {
@@ -97,7 +97,7 @@
       document.getElementById('footer-container').innerHTML = footer;
 
       await cargarPromociones();
-      await iniciarTemporizador();
+      iniciarTemporizador();
     });
 
     function ajustarCarrito() {
@@ -121,50 +121,30 @@
       });
     }
 
-   function iniciarTemporizador() {
-  renderPromocionesPorCiclo();
+    function iniciarTemporizador() {
+      renderPromocionesPorCiclo();
 
-  const temporizador = document.getElementById("temporizador");
-  const ciclosPorDia = 4; // cada 6 horas
+      const temporizador = document.getElementById("temporizador");
 
-  setInterval(() => {
-    const ahora = new Date();
-    const horasActuales = ahora.getHours();
-    const siguienteCorte = Math.ceil(horasActuales / (24 / ciclosPorDia)) * (24 / ciclosPorDia);
-    const siguienteFecha = new Date(ahora);
-    siguienteFecha.setHours(siguienteCorte, 0, 0, 0);
+      setInterval(() => {
+        const ahora = new Date();
+        const siguienteCorte = Math.ceil(ahora.getHours() / 6) * 6;
+        const siguienteFecha = new Date(ahora);
+        siguienteFecha.setHours(siguienteCorte, 0, 0, 0);
 
-    const restante = siguienteFecha - ahora;
+        const restante = siguienteFecha - ahora;
 
-    const horas = Math.floor(restante / (1000 * 60 * 60));
-    const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
-    const segundos = Math.floor((restante % (1000 * 60)) / 1000);
+        if (restante <= 0) {
+          temporizador.textContent = "⏳ ¡Promociones actualizadas!";
+          return;
+        }
 
-    temporizador.textContent = `⏰ Cambia en ${horas}h ${minutos}m ${segundos}s`;
-  }, 1000);
-}
+        const horas = Math.floor(restante / (1000 * 60 * 60));
+        const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
+        const segundos = Math.floor((restante % (1000 * 60)) / 1000);
 
-       
-      const tiempoRestante = finPromo - new Date();
-      if (tiempoRestante > 0) {
-        setTimeout(async () => {
-          try {
-            const nuevaURL = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json?nocache=${Date.now()}`;
-            const nuevaRes = await fetch(nuevaURL);
-            const { finPromo: nuevaFin, indicePromoActual: nuevoIndice } = await nuevaRes.json();
-
-            finPromo = new Date(nuevaFin);
-            indiceActual = Number(nuevoIndice) || 0;
-
-            console.log("🔄 Bloque actualizado automáticamente:", indiceActual);
-            renderPromocionesPorCiclo();
-          } catch (err) {
-            console.error("❌ Error al recargar promociones:", err);
-          }
-        }, tiempoRestante);
-      } else {
-        console.warn("⚠️ El tiempo de promoción ya venció. No se programó recarga automática.");
-      }
+        temporizador.textContent = `⏰ Cambia en ${horas}h ${minutos}m ${segundos}s`;
+      }, 1000);
     }
 
     function renderPromocionesPorCiclo() {
@@ -177,25 +157,19 @@
         return;
       }
 
-      const ciclosPorDia = 4; // 24 / 6
-const ahora = new Date();
-const inicio = new Date("2025-11-08T00:00:00"); // fecha base institucional
-const diferenciaHoras = Math.floor((ahora - inicio) / (1000 * 60 * 60));
-const cicloActual = diferenciaHoras % (ciclosPorDia * 365); // rotación para 1 año
-const indiceActual = (cicloActual * cantidadPorCiclo) % promocionesGlobal.length;
+      const indiceActual = obtenerIndicePromocional();
+      const bloque = promocionesGlobal.slice(indiceActual, indiceActual + cantidadPorCiclo);
 
-const siguienteBloque = promocionesGlobal.slice(indiceActual, indiceActual + cantidadPorCiclo);
-
-      if (siguienteBloque.length === 0) {
+      if (bloque.length === 0) {
         contenedor.innerHTML = `<div class="text-center text-muted">No hay promociones activas en este momento.</div>`;
         console.warn("⚠️ Bloque vacío. índiceActual:", indiceActual);
         return;
       }
 
-      contenedor.classList.toggle("bloque-incompleto", siguienteBloque.length < cantidadPorCiclo);
-            console.log("🔁 Bloque activo:", siguienteBloque.map(p => p.id));
+      contenedor.classList.toggle("bloque-incompleto", bloque.length < cantidadPorCiclo);
+      console.log("🔁 Bloque activo:", bloque.map(p => p.id));
 
-      siguienteBloque.forEach(p => {
+      bloque.forEach(p => {
         const precioOriginal = Number(p.precio) || 0;
         const precioDescuento = Math.round(precioOriginal * 0.9);
 
@@ -220,13 +194,13 @@ const siguienteBloque = promocionesGlobal.slice(indiceActual, indiceActual + can
           <div class="precio-producto">
             <s>$${precioOriginal.toLocaleString("es-CO")} COP</s>
             <span class="text-success fw-bold">$${precioDescuento.toLocaleString("es-CO")} COP</span>
-          </div>
+                   </div>
           <a href="producto.html?id=${id}" class="boton-comprar">Ver más</a>
-        `;
-        contenedor.appendChild(tarjeta);
-      });
-    }
+        </div>
+      `;
+      contenedor.appendChild(tarjeta);
+    });
+  }
   </script>
-
 </body>
 </html>
