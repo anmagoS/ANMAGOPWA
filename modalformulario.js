@@ -5,20 +5,20 @@ if (window.opener && Array.isArray(window.opener.articulosCarrito)) {
 
 // 🔍 Validación epistémica
 function validarFormularioCliente() {
-  const camposObligatorios = ["nombreCliente", "telefonoCliente", "emailCliente"];
+  const camposObligatorios = ["nombreCliente", "telefonoCliente", "DireccionCompleta", "ciudadCliente"];
   const todosLlenos = camposObligatorios.every(id => {
     const el = document.getElementById(id);
     return el && el.value.trim() !== "";
   });
 
   const telefonoValido = /^3\d{9}$/.test(document.getElementById("telefonoCliente")?.value.trim());
-  const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById("emailCliente")?.value.trim());
 
   const btnEnviar = document.getElementById("btnEnviarPedido");
   if (btnEnviar) {
-    btnEnviar.disabled = !(todosLlenos && telefonoValido && emailValido);
+    btnEnviar.disabled = !(todosLlenos && telefonoValido);
   }
 }
+
 
 // 🧠 Construcción de nombre completo
 function construirNombreCliente() {
