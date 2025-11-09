@@ -1,4 +1,4 @@
-const CACHE_NAME = 'anmago-cache-v2';
+const CACHE_NAME = 'anmago-cache-v3';
 const ARCHIVOS_A_CACHEAR = [
   './INICIO.HTML',
   './ESTILO.CSS',
@@ -21,7 +21,7 @@ self.addEventListener('install', event => {
   );
 });
 
-// Activar y limpiar cachés antiguas si es necesario
+// Activar y limpiar cachés antiguas
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys => {
@@ -36,10 +36,18 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Interceptar peticiones y servir desde red o caché
+// Estrategia: Cache First + Actualización en segundo plano
 self.addEventListener('fetch', event => {
   event.respondWith(
-    fetch(event.request).catch(() => caches.match(event.request))
+    caches.match(event.request).then(cachedResponse => {
+      const fetchPromise = fetch(event.request).then(networkResponse => {
+        return caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, networkResponse.clone());
+          return networkResponse;
+        });
+      }).catch(() => cachedResponse); // fallback si offline
+
+      return cachedResponse || fetchPromise;
+    })
   );
 });
-
