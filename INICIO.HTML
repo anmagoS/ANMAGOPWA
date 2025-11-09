@@ -174,38 +174,49 @@
     });
   }
 
-  function renderCarruselPromosDesdePromos(productos) {
-    const contenedor = document.getElementById("carousel-promos-contenido");
-    if (!contenedor) return;
+ function renderCarruselPromosDesdePromos(productos) {
+  const contenedor = document.getElementById("carousel-promos-contenido");
+  if (!contenedor) return;
 
-    const promociones = productos.filter(p => {
-      const promo = typeof p.promo === "string" ? p.promo.toLowerCase().trim() : p.promo;
-      return promo === true || promo === "true" || promo === "sí" || promo === "activo";
-    });
+  const promociones = productos.filter(p => {
+    const promo = typeof p.promo === "string" ? p.promo.toLowerCase().trim() : p.promo;
+    return promo === true || promo === "true" || promo === "sí" || promo === "activo";
+  });
 
-    contenedor.innerHTML = "";
+  const cantidadPorCiclo = 4;
+  const ciclosPorDia = 4;
+  const totalPromos = promociones.length;
+  const indiceActual = obtenerIndicePromocional(cantidadPorCiclo, ciclosPorDia, totalPromos);
 
-    promociones.slice(0, 4).forEach((p, index) => {
-      const item = document.createElement("div");
-      item.className = `carousel-item ${index === 0 ? "active" : ""}`;
-      item.innerHTML = `
-        <div class="d-flex justify-content-center">
-          <div class="card" style="width: 18rem;">
-            <img src="${p.imagen}" class="card-img-top" alt="${p.producto}" fetchpriority="${index === 0 ? 'high' : 'auto'}" width="288" height="288" decoding="async">
-            <div class="card-body text-center">
-              <h5 class="card-title">${p.producto}</h5>
-              <p class="card-text">
-                <s class="text-muted me-2">$${p.precio.toLocaleString("es-CO")}</s>
-                <span class="text-success fw-bold">$${(p.precio * 0.9).toLocaleString("es-CO")}</span>
-              </p>
-              <a href="producto.html?id=${p.id}" class="boton-comprar">Ver producto</a>
-            </div>
+  let bloque = promociones.slice(indiceActual, indiceActual + cantidadPorCiclo);
+  if (bloque.length < cantidadPorCiclo && totalPromos >= cantidadPorCiclo) {
+    bloque = promociones.slice(0, cantidadPorCiclo); // fallback si el índice se desborda
+  }
+
+  contenedor.innerHTML = "";
+
+  bloque.forEach((p, index) => {
+    const item = document.createElement("div");
+    item.className = `carousel-item ${index === 0 ? "active" : ""}`;
+    item.innerHTML = `
+      <div class="d-flex justify-content-center">
+        <div class="card" style="width: 18rem;">
+          <img src="${p.imagen}" class="card-img-top" alt="${p.producto}" fetchpriority="${index === 0 ? 'high' : 'auto'}" width="288" height="288" decoding="async">
+          <div class="card-body text-center">
+            <h5 class="card-title">${p.producto}</h5>
+            <p class="card-text">
+              <s class="text-muted me-2">$${p.precio.toLocaleString("es-CO")}</s>
+              <span class="text-success fw-bold">$${(p.precio * 0.9).toLocaleString("es-CO")}</span>
+            </p>
+            <a href="producto.html?id=${p.id}" class="boton-comprar">Ver producto</a>
           </div>
         </div>
-      `;
-      contenedor.appendChild(item);
-    });
-  }
+      </div>
+    `;
+    contenedor.appendChild(item);
+  });
+}
+
 
   function cargarTemporizadorPromos() {
     try {
