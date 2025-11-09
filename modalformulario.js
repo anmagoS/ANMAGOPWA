@@ -5,7 +5,7 @@ if (window.opener && Array.isArray(window.opener.articulosCarrito)) {
 
 // 🔍 Validación epistémica
 function validarFormularioCliente() {
-  const camposObligatorios = ["nombreCliente", "telefonoCliente", "cedulaCliente", "emailCliente"];
+  const camposObligatorios = ["nombreCliente", "telefonoCliente", "emailCliente"];
   const todosLlenos = camposObligatorios.every(id => {
     const el = document.getElementById(id);
     return el && el.value.trim() !== "";
