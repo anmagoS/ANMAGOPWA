@@ -32,13 +32,15 @@ function construirDireccionEstructurada() {
   const tipoUnidad = document.getElementById("tipoUnidad")?.value.trim();
   const numeroApto = document.getElementById("numeroApto")?.value.trim();
   const barrio = document.getElementById("barrio")?.value.trim();
-  const barrio = document.getElementById("observacionDireccion")?.value.trim();
+  const observacionDireccion = document.getElementById("observacionDireccion")?.value.trim();
 
   let direccion = `${tipoVia} ${numeroVia}${complementoVia1 ? ' ' + complementoVia1 : ''} # ${numeroAdicional1}${complementoVia2 ? ' ' + complementoVia2 : ''} - ${numeroAdicional2}`;
   if (tipoUnidad && numeroApto) direccion += `, ${tipoUnidad} ${numeroApto}`;
   if (barrio) direccion += `, Barrio ${barrio}`;
+  if (observacionDireccion) direccion += `, Observación: ${observacionDireccion}`;
   return direccion;
 }
+
 
 // 🧾 Generar texto para WhatsApp
 function generarTextoWhatsApp() {
