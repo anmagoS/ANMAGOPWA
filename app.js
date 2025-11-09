@@ -105,7 +105,51 @@ async function renderCarruselPromosDesdePromos(productos) {
     const promo = typeof p.promo === "string" ? p.promo.toLowerCase().trim() : p.promo;
     return promo === true || promo === "true" || promo === "sí" || promo === "activo";
   });
+function renderPromocionesPorCiclo(productos) {
+  const contenedor = document.getElementById("contenedor-promos");
+  if (!contenedor) return;
 
+  const promociones = productos.filter(p => {
+    const promo = typeof p.promo === "string" ? p.promo.toLowerCase().trim() : p.promo;
+    return promo === true || promo === "true" || promo === "sí" || promo === "activo";
+  });
+
+  const cantidadPorCiclo = 4;
+  const ciclosPorDia = 8; // 24 / 3
+  const ahora = new Date();
+  const inicio = new Date("2025-11-08T00:00:00");
+  const diferenciaHoras = Math.floor((ahora - inicio) / (1000 * 60 * 60));
+  const cicloActual = diferenciaHoras % (ciclosPorDia * 365);
+  const indiceActual = (cicloActual * cantidadPorCiclo) % promociones.length;
+
+  const bloque = promociones.slice(indiceActual, indiceActual + cantidadPorCiclo);
+  contenedor.innerHTML = "";
+
+  bloque.forEach(p => {
+    const precioOriginal = Number(p.precio) || 0;
+    const precioDescuento = Math.round(precioOriginal * 0.9);
+
+    const tarjeta = document.createElement("div");
+    tarjeta.className = "producto";
+    tarjeta.innerHTML = `
+      <a href="producto.html?id=${p.id}">
+        <div class="imagen-producto">
+          <img src="${p.imagen}" alt="${p.producto}">
+          <span class="etiqueta-promo">🔥 10%</span>
+        </div>
+      </a>
+      <div class="nombre-producto">${p.producto}</div>
+      <div class="nombre-producto">${p.material || ""}</div>
+      <div class="nombre-producto">${p.tallas || ""}</div>
+      <div class="precio-producto">
+        <s>$${precioOriginal.toLocaleString("es-CO")} COP</s>
+        <span class="text-success fw-bold">$${precioDescuento.toLocaleString("es-CO")} COP</span>
+      </div>
+      <a href="producto.html?id=${p.id}" class="boton-comprar">Ver más</a>
+    `;
+    contenedor.appendChild(tarjeta);
+  });
+}
   // 🔁 Calcular índice dinámico según ciclo de 3 horas
   const cantidadPorCiclo = 4;
   const ciclosPorDia = 8; // 24 / 3
@@ -187,7 +231,7 @@ window.addEventListener("beforeinstallprompt", (e) => {
   // ✅ Ahora que el header está listo, renderizar menú lateral
   if (Array.isArray(window.catalogoGlobal) && window.catalogoGlobal.length > 0) {
     renderizarMenuLateral(window.catalogoGlobal);
-    renderCarruselPromosDesdePromos(window.catalogoGlobal);
+   renderPromocionesPorCiclo(window.catalogoGlobal);
   }
 
   // ✅ Activar buscador si existe
