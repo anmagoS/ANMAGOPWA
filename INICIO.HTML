@@ -4,61 +4,64 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Inicio | Anmago Store</title>
-  <!-- 🔗 Preconexión para acelerar carga -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="preconnect" href="https://ik.imagekit.io">
- 
-<!-- 📦 Bootstrap y íconos con carga diferida -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" media="print" onload="this.media='all'" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" media="print" onload="this.media='all'" />
-
-<!-- 📱 PWA y favicon -->
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="https://ik.imagekit.io/mbsk9dati/logo.jpg?tr=w-560,q-80" type="image/x-icon" />
-<!-- 🔁 Versión institucional centralizada -->
-<script>
-  const VERSION_ANMAGO = '20251109'; // ← actualiza este valor cada vez que edites JS o CSS
-
-  // 🎯 Carga modular de scripts institucionales
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" media="print" onload="this.media='all'" />
+  
+  <!-- 🔁 Versión institucional centralizada -->
+  <script>
+  const VERSION_ANMAGO = '20251109';
   const scriptsAnmago = [
     { src: 'app.js', defer: true },
     { src: 'carrito.js', defer: true },
-    { src: 'buscador.js', type: 'module' }
+    { src: 'buscador.js', type: 'module' },
+    { src: 'MODULOULTIMOS.JS', defer: true } // ← nuevo módulo
   ];
-
-  scriptsAnmago.forEach(({ src, defer, type }) => {
-    const s = document.createElement('script');
-    s.src = `${src}?v=${VERSION_ANMAGO}`;
-    if (defer) s.defer = true;
-    if (type) s.type = type;
-    document.head.appendChild(s);
-  });
-
-  // 🎨 Carga modular del CSS institucional
-  const cssAnmago = document.createElement('link');
-  cssAnmago.rel = 'stylesheet';
-  cssAnmago.href = `https://ik.imagekit.io/mbsk9dati/CODIGOS/ESTILO.CSS?v=${VERSION_ANMAGO}`;
-  cssAnmago.media = 'print';
-  cssAnmago.onload = () => { cssAnmago.media = 'all'; };
-  document.head.appendChild(cssAnmago);
-</script>
+    scriptsAnmago.forEach(({ src, defer, type }) => {
+      const s = document.createElement('script');
+      s.src = `${src}?v=${VERSION_ANMAGO}`;
+      if (defer) s.defer = true;
+      if (type) s.type = type;
+      document.head.appendChild(s);
+    });
+    const cssAnmago = document.createElement('link');
+    cssAnmago.rel = 'stylesheet';
+    cssAnmago.href = `ESTILO.CSS?v=${VERSION_ANMAGO}`;
+    cssAnmago.media = 'print';
+    cssAnmago.onload = () => { cssAnmago.media = 'all'; };
+    document.head.appendChild(cssAnmago);
+  </script>
 
 </head>
 
 <body>
   <!-- HEADER -->
   <div id="header-container"></div>
-  <!-- BUSCADOR MODULAR -->
+
+  <!-- BUSCADOR + SUGERENCIAS -->
   <div class="container mt-0 position-relative" style="max-width: 600px;">
     <input id="buscador" class="form-control" placeholder="Buscar productos, categorías, precios..." autocomplete="on">
     <div id="sugerencias" class="dropdown-menu position-absolute mt-0 w-100 z-3"></div>
+    <!-- 🔍 Sugerencias contextuales por tipo institucional -->
+<div id="sugerencias-contextuales" class="d-flex flex-wrap gap-2 mt-2 justify-content-center">
+  <a href="SUBTIPOS.HTML?tipo=ROPA" class="btn btn-outline-dark btn-sm">👗 Ropa</a>
+  <a href="SUBTIPOS.HTML?tipo=RELOJERIA" class="btn btn-outline-dark btn-sm">⌚ Relojería</a>
+  <a href="SUBTIPOS.HTML?tipo=HOGAR" class="btn btn-outline-dark btn-sm">🏠 Hogar</a>
+  <a href="SUBTIPOS.HTML?tipo=BELLEZA" class="btn btn-outline-dark btn-sm">💄 Belleza</a>
+  <a href="SUBTIPOS.HTML?tipo=NAVIDAD" class="btn btn-outline-dark btn-sm">🎄 Navidad</a>
+  <a href="SUBTIPOS.HTML?tipo=ESCOLAR" class="btn btn-outline-dark btn-sm">🎒 Escolar</a>
+</div>
   </div>
 
   <!-- BOTÓN FLOTANTE DEL CARRITO -->
   <a href="#" class="btn btn_shopping" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
-<i class="bi bi-bag-heart text-white"></i>
+    <i class="bi bi-bag-heart text-white"></i>
     <span id="contador-carrito" class="contador-carrito">0</span>
   </a>
+
   <!-- BOTÓN DE INSTALACIÓN PWA -->
   <div id="instalar-container" class="bloque-superior-pwa d-none">
     <button id="boton-instalar" class="btn btn-gradient fw-bold d-flex align-items-center justify-content-center mx-auto" style="gap: 12px; padding: 12px 24px; border-radius: 8px; font-size: 1.1rem;">
@@ -66,58 +69,52 @@
       Instalar Anmago Store
     </button>
   </div>
-  <!-- CONTENIDO PRINCIPAL -->
-  <main class="contenedor-categoria">
-    <h1 class="titulo-categoria text-center">Colecciones</h1>
-    <div id="grid-tipos" class="grid-productos"></div>
 
-    <div class="container-fluid text-center mt-3 px-3">
-      <a href="PROMOS.HTML" class="btn btn-gradient fw-bold">🎁 Ver promociones exclusivas</a>
-    </div>
-    <div id="temporizador-promos" class="text-center text-muted mt-2 small"></div>
-    <div id="carouselPromos" class="carousel slide mt-4" data-bs-ride="carousel">
-      <div class="carousel-inner" id="carousel-promos-contenido"></div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselPromos" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselPromos" data-bs-slide="next">
-        <span class="carousel-control-next-icon"></span>
-      </button>
-    </div>
-    <!-- Secciones institucionales -->
-    <section class="seccion-centrada">
-  <h2 class="titulo-categoria">🎥 Conoce más sobre <span class="text-gradient">Anmago Store</span></h2>
-  <div class="video-wrapper mt-3">
-    <div class="card mx-auto shadow" style="max-width: 560px; border-radius: 12px; overflow: hidden; cursor: pointer;" onclick="cargarVideo()">
-      <img src="https://ik.imagekit.io/mbsk9dati/logo.jpg?tr=w-560,q-80" alt="Video Anmago Store" fetchpriority="high" width="560" height="315" decoding="async"
- class="img-fluid">
-      <div class="card-body bg-light text-center py-2">
-        <i class="bi bi-play-circle-fill fs-1 text-primary"></i>
-        <p class="mb-0 fw-bold">Haz clic para ver el video</p>
+  <!-- CARRUSEL DE PROMOCIONES -->
+  <div class="container-fluid text-center mt-3 px-3">
+    <a href="PROMOS.HTML" class="btn btn-gradient fw-bold">🎁 Ver promociones exclusivas</a>
+  </div>
+  <div id="temporizador-promos" class="text-center text-muted mt-2 small"></div>
+  <div id="carouselPromos" class="carousel slide mt-4" data-bs-ride="carousel">
+    <div class="carousel-inner" id="carousel-promos-contenido"></div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselPromos" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselPromos" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+  </div>
+
+  <!-- ÚLTIMOS PRODUCTOS -->
+  <main class="contenedor-categoria">
+    <h1 class="titulo-categoria text-center mt-4">🆕 Últimos productos</h1>
+    <div id="grid-ultimos" class="grid-productos"></div>
+  </main>
+
+  <!-- SECCIONES INSTITUCIONALES -->
+  <section class="seccion-centrada">
+    <h2 class="titulo-categoria">🎥 Conoce más sobre <span class="text-gradient">Anmago Store</span></h2>
+    <div class="video-wrapper mt-3">
+      <div class="card mx-auto shadow" style="max-width: 560px; border-radius: 12px; overflow: hidden; cursor: pointer;" onclick="cargarVideo()">
+        <img src="https://ik.imagekit.io/mbsk9dati/logo.jpg?tr=w-560,q-80" alt="Video Anmago Store" fetchpriority="high" width="560" height="315" decoding="async" class="img-fluid">
+        <div class="card-body bg-light text-center py-2">
+          <i class="bi bi-play-circle-fill fs-1 text-primary"></i>
+          <p class="mb-0 fw-bold">Haz clic para ver el video</p>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<script>
-  function cargarVideo() {
-    document.querySelector('.video-wrapper').innerHTML = `
-      <iframe width="100%" height="315" src="https://www.youtube.com/embed/E8_rkF1957Y" title="Video de presentación" frameborder="0" allowfullscreen style="max-width: 560px; border-radius: 12px;"></iframe>
-    `;
-  }
-</script>
+  <section class="seccion-centrada">
+    <h2 class="titulo-categoria">Aliados</h2>
+    <a class="boton-comprar" href="https://sites.google.com/view/anmagostore/aliados" target="_blank">Catálogos Aliados</a>
+  </section>
 
-    <section class="seccion-centrada">
-      <h2 class="titulo-categoria">Aliados</h2>
-      <a class="boton-comprar" href="https://sites.google.com/view/anmagostore/aliados" target="_blank">Catálogos Aliados</a>
-    </section>
-
-    <section class="seccion-centrada">
-      <p class="frase-destacada">“La ropa no solo cubre tu cuerpo, sino que también expresa tu alma. En cada prenda, encuentras confianza, elegancia y la magia de ser tú mismo”</p>
-      <p class="frase-secundaria">¡Disfruta la experiencia de vestir tus sueños en Anmago Store!</p>
-      <a class="boton-comprar" href="https://docs.google.com/forms/d/e/1FAIpQLSevvlCBgz7L6l2-DecKQLazoswqzf7DRYWOaCq4FtMGOR6D2Q/viewform?usp=header" target="_blank">Deja tus datos</a>
-    </section>
-  </main>
+  <section class="seccion-centrada">
+    <p class="frase-destacada">“La ropa no solo cubre tu cuerpo, sino que también expresa tu alma...”</p>
+    <p class="frase-secundaria">¡Disfruta la experiencia de vestir tus sueños en Anmago Store!</p>
+    <a class="boton-comprar" href="https://docs.google.com/forms/d/e/1FAIpQLSevvlCBgz7L6l2-DecKQLazoswqzf7DRYWOaCq4FtMGOR6D2Q/viewform?usp=header" target="_blank">Deja tus datos</a>
+  </section>
 
   <!-- CARRITO OFFCANVAS -->
   <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito">
@@ -137,6 +134,22 @@
   <!-- FOOTER -->
   <div id="footer-container"></div>
 
+   <!-- BARRA INFERIOR FIJA -->
+  <nav class="barra-inferior fixed-bottom bg-light border-top d-flex justify-content-around py-2 d-md-none">
+    <a href="INICIO.HTML" class="text-center text-dark text-decoration-none">
+      <i class="bi bi-house fs-4"></i><br><small>Inicio</small>
+    </a>
+    <a href="PROMOS.HTML" class="text-center text-dark text-decoration-none">
+      <i class="bi bi-gift fs-4"></i><br><small>Promos</small>
+    </a>
+    <a href="modalformulario.html" class="text-center text-dark text-decoration-none">
+      <i class="bi bi-person-plus fs-4"></i><br><small>Registro</small>
+    </a>
+    <a href="#video" class="text-center text-dark text-decoration-none">
+      <i class="bi bi-play-circle fs-4"></i><br><small>Video</small>
+    </a>
+  </nav>
+
   <!-- SCRIPTS EXTERNOS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
 
@@ -148,339 +161,5 @@
     }
   </script>
 
-  <!-- INICIALIZACIÓN -->
- <script type="module">
-  import { activarBuscadorGlobal } from './buscador.js';
-
-  const imagenesPorTipo = {
-    "ROPA": "https://ik.imagekit.io/mbsk9dati/593678a2-9af5-47a8-a47c-34407d25bd60.jpg?tr=w-600,q-80",
-    "RELOJERIA": "https://ik.imagekit.io/mbsk9dati/producto_53/PRODUCTOS_Images_d9594fb8.IMAGEN_12.215521.jpg?tr=w-140,h-152,q-80",
-    "HOGAR": "https://ik.imagekit.io/mbsk9dati/portad1-1.webp?tr=w-140,h-152,q-80",
-    "BELLEZA": "https://ik.imagekit.io/mbsk9dati/R.jpg?tr=w-140,h-152,q-80",
-    "ESCOLAR": "fondo-vuelta-al-cole-elementos_23-2147848492.jpg",
-    "NAVIDAD": "https://ik.imagekit.io/mbsk9dati/4-im%C3%A1genes-navide%C3%B1as-christmas-pictures-postales-de-Navidad-Joyeux-Noel-Bon-Nadal-Merry-Christmas%20(2).png?tr=w-140,h-152,q-80"  };
-
-  // ✅ Carga diferida del header institucional
-  requestIdleCallback(async () => {
-    const header = await fetch("HEADER.HTML").then(res => res.text());
-    document.getElementById("header-container").innerHTML = header;
-    await new Promise(resolve => requestAnimationFrame(resolve));
-    ajustarCarrito();
-  });
-
-  function ajustarCarrito() {
-    const header = document.querySelector(".header");
-    const carritoBtn = document.querySelector(".btn_shopping");
-    if (header && carritoBtn) {
-      const alturaHeader = header.offsetHeight;
-      carritoBtn.style.top = `${alturaHeader + 12}px`;
-    }
-  }
-
-  function renderTipos(productos) {
-    const contenedor = document.getElementById("grid-tipos");
-    contenedor.innerHTML = "";
-
-    const tiposUnicos = [...new Set(productos.map(p => p.tipo?.trim()).filter(Boolean))];
-
-    tiposUnicos.forEach(tipo => {
-      const imagenRef = imagenesPorTipo[tipo] || "imagen-default.jpg";
-      const tarjeta = document.createElement("div");
-      tarjeta.className = "producto";
-      tarjeta.innerHTML = `
-        <a href="SUBTIPOS.HTML?tipo=${encodeURIComponent(tipo)}" class="imagen-producto">
-          <img src="${imagenRef}" alt="${tipo}" loading="lazy" width="140" height="152" decoding="async">
-        </a>
-        <div class="nombre-producto">${tipo}</div>
-        <a class="boton-comprar" href="SUBTIPOS.HTML?tipo=${encodeURIComponent(tipo)}">Ver más</a>
-      `;
-      contenedor.appendChild(tarjeta);
-    });
-  }
-
- function renderCarruselPromosDesdePromos(productos) {
-  const contenedor = document.getElementById("carousel-promos-contenido");
-  if (!contenedor) return;
-
-  const promociones = productos.filter(p => {
-    const promo = typeof p.promo === "string" ? p.promo.toLowerCase().trim() : p.promo;
-    return promo === true || promo === "true" || promo === "sí" || promo === "activo";
-  });
-
-  const cantidadPorCiclo = 4;
-  const ciclosPorDia = 4;
-  const totalPromos = promociones.length;
-  const indiceActual = obtenerIndicePromocional(cantidadPorCiclo, ciclosPorDia, totalPromos);
-
-  let bloque = promociones.slice(indiceActual, indiceActual + cantidadPorCiclo);
-  if (bloque.length < cantidadPorCiclo && totalPromos >= cantidadPorCiclo) {
-    bloque = promociones.slice(0, cantidadPorCiclo); // fallback si el índice se desborda
-  }
-
-  contenedor.innerHTML = "";
-
-  bloque.forEach((p, index) => {
-    const item = document.createElement("div");
-    item.className = `carousel-item ${index === 0 ? "active" : ""}`;
-    item.innerHTML = `
-      <div class="d-flex justify-content-center">
-        <div class="card" style="width: 18rem;">
-          <img src="${p.imagen}" class="card-img-top" alt="${p.producto}" fetchpriority="${index === 0 ? 'high' : 'auto'}" width="288" height="288" decoding="async">
-          <div class="card-body text-center">
-            <h5 class="card-title">${p.producto}</h5>
-            <p class="card-text">
-              <s class="text-muted me-2">$${p.precio.toLocaleString("es-CO")}</s>
-              <span class="text-success fw-bold">$${(p.precio * 0.9).toLocaleString("es-CO")}</span>
-            </p>
-            <a href="producto.html?id=${p.id}" class="boton-comprar">Ver producto</a>
-          </div>
-        </div>
-      </div>
-    `;
-    contenedor.appendChild(item);
-  });
-}
-
-
-  function cargarTemporizadorPromos() {
-    try {
-      const urlTemporizador = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/temporizador.json?nocache=${Date.now()}`;
-      fetch(urlTemporizador)
-        .then(res => res.json())
-        .then(({ finPromo }) => {
-          const tiempoRestante = new Date(finPromo) - new Date();
-          if (tiempoRestante > 0) {
-            setTimeout(() => {
-              renderCarruselPromosDesdePromos(window.catalogoGlobal);
-              console.log("🔄 Carrusel actualizado automáticamente");
-            }, tiempoRestante);
-          }
-        });
-    } catch (err) {
-      console.warn("⚠️ No se pudo cargar temporizador de promociones:", err);
-    }
-  }
-
-  document.addEventListener("DOMContentLoaded", async () => {
-    activarBuscadorGlobal();
-
-    // 🔹 Carga inmediata del catálogo base
-    const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json";
-    const respuesta = await fetch(url);
-    const productos = await respuesta.json();
-    window.catalogoGlobal = productos;
-    window.catalogo = productos;
-
-    renderTipos(productos); // ✅ Esto sí debe ir directo
-
-    // 🔸 Carga diferida del carrusel y temporizador
-    requestIdleCallback(() => {
-      renderCarruselPromosDesdePromos(productos);
-      cargarTemporizadorPromos();
-    });
-
-    // 🔹 Carga diferida del footer
-    requestIdleCallback(async () => {
-      const footer = await fetch("footer.html").then(res => res.text());
-      document.getElementById("footer-container").innerHTML = footer;
-    });
-
-    // 🔹 Carrito
-    const carritoBtn = document.querySelector(".btn_shopping");
-    carritoBtn?.addEventListener("click", e => {
-      e.preventDefault();// ✅ Función para corregir el formato visual del enlace de imagen
-function corregirFormatoImagen(url) {
-  return url
-    .replace(/producto(\d+)/, "producto_$1")
-    .replace(/PRODUCTOSImages/, "PRODUCTOS_Images")
-    .replace(/IMAGEN(\d+)/, "IMAGEN_$1");
-}
-
-// ✅ Carga inicial del carrito con corrección de enlaces
-let articulosCarrito = JSON.parse(localStorage.getItem("carritoAnmago")) || [];
-articulosCarrito = articulosCarrito.map(p => {
-  if (p.imagen) p.imagen = corregirFormatoImagen(p.imagen);
-  return p;
-});
-window.articulosCarrito = articulosCarrito;
-
-let catalogo = [];
-
-async function cargarCatalogo() {
-  try {
-    const res = await fetch("https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json");
-    catalogo = await res.json();
-    console.log("✅ Catálogo cargado");
-  } catch (error) {
-    console.error("❌ Error al cargar catálogo:", error);
-  }
-}
-
-function guardarCarrito() {
-  try {
-    localStorage.setItem("carritoAnmago", JSON.stringify(articulosCarrito));
-    window.articulosCarrito = articulosCarrito;
-  } catch (e) {
-    console.error("❌ Error al guardar carrito:", e);
-  }
-}
-
-function abrirCarrito() {
-  const offcanvas = document.getElementById("offcanvasCarrito");
-  if (offcanvas) bootstrap.Offcanvas.getOrCreateInstance(offcanvas).show();
-}
-
-function actualizarSubtotal() {
-  const subtotal = articulosCarrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
-  const opciones = {
-    minimumFractionDigits: subtotal % 1 === 0 ? 0 : 2,
-    maximumFractionDigits: 2
-  };
-  const subtotalElement = document.getElementById("subtotal");
-  if (subtotalElement) subtotalElement.textContent = `$${subtotal.toLocaleString("es-CO", opciones)}`;
-}
-
-function actualizarContadorCarrito() {
-  const contador = document.getElementById("contador-carrito");
-  if (contador) contador.textContent = articulosCarrito.length;
-}
-
-function actualizarEstadoBotonWhatsApp() {
-  const btn = document.querySelector("button[onclick='generarPedidoWhatsApp()']");
-  if (btn) btn.disabled = articulosCarrito.length === 0;
-}
-
-function renderizarCarrito() {
-  const contenedor = document.getElementById("carrito-contenido");
-  if (!contenedor) return;
-  contenedor.innerHTML = "";
-
-  if (articulosCarrito.length === 0) {
-    contenedor.innerHTML = "<p class='text-center'>El carrito está vacío.</p>";
-    return;
-  }
-
-  articulosCarrito.forEach((producto, index) => {
-    contenedor.insertAdjacentHTML("beforeend", `
-      <div class="container mb-3">
-        <div class="row align-items-center border-bottom py-2">
-          <div class="col-3">
-            <img class="img-fluid rounded" src="${producto.imagen}" alt="${producto.nombre}" />
-          </div>
-          <div class="col-6">
-            <h6 class="mb-1 title-product">${producto.nombre}</h6>
-            <p class="mb-0 detalles-product">Talla: ${producto.talla || "No especificada"}</p>
-            <p class="mb-0 detalles-product">Cantidad: ${producto.cantidad}</p>
-            <p class="mb-0 detalles-product">Precio: $${producto.precio.toLocaleString("es-CO")}</p>
-          </div>
-          <div class="col-3 text-end">
-            <button class="boton-comprar" data-index="${index}" title="Eliminar">
-              <i class="bi bi-trash3"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    `);
-  });
-
-  contenedor.insertAdjacentHTML("beforeend", `
-    <div class="text-center mt-3">
-      <button class="btn btn-success w-100" id="btn-comprar">Comprar</button>
-    </div>
-  `);
-
-  document.querySelectorAll(".boton-comprar[data-index]").forEach(btn => {
-    btn.addEventListener("click", e => {
-      const index = parseInt(e.currentTarget.dataset.index);
-      articulosCarrito.splice(index, 1);
-      guardarCarrito();
-      renderizarCarrito();
-      actualizarSubtotal();
-      actualizarContadorCarrito();
-      actualizarEstadoBotonWhatsApp();
-    });
-  });
-
-  const btnComprar = document.getElementById("btn-comprar");
-  if (btnComprar) {
-    btnComprar.addEventListener("click", () => {
-      const modalFormulario = document.getElementById("modalFormularioCliente");
-      if (modalFormulario) {
-        const instanciaModal = bootstrap.Modal.getOrCreateInstance(modalFormulario);
-        instanciaModal.show();
-      } else {
-        alert("⚠️ No se encontró el formulario del cliente.");
-      }
-    });
-  }
-}
-
-function agregarAlCarrito(producto) {
-  if (producto.precioDescuento) producto.precio = producto.precioDescuento;
-
-  if (!producto.proveedor && producto.id && catalogo.length > 0) {
-    const desdeCatalogo = catalogo.find(p => producto.id.includes(p.id));
-    if (desdeCatalogo?.proveedor) producto.proveedor = desdeCatalogo.proveedor;
-  }
-
-  if (producto.imagen) {
-    producto.imagen = corregirFormatoImagen(producto.imagen);
-  }
-
-  const existe = articulosCarrito.find(p => p.id === producto.id);
-  if (existe) {
-    existe.cantidad = (existe.cantidad || 1) + 1;
-  } else {
-    producto.cantidad = 1;
-    articulosCarrito.push(producto);
-  }
-
-  guardarCarrito();
-  renderizarCarrito();
-  actualizarSubtotal();
-  actualizarContadorCarrito();
-  actualizarEstadoBotonWhatsApp();
-  abrirCarrito();
-}
-
-document.addEventListener("DOMContentLoaded", async () => {
-  await cargarCatalogo();
-  renderizarCarrito();
-  actualizarSubtotal();
-  actualizarContadorCarrito();
-  actualizarEstadoBotonWhatsApp();
-});
-
-      const offcanvas = document.getElementById("offcanvasCarrito");
-      if (offcanvas) {
-        const instancia = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
-        instancia.show();
-      }
-    });
-
-    if (typeof window.actualizarContadorCarrito === "function") window.actualizarContadorCarrito();
-    if (typeof window.renderizarCarrito === "function") window.renderizarCarrito();
-  });
-
-  // 🔔 Instalación PWA
-  let deferredPrompt;
-  window.addEventListener("beforeinstallprompt", (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-
-    const contenedor = document.getElementById("instalar-container");
-    const boton = document.getElementById("boton-instalar");
-
-    contenedor.style.display = "block";
-
-    boton.addEventListener("click", async () => {
-      deferredPrompt.prompt();
-      const resultado = await deferredPrompt.userChoice;
-      console.log("Resultado instalación:", resultado.outcome);
-      deferredPrompt = null;
-      contenedor.style.display = "none";
-    });
-  });
-</script>
 </body>
 </html>
