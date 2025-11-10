@@ -258,6 +258,7 @@ if (producto.video_url?.includes("youtube.com/shorts/")) {
     const selectorVariable = tarjeta.querySelector(".selector-variable");
 
    boton.addEventListener("click", () => {
+     let tallaSeleccionada = "No especificada";
   if (selectorTalla) tallaSeleccionada = selectorTalla.value;
   else if (selectorVariable) tallaSeleccionada = selectorVariable.value;
 
