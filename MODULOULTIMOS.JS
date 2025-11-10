@@ -1,4 +1,3 @@
-
 // ✅ Carga los últimos 10 productos del catálogo
 async function cargarUltimosProductos() {
   try {
