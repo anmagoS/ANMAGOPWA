@@ -51,9 +51,12 @@ function actualizarSubtotal() {
 }
 
 function actualizarContadorCarrito() {
-  const contador = document.getElementById("contador-carrito");
-  if (contador) contador.textContent = articulosCarrito.length;
+  const totalUnidades = articulosCarrito.reduce((acc, p) => acc + (p.cantidad || 1), 0);
+  document.querySelectorAll(".contador-carrito").forEach(el => {
+    el.textContent = totalUnidades;
+  });
 }
+
 
 function actualizarEstadoBotonWhatsApp() {
   const btn = document.querySelector("button[onclick='generarPedidoWhatsApp()']");
