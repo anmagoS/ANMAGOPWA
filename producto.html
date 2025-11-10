@@ -135,7 +135,7 @@
   <script type="module">
     import { activarBuscadorGlobal } from './buscador.js';
     
-    function mostrarAlertaCarrito(producto) {
+   function mostrarAlertaCarrito(producto) {
   let alerta = document.getElementById("alerta-carrito");
   let mensaje = document.getElementById("mensaje-alerta-carrito");
 
@@ -143,6 +143,8 @@
     alerta = document.createElement("div");
     alerta.id = "alerta-carrito";
     alerta.className = "alerta-carrito-movil";
+    alerta.classList.add("d-none"); // ✅ Aquí se oculta por defecto
+
     mensaje = document.createElement("span");
     mensaje.id = "mensaje-alerta-carrito";
     alerta.appendChild(mensaje);
@@ -156,6 +158,7 @@
     alerta.classList.add("d-none");
   }, 3000);
 }
+
 
 
     function ajustarCarrito() {
