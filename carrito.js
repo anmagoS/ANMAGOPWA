@@ -148,8 +148,12 @@ function agregarAlCarrito(producto) {
   actualizarSubtotal();
   actualizarContadorCarrito();
   actualizarEstadoBotonWhatsApp();
+ if (window.innerWidth < 768 && typeof mostrarAlertaCarrito === "function") {
+  mostrarAlertaCarrito(producto);
+} else {
   abrirCarrito();
 }
+
 
 document.addEventListener("DOMContentLoaded", async () => {
   await cargarCatalogo();
