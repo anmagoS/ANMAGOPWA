@@ -134,6 +134,29 @@
 
   <script type="module">
     import { activarBuscadorGlobal } from './buscador.js';
+    
+    function mostrarAlertaCarrito(producto) {
+  let alerta = document.getElementById("alerta-carrito");
+  let mensaje = document.getElementById("mensaje-alerta-carrito");
+
+  if (!alerta) {
+    alerta = document.createElement("div");
+    alerta.id = "alerta-carrito";
+    alerta.className = "alerta-carrito-movil";
+    mensaje = document.createElement("span");
+    mensaje.id = "mensaje-alerta-carrito";
+    alerta.appendChild(mensaje);
+    document.body.appendChild(alerta);
+  }
+
+  mensaje.textContent = `✅ Has agregado 1 unidad de ${producto.nombre} al carrito.`;
+  alerta.classList.remove("d-none");
+
+  setTimeout(() => {
+    alerta.classList.add("d-none");
+  }, 3000);
+}
+
 
     function ajustarCarrito() {
       const header = document.querySelector(".header");
@@ -234,28 +257,32 @@ if (producto.video_url?.includes("youtube.com/shorts/")) {
     const selectorTalla = tarjeta.querySelector(".selector-talla");
     const selectorVariable = tarjeta.querySelector(".selector-variable");
 
-    boton.addEventListener("click", () => {
-      let tallaSeleccionada = "No especificada";
-      if (selectorTalla) tallaSeleccionada = selectorTalla.value;
-      else if (selectorVariable) tallaSeleccionada = selectorVariable.value;
+   boton.addEventListener("click", () => {
+  if (selectorTalla) tallaSeleccionada = selectorTalla.value;
+  else if (selectorVariable) tallaSeleccionada = selectorVariable.value;
 
-      const productoFinal = {
-        id: img + "-" + tallaSeleccionada,
-        nombre: producto.producto,
-        precio: producto.precio,
-        imagen: img,
-        talla: tallaSeleccionada,
-        cantidad: 1,
-        proveedor: producto.proveedor || "No definido"
-      };
+  const productoFinal = {
+    id: img + "-" + tallaSeleccionada,
+    nombre: producto.producto,
+    precio: producto.precio,
+    imagen: img,
+    talla: tallaSeleccionada,
+    cantidad: 1,
+    proveedor: producto.proveedor || "No definido"
+  };
 
-      if (typeof window.agregarAlCarrito === "function") {
-        window.agregarAlCarrito(productoFinal);
-      }
+  if (typeof window.agregarAlCarrito === "function") {
+    window.agregarAlCarrito(productoFinal);
+  }
 
-      const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(document.getElementById("offcanvasCarrito"));
-      bsOffcanvas.show();
-    });
+  // ✅ Mostrar alerta en móvil, abrir carrito solo en escritorio
+  if (window.innerWidth < 768) {
+    mostrarAlertaCarrito(productoFinal);
+  } else {
+    const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(document.getElementById("offcanvasCarrito"));
+    bsOffcanvas.show();
+  }
+});
 
     galeria.appendChild(tarjeta);
   });
