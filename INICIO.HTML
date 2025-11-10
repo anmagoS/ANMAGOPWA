@@ -3,13 +3,15 @@
 <head>
   <!-- 🔗 Carga del head institucional desde header.html -->
   <script>
-    // Inyectar el <head> institucional
     fetch("header.html")
       .then(res => res.text())
       .then(html => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, "text/html");
-        document.head.innerHTML = doc.head.innerHTML;
+        const elementosHead = doc.head.children;
+        for (let el of elementosHead) {
+          document.head.appendChild(el.cloneNode(true));
+        }
       });
   </script>
 </head>
@@ -17,7 +19,6 @@
   <!-- HEADER visual -->
   <div id="header-container"></div>
   <script>
-    // Inyectar el <header> visual desde header.html
     fetch("header.html")
       .then(res => res.text())
       .then(html => {
