@@ -1,33 +1,41 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <!-- 🔗 Carga del head institucional desde header.html -->
-  <script>
-    fetch("header.html")
-      .then(res => res.text())
-      .then(html => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, "text/html");
-        const elementosHead = doc.head.children;
-        for (let el of elementosHead) {
-          document.head.appendChild(el.cloneNode(true));
-        }
-      });
-  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inicio | Anmago Store</title>
+  <!-- El head institucional se carga desde header.html vía app.js -->
 </head>
+
 <body>
-  <!-- HEADER visual -->
+  <!-- HEADER -->
   <div id="header-container"></div>
-  <script>
-    fetch("header.html")
-      .then(res => res.text())
-      .then(html => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, "text/html");
-        document.getElementById("header-container").innerHTML =
-          doc.querySelector("header").outerHTML;
-      });
-  </script>
+
+  <!-- CONTENIDO PROPIO DE LA PÁGINA -->
+  <main class="contenedor-categoria">
+    <h1 class="titulo-categoria text-center mt-4">🆕 Últimos productos</h1>
+    <div id="grid-ultimos" class="grid-productos"></div>
+  </main>
+
+  <!-- FOOTER -->
+  <div id="footer-container"></div>
+
+  <!-- BARRA INFERIOR FIJA -->
+  <nav class="barra-inferior fixed-bottom bg-light border-top d-flex justify-content-around py-2 d-md-none">
+    <a href="INICIO.HTML" class="text-center text-dark text-decoration-none">
+      <i class="bi bi-house fs-4"></i><br><small>Inicio</small>
+    </a>
+    <a href="PROMOS.HTML" class="text-center text-dark text-decoration-none">
+      <i class="bi bi-gift fs-4"></i><br><small>Promos</small>
+    </a>
+    <a href="modalformulario.html" class="text-center text-dark text-decoration-none">
+      <i class="bi bi-person-plus fs-4"></i><br><small>Registro</small>
+    </a>
+    <a href="#video" class="text-center text-dark text-decoration-none">
+      <i class="bi bi-play-circle fs-4"></i><br><small>Video</small>
+    </a>
+  </nav>
+
 
   <!-- BUSCADOR + SUGERENCIAS -->
   <div class="container mt-0 position-relative" style="max-width: 600px;">
