@@ -147,11 +147,12 @@ function agregarAlCarrito(producto) {
   actualizarSubtotal();
   actualizarContadorCarrito();
   actualizarEstadoBotonWhatsApp();
- if (window.innerWidth < 768 && typeof mostrarAlertaCarrito === "function") {
-  mostrarAlertaCarrito(producto);
+if (window.innerWidth < 768 && typeof window.mostrarAlertaCarrito === "function") {
+  window.mostrarAlertaCarrito(producto);
 } else {
   abrirCarrito();
 }
+
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
