@@ -5,7 +5,7 @@ function mostrarAlertaCarrito(producto) {
   if (!modal) {
     modal = document.createElement("div");
     modal.id = "modal-carrito";
-    modal.className = "modal-carrito-anmago";
+    modal.className = "anmago-modal-carrito";
     document.body.appendChild(modal);
   }
 modal.innerHTML = `
