@@ -1,7 +1,7 @@
 // ✅ Carga los últimos 10 productos del catálogo
 async function cargarUltimosProductos() {
   try {
-    const url = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json?v=${VERSION_ANMAGO}`;
+    const url = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json`;
     const res = await fetch(url);
     const productos = await res.json();
     renderUltimosProductos(productos);
