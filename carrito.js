@@ -7,7 +7,7 @@ function corregirFormatoImagen(url) {
 }
 // ✅ Carga inicial del carrito con corrección de enlaces
 window.articulosCarrito = window.articulosCarrito || JSON.parse(localStorage.getItem("carritoAnmago")) || [];
-
+let catalogo = [];
 window.articulosCarrito = window.articulosCarrito.map(p => {
   if (p.imagen) p.imagen = corregirFormatoImagen(p.imagen);
   return p;
@@ -61,7 +61,7 @@ function actualizarEstadoBotonWhatsApp() {
   const btn = document.querySelector("button[onclick='generarPedidoWhatsApp()']");
   if (btn) btn.disabled = articulosCarrito.length === 0;
 }
-}
+
 function renderizarCarrito() {
   const contenedor = document.getElementById("carrito-contenido");
   if (!contenedor) return;
