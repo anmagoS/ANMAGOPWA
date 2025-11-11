@@ -1,4 +1,7 @@
-if (!modal) {
+function mostrarAlertaCarrito(producto) {
+  console.log("🚨 mostrarAlertaCarrito ejecutada con:", producto);
+  let modal = document.getElementById("modal-carrito");
+  if (!modal) {
   modal = document.createElement("div");
   modal.id = "modal-carrito";
   modal.className = "modal-carrito-anmago";
