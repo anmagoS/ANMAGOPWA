@@ -17,8 +17,7 @@
     { src: 'app.js', defer: true },
     { src: 'carrito.js', defer: true },
     { src: 'buscador.js', type: 'module' },
-    { src: 'MODULOULTIMOS.JS', defer: true } // ← nuevo módulo
-  ];
+      ];
     scriptsAnmago.forEach(({ src, defer, type }) => {
       const s = document.createElement('script');
       s.src = `${src}?v=${VERSION_ANMAGO}`;
@@ -35,6 +34,8 @@
   </script>
 
 </head>
+<!-- Script de últimos productos -->
+<script src="MODULOULTIMOS.JS?v=20251109" defer></script>
 
 <body>
   <!-- HEADER -->
