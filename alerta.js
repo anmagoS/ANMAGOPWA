@@ -19,7 +19,13 @@
       modal = document.createElement("div");
       modal.id = "anmago-carrito";
       modal.className = "anmago-modal-carrito";
-      document.body.appendChild(modal);
+     const referencia = document.getElementById("footer-container");
+if (referencia) {
+  referencia.insertAdjacentElement("beforebegin", modal);
+} else {
+  document.body.appendChild(modal);
+}
+
 
       // Cerrar al tocar fuera del contenido
       modal.addEventListener("click", (e) => {
