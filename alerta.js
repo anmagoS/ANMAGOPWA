@@ -1,44 +1,46 @@
 function mostrarAlertaCarrito(producto) {
   console.log("🚨 mostrarAlertaCarrito ejecutada con:", producto);
-  let alerta = document.getElementById("alerta-carrito");
 
-  if (!alerta) {
-    alerta = document.createElement("div");
-    alerta.id = "alerta-carrito";
-    alerta.className = "alerta-carrito-movil";
-    document.body.appendChild(alerta);
+  let modal = document.getElementById("modal-carrito");
+
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.id = "modal-carrito";
+    modal.className = "modal-carrito-anmago";
+    modal.innerHTML = `
+      <div class="modal-carrito-contenido">
+        <p class="mb-3">✅ Has agregado <strong>${producto.cantidad}</strong> unidad${producto.cantidad > 1 ? "es" : ""} de <strong>${producto.nombre}</strong> en talla <strong>${producto.talla}</strong> al carrito.</p>
+        <div class="d-flex justify-content-center gap-3">
+          <button class="btn btn-light btn-sm" id="btn-ver-carrito">Ver carrito</button>
+          <button class="btn btn-outline-light btn-sm" id="btn-ir-inicio">Inicio</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+
+    // Cierre al tocar fuera
+    modal.addEventListener("click", e => {
+      if (e.target.id === "modal-carrito") {
+        modal.classList.remove("activo");
+      }
+    });
   }
 
-  alerta.className = "alerta-carrito-movil"; // 🔁 elimina d-none y aplica clase institucional
-  alerta.style.display = "block"; // 🔓 asegura visibilidad
+  modal.classList.add("activo");
 
-  alerta.innerHTML = `
-    <div class="contenido-alerta">
-      <p class="mb-2">✅ Has agregado <strong>${producto.cantidad}</strong> unidad${producto.cantidad > 1 ? "es" : ""} de <strong>${producto.nombre}</strong> en talla <strong>${producto.talla}</strong> al carrito.</p>
-      <div class="d-flex justify-content-center gap-3 mt-2">
-        <button class="btn btn-light btn-sm" id="btn-ver-carrito">Ver carrito</button>
-        <button class="btn btn-outline-light btn-sm" id="btn-ir-inicio">Inicio</button>
-      </div>
-    </div>
-  `;
-
-  // Botón: Ver carrito
   document.getElementById("btn-ver-carrito").onclick = () => {
-    alerta.style.display = "none";
+    modal.classList.remove("activo");
     const offcanvas = document.getElementById("offcanvasCarrito");
     if (offcanvas) bootstrap.Offcanvas.getOrCreateInstance(offcanvas).show();
   };
 
-  // Botón: Ir al inicio
   document.getElementById("btn-ir-inicio").onclick = () => {
     window.location.href = "INICIO.HTML";
   };
 
-  // Ocultar automáticamente después de 6 segundos
   setTimeout(() => {
-    alerta.style.display = "none";
+    modal.classList.remove("activo");
   }, 6000);
 }
 
 window.mostrarAlertaCarrito = mostrarAlertaCarrito;
-
