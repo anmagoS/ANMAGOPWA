@@ -45,3 +45,5 @@ export async function activarBuscadorGlobal() {
     sugerencias.classList.remove("show");
   });
 }
+// Llamar la función al cargar el módulo
+activarBuscadorGlobal();
