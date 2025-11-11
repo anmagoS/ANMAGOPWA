@@ -14,7 +14,6 @@ modal.innerHTML = `
     <p class="mb-2 fw-bold">✅ Agregado al carrito:</p>
     <p class="mb-2">${producto.nombre} <br><small class="text-light">Talla: ${producto.talla} | Cantidad: ${producto.cantidad}</small></p>
     <p class="mb-3 fs-5 text-warning">💰 $${producto.precio.toLocaleString("es-CO")}</p>
-    <div class="d-flex justify-content-center gap-3">
       <button class="btn btn-light btn-sm" id="btn-ver-carrito">Ver carrito</button>
       <button class="btn btn-outline-light btn-sm" id="btn-ir-inicio">Inicio</button>
     </div>
