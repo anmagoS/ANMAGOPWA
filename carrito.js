@@ -5,7 +5,6 @@ function corregirFormatoImagen(url) {
     .replace(/PRODUCTOSImages/, "PRODUCTOS_Images")
     .replace(/IMAGEN(\d+)/, "IMAGEN_$1");
 }
-
 // ✅ Carga inicial del carrito con corrección de enlaces
 window.articulosCarrito = window.articulosCarrito || JSON.parse(localStorage.getItem("carritoAnmago")) || [];
 
