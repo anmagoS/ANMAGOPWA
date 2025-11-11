@@ -21,6 +21,20 @@
 
   alerta.classList.remove("d-none");
  alerta.style.display = "block";
+  alerta.style.position = "fixed";
+alerta.style.bottom = "80px";
+alerta.style.left = "10px";
+alerta.style.right = "10px";
+alerta.style.background = "#199461";
+alerta.style.color = "#fff";
+alerta.style.padding = "12px";
+alerta.style.borderRadius = "8px";
+alerta.style.zIndex = "9999";
+alerta.style.boxShadow = "0 0 12px rgba(0,0,0,0.3)";
+alerta.style.maxWidth = "90%";
+alerta.style.margin = "0 auto";
+alerta.style.textAlign = "center";
+
   // Botón: Ver carrito
   document.getElementById("btn-ver-carrito").onclick = () => {
     alerta.classList.add("d-none");
