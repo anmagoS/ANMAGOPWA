@@ -152,7 +152,7 @@ function agregarAlCarrito(producto) {
 } else {
   abrirCarrito();
 }
-
+}
 
 document.addEventListener("DOMContentLoaded", async () => {
   await cargarCatalogo();
