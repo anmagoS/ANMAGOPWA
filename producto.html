@@ -294,15 +294,7 @@ if (producto.video_url?.includes("youtube.com/shorts/")) {
   if (typeof window.agregarAlCarrito === "function") {
     window.agregarAlCarrito(productoFinal);
   }
-
-  // ✅ Mostrar alerta en móvil, abrir carrito solo en escritorio
-  if (window.innerWidth < 768) {
-    mostrarAlertaCarrito(productoFinal);
-  } else {
-    const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(document.getElementById("offcanvasCarrito"));
-    bsOffcanvas.show();
-  }
-});
+ });
 
     galeria.appendChild(tarjeta);
   });
