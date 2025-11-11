@@ -8,16 +8,20 @@ function mostrarAlertaCarrito(producto) {
     modal.className = "modal-carrito-anmago";
     document.body.appendChild(modal);
   }
-
-  modal.innerHTML = `
-    <div class="modal-carrito-contenido">
-      <p class="mb-3">✅ Has agregado <strong>${producto.cantidad}</strong> unidad${producto.cantidad > 1 ? "es" : ""} de <strong>${producto.nombre}</strong> en talla <strong>${producto.talla}</strong> al carrito.</p>
-      <div class="d-flex justify-content-center gap-3">
-        <button class="btn btn-light btn-sm" id="btn-ver-carrito">Ver carrito</button>
-        <button class="btn btn-outline-light btn-sm" id="btn-ir-inicio">Inicio</button>
-      </div>
+modal.innerHTML = `
+  <div class="modal-carrito-contenido d-flex flex-column align-items-center justify-content-center text-center">
+    <img src="${producto.imagen}" alt="${producto.nombre}" class="img-fluid rounded mb-3" style="max-height:120px; object-fit:cover;" onerror="this.src='REDES_IMAGES/default.jpg'">
+    <p class="mb-2 fw-bold">✅ Agregado al carrito:</p>
+    <p class="mb-2">${producto.nombre} <br><small class="text-light">Talla: ${producto.talla} | Cantidad: ${producto.cantidad}</small></p>
+    <p class="mb-3 fs-5 text-warning">💰 $${producto.precio.toLocaleString("es-CO")}</p>
+    <div class="d-flex justify-content-center gap-3">
+      <button class="btn btn-light btn-sm" id="btn-ver-carrito">Ver carrito</button>
+      <button class="btn btn-outline-light btn-sm" id="btn-ir-inicio">Inicio</button>
     </div>
-  `;
+  </div>
+`;
+
+ 
 
   modal.onclick = e => {
     if (e.target.id === "modal-carrito") {
