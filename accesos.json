@@ -682,5 +682,9 @@
   {
     "id_producto": "D260FD52",
     "ruta": "/ROPA/DAMA/VESTIDOS/PANTALÓN"
+  },
+  {
+    "id_producto": "FEC8CB6F",
+    "ruta": "/ROPA/DAMA/VESTIDO/PANTALÓN"
   }
 ]
