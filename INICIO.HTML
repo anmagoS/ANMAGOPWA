@@ -16,8 +16,7 @@
   const scriptsAnmago = [
     { src: 'app.js', defer: true },
     { src: 'carrito.js', defer: true },
-    { src: 'buscador.js', type: 'module' },
-      ];
+         ];
     scriptsAnmago.forEach(({ src, defer, type }) => {
       const s = document.createElement('script');
       s.src = `${src}?v=${VERSION_ANMAGO}`;
@@ -36,7 +35,7 @@
 </head>
 <!-- Script de últimos productos -->
 <script src="MODULOULTIMOS.JS?v=20251109" defer></script>
-
+<script src="buscador.js?v=20251109" type="module"></script>
 <body>
   <!-- HEADER -->
   <div id="header-container"></div>
