@@ -1,4 +1,4 @@
-<script>
+
 // === alerta.js ===
 (function () {
   let autoCloseId = null;
@@ -76,4 +76,4 @@
   // Registro global
   window.mostrarAlertaCarrito = mostrarAlertaCarrito;
 })();
-</script>
+
