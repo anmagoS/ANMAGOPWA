@@ -62,7 +62,7 @@ function actualizarEstadoBotonWhatsApp() {
   const btn = document.querySelector("button[onclick='generarPedidoWhatsApp()']");
   if (btn) btn.disabled = articulosCarrito.length === 0;
 }
-
+}
 function renderizarCarrito() {
   const contenedor = document.getElementById("carrito-contenido");
   if (!contenedor) return;
