@@ -13,13 +13,20 @@ const ARCHIVOS_A_CACHEAR = [
 
 // Instalar y cachear archivos clave
 self.addEventListener('install', event => {
-  self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(ARCHIVOS_A_CACHEAR);
+    caches.open('anmago-cache').then(cache => {
+      return cache.addAll([
+        'INICIO.HTML',
+        'catalogo.json',
+        'logo.jpg'
+        // otros archivos...
+      ]);
+    }).catch(err => {
+      console.warn("⚠️ Error al precachear:", err);
     })
   );
 });
+
 
 // Activar y limpiar cachés antiguas
 self.addEventListener('activate', event => {
