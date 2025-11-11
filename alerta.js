@@ -1,6 +1,5 @@
 function mostrarAlertaCarrito(producto) {
   console.log("🚨 mostrarAlertaCarrito ejecutada con:", producto);
-
   let modal = document.getElementById("modal-carrito");
 
   if (!modal) {
