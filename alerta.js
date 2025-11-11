@@ -9,7 +9,7 @@ function mostrarAlertaCarrito(producto) {
     document.body.appendChild(modal);
   }
 modal.innerHTML = `
-  <div class="modal-carrito-contenido d-flex flex-column align-items-center justify-content-center text-center">
+  <div class="modal-carrito-contenido">
     <img src="${producto.imagen}" alt="${producto.nombre}" class="img-fluid rounded mb-3" style="max-height:120px; object-fit:cover;" onerror="this.src='REDES_IMAGES/default.jpg'">
     <p class="mb-2 fw-bold">✅ Agregado al carrito:</p>
     <p class="mb-2">${producto.nombre} <br><small class="text-light">Talla: ${producto.talla} | Cantidad: ${producto.cantidad}</small></p>
