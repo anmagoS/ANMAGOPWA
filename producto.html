@@ -15,7 +15,6 @@
     { src: 'carrito.js', defer: true },
     { src: 'buscador.js', type: 'module' }
   ];
-
   scriptsAnmago.forEach(({ src, defer, type }) => {
     const s = document.createElement('script');
     s.src = `${src}?v=${VERSION_ANMAGO}`;
