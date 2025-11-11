@@ -252,6 +252,10 @@ if (producto.video_url?.includes("youtube.com/shorts/")) {
   if (typeof window.agregarAlCarrito === "function") {
     window.agregarAlCarrito(productoFinal);
   }
+     if (typeof window.mostrarAlertaCarrito === "function") {
+  window.mostrarAlertaCarrito(productoFinal);
+}
+
  });
 
     galeria.appendChild(tarjeta);
