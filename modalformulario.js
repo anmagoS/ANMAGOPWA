@@ -2,7 +2,6 @@
 if (window.opener && Array.isArray(window.opener.articulosCarrito)) {
   window.articulosCarrito = JSON.parse(JSON.stringify(window.opener.articulosCarrito));
 }
-
 // 🔍 Validación epistémica
 function validarFormularioCliente() {
   const camposObligatorios = ["nombreCliente", "telefonoCliente", "DireccionCompleta", "ciudadCliente"];
