@@ -2,6 +2,7 @@
 if (window.opener && Array.isArray(window.opener.articulosCarrito)) {
   window.articulosCarrito = JSON.parse(JSON.stringify(window.opener.articulosCarrito));
 }
+
 // 🔍 Validación epistémica
 function validarFormularioCliente() {
   const camposObligatorios = ["nombreCliente", "telefonoCliente", "DireccionCompleta", "ciudadCliente"];
@@ -60,7 +61,7 @@ function generarTextoWhatsApp() {
   return `🛍️ ¡Hola! Soy ${nombreCliente} y quiero realizar el siguiente pedido:\n\n${productos}\n\n🧾 Total del pedido: $${total.toLocaleString("es-CO")}\n\n✅ ¡Gracias por tu atención!`;
 }
 
-// 📤 Envío institucional a hoja
+// 📤 Envío institucional a hoja (POST)
 async function enviarPedidoInstitucional() {
   try {
     const datos = {
@@ -86,7 +87,6 @@ async function enviarPedidoInstitucional() {
   }
 }
 
-
 // 📤 Envío a WhatsApp
 function enviarPedidoWhatsApp() {
   const mensaje = generarTextoWhatsApp();
@@ -98,6 +98,10 @@ function enviarPedidoWhatsApp() {
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("formCliente");
   if (!form) return;
+
+  // Al inicio, deshabilitar todos los campos excepto el celular
+  const otrosCampos = document.querySelectorAll("#formCliente input:not(#telefonoCliente), #formCliente textarea, #formCliente select");
+  otrosCampos.forEach(el => el.disabled = true);
 
   document.querySelectorAll("#formCliente input, #formCliente select, #formCliente textarea").forEach(el => {
     el.addEventListener("input", validarFormularioCliente);
@@ -116,36 +120,34 @@ document.addEventListener("DOMContentLoaded", () => {
       const telefono = campoTelefono.value.trim();
       if (!/^3\d{9}$/.test(telefono)) return;
 
+      console.log("🔄 Validando celular...");
+
       try {
         const res = await fetch(`https://script.google.com/macros/s/AKfycbxzaywmZjTBQ4iOqwx8tb55orNwpt24XWzrdQ-gOpn8x_89x-Dja6v7VCwZzUvIqOq2/exec?telefono=${telefono}`);
         const datos = await res.json();
         console.log("Respuesta del Web App:", datos);
 
+        // Habilitar los demás campos después de la validación
+        otrosCampos.forEach(el => el.disabled = false);
+
         if (datos && datos.nombreCliente) {
-  // Concatenar nombre + apellido
-  document.getElementById("nombreCliente").value = 
-    `${datos.nombreCliente || ""} ${datos.apellido || ""}`.trim();
-
-  // Dirección: base + complemento
-  let direccionCompleta = datos.direccionCliente || "";
-  if (datos.complementoDir) direccionCompleta += `, ${datos.complementoDir}`;
-
-  document.getElementById("DireccionCompleta").value = direccionCompleta.trim();
-
-  // Ciudad y correo
-  document.getElementById("ciudadCliente").value = datos.ciudadDestino || "";
-  document.getElementById("emailCliente").value = datos.correo || "";
-
-  // Si quieres mapear unidad/apto/barrio/punto referencia
-  document.getElementById("tipoUnidad").value = datos.tipoUnidad || "";
-  document.getElementById("numeroApto").value = datos.numeroApto || "";
-  document.getElementById("barrio").value = datos.barrio || "";
-  document.getElementById("observacionDireccion").value = datos.puntoReferencia || "";
-
-  console.log("✅ Datos del cliente prellenados desde hoja");
-}
+          document.getElementById("nombreCliente").value = `${datos.nombreCliente || ""} ${datos.apellido || ""}`.trim();
+          let direccionCompleta = datos.direccionCliente || "";
+          if (datos.complementoDir) direccionCompleta += `, ${datos.complementoDir}`;
+          document.getElementById("DireccionCompleta").value = direccionCompleta.trim();
+          document.getElementById("ciudadCliente").value = datos.ciudadDestino || "";
+          document.getElementById("emailCliente").value = datos.correo || "";
+          document.getElementById("tipoUnidad").value = datos.tipoUnidad || "";
+          document.getElementById("numeroApto").value = datos.numeroApto || "";
+          document.getElementById("barrio").value = datos.barrio || "";
+          document.getElementById("observacionDireccion").value = datos.puntoReferencia || "";
+          console.log("✅ Datos del cliente prellenados desde hoja");
+        } else {
+          console.log("ℹ️ Cliente no encontrado, campos habilitados en blanco");
+        }
       } catch (error) {
         console.error("❌ Error consultando cliente:", error);
+        otrosCampos.forEach(el => el.disabled = false);
       }
     });
   }
