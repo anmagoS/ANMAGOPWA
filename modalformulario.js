@@ -38,7 +38,7 @@ function construirDireccionEstructurada() {
   if (tipoUnidad) direccion += `, ${tipoUnidad}`;
   if (numeroApto) direccion += ` ${numeroApto}`;
   if (barrio) direccion += `, Barrio ${barrio}`;
-  if (puntoReferencia) direccion += `,  ${puntoReferencia}`;
+  if (puntoReferencia) direccion += `, ${puntoReferencia}`;
 
   return direccion.trim();
 }
@@ -70,13 +70,19 @@ async function enviarPedidoInstitucional() {
       apellido: "", // si decides separar
       direccionCliente: construirDireccionEstructurada(),
       telefonoCliente: document.getElementById("telefonoCliente")?.value.trim(),
+      cedula: document.getElementById("cedulaCliente")?.value.trim() || "",
+      complementoDir: "", // si tienes campo separado
       ciudadDestino: document.getElementById("ciudadCliente")?.value.trim(),
       correo: document.getElementById("emailCliente")?.value.trim(),
+      rotular: "",
+      rotulo: "",
+      mensajeCobro: "",
       usuario: "ANMAGOSTORE@GMAIL.COM"
     };
 
-    const res = await fetch("https://script.google.com/macros/s/AKfycbzS4IFkO8g8GDx4RSzRSVDCteJGaszXs-U3OwJyi9pT4ZUsZUI38fKXqiElQVKB8Opo/exec", {
+    const res = await fetch("https://script.google.com/macros/s/AKfycbx_TU_ID_AQUI/exec", {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(datos)
     });
 
@@ -123,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("🔄 Validando celular...");
 
       try {
-        const res = await fetch(`https://script.google.com/macros/s/AKfycbxzaywmZjTBQ4iOqwx8tb55orNwpt24XWzrdQ-gOpn8x_89x-Dja6v7VCwZzUvIqOq2/exec?telefono=${telefono}`);
+        const res = await fetch(`https://script.google.com/macros/s/AKfycbx_TU_ID_AQUI/exec?telefono=${telefono}`);
         const datos = await res.json();
         console.log("Respuesta del Web App:", datos);
 
