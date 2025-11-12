@@ -1,152 +1,142 @@
-// 🔗 Vincular carrito desde ventana principal si existe
-if (window.opener && Array.isArray(window.opener.articulosCarrito)) {
-  window.articulosCarrito = JSON.parse(JSON.stringify(window.opener.articulosCarrito));
-}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro Cliente | Anmago Store</title>
+  <link rel="stylesheet" href="https://ik.imagekit.io/mbsk9dati/CODIGOS/ESTILO.CSS">
+  <link rel="icon" href="logo.jpg" type="image/x-icon" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+   <div id="header-container"></div>
+  
+  <div class="container mt-3">
+    <a href="javascript:history.back()" class="btn btn-outline-dark">
+      <i class="bi bi-arrow-left"></i> Atrás
+    </a>
+  </div>
+  <main class="container py-4">
+    <h2 class="mb-4 text-center">Registro Cliente</h2>
 
-// 🔍 Validación epistémica
-function validarFormularioCliente() {
-  const camposObligatorios = ["nombreCliente", "telefonoCliente", "DireccionCompleta", "ciudadCliente"];
-  const todosLlenos = camposObligatorios.every(id => {
-    const el = document.getElementById(id);
-    return el && el.value.trim() !== "";
-  });
+    <form id="formCliente">
 
-  const telefonoValido = /^3\d{9}$/.test(document.getElementById("telefonoCliente")?.value.trim());
+        <!-- Celular principal -->
+          <div class="mb-3">
+            <label for="telefonoCliente" class="form-label">Celular</label>
+            <input type="tel" class="form-control" id="telefonoCliente" placeholder="Ej: 3001234567" maxlength="10">
+            <div class="form-text">Debe comenzar por 3 y tener 10 dígitos.</div>
+          </div>
+          <!-- Nombre -->
+          <div class="mb-3">
+            <label for="nombreCliente" class="form-label">Nombres y Apellidos</label>
+            <input type="text" class="form-control" id="nombreCliente">
+          </div>
 
-  const btnEnviar = document.getElementById("btnEnviarPedido");
-  if (btnEnviar) {
-    btnEnviar.disabled = !(todosLlenos && telefonoValido);
-  }
-}
+       
+          
+      
+<div class="mb-3">
+  <label for="observacionDireccion" class="form-label">Dirección Completa</label>
+  <textarea id="DireccionCompleta" class="form-control" rows="2" maxlength="200" placeholder="Ej: calle, carrera, avenida, transversal, etc. "></textarea>
+   <div class="form-text">Recuerda colocar tu direccion exacta para evitar contratiempos en tu entrega.</div>
+</div>
+      
 
-// 🧠 Construcción de nombre completo
-function construirNombreCliente() {
-  const nombre = document.getElementById("nombreCliente")?.value.trim();
-  return nombre;
-}
+  <div class="col-4">
+    <label for="tipoUnidad" class="form-label">Tipo de unidad</label>
+    <select id="tipoUnidad" class="form-select">
+      <option value="">Selecciona</option>
+      <option value="Casa">CASA</option>
+      <option value="Apartamento">APARTAMENTO</option>
+      <option value="Piso">PISO</option>
+      <option value="Bodega">BODEGA</option>
+      <option value="Interior">INTERIOR</option>
+    </select>
+  </div>
+  <div class="col-4">
+    <label for="numeroApto" class="form-label">Número</label>
+    <input type="text" class="form-control" id="numeroApto" maxlength="4" inputmode="numeric" pattern="\d{1,4}" title="Solo números entre 0 y 9999">
+  </div>
+</div>
 
-// 🧱 Construcción de dirección estructurada
-function construirDireccionEstructurada() {
-  const direccionBase = document.getElementById("DireccionCompleta")?.value.trim();
-  const tipoUnidad = document.getElementById("tipoUnidad")?.value.trim();
-  const numeroApto = document.getElementById("numeroApto")?.value.trim();
-  const barrio = document.getElementById("barrio")?.value.trim();
-  const puntoReferencia = document.getElementById("observacionDireccion")?.value.trim();
+          <!-- Barrio -->
+          <div class="mb-3">
+            <label for="barrio" class="form-label">Barrio (opcional)</label>
+            <input type="text" class="form-control" id="barrio" maxlength="50">
+          </div>
+      
+<!-- Observación adicional -->
+<div class="mb-3">
+  <label for="observacionDireccion" class="form-label">Punto de referencia</label>
+  <textarea id="observacionDireccion" class="form-control" rows="2" maxlength="200" placeholder="Ej: entrada por portería, conjunto.., torre, casa color..., etc."></textarea>
+</div>
+          <!-- Ciudad con autocompletado -->
+          <div class="mb-3 position-relative">
+            <label for="ciudadCliente" class="form-label">Ciudad</label>
+            <input type="text" id="ciudadCliente" class="form-control" placeholder="Escribe tu ciudad" autocomplete="off">
+            <ul id="sugerenciasCiudades" class="dropdown-menu w-100 mt-0 z-3"></ul>
+          </div>
 
-  let direccion = direccionBase || "";
+          <!-- Correo electrónico -->
+          <div class="mb-3">
+            <label for="emailCliente" class="form-label">Correo electrónico</label>
+            <input type="email" class="form-control" id="emailCliente">
+          </div>
 
-  if (tipoUnidad) direccion += `, ${tipoUnidad}`;
-  if (numeroApto) direccion += ` ${numeroApto}`;
-  if (barrio) direccion += `, Barrio ${barrio}`;
-  if (puntoReferencia) direccion += `,  ${puntoReferencia}`;
+        </form>
+          <div class="text-center mt-3">
+      <button id="btnEnviarPedido" class="btn btn-gradient" disabled>Enviar pedido</button>
+    </div>
+  </main>
 
-  return direccion.trim();
-}
+  <!-- Bootstrap JS (si usas componentes como dropdowns o autocompletado) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const camposNumericos = [
+      "telefonoCliente",
+      "numeroVia",
+      "numeroAdicional1",
+      "numeroAdicional2",
+      "numeroApto"
+    ];
 
+    camposNumericos.forEach(id => {
+      const campo = document.getElementById(id);
+      if (!campo) return;
 
-
-// 🧾 Generar texto para WhatsApp
-function generarTextoWhatsApp() {
-  const nombreCliente = construirNombreCliente();
-  const hayProductos = Array.isArray(window.articulosCarrito) && window.articulosCarrito.length > 0;
-
-  if (!hayProductos) {
-    return `🛍️ ¡Hola! Soy ${nombreCliente} y quiero registrarme como cliente.\n\n✅ ¡Gracias por tu atención!`;
-  }
-
-  const productos = window.articulosCarrito.map((p, i) => {
-    return `${i + 1}. ${p.nombre.toUpperCase()}\n🖼️ Imagen: ${p.imagen}\n📏 Talla: ${p.talla || "No especificada"}\n💲 Precio: $${p.precio.toLocaleString("es-CO")}\n🔢 Cantidad: ${p.cantidad}`;
-  }).join("\n\n");
-
-  const total = window.articulosCarrito.reduce((sum, p) => sum + (p.precio * p.cantidad), 0);
-
-  return `🛍️ ¡Hola! Soy ${nombreCliente} y quiero realizar el siguiente pedido:\n\n${productos}\n\n🧾 Total del pedido: $${total.toLocaleString("es-CO")}\n\n✅ ¡Gracias por tu atención!`;
-}
-
-// 📤 Envío institucional a hoja
-function enviarPedidoInstitucional() {
-  try {
-    const nombreCliente = construirNombreCliente();
-    const telefono = document.getElementById("telefonoCliente")?.value.trim();
-    const ciudad = document.getElementById("ciudadCliente")?.value.trim();
-    const email = document.getElementById("emailCliente")?.value.trim();
-    const direccion = construirDireccionEstructurada();
-    const fecha = new Date().toLocaleString("es-CO", {
-      day: "2-digit", month: "2-digit", year: "numeric",
-      hour: "2-digit", minute: "2-digit", second: "2-digit"
-    });
-
-    const mensajeReducido = `🕒 Registro de cliente el ${fecha}
-
-👤 Nombre: ${nombreCliente}
-📞 Teléfono: ${telefono}
-🏠 Dirección: ${direccion}
-🏙️ Ciudad: ${ciudad}
-📧 Correo: ${email}`;
-
-    const url = `https://script.google.com/macros/s/AKfycbzS4IFkO8g8GDx4RSzRSVDCteJGaszXs-U3OwJyi9pT4ZUsZUI38fKXqiElQVKB8Opo/exec?mensaje=${encodeURIComponent(mensajeReducido)}`;
-
-    const iframe = document.createElement("iframe");
-    iframe.style.display = "none";
-    iframe.src = url;
-    document.body.appendChild(iframe);
-
-    console.log("📤 GET enviado al Web App intermedio mediante iframe");
-  } catch (error) {
-    console.error("❌ Error al enviar al Web App intermedio:", error);
-  }
-}
-
-// 📤 Envío a WhatsApp
-function enviarPedidoWhatsApp() {
-  const mensaje = generarTextoWhatsApp();
-  const url = `https://wa.me/573006498710?text=${encodeURIComponent(mensaje)}`;
-  window.open(url, "_blank");
-}
-
-// 🚀 Conexión de eventos cuando el formulario ya está en el DOM
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("formCliente");
-  if (!form) return;
-
-  document.querySelectorAll("#formCliente input, #formCliente select, #formCliente textarea").forEach(el => {
-    el.addEventListener("input", validarFormularioCliente);
-    el.addEventListener("change", validarFormularioCliente);
-    el.addEventListener("paste", () => {
-      setTimeout(validarFormularioCliente, 50);
-    });
-  });
-
-  validarFormularioCliente();
-
-  const btnEnviar = document.getElementById("btnEnviarPedido");
-  if (btnEnviar) {
-    btnEnviar.addEventListener("click", (e) => {
-      e.preventDefault();
-      enviarPedidoInstitucional();
-
-      const hayProductos = Array.isArray(window.articulosCarrito) && window.articulosCarrito.length > 0;
-
-      setTimeout(() => {
-        enviarPedidoWhatsApp();
-
-        const modalFormulario = document.getElementById("modalFormularioCliente");
-        if (modalFormulario) bootstrap.Modal.getOrCreateInstance(modalFormulario).hide();
-
-        if (window.opener) {
-          window.opener.postMessage("limpiarCarrito", "*");
-          window.close();
+      campo.addEventListener("input", () => {
+        const valor = campo.value;
+        if (!/^\d*$/.test(valor)) {
+          campo.value = valor.replace(/\D/g, "");
+          alert("⚠️ Solo se permiten números en este campo.");
         }
-
-        if (hayProductos) {
-          window.articulosCarrito = [];
-          if (typeof guardarCarrito === "function") guardarCarrito();
-          if (typeof renderizarCarrito === "function") renderizarCarrito();
-          if (typeof actualizarSubtotal === "function") actualizarSubtotal();
-          if (typeof actualizarContadorCarrito === "function") actualizarContadorCarrito();
-          if (typeof actualizarEstadoBotonWhatsApp === "function") actualizarEstadoBotonWhatsApp();
-        }
-      }, 500);
+      });
     });
-  }
-});
+  });
+</script>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const campoTelefono = document.getElementById("telefonoCliente");
+
+    campoTelefono.addEventListener("input", () => {
+      const valor = campoTelefono.value.trim();
+      const esValido = /^3\d{9}$/.test(valor);
+
+      // Si no es válido, muestra alerta visual
+      if (!esValido && valor.length === 10) {
+        campoTelefono.classList.add("is-invalid");
+        campoTelefono.setCustomValidity("El número debe comenzar por 3 y tener 10 dígitos.");
+      } else {
+        campoTelefono.classList.remove("is-invalid");
+        campoTelefono.setCustomValidity("");
+      }
+    });
+  });
+</script>
+<script src="modalformulario.js" defer></script>
+</body>
+</html>
