@@ -62,38 +62,31 @@ function generarTextoWhatsApp() {
 }
 
 // 📤 Envío institucional a hoja
-function enviarPedidoInstitucional() {
+async function enviarPedidoInstitucional() {
   try {
-    const nombreCliente = construirNombreCliente();
-    const telefono = document.getElementById("telefonoCliente")?.value.trim();
-    const ciudad = document.getElementById("ciudadCliente")?.value.trim();
-    const email = document.getElementById("emailCliente")?.value.trim();
-    const direccion = construirDireccionEstructurada();
-    const fecha = new Date().toLocaleString("es-CO", {
-      day: "2-digit", month: "2-digit", year: "numeric",
-      hour: "2-digit", minute: "2-digit", second: "2-digit"
+    const datos = {
+      clienteId: "", // puedes generar un ID si es nuevo
+      nombreCliente: construirNombreCliente(),
+      apellido: "", // si decides separar
+      direccionCliente: construirDireccionEstructurada(),
+      telefonoCliente: document.getElementById("telefonoCliente")?.value.trim(),
+      ciudadDestino: document.getElementById("ciudadCliente")?.value.trim(),
+      correo: document.getElementById("emailCliente")?.value.trim(),
+      usuario: "ANMAGOSTORE@GMAIL.COM"
+    };
+
+    const res = await fetch("https://script.google.com/macros/s/AKfycbzS4IFkO8g8GDx4RSzRSVDCteJGaszXs-U3OwJyi9pT4ZUsZUI38fKXqiElQVKB8Opo/exec", {
+      method: "POST",
+      body: JSON.stringify(datos)
     });
 
-    const mensajeReducido = `🕒 Registro de cliente el ${fecha}
-
-👤 Nombre: ${nombreCliente}
-📞 Teléfono: ${telefono}
-🏠 Dirección: ${direccion}
-🏙️ Ciudad: ${ciudad}
-📧 Correo: ${email}`;
-
-    const url = `https://script.google.com/macros/s/AKfycbzS4IFkO8g8GDx4RSzRSVDCteJGaszXs-U3OwJyi9pT4ZUsZUI38fKXqiElQVKB8Opo/exec?mensaje=${encodeURIComponent(mensajeReducido)}`;
-
-    const iframe = document.createElement("iframe");
-    iframe.style.display = "none";
-    iframe.src = url;
-    document.body.appendChild(iframe);
-
-    console.log("📤 GET enviado al Web App intermedio mediante iframe");
+    const respuesta = await res.json();
+    console.log("📤 Respuesta del Web App:", respuesta);
   } catch (error) {
     console.error("❌ Error al enviar al Web App intermedio:", error);
   }
 }
+
 
 // 📤 Envío a WhatsApp
 function enviarPedidoWhatsApp() {
