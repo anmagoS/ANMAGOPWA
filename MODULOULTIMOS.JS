@@ -9,7 +9,6 @@ async function cargarUltimosProductos() {
     console.error("❌ Error al cargar últimos productos:", error);
   }
 }
-
 // 🎨 Renderiza los últimos 10 productos en el grid
 function renderUltimosProductos(productos) {
   const contenedor = document.getElementById("grid-ultimos");
