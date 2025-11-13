@@ -12,15 +12,17 @@
 <body>
    <div id="header-container"></div>
   
-  <div class="container mt-3">
-    <a href="javascript:history.back()" class="btn btn-outline-dark">
-      <i class="bi bi-arrow-left"></i> Atrás
-    </a>
-  </div>
+<div class="container mt-3">
+  <button type="button" class="btn btn-outline-dark" onclick="location.reload()">
+    <i class="bi bi-arrow-clockwise"></i> Refrescar
+  </button>
+</div>
   <main class="container py-4">
     <h2 class="mb-4 text-center">Registro Cliente</h2>
 
     <form id="formCliente">
+      <input type="hidden" id="clienteId">
+
 
         <!-- Celular principal -->
           <div class="mb-3">
