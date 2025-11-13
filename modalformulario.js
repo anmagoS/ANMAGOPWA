@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 🔍 Prellenado automático si el celular ya existe
   const campoTelefono = document.getElementById("telefonoCliente");
   if (campoTelefono) {
-    campoTelefono.addEventListener("change", async () => {
+    campoTelefono.addEventListener("blur", async () => {   // 👈 cambio clave: blur
       const telefono = campoTelefono.value.trim();
       if (!/^3\d{9}$/.test(telefono)) return;
 
@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
           window.close();
         }
 
-              if (hayProductos) {
+             if (hayProductos) {
           window.articulosCarrito = [];
           if (typeof guardarCarrito === "function") guardarCarrito();
           if (typeof renderizarCarrito === "function") renderizarCarrito();
