@@ -63,39 +63,54 @@ function generarTextoWhatsApp() {
 }
 
 // 📤 Envío institucional a hoja (POST)
+// 📤 Envío institucional a hoja (GET con parámetros)
 async function enviarPedidoInstitucional() {
+  const datos = {
+    clienteId: document.getElementById("clienteId")?.value?.trim() || "",
+    nombreCliente: document.getElementById("nombreCliente")?.value?.trim() || "",
+    apellidoCompl: "",
+    direccionCliente: construirDireccionEstructurada(),
+    telefonoCliente: document.getElementById("telefonoCliente")?.value?.trim() || "",
+    cedula: "",
+    complementoDir: "",
+    ciudadDestino: document.getElementById("ciudadCliente")?.value?.trim() || "",
+    correo: document.getElementById("emailCliente")?.value?.trim() || "",
+    rotular: "",
+    rotulo: "",
+    mensajeCobro: "",
+    usuario: "ANMAGOSTORE@GMAIL.COM"
+  };
+
+  console.log("🔎 Datos enviados (previo a fetch):", datos);
+
   try {
-    const datos = {
-      clienteId: document.getElementById("clienteId")?.value.trim(),
-      nombreCliente: document.getElementById("nombreCliente")?.value.trim(),
-      apellidoCompl: "", // columna "APELLIDO COMPL."
-      direccionCliente: construirDireccionEstructurada(),
-      telefonoCliente: document.getElementById("telefonoCliente")?.value.trim(),
-      cedula: "",
-      complementoDir: "",
-      ciudadDestino: document.getElementById("ciudadCliente")?.value.trim(),
-      correo: document.getElementById("emailCliente")?.value.trim(),
-      rotular: "",
-      rotulo: "",
-      mensajeCobro: "",
-      usuario: "ANMAGOSTORE@GMAIL.COM"
-    };
+    // Construir URL con parámetros
+    const params = new URLSearchParams(datos);
+    const url = `https://script.google.com/macros/s/TU_ID/exec?${params.toString()}`;
 
-    const res = await fetch("https://script.google.com/macros/s/AKfycbwt-rFg_coabATigGv_zNOa93aO6u9uNqC-Oynh_HAL4dbuKo6pvmtw7jKlixXagW5o/exec", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(datos)
-    });
+    const res = await fetch(url); // GET
+    const text = await res.text();
+    console.log("📨 Texto bruto de respuesta:", text);
 
-    const respuesta = await res.json();
-    console.log("📤 Respuesta del Web App:", respuesta);
+    if (!res.ok) throw new Error(`http_${res.status}`);
+
+    let respuesta;
+    try {
+      respuesta = JSON.parse(text);
+    } catch {
+      throw new Error("json_parse_error");
+    }
+
+    console.log("✅ JSON parseado:", respuesta);
 
     if (!respuesta || respuesta.error) {
-      throw new Error(respuesta?.error || "sin_respuesta");
+      throw new Error(respuesta?.error || "respuesta_error");
     }
+
     return respuesta;
   } catch (error) {
     console.error("❌ Error al enviar al Web App:", error);
+    alert("No se pudo guardar el pedido. Intenta de nuevo.");
     throw error;
   }
 }
@@ -126,7 +141,7 @@ if (campoTelefono) {
     otrosCampos.forEach(el => el.disabled = true);
 
     try {
-      const res = await fetch(`https://script.google.com/macros/s/AKfycbwt-rFg_coabATigGv_zNOa93aO6u9uNqC-Oynh_HAL4dbuKo6pvmtw7jKlixXagW5o/exec?telefono=${telefono}`);
+      const res = await fetch(`https://script.google.com/macros/s/AKfycbwt-rFg_coabATigGv_zNOa93aO6u9uNqC-Oynh_HAL4dbuKo6pvmtw7jKlixXagW5o/exec?telefonoCliente=${telefono}`);
       const json = await res.json();
 
       if (json && json.existe && json.datos) {
