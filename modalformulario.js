@@ -64,21 +64,22 @@ function generarTextoWhatsApp() {
 // 📤 Envío institucional a hoja (POST)
 async function enviarPedidoInstitucional() {
   try {
-    const datos = {
-      clienteId: "", // puedes generar un ID si es nuevo
-      nombreCliente: construirNombreCliente(),
-      apellido: "", // si decides separar
-      direccionCliente: construirDireccionEstructurada(),
-      telefonoCliente: document.getElementById("telefonoCliente")?.value.trim(),
-      cedula: document.getElementById("cedulaCliente")?.value.trim() || "",
-      complementoDir: "", // si tienes campo separado
-      ciudadDestino: document.getElementById("ciudadCliente")?.value.trim(),
-      correo: document.getElementById("emailCliente")?.value.trim(),
-      rotular: "",
-      rotulo: "",
-      mensajeCobro: "",
-      usuario: "ANMAGOSTORE@GMAIL.COM"
-    };
+  const datos = {
+  clienteId: "", // se genera en el doPost si es nuevo
+  nombreCliente: document.getElementById("nombreCliente")?.value.trim(),
+  apellido: "", // no se usa en el formulario
+  direccionCliente: construirDireccionEstructurada(), // concatena todos los fragmentos
+  telefonoCliente: document.getElementById("telefonoCliente")?.value.trim(),
+  cedula: "", // no se usa en el formulario
+  complementoDir: "", // opcional
+  ciudadDestino: document.getElementById("ciudadCliente")?.value.trim(),
+  correo: document.getElementById("emailCliente")?.value.trim(),
+  rotular: "",
+  rotulo: "",
+  mensajeCobro: "",
+  usuario: "ANMAGOSTORE@GMAIL.COM"
+};
+
 
     const res = await fetch("https://script.google.com/macros/s/AKfycbx_TU_ID_AQUI/exec", {
       method: "POST",
@@ -109,6 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const otrosCampos = document.querySelectorAll("#formCliente input:not(#telefonoCliente), #formCliente textarea, #formCliente select");
   otrosCampos.forEach(el => el.disabled = true);
 
+  // Validación en cada cambio de campo
   document.querySelectorAll("#formCliente input, #formCliente select, #formCliente textarea").forEach(el => {
     el.addEventListener("input", validarFormularioCliente);
     el.addEventListener("change", validarFormularioCliente);
@@ -137,16 +139,20 @@ document.addEventListener("DOMContentLoaded", () => {
         otrosCampos.forEach(el => el.disabled = false);
 
         if (datos && datos.nombreCliente) {
-          document.getElementById("nombreCliente").value = `${datos.nombreCliente || ""} ${datos.apellido || ""}`.trim();
-          let direccionCompleta = datos.direccionCliente || "";
-          if (datos.complementoDir) direccionCompleta += `, ${datos.complementoDir}`;
-          document.getElementById("DireccionCompleta").value = direccionCompleta.trim();
-          document.getElementById("ciudadCliente").value = datos.ciudadDestino || "";
-          document.getElementById("emailCliente").value = datos.correo || "";
+          // Nombre completo en un solo campo
+          document.getElementById("nombreCliente").value = datos.nombreCliente || "";
+
+          // Dirección fragmentada: se desconcatena desde la hoja
+          document.getElementById("DireccionCompleta").value = datos.direccionCliente || "";
           document.getElementById("tipoUnidad").value = datos.tipoUnidad || "";
           document.getElementById("numeroApto").value = datos.numeroApto || "";
           document.getElementById("barrio").value = datos.barrio || "";
           document.getElementById("observacionDireccion").value = datos.puntoReferencia || "";
+
+          // Otros campos visibles
+          document.getElementById("ciudadCliente").value = datos.ciudadDestino || "";
+          document.getElementById("emailCliente").value = datos.correo || "";
+
           console.log("✅ Datos del cliente prellenados desde hoja");
         } else {
           console.log("ℹ️ Cliente no encontrado, campos habilitados en blanco");
@@ -157,6 +163,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+});
+
 
   const btnEnviar = document.getElementById("btnEnviarPedido");
   if (btnEnviar) {
