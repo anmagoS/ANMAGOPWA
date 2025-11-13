@@ -82,7 +82,7 @@ function enviarPedidoInstitucional() {
 🏙️ Ciudad: ${ciudad}
 📧 Correo: ${email}`;
 
-    const url = `https://script.google.com/macros/s/AKfycbzS4IFkO8g8GDx4RSzRSVDCteJGaszXs-U3OwJyi9pT4ZUsZUI38fKXqiElQVKB8Opo/exec?mensaje=${encodeURIComponent(mensajeReducido)}`;
+    const url = `https://script.google.com/macros/s/AKfycbyvtwBBOccqKnlSCLJRxm8SHZsGawIHykustOeaezCBJjQg57fxJfaHr1natX9ErtnV/exec?mensaje=${encodeURIComponent(mensajeReducido)}`;
 
     const iframe = document.createElement("iframe");
     iframe.style.display = "none";
@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!/^3\d{9}$/.test(telefono)) return;
 
       try {
-        const res = await fetch(`https://script.google.com/macros/s/AKfycbxzaywmZjTBQ4iOqwx8tb55orNwpt24XWzrdQ-gOpn8x_89x-Dja6v7VCwZzUvIqOq2/exec?telefono=${telefono}`);
+        const res = await fetch(`https://script.google.com/macros/s/AKfycbyvtwBBOccqKnlSCLJRxm8SHZsGawIHykustOeaezCBJjQg57fxJfaHr1natX9ErtnV/exec?telefono=${telefono}`);
         const datos = await res.json();
         console.log("Respuesta del Web App:", datos);
 
