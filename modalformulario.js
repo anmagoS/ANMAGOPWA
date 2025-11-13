@@ -64,22 +64,21 @@ function generarTextoWhatsApp() {
 // 📤 Envío institucional a hoja (POST)
 async function enviarPedidoInstitucional() {
   try {
-  const datos = {
-  clienteId: "", // se genera en el doPost si es nuevo
-  nombreCliente: document.getElementById("nombreCliente")?.value.trim(),
-  apellido: "", // no se usa en el formulario
-  direccionCliente: construirDireccionEstructurada(), // concatena todos los fragmentos
-  telefonoCliente: document.getElementById("telefonoCliente")?.value.trim(),
-  cedula: "", // no se usa en el formulario
-  complementoDir: "", // opcional
-  ciudadDestino: document.getElementById("ciudadCliente")?.value.trim(),
-  correo: document.getElementById("emailCliente")?.value.trim(),
-  rotular: "",
-  rotulo: "",
-  mensajeCobro: "",
-  usuario: "ANMAGOSTORE@GMAIL.COM"
-};
-
+    const datos = {
+      clienteId: "", // se genera en el doPost si es nuevo
+      nombreCliente: document.getElementById("nombreCliente")?.value.trim(),
+      apellido: "", // no se usa en el formulario
+      direccionCliente: construirDireccionEstructurada(), // concatena todos los fragmentos
+      telefonoCliente: document.getElementById("telefonoCliente")?.value.trim(),
+      cedula: "", // no se usa en el formulario
+      complementoDir: "", // opcional
+      ciudadDestino: document.getElementById("ciudadCliente")?.value.trim(),
+      correo: document.getElementById("emailCliente")?.value.trim(),
+      rotular: "",
+      rotulo: "",
+      mensajeCobro: "",
+      usuario: "ANMAGOSTORE@GMAIL.COM"
+    };
 
     const res = await fetch("https://script.google.com/macros/s/AKfycbyvtwBBOccqKnlSCLJRxm8SHZsGawIHykustOeaezCBJjQg57fxJfaHr1natX9ErtnV/exec", {
       method: "POST",
@@ -124,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 🔍 Prellenado automático si el celular ya existe
   const campoTelefono = document.getElementById("telefonoCliente");
   if (campoTelefono) {
-    campoTelefono.addEventListener("blur", async () => {
+    campoTelefono.addEventListener("change", async () => {
       const telefono = campoTelefono.value.trim();
       if (!/^3\d{9}$/.test(telefono)) return;
 
@@ -139,21 +138,19 @@ document.addEventListener("DOMContentLoaded", () => {
         otrosCampos.forEach(el => el.disabled = false);
 
         if (datos && datos.nombreCliente) {
-          // Nombre completo en un solo campo
-          document.getElementById("nombreCliente").value = datos.nombreCliente || "";
+          console.log("✅ Datos recibidos para prellenar:", datos);
 
-          // Dirección fragmentada: se desconcatena desde la hoja
+          document.getElementById("telefonoCliente").value = (datos.telefonoCliente || "").toString();
+          document.getElementById("nombreCliente").value = datos.nombreCliente || "";
           document.getElementById("DireccionCompleta").value = datos.direccionCliente || "";
           document.getElementById("tipoUnidad").value = datos.tipoUnidad || "";
           document.getElementById("numeroApto").value = datos.numeroApto || "";
           document.getElementById("barrio").value = datos.barrio || "";
           document.getElementById("observacionDireccion").value = datos.puntoReferencia || "";
-
-          // Otros campos visibles
           document.getElementById("ciudadCliente").value = datos.ciudadDestino || "";
           document.getElementById("emailCliente").value = datos.correo || "";
 
-          console.log("✅ Datos del cliente prellenados desde hoja");
+          console.log("✅ Campos del formulario actualizados");
         } else {
           console.log("ℹ️ Cliente no encontrado, campos habilitados en blanco");
         }
@@ -163,8 +160,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-});
-
 
   const btnEnviar = document.getElementById("btnEnviarPedido");
   if (btnEnviar) {
@@ -185,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
           window.close();
         }
 
-        if (hayProductos) {
+              if (hayProductos) {
           window.articulosCarrito = [];
           if (typeof guardarCarrito === "function") guardarCarrito();
           if (typeof renderizarCarrito === "function") renderizarCarrito();
@@ -193,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (typeof actualizarContadorCarrito === "function") actualizarContadorCarrito();
           if (typeof actualizarEstadoBotonWhatsApp === "function") actualizarEstadoBotonWhatsApp();
         }
-      }, 500);
+      }, 500); // cierre del setTimeout
     });
   }
 });
