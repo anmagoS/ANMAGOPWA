@@ -65,7 +65,7 @@ function generarTextoWhatsApp() {
 async function enviarPedidoInstitucional() {
   try {
     const datos = {
-      clienteId: "", // se genera en el doPost si es nuevo
+     clienteId: document.getElementById("clienteId")?.value.trim(),
       nombreCliente: document.getElementById("nombreCliente")?.value.trim(),
       apellido: "", // no se usa en el formulario
       direccionCliente: construirDireccionEstructurada(), // concatena todos los fragmentos
