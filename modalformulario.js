@@ -65,14 +65,16 @@ function generarTextoWhatsApp() {
 async function enviarPedidoInstitucional() {
   try {
     const datos = {
-     clienteId: document.getElementById("clienteId")?.value.trim(),
+      // Importante: este id se conserva si existía y se genera en el server si no
+      clienteId: document.getElementById("clienteId")?.value.trim(),
+
       nombreCliente: document.getElementById("nombreCliente")?.value.trim(),
-      apellido: "", // no se usa en el formulario
-      direccionCliente: construirDireccionEstructurada(), // concatena todos los fragmentos
+      apellidoCompl: "", // tu formulario no lo usa; el encabezado es "APELLIDO COMPL."
+      direccionCliente: construirDireccionEstructurada(), // concatena fragmentos
       telefonoCliente: document.getElementById("telefonoCliente")?.value.trim(),
-      cedula: "", // no se usa en el formulario
-      complementoDir: "", // opcional
-      ciudadDestino: document.getElementById("ciudadCliente")?.value.trim(),
+      cedula: "", // no lo usas
+      complementoDir: "", // corresponde a "COMPLEMENTO DE DIR"
+      ciudadDestino: document.getElementById("ciudadCliente")?.value.trim(), // "CIUDAD DESTINO"
       correo: document.getElementById("emailCliente")?.value.trim(),
       rotular: "",
       rotulo: "",
@@ -88,10 +90,17 @@ async function enviarPedidoInstitucional() {
 
     const respuesta = await res.json();
     console.log("📤 Respuesta del Web App:", respuesta);
+
+    if (!respuesta || respuesta.error) {
+      throw new Error(respuesta?.error || "sin_respuesta");
+    }
+    return respuesta; // permite await en el botón
   } catch (error) {
-    console.error("❌ Error al enviar al Web App intermedio:", error);
+    console.error("❌ Error al enviar al Web App:", error);
+    throw error;
   }
 }
+
 
 // 📤 Envío a WhatsApp
 function enviarPedidoWhatsApp() {
@@ -121,74 +130,87 @@ document.addEventListener("DOMContentLoaded", () => {
   validarFormularioCliente();
 
   // 🔍 Prellenado automático si el celular ya existe
-  const campoTelefono = document.getElementById("telefonoCliente");
-  if (campoTelefono) {
-    campoTelefono.addEventListener("blur", async () => {   // 👈 cambio clave: blur
-      const telefono = campoTelefono.value.trim();
-      if (!/^3\d{9}$/.test(telefono)) return;
+ campoTelefono.addEventListener("blur", async () => {
+  const telefono = campoTelefono.value.trim();
+  if (!/^3\d{9}$/.test(telefono)) return;
 
-      console.log("🔄 Validando celular...");
+  console.log("🔄 Validando celular...");
 
-      try {
-        const res = await fetch(`https://script.google.com/macros/s/AKfycbyvtwBBOccqKnlSCLJRxm8SHZsGawIHykustOeaezCBJjQg57fxJfaHr1natX9ErtnV/exec?telefono=${telefono}`);
-        const datos = await res.json();
-        console.log("Respuesta del Web App:", datos);
+  try {
+    const res = await fetch(`https://script.google.com/macros/s/AKfycbyvtwBBOccqKnlSCLJRxm8SHZsGawIHykustOeaezCBJjQg57fxJfaHr1natX9ErtnV/exec?telefono=${telefono}`);
+    const json = await res.json();
+    console.log("Respuesta del Web App:", json);
 
-        // Habilitar los demás campos después de la validación
-        otrosCampos.forEach(el => el.disabled = false);
+    // Habilitar los demás campos después de la validación
+    otrosCampos.forEach(el => el.disabled = false);
 
-        if (datos && datos.nombreCliente) {
-          console.log("✅ Datos recibidos para prellenar:", datos);
+    if (json && json.existe && json.datos) {
+      const d = json.datos; // claves idénticas a encabezados de Sheets
 
-          document.getElementById("telefonoCliente").value = (datos.telefonoCliente || "").toString();
-          document.getElementById("nombreCliente").value = datos.nombreCliente || "";
-          document.getElementById("DireccionCompleta").value = datos.direccionCliente || "";
-          document.getElementById("tipoUnidad").value = datos.tipoUnidad || "";
-          document.getElementById("numeroApto").value = datos.numeroApto || "";
-          document.getElementById("barrio").value = datos.barrio || "";
-          document.getElementById("observacionDireccion").value = datos.puntoReferencia || "";
-          document.getElementById("ciudadCliente").value = datos.ciudadDestino || "";
-          document.getElementById("emailCliente").value = datos.correo || "";
+      // Guarda el CLIENTEID oculto
+      const hId = document.getElementById("clienteId");
+      if (hId) hId.value = (d["CLIENTEID"] || "").toString().trim();
 
-          console.log("✅ Campos del formulario actualizados");
-        } else {
-          console.log("ℹ️ Cliente no encontrado, campos habilitados en blanco");
-        }
-      } catch (error) {
-        console.error("❌ Error consultando cliente:", error);
-        otrosCampos.forEach(el => el.disabled = false);
-      }
-    });
-  }
+      // Mapeo a tus campos del formulario
+      document.getElementById("telefonoCliente").value      = (d["TELEFONOCLIENTE"] || "").toString();
+      document.getElementById("nombreCliente").value        = d["NOMBRECLIENTE"] || "";
+      document.getElementById("DireccionCompleta").value    = d["DIRECCIONCLIENTE"] || "";
+      document.getElementById("ciudadCliente").value        = d["CIUDAD DESTINO"] || "";
+      document.getElementById("emailCliente").value         = d["CORREO"] || "";
 
-  const btnEnviar = document.getElementById("btnEnviarPedido");
-  if (btnEnviar) {
-    btnEnviar.addEventListener("click", (e) => {
-      e.preventDefault();
-      enviarPedidoInstitucional();
+      // Estos no existen en la hoja: vaciarlos por seguridad
+      if (document.getElementById("tipoUnidad"))            document.getElementById("tipoUnidad").value = "";
+      if (document.getElementById("numeroApto"))            document.getElementById("numeroApto").value = "";
+      if (document.getElementById("barrio"))                document.getElementById("barrio").value = "";
+      if (document.getElementById("observacionDireccion"))  document.getElementById("observacionDireccion").value = "";
 
-      const hayProductos = Array.isArray(window.articulosCarrito) && window.articulosCarrito.length > 0;
+      console.log("✅ Campos del formulario actualizados y CLIENTEID almacenado");
+    } else {
+      // Cliente no encontrado: limpiar y habilitar
+      const hId = document.getElementById("clienteId");
+      if (hId) hId.value = ""; // nuevo registro
 
-      setTimeout(() => {
-        enviarPedidoWhatsApp();
-
-        const modalFormulario = document.getElementById("modalFormularioCliente");
-        if (modalFormulario) bootstrap.Modal.getOrCreateInstance(modalFormulario).hide();
-
-        if (window.opener) {
-          window.opener.postMessage("limpiarCarrito", "*");
-          window.close();
-        }
-
-             if (hayProductos) {
-          window.articulosCarrito = [];
-          if (typeof guardarCarrito === "function") guardarCarrito();
-          if (typeof renderizarCarrito === "function") renderizarCarrito();
-          if (typeof actualizarSubtotal === "function") actualizarSubtotal();
-          if (typeof actualizarContadorCarrito === "function") actualizarContadorCarrito();
-          if (typeof actualizarEstadoBotonWhatsApp === "function") actualizarEstadoBotonWhatsApp();
-        }
-      }, 500); // cierre del setTimeout
-    });
+      console.log("ℹ️ Cliente no encontrado, campos habilitados en blanco");
+    }
+  } catch (error) {
+    console.error("❌ Error consultando cliente:", error);
+    otrosCampos.forEach(el => el.disabled = false);
   }
 });
+ }
+ const btnEnviar = document.getElementById("btnEnviarPedido");
+if (btnEnviar) {
+  btnEnviar.addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    try {
+      // Esperar a que se guarde en Sheets
+      const resp = await enviarPedidoInstitucional();
+      console.log("✅ Guardado en Sheets:", resp);
+
+      // Solo después abrir WhatsApp
+      enviarPedidoWhatsApp();
+
+      const modalFormulario = document.getElementById("modalFormularioCliente");
+      if (modalFormulario) bootstrap.Modal.getOrCreateInstance(modalFormulario).hide();
+
+      if (window.opener) {
+        window.opener.postMessage("limpiarCarrito", "*");
+        window.close();
+      }
+
+      const hayProductos = Array.isArray(window.articulosCarrito) && window.articulosCarrito.length > 0;
+      if (hayProductos) {
+        window.articulosCarrito = [];
+        if (typeof guardarCarrito === "function") guardarCarrito();
+        if (typeof renderizarCarrito === "function") renderizarCarrito();
+        if (typeof actualizarSubtotal === "function") actualizarSubtotal();
+        if (typeof actualizarContadorCarrito === "function") actualizarContadorCarrito();
+        if (typeof actualizarEstadoBotonWhatsApp === "function") actualizarEstadoBotonWhatsApp();
+      }
+    } catch (err) {
+      console.error("❌ Error guardando en Sheets:", err);
+      alert("No se pudo guardar el pedido. Intenta de nuevo.");
+    }
+  });
+}
