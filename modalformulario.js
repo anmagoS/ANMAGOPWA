@@ -81,7 +81,7 @@ async function enviarPedidoInstitucional() {
 };
 
 
-    const res = await fetch("https://script.google.com/macros/s/AKfycbx_TU_ID_AQUI/exec", {
+    const res = await fetch("https://script.google.com/macros/s/AKfycbyvtwBBOccqKnlSCLJRxm8SHZsGawIHykustOeaezCBJjQg57fxJfaHr1natX9ErtnV/exec", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(datos)
@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("🔄 Validando celular...");
 
       try {
-        const res = await fetch(`https://script.google.com/macros/s/AKfycbx_TU_ID_AQUI/exec?telefono=${telefono}`);
+        const res = await fetch(`https://script.google.com/macros/s/AKfycbyvtwBBOccqKnlSCLJRxm8SHZsGawIHykustOeaezCBJjQg57fxJfaHr1natX9ErtnV/exec/exec?telefono=${telefono}`);
         const datos = await res.json();
         console.log("Respuesta del Web App:", datos);
 
