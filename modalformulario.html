@@ -11,34 +11,32 @@
 </head>
 <body>
    <div id="header-container"></div>
-   <div class="container mt-3">
-  <button type="button" class="btn btn-outline-dark" onclick="location.reload();">
-    <i class="bi bi-arrow-left"></i> Refrescar
-  </button>
-</div>
-
-
+  
+  <div class="container mt-3">
+    <a href="javascript:history.back()" class="btn btn-outline-dark">
+      <i class="bi bi-arrow-left"></i> Atrás
+    </a>
+  </div>
   <main class="container py-4">
     <h2 class="mb-4 text-center">Registro Cliente</h2>
 
     <form id="formCliente">
-      <!-- Campo oculto para clienteId -->
-<input type="hidden" id="clienteId">
 
-   <!-- Celular principal -->
+        <!-- Celular principal -->
           <div class="mb-3">
             <label for="telefonoCliente" class="form-label">Celular</label>
             <input type="tel" class="form-control" id="telefonoCliente" placeholder="Ej: 3001234567" maxlength="10">
             <div class="form-text">Debe comenzar por 3 y tener 10 dígitos.</div>
           </div>
-        
           <!-- Nombre -->
           <div class="mb-3">
             <label for="nombreCliente" class="form-label">Nombres y Apellidos</label>
             <input type="text" class="form-control" id="nombreCliente">
           </div>
 
-                      
+       
+          
+      
 <div class="mb-3">
   <label for="observacionDireccion" class="form-label">Dirección Completa</label>
   <textarea id="DireccionCompleta" class="form-control" rows="2" maxlength="200" placeholder="Ej: calle, carrera, avenida, transversal, etc. "></textarea>
@@ -55,7 +53,6 @@
       <option value="Piso">PISO</option>
       <option value="Bodega">BODEGA</option>
       <option value="Interior">INTERIOR</option>
-      <option value="Torre">TORRE</option>
     </select>
   </div>
   <div class="col-4">
