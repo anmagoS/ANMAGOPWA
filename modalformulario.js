@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("🔄 Validando celular...");
 
       try {
-        const res = await fetch(`https://script.google.com/macros/s/AKfycbyvtwBBOccqKnlSCLJRxm8SHZsGawIHykustOeaezCBJjQg57fxJfaHr1natX9ErtnV/exec/exec?telefono=${telefono}`);
+        const res = await fetch(`https://script.google.com/macros/s/AKfycbyvtwBBOccqKnlSCLJRxm8SHZsGawIHykustOeaezCBJjQg57fxJfaHr1natX9ErtnV/exec?telefono=${telefono}`);
         const datos = await res.json();
         console.log("Respuesta del Web App:", datos);
 
