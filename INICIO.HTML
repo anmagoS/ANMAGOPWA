@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <script>
-// CARRUSEL CON IMÁGENES COMPLETAS Y CLICK A PROMOS
+// CARRUSEL CON IMÁGENES COMPLETAS Y CLICK A PROMOS - CORREGIDO
 document.addEventListener('DOMContentLoaded', function() {
     const carouselContent = document.getElementById('carousel-promos-contenido');
     
@@ -323,7 +323,7 @@ document.addEventListener('DOMContentLoaded', function() {
         carouselItem.className = `carousel-item ${index === 0 ? 'active' : ''}`;
         
         carouselItem.innerHTML = `
-            <a href="${image.link}" class="d-block h-100">
+            <a href="${image.link}" class="d-block h-100 carrusel-enlace">
                 <img src="${image.url}" 
                      alt="${image.alt}" 
                      class="w-100 h-100 imagen-completa">
@@ -332,6 +332,28 @@ document.addEventListener('DOMContentLoaded', function() {
         
         carouselContent.appendChild(carouselItem);
     });
+    
+    // ✅ PREVENIR QUE BOOTSTRAP INTERCEPTE LOS CLICKS
+    const carouselElement = document.getElementById('carouselPromos');
+    if (carouselElement) {
+        carouselElement.addEventListener('click', function(e) {
+            // Si el click fue en un enlace del carrusel, permitir la navegación
+            if (e.target.closest('.carrusel-enlace')) {
+                e.stopPropagation(); // Detener la propagación para que Bootstrap no lo capture
+                // No prevenir el comportamiento por defecto para permitir la navegación
+            }
+        });
+    }
+    
+    // ✅ ALTERNATIVA: Agregar event listeners directos a los enlaces
+    setTimeout(() => {
+        const enlacesCarrusel = document.querySelectorAll('.carrusel-enlace');
+        enlacesCarrusel.forEach(enlace => {
+            enlace.addEventListener('click', function(e) {
+                e.stopPropagation(); // Importante: evitar que Bootstrap capture el click
+            });
+        });
+    }, 100);
     
     console.log('🎠 Carrusel configurado con', carouselImages.length, 'imágenes');
 });
