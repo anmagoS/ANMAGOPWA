@@ -1,4 +1,96 @@
-// modalformulario.js - VERSIÓN CORREGIDA PARA TU APPS SCRIPT
+// modalformulario.js - VERSIÓN COMPLETA CORREGIDA
+
+// ✅ FUNCIÓN DEBOUSE FALTANTE
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🔧 Formulario cargado en GitHub Pages');
+    
+    // Inicializar variables globales
+    window.articulosCarrito = window.articulosCarrito || [];
+    window.clienteEncontrado = false;
+    
+    // Configurar formulario
+    inicializarFormulario();
+});
+
+function inicializarFormulario() {
+    const form = document.getElementById('formCliente');
+    if (!form) {
+        console.error('❌ No se encontró el formulario con ID formCliente');
+        return;
+    }
+
+    console.log('✅ Formulario encontrado, configurando...');
+
+    // 🔒 INICIALMENTE: Solo teléfono habilitado
+    const otrosCampos = document.querySelectorAll('#formCliente input:not(#telefonoCliente), #formCliente textarea, #formCliente select');
+    otrosCampos.forEach(campo => {
+        campo.disabled = true;
+        campo.style.opacity = '0.6';
+    });
+
+    // 📱 EVENTO PARA TELÉFONO - Búsqueda automática
+    const telefonoInput = document.getElementById('telefonoCliente');
+    if (telefonoInput) {
+        telefonoInput.addEventListener('input', debounce(async function() {
+            const telefono = this.value.trim();
+            
+            console.log('📞 Teléfono ingresado:', telefono);
+            
+            if (!/^3\d{9}$/.test(telefono)) {
+                console.log('❌ Teléfono no válido');
+                mantenerCamposDeshabilitados();
+                return;
+            }
+
+            console.log('🔍 Buscando cliente con teléfono:', telefono);
+            
+            try {
+                const url = `https://script.google.com/macros/s/AKfycbwt-rFg_coabATigGv_zNOa93aO6u9uNqC-Oynh_HAL4dbuKo6pvmtw7jKlixXagW5o/exec?telefonoCliente=${telefono}`;
+                
+                console.log('🌐 Consultando API...');
+                
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                console.log('📦 Respuesta API:', data);
+
+                if (data && data.existe && data.datos) {
+                    console.log('✅ Cliente encontrado, prellenando...');
+                    window.clienteEncontrado = true;
+                    prellenarFormulario(data.datos);
+                    habilitarTodosLosCampos();
+                } else {
+                    console.log('❌ Cliente no encontrado, habilitando para registro nuevo');
+                    window.clienteEncontrado = false;
+                    limpiarFormulario();
+                    habilitarTodosLosCampos();
+                }
+                
+                validarFormularioCompleto();
+                
+            } catch (error) {
+                console.error('❌ Error en búsqueda:', error);
+                habilitarTodosLosCampos();
+            }
+        }, 800));
+    }
+
+    // ... el resto de las funciones continúan igual
+}
+
+// ... el resto de tu código actual// modalformulario.js - VERSIÓN CORREGIDA PARA TU APPS SCRIPT
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🔧 Formulario cargado en GitHub Pages');
     
