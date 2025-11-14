@@ -1,10 +1,11 @@
-// carrito.js - Sistema completo del carrito
+// carrito.js - Sistema completo del carrito CORREGIDO
 class CarritoManager {
     constructor() {
         this.articulosCarrito = [];
         this.observers = [];
         this.init();
     }
+
     init() {
         this.cargarCarrito();
         this.setupStorageListener();
@@ -56,6 +57,7 @@ class CarritoManager {
             !(item.id === id && item.talla === talla)
         );
         this.guardarCarrito();
+        this.mostrarNotificacion('🗑️ Producto eliminado');
     }
 
     actualizarCantidad(id, talla, nuevaCantidad) {
@@ -123,6 +125,37 @@ class CarritoManager {
         this.articulosCarrito = [];
         this.guardarCarrito();
     }
+
+    // ✅ FUNCIÓN ÚNICA PARA ACTUALIZAR CONTADORES
+    actualizarContadoresCarrito() {
+        const totalItems = this.obtenerTotalItems();
+        
+        console.log('🔄 Actualizando contadores:', totalItems);
+        
+        // 1. Contador PC (flotante) - SOLO EN INICIO
+        const contadorDesktop = document.getElementById('contador-carrito');
+        if (contadorDesktop) {
+            contadorDesktop.textContent = totalItems;
+            contadorDesktop.style.display = totalItems > 0 ? 'block' : 'none';
+            console.log('📊 Contador PC actualizado:', totalItems);
+        }
+        
+        // 2. Contador Mobile (barra inferior) - SOLO EN INICIO
+        const contadorMobile = document.getElementById('contador-carrito-mobile');
+        if (contadorMobile) {
+            contadorMobile.textContent = totalItems;
+            contadorMobile.style.display = totalItems > 0 ? 'block' : 'none';
+            console.log('📱 Contador Mobile actualizado:', totalItems);
+        }
+        
+        // 3. Contador Header (para otras páginas)
+        const contadorHeader = document.getElementById('contador-carrito-header');
+        if (contadorHeader) {
+            contadorHeader.textContent = totalItems;
+            contadorHeader.style.display = totalItems > 0 ? 'inline' : 'none';
+            console.log('🔝 Contador Header actualizado:', totalItems);
+        }
+    }
 }
 
 // 🚀 INICIALIZACIÓN GLOBAL
@@ -134,26 +167,14 @@ function inicializarCarrito() {
     
     // Observer para actualizar UI automáticamente
     carritoManager.agregarObserver(() => {
-        actualizarContadoresCarrito();
+        carritoManager.actualizarContadoresCarrito(); // ✅ Usar la función de la clase
         actualizarOffcanvasCarrito();
     });
 
-    return carritoManager;
-}
+    // Actualizar contadores inmediatamente
+    carritoManager.actualizarContadoresCarrito();
 
-// 🔢 ACTUALIZAR CONTADORES EN TIEMPO REAL
-function actualizarContadoresCarrito() {
-    const contador = document.getElementById('contador-carrito');
-    const contadorMobile = document.getElementById('contador-carrito-mobile');
-    
-    const totalItems = window.carritoManager ? window.carritoManager.obtenerTotalItems() : 0;
-    
-    [contador, contadorMobile].forEach(el => {
-        if (el) {
-            el.textContent = totalItems;
-            el.style.display = totalItems > 0 ? 'block' : 'none';
-        }
-    });
+    return carritoManager;
 }
 
 // 🛒 ACTUALIZAR OFFCANVAS EN TIEMPO REAL
@@ -223,68 +244,23 @@ function abrirFormularioPedido() {
 }
 
 // 🎯 FUNCIONES GLOBALES
-window.actualizarContadoresCarrito = actualizarContadoresCarrito;
 window.abrirFormularioPedido = abrirFormularioPedido;
 window.actualizarOffcanvasCarrito = actualizarOffcanvasCarrito;
 
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
     inicializarCarrito();
+    console.log('🛒 Carrito inicializado correctamente');
 });
-// ✅ FUNCIÓN PARA ACTUALIZAR CONTADORES DEL CARRITO (FALTANTE)
-function actualizarContadoresCarrito() {
-    const carrito = obtenerCarrito();
-    const totalItems = carrito.reduce((total, item) => total + item.cantidad, 0);
-    
-    // Actualizar contador desktop
-    const contadorDesktop = document.getElementById('contador-carrito');
-    if (contadorDesktop) {
-        contadorDesktop.textContent = totalItems;
-        contadorDesktop.style.display = totalItems > 0 ? 'block' : 'none';
+
+// ✅ FUNCIÓN GLOBAL PARA AGREGAR PRODUCTOS DESDE OTROS ARCHIVOS
+window.agregarAlCarrito = function(producto) {
+    if (window.carritoManager) {
+        window.carritoManager.agregarProducto(producto);
+    } else {
+        console.error('CarritoManager no está inicializado');
+        // Fallback: inicializar y agregar
+        inicializarCarrito();
+        window.carritoManager.agregarProducto(producto);
     }
-    
-    // Actualizar contador mobile
-    const contadorMobile = document.getElementById('contador-carrito-mobile');
-    if (contadorMobile) {
-        contadorMobile.textContent = totalItems;
-        contadorMobile.style.display = totalItems > 0 ? 'block' : 'none';
-    }
-    
-    // Actualizar contador en header si existe
-    const contadorHeader = document.getElementById('contador-carrito-header');
-    if (contadorHeader) {
-        contadorHeader.textContent = totalItems;
-        contadorHeader.style.display = totalItems > 0 ? 'inline' : 'none';
-    }
-}
-
-// ✅ LLAMAR ESTA FUNCIÓN CADA VEZ QUE EL CARRITO CAMBIE
-// Modificar las funciones existentes para incluir esta llamada:
-
-// En la función agregarAlCarrito, DESPUÉS de guardar el carrito:
-function agregarAlCarrito(producto) {
-    // ... código existente ...
-    guardarCarrito(carrito);
-    actualizarContadoresCarrito(); // ← AGREGAR ESTA LÍNEA
-    mostrarNotificacion('✅ Producto agregado al carrito');
-}
-
-// En la función eliminarDelCarrito, DESPUÉS de guardar el carrito:
-function eliminarDelCarrito(id) {
-    // ... código existente ...
-    guardarCarrito(carrito);
-    actualizarContadoresCarrito(); // ← AGREGAR ESTA LÍNEA
-    mostrarNotificacion('🗑️ Producto eliminado');
-}
-
-// En la función actualizarCantidad, DESPUÉS de guardar el carrito:
-function actualizarCantidad(id, nuevaCantidad) {
-    // ... código existente ...
-    guardarCarrito(carrito);
-    actualizarContadoresCarrito(); // ← AGREGAR ESTA LÍNEA
-}
-
-// ✅ ACTUALIZAR CONTADORES AL CARGAR LA PÁGINA
-document.addEventListener('DOMContentLoaded', function() {
-    actualizarContadoresCarrito();
-});
+};
