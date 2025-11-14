@@ -32,6 +32,10 @@
     <button type="button" class="btn btn-outline-dark" onclick="location.reload()">
       <i class="bi bi-arrow-clockwise"></i> Refrescar
     </button>
+    <!-- AGREGAR BOTÓN DIAGNÓSTICO -->
+    <button type="button" class="btn btn-outline-info ms-2" onclick="diagnosticoFormulario()">
+      <i class="bi bi-bug"></i> Diagnóstico
+    </button>
   </div>
 
   <!-- CONTENIDO PRINCIPAL -->
@@ -39,26 +43,28 @@
     <h2 class="mb-4 text-center">Registro Cliente</h2>
 
     <form id="formCliente">
-      <input type="hidden" id="clienteId">
+      <!-- ✅ CAMPO OCULTO CON NAME PARA GOOGLE SHEETS -->
+      <input type="hidden" id="clienteId" name="clienteId">
 
       <!-- Celular principal -->
       <div class="mb-3">
         <label for="telefonoCliente" class="form-label">Celular</label>
-        <input type="tel" class="form-control" id="telefonoCliente" placeholder="Ej: 3001234567" maxlength="10" required>
+        <input type="tel" class="form-control" id="telefonoCliente" name="telefonoCliente" 
+               placeholder="Ej: 3001234567" maxlength="10" required>
         <div class="form-text">Debe comenzar por 3 y tener 10 dígitos.</div>
       </div>
 
       <!-- Nombre -->
       <div class="mb-3">
         <label for="nombreCliente" class="form-label">Nombres y Apellidos</label>
-        <input type="text" class="form-control" id="nombreCliente" required>
+        <input type="text" class="form-control" id="nombreCliente" name="nombreCliente" required>
       </div>
 
       <!-- Dirección Completa -->
       <div class="mb-3">
         <label for="DireccionCompleta" class="form-label">Dirección Completa</label>
-        <textarea id="DireccionCompleta" class="form-control" rows="2" maxlength="200" 
-                  placeholder="Ej: calle, carrera, avenida, transversal, etc." required></textarea>
+        <textarea id="DireccionCompleta" class="form-control" name="DireccionCompleta" 
+                  rows="2" maxlength="200" placeholder="Ej: calle, carrera, avenida, transversal, etc." required></textarea>
         <div class="form-text">Recuerda colocar tu dirección exacta para evitar contratiempos en tu entrega.</div>
       </div>
 
@@ -66,7 +72,7 @@
       <div class="row mb-3">
         <div class="col-md-6">
           <label for="tipoUnidad" class="form-label">Tipo de unidad</label>
-          <select id="tipoUnidad" class="form-select">
+          <select id="tipoUnidad" class="form-select" name="tipoUnidad">
             <option value="">Selecciona</option>
             <option value="Casa">CASA</option>
             <option value="Apartamento">APARTAMENTO</option>
@@ -77,35 +83,36 @@
         </div>
         <div class="col-md-6">
           <label for="numeroApto" class="form-label">Número</label>
-          <input type="text" class="form-control" id="numeroApto" maxlength="4" inputmode="numeric" 
-                 pattern="\d{1,4}" title="Solo números entre 0 y 9999">
+          <input type="text" class="form-control" id="numeroApto" name="numeroApto" 
+                 maxlength="4" inputmode="numeric" pattern="\d{1,4}" title="Solo números entre 0 y 9999">
         </div>
       </div>
 
       <!-- Barrio -->
       <div class="mb-3">
         <label for="barrio" class="form-label">Barrio (opcional)</label>
-        <input type="text" class="form-control" id="barrio" maxlength="50">
+        <input type="text" class="form-control" id="barrio" name="barrio" maxlength="50">
       </div>
 
       <!-- Observación adicional -->
       <div class="mb-3">
         <label for="observacionDireccion" class="form-label">Punto de referencia</label>
-        <textarea id="observacionDireccion" class="form-control" rows="2" maxlength="200" 
-                  placeholder="Ej: entrada por portería, conjunto.., torre, casa color..., etc."></textarea>
+        <textarea id="observacionDireccion" class="form-control" name="observacionDireccion" 
+                  rows="2" maxlength="200" placeholder="Ej: entrada por portería, conjunto.., torre, casa color..., etc."></textarea>
       </div>
 
       <!-- Ciudad con autocompletado -->
       <div class="mb-3 position-relative">
         <label for="ciudadCliente" class="form-label">Ciudad</label>
-        <input type="text" id="ciudadCliente" class="form-control" placeholder="Escribe tu ciudad" autocomplete="off" required>
+        <input type="text" id="ciudadCliente" class="form-control" name="ciudadCliente" 
+               placeholder="Escribe tu ciudad" autocomplete="off" required>
         <ul id="sugerenciasCiudades" class="dropdown-menu w-100 mt-0 z-3"></ul>
       </div>
 
       <!-- Correo electrónico -->
       <div class="mb-3">
         <label for="emailCliente" class="form-label">Correo electrónico</label>
-        <input type="email" class="form-control" id="emailCliente">
+        <input type="email" class="form-control" id="emailCliente" name="emailCliente">
       </div>
 
       <!-- Botón Enviar -->
@@ -123,6 +130,8 @@
   <!-- VALIDACIONES BÁSICAS -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
+      console.log("🚀 HTML cargado - Iniciando validaciones básicas...");
+      
       // Validación de campos numéricos
       const camposNumericos = ["telefonoCliente", "numeroApto"];
 
@@ -162,10 +171,20 @@
         .catch(error => {
           console.error("Error cargando header:", error);
         });
+
+      // ✅ INICIAL: Deshabilitar todos los campos excepto teléfono
+      setTimeout(() => {
+        const otrosCampos = document.querySelectorAll('#formCliente input:not(#telefonoCliente), #formCliente textarea, #formCliente select');
+        otrosCampos.forEach(campo => {
+          campo.disabled = true;
+          campo.style.opacity = '0.6';
+        });
+        console.log("🔒 Campos deshabilitados (solo teléfono activo)");
+      }, 100);
     });
   </script>
 
-  <!-- SCRIPT PRINCIPAL DEL FORMULARIO -->
-  <script src="modalformulario.js?v=20251115" defer></script>
+  <!-- ✅ SCRIPT PRINCIPAL DEL FORMULARIO UNIFICADO -->
+  <script src="formulario.js?v=20251115" defer></script>
 </body>
 </html>
