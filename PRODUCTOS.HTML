@@ -152,9 +152,12 @@
           <span id="contador-carrito-mobile" class="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill" style="font-size: 0.6rem;">0</span>
           <div class="small mt-1">Carrito</div>
         </a>
-        <a href="CATEGORIAS.HTML" class="text-center text-decoration-none text-dark">
-          <i class="bi bi-grid fs-5"></i>
-          <div class="small">Categorías</div>
+        <!-- BOTÓN DE WHATSAPP REEMPLAZANDO CATEGORÍAS -->
+        <a href="https://wa.me/573006498710?text=¡Hola!%20Me%20interesan%20sus%20productos%20de%20Anmago%20Store" 
+           class="text-center text-decoration-none text-success"
+           target="_blank">
+          <i class="bi bi-whatsapp fs-5"></i>
+          <div class="small">Chat</div>
         </a>
         <a href="modalformulario.html" class="text-center text-decoration-none text-dark">
           <i class="bi bi-person fs-5"></i>
@@ -365,60 +368,225 @@
     window.cargarCatalogo = cargarCatalogo;
   </script>
 
-  <!-- INICIALIZACIÓN DEL CARRITO - CORREGIDA -->
+  <!-- INICIALIZACIÓN DEL CARRITO - ACTUALIZACIÓN EN TIEMPO REAL -->
   <script>
-    // 🛒 INICIALIZACIÓN DEL CARRITO
-    document.addEventListener('DOMContentLoaded', function() {
-      // Esperar a que cargue el carrito.js
-      setTimeout(() => {
-        inicializarCarrito();
-        actualizarContadoresCarrito();
-      }, 500);
-    });
-
-    // 🔄 FUNCIÓN PARA INICIALIZAR CARRITO
-    function inicializarCarrito() {
-      // Recuperar carrito de localStorage
-      const carritoGuardado = localStorage.getItem('carritoAnmago');
-      if (carritoGuardado) {
-        try {
-          window.articulosCarrito = JSON.parse(carritoGuardado);
-        } catch (e) {
-          console.error('Error cargando carrito:', e);
-          window.articulosCarrito = [];
-        }
-      } else {
-        window.articulosCarrito = [];
+    // 🛒 SISTEMA DE CARRITO EN TIEMPO REAL
+    class CarritoManager {
+      constructor() {
+        this.articulosCarrito = [];
+        this.observers = [];
+        this.init();
       }
-      
-      console.log('Carrito inicializado:', window.articulosCarrito);
-      actualizarContadoresCarrito();
+
+      init() {
+        this.cargarCarrito();
+        this.setupStorageListener();
+      }
+
+      // 🔄 Cargar carrito desde localStorage
+      cargarCarrito() {
+        const carritoGuardado = localStorage.getItem('carritoAnmago');
+        if (carritoGuardado) {
+          try {
+            this.articulosCarrito = JSON.parse(carritoGuardado);
+          } catch (e) {
+            console.error('Error cargando carrito:', e);
+            this.articulosCarrito = [];
+          }
+        }
+        window.articulosCarrito = this.articulosCarrito;
+        this.notificarObservers();
+      }
+
+      // 👂 Escuchar cambios en localStorage entre pestañas
+      setupStorageListener() {
+        window.addEventListener('storage', (e) => {
+          if (e.key === 'carritoAnmago') {
+            this.cargarCarrito();
+          }
+        });
+      }
+
+      // 📝 Agregar producto
+      agregarProducto(producto) {
+        const existe = this.articulosCarrito.find(item => 
+          item.id === producto.id && item.talla === producto.talla
+        );
+
+        if (existe) {
+          existe.cantidad += producto.cantidad || 1;
+        } else {
+          this.articulosCarrito.push({
+            ...producto,
+            cantidad: producto.cantidad || 1
+          });
+        }
+
+        this.guardarCarrito();
+      }
+
+      // 🗑️ Eliminar producto
+      eliminarProducto(id, talla) {
+        this.articulosCarrito = this.articulosCarrito.filter(item => 
+          !(item.id === id && item.talla === talla)
+        );
+        this.guardarCarrito();
+      }
+
+      // 🔢 Actualizar cantidad
+      actualizarCantidad(id, talla, nuevaCantidad) {
+        const producto = this.articulosCarrito.find(item => 
+          item.id === id && item.talla === talla
+        );
+        
+        if (producto) {
+          if (nuevaCantidad <= 0) {
+            this.eliminarProducto(id, talla);
+          } else {
+            producto.cantidad = nuevaCantidad;
+            this.guardarCarrito();
+          }
+        }
+      }
+
+      // 💾 Guardar en localStorage
+      guardarCarrito() {
+        localStorage.setItem('carritoAnmago', JSON.stringify(this.articulosCarrito));
+        window.articulosCarrito = this.articulosCarrito;
+        this.notificarObservers();
+      }
+
+      // 👀 Sistema de observadores para actualización en tiempo real
+      agregarObserver(observer) {
+        this.observers.push(observer);
+      }
+
+      notificarObservers() {
+        this.observers.forEach(observer => observer(this.articulosCarrito));
+      }
+
+      // 🔢 Obtener total de items
+      obtenerTotalItems() {
+        return this.articulosCarrito.reduce((sum, item) => sum + (item.cantidad || 1), 0);
+      }
+
+      // 💰 Obtener subtotal
+      obtenerSubtotal() {
+        return this.articulosCarrito.reduce((total, item) => {
+          return total + (item.precio * item.cantidad);
+        }, 0);
+      }
     }
 
-    // 🔢 ACTUALIZAR CONTADORES
+    // 🚀 INICIALIZACIÓN GLOBAL
+    let carritoManager;
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Inicializar carrito manager
+      carritoManager = new CarritoManager();
+      window.carritoManager = carritoManager;
+
+      // Agregar observer para actualización en tiempo real
+      carritoManager.agregarObserver((carrito) => {
+        actualizarContadoresCarrito();
+        actualizarOffcanvasCarrito();
+      });
+
+      // Actualización inicial
+      setTimeout(() => {
+        actualizarContadoresCarrito();
+        actualizarOffcanvasCarrito();
+      }, 100);
+    });
+
+    // 🔢 ACTUALIZAR CONTADORES EN TIEMPO REAL
     function actualizarContadoresCarrito() {
       const contador = document.getElementById('contador-carrito');
       const contadorMobile = document.getElementById('contador-carrito-mobile');
+      const subtotalElement = document.getElementById('subtotal');
       
-      const count = window.articulosCarrito ? 
-        window.articulosCarrito.reduce((sum, item) => sum + (item.cantidad || 1), 0) : 0;
+      const totalItems = window.carritoManager ? window.carritoManager.obtenerTotalItems() : 0;
+      const subtotal = window.carritoManager ? window.carritoManager.obtenerSubtotal() : 0;
       
-      console.log('Actualizando contadores:', count);
-      
+      console.log('🔄 Actualizando contadores:', totalItems, 'items');
+
+      // Actualizar contadores numéricos
       if (contador) {
-        contador.textContent = count;
-        contador.style.display = count > 0 ? 'block' : 'none';
+        contador.textContent = totalItems;
+        contador.style.display = totalItems > 0 ? 'block' : 'none';
       }
       
       if (contadorMobile) {
-        contadorMobile.textContent = count;
-        contadorMobile.style.display = count > 0 ? 'block' : 'none';
+        contadorMobile.textContent = totalItems;
+        contadorMobile.style.display = totalItems > 0 ? 'block' : 'none';
+      }
+
+      // Actualizar subtotal
+      if (subtotalElement) {
+        subtotalElement.textContent = `$${subtotal.toLocaleString('es-CO')}`;
+      }
+    }
+
+    // 🛒 ACTUALIZAR OFFCANVAS EN TIEMPO REAL
+    function actualizarOffcanvasCarrito() {
+      const contenedor = document.getElementById('carrito-contenido');
+      const subtotalElement = document.getElementById('subtotal');
+      
+      if (!contenedor || !window.carritoManager) return;
+
+      const carrito = window.carritoManager.articulosCarrito;
+
+      if (carrito.length === 0) {
+        contenedor.innerHTML = `
+          <div class="text-center text-muted py-4">
+            <i class="bi bi-bag-x fs-1"></i>
+            <p class="mt-2">Tu carrito está vacío</p>
+          </div>
+        `;
+        return;
+      }
+
+      contenedor.innerHTML = carrito.map(item => `
+        <div class="card mb-2">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-3">
+                <img src="${item.imagen}" alt="${item.nombre}" 
+                     class="img-fluid rounded" style="height: 60px; object-fit: cover;">
+              </div>
+              <div class="col-6">
+                <h6 class="card-title mb-1 small">${item.nombre}</h6>
+                <p class="card-text mb-1 small text-muted">Talla: ${item.talla}</p>
+                <p class="card-text mb-0 fw-bold text-primary">$${item.precio?.toLocaleString('es-CO')}</p>
+              </div>
+              <div class="col-3">
+                <div class="d-flex align-items-center">
+                  <button class="btn btn-sm btn-outline-secondary" 
+                          onclick="carritoManager.actualizarCantidad('${item.id}', '${item.talla}', ${item.cantidad - 1})">-</button>
+                  <span class="mx-2">${item.cantidad}</span>
+                  <button class="btn btn-sm btn-outline-secondary"
+                          onclick="carritoManager.actualizarCantidad('${item.id}', '${item.talla}', ${item.cantidad + 1})">+</button>
+                </div>
+                <button class="btn btn-sm btn-danger mt-1 w-100" 
+                        onclick="carritoManager.eliminarProducto('${item.id}', '${item.talla}')">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      // Actualizar subtotal en offcanvas
+      if (subtotalElement) {
+        const subtotal = window.carritoManager.obtenerSubtotal();
+        subtotalElement.textContent = `$${subtotal.toLocaleString('es-CO')}`;
       }
     }
 
     // 📝 ABRIR FORMULARIO
     function abrirFormularioPedido() {
-      if (!window.articulosCarrito || window.articulosCarrito.length === 0) {
+      if (!window.carritoManager || window.carritoManager.articulosCarrito.length === 0) {
         alert('Tu carrito está vacío');
         return;
       }
@@ -428,6 +596,14 @@
     // 🎯 EXPONER FUNCIONES GLOBALMENTE
     window.actualizarContadoresCarrito = actualizarContadoresCarrito;
     window.abrirFormularioPedido = abrirFormularioPedido;
+    window.actualizarOffcanvasCarrito = actualizarOffcanvasCarrito;
+
+    // 🔄 ACTUALIZACIÓN PERIÓDICA (backup)
+    setInterval(() => {
+      if (window.carritoManager) {
+        actualizarContadoresCarrito();
+      }
+    }, 2000);
   </script>
 </body>
 </html>
