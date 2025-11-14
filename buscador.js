@@ -1,5 +1,4 @@
 export async function activarBuscadorGlobal() {
-  // Cargar catálogo si no está disponible
   if (!window.catalogoGlobal) {
     const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json";
     const respuesta = await fetch(url);
@@ -22,8 +21,7 @@ export async function activarBuscadorGlobal() {
         normalizar(p.tipo).includes(texto) ||
         normalizar(p.subtipo).includes(texto) ||
         normalizar(p.categoria).includes(texto) ||
-        normalizar(p.material).includes(texto) ||
-        normalizar(p.precio).includes(texto)
+        normalizar(p.material).includes(texto)
       );
     });
 
@@ -38,12 +36,10 @@ export async function activarBuscadorGlobal() {
       sugerencias.appendChild(item);
     });
 
-    sugerencias.classList.add("show");
+    sugerencias.classList.toggle("show", coincidencias.length > 0);
   });
 
   document.addEventListener("click", () => {
     sugerencias.classList.remove("show");
   });
 }
-// Llamar la función al cargar el módulo
-activarBuscadorGlobal();
