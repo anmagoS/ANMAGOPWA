@@ -13,12 +13,38 @@ function debounce(func, wait) {
     };
 }
 
+// ✅ DETECTAR SI VIENE DEL CARRITO
+function detectarOrigen() {
+    console.log('🔍 Detectando origen del formulario...');
+    
+    // 1. Verificar si hay productos en el carrito
+    const hayProductos = window.articulosCarrito && window.articulosCarrito.length > 0;
+    console.log('🛒 Productos en carrito:', hayProductos, window.articulosCarrito);
+    
+    // 2. Verificar si se pasó parámetro por URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const desdeCarrito = urlParams.get('carrito') === 'true';
+    console.log('📎 Parámetro URL carrito:', desdeCarrito);
+    
+    // 3. Verificar localStorage
+    const carritoLocal = localStorage.getItem('carritoAnmago');
+    const hayCarritoLocal = carritoLocal && JSON.parse(carritoLocal).length > 0;
+    console.log('💾 Carrito en localStorage:', hayCarritoLocal);
+    
+    // 4. Si alguna condición es true, es desde carrito
+    const esDesdeCarrito = hayProductos || desdeCarrito || hayCarritoLocal;
+    console.log('🎯 Origen detectado:', esDesdeCarrito ? 'DESDE CARRITO' : 'SOLO REGISTRO');
+    
+    return esDesdeCarrito;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🔧 Formulario cargado en GitHub Pages');
     
     // Inicializar variables globales
     window.articulosCarrito = window.articulosCarrito || [];
     window.clienteEncontrado = false;
+    window.esDesdeCarrito = detectarOrigen();
     
     // Configurar formulario
     inicializarFormulario();
@@ -43,8 +69,8 @@ function inicializarFormulario() {
     // 📱 EVENTO PARA TELÉFONO - Búsqueda automática
     const telefonoInput = document.getElementById('telefonoCliente');
     if (telefonoInput) {
-       telefonoInput.addEventListener('input', debounce(async function(event) {
-    const telefono = event.target.value.trim();
+        telefonoInput.addEventListener('input', debounce(async function(event) {
+            const telefono = event.target.value.trim();
             
             console.log('📞 Teléfono ingresado:', telefono);
             
@@ -96,37 +122,40 @@ function inicializarFormulario() {
         }
     });
 
-// 🚀 EVENTO DE ENVÍO MEJORADO
-const btnEnviar = document.getElementById('btnEnviarPedido');
-if (btnEnviar) {
-    btnEnviar.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        if (!validarFormularioCompleto()) {
-            alert('❌ Por favor completa todos los campos requeridos');
-            return;
-        }
+    // 🚀 EVENTO DE ENVÍO MEJORADO
+    const btnEnviar = document.getElementById('btnEnviarPedido');
+    if (btnEnviar) {
+        btnEnviar.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            if (!validarFormularioCompleto()) {
+                alert('❌ Por favor completa todos los campos requeridos');
+                return;
+            }
 
-        console.log('🚀 Iniciando proceso de envío completo...');
-        
-        // 1. Construir dirección completa
-        const direccionFinal = construirDireccionCompleta();
-        document.getElementById('DireccionCompleta').value = direccionFinal;
-        console.log('📍 Dirección final:', direccionFinal);
+            console.log('🚀 Iniciando proceso de envío completo...');
+            
+            // 1. Construir dirección completa
+            const direccionFinal = construirDireccionCompleta();
+            document.getElementById('DireccionCompleta').value = direccionFinal;
+            console.log('📍 Dirección final:', direccionFinal);
 
-        // 2. Enviar a Google Sheets PRIMERO
-        enviarFormularioGoogleSheets();
-        
-        // 3. Esperar un momento y enviar WhatsApp
-        setTimeout(() => {
-            enviarWhatsAppPedido();
-        }, 1000);
-        
-        // 4. Cerrar ventana después de un tiempo
-        setTimeout(() => {
-            cerrarFormulario();
-        }, 2000);
-    });
+            // 2. Enviar a Google Sheets PRIMERO
+            enviarFormularioGoogleSheets();
+            
+            // 3. Esperar un momento y enviar WhatsApp
+            setTimeout(() => {
+                enviarWhatsAppPedido();
+            }, 1000);
+            
+            // 4. Cerrar ventana después de un tiempo
+            setTimeout(() => {
+                cerrarFormulario();
+            }, 2000);
+        });
+    }
+
+    console.log('🎯 Formulario inicializado correctamente');
 }
 
 // ✅ FUNCIONES FALTANTES
@@ -281,13 +310,15 @@ function construirDireccionCompleta() {
 
     return direccion;
 }
+
+// ✅ ENVÍO A GOOGLE SHEETS MEJORADO
 function enviarFormularioGoogleSheets() {
     console.log('📝 Iniciando envío a Google Sheets...');
     
     // Construir los parámetros que tu Apps Script espera
     const params = new URLSearchParams();
     
-    // Campos principales (mapeo exacto con tu doPost)
+    // Campos principales (mapeo exacto con tu doGet)
     params.append('telefonoCliente', document.getElementById('telefonoCliente')?.value || '');
     params.append('nombreCliente', document.getElementById('nombreCliente')?.value || '');
     params.append('direccionCliente', document.getElementById('DireccionCompleta')?.value || '');
@@ -295,15 +326,15 @@ function enviarFormularioGoogleSheets() {
     params.append('correo', document.getElementById('emailCliente')?.value || '');
     params.append('clienteId', document.getElementById('clienteId')?.value || '');
     
-    // Campos adicionales de dirección
+    // Campos adicionales que tu Apps Script espera
     params.append('complementoDir', construirDireccionCompleta());
     params.append('usuario', 'ANMAGOSTORE@GMAIL.COM');
     
     const url = 'https://script.google.com/macros/s/AKfycbwt-rFg_coabATigGv_zNOa93aO6u9uNqC-Oynh_HAL4dbuKo6pvmtw7jKlixXagW5o/exec';
     
-    console.log('📦 Datos a enviar:', Object.fromEntries(params));
+    console.log('📦 Datos a enviar a Google Sheets:', Object.fromEntries(params));
     
-    // Enviar usando POST
+    // Enviar usando POST con todos los parámetros
     fetch(url, {
         method: 'POST',
         headers: {
@@ -335,21 +366,15 @@ function enviarFormularioGoogleSheets() {
     });
 }
 
+// ✅ MENSAJES DE WHATSAPP DIFERENCIADOS
 function enviarWhatsAppPedido() {
     const nombre = document.getElementById('nombreCliente')?.value.trim() || 'Cliente';
     const telefono = document.getElementById('telefonoCliente')?.value.trim() || '';
-    const direccion = construirDireccionCompleta();
-    const ciudad = document.getElementById('ciudadCliente')?.value || '';
-    const email = document.getElementById('emailCliente')?.value || '';
     
     let mensaje = '';
 
-    // Validar si hay productos en el carrito
-    const hayProductos = window.articulosCarrito && window.articulosCarrito.length > 0;
-    console.log('🛒 Validando productos en carrito:', hayProductos, window.articulosCarrito);
-
-    if (hayProductos) {
-        // 🛍️ PEDIDO CON PRODUCTOS
+    if (window.esDesdeCarrito) {
+        // 🛍️ PEDIDO DESDE CARRITO
         mensaje = `🛍️ ¡Hola! Soy ${nombre.toUpperCase()} y quiero realizar el siguiente pedido:\n\n`;
         
         let total = 0;
@@ -365,17 +390,11 @@ function enviarWhatsAppPedido() {
             mensaje += `💰 Subtotal: $${subtotal.toLocaleString()}\n\n`;
         });
         
-        mensaje += `🧾 TOTAL DEL PEDIDO: $${total.toLocaleString()}\n\n`;
+        mensaje += `🧾 Total del pedido: $${total.toLocaleString()}\n\n`;
         mensaje += `✅ ¡Gracias por tu atención!`;
     } else {
         // 👤 SOLO REGISTRO
-        mensaje = `¡Hola! Me he registrado en tu sitio web.\n\n`;
-        mensaje += `👤 Nombre: ${nombre}\n`;
-        mensaje += `📞 Teléfono: ${telefono}\n`;
-        mensaje += `📍 Dirección: ${direccion}\n`;
-        mensaje += `🏙️ Ciudad: ${ciudad}\n`;
-        if (email) mensaje += `📧 Email: ${email}\n`;
-        mensaje += `\n✅ ¡Gracias por registrarme!`;
+        mensaje = `¡Hola! Soy ${nombre.toUpperCase()} y quiero registrarme como cliente.`;
     }
 
     console.log('💬 Mensaje WhatsApp generado:', mensaje);
@@ -383,12 +402,12 @@ function enviarWhatsAppPedido() {
     window.open(urlWhatsApp, '_blank');
 }
 
-
 function cerrarFormulario() {
-    // Limpiar carrito
-    if (window.articulosCarrito && window.articulosCarrito.length > 0) {
+    // Limpiar carrito solo si venía desde carrito
+    if (window.esDesdeCarrito) {
         window.articulosCarrito = [];
         localStorage.removeItem('carritoAnmago');
+        console.log('🛒 Carrito limpiado');
     }
 
     // Cerrar ventana/modal
@@ -401,6 +420,8 @@ function cerrarFormulario() {
             if (bsModal) bsModal.hide();
         }
     }
+    
+    console.log('🚪 Formulario cerrado');
 }
 
 // 🆘 DIAGNÓSTICO
@@ -410,5 +431,6 @@ window.diagnosticoFormulario = function() {
     console.log('- Teléfono encontrado:', !!document.getElementById('telefonoCliente'));
     console.log('- Carrito:', window.articulosCarrito);
     console.log('- Cliente encontrado:', window.clienteEncontrado);
+    console.log('- Desde carrito:', window.esDesdeCarrito);
     validarFormularioCompleto();
 };
