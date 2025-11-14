@@ -399,5 +399,67 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+<script>
+// DIAGNÓSTICO DEL CARRITO - Agregar antes de </body>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🔍 INICIANDO DIAGNÓSTICO DEL CARRITO...');
+    
+    // Verificar localStorage
+    const carritoGuardado = localStorage.getItem('carritoAnmago');
+    console.log('📦 Carrito en localStorage:', carritoGuardado);
+    
+    if (carritoGuardado) {
+        try {
+            const carrito = JSON.parse(carritoGuardado);
+            console.log('🛒 Productos en carrito:', carrito);
+            console.log('🔢 Total items:', carrito.reduce((sum, item) => sum + (item.cantidad || 1), 0));
+            
+            // Verificar estructura de datos
+            carrito.forEach((item, index) => {
+                console.log(`📝 Producto ${index + 1}:`, {
+                    id: item.id,
+                    nombre: item.nombre,
+                    precio: item.precio,
+                    cantidad: item.cantidad,
+                    talla: item.talla,
+                    imagen: item.imagen ? '✅' : '❌'
+                });
+            });
+            
+        } catch (error) {
+            console.error('❌ Error parseando carrito:', error);
+        }
+    } else {
+        console.log('📭 Carrito vacío en localStorage');
+    }
+    
+    // Verificar si carritoManager está funcionando
+    if (window.carritoManager) {
+        console.log('✅ carritoManager está inicializado');
+        console.log('🛒 carritoManager.articulosCarrito:', window.carritoManager.articulosCarrito);
+    } else {
+        console.log('❌ carritoManager NO está inicializado');
+    }
+});
+
+// Función para forzar actualización del offcanvas
+function forzarActualizacionCarrito() {
+    if (window.carritoManager && window.actualizarOffcanvasCarrito) {
+        console.log('🔄 Forzando actualización del offcanvas...');
+        window.actualizarOffcanvasCarrito();
+    }
+}
+
+// Actualizar offcanvas cuando se abra
+document.addEventListener('DOMContentLoaded', function() {
+    const offcanvasElement = document.getElementById('offcanvasCarrito');
+    if (offcanvasElement) {
+        offcanvasElement.addEventListener('show.bs.offcanvas', function() {
+            console.log('🎯 Offcanvas abierto - actualizando contenido...');
+            setTimeout(forzarActualizacionCarrito, 100);
+        });
+    }
+});
+</script>
 </body>
 </html>
