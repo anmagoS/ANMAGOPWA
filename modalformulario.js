@@ -1,212 +1,321 @@
-// formulario.js - Archivo completo corregido
+// formulario.js - SISTEMA UNIFICADO CORREGIDO
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🔧 Formulario.js cargado - Versión corregida');
+    console.log('🔧 Formulario unificado cargado');
     
-    // Inicializar la detección de ubicación
-    window.ubicacionActual = detectarUbicacion();
-    console.log('📍 Ubicación detectada:', window.ubicacionActual);
+    // Inicializar variables globales
+    window.articulosCarrito = window.articulosCarrito || [];
+    window.clienteEncontrado = false;
     
-    // Configurar el evento del formulario
-    const form = document.getElementById('registroForm');
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            console.log('📝 Formulario enviado desde:', window.ubicacionActual);
-            
-            if (validarFormulario()) {
-                enviarWhatsapp();
-            }
-        });
-    }
-    
-    // Agregar validación en tiempo real
-    const inputs = document.querySelectorAll('#registroForm input[required]');
-    inputs.forEach(input => {
-        input.addEventListener('blur', validarCampo);
-        input.addEventListener('input', limpiarError);
-    });
+    // Configurar formulario
+    inicializarFormulario();
 });
 
-function detectarUbicacion() {
-    const url = window.location.href;
-    const path = window.location.pathname;
-    
-    // Detectar por URL
-    if (url.includes('carrito') || url.includes('checkout') || path.includes('carrito')) {
-        return 'carrito';
+function inicializarFormulario() {
+    const form = document.getElementById('formCliente');
+    if (!form) {
+        console.error('❌ No se encontró el formulario con ID formCliente');
+        return;
     }
-    
-    // Detectar por elementos en la página
-    if (document.querySelector('.carrito-container') || 
-        document.querySelector('#carrito') ||
-        document.querySelector('.producto-carrito')) {
-        return 'carrito';
-    }
-    
-    // Detectar por presencia de productos en el carrito
-    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    if (carrito.length > 0 && document.querySelector('#registroForm')) {
-        return 'carrito';
-    }
-    
-    return 'registro';
-}
 
-function validarCampo(e) {
-    const campo = e.target;
-    const valor = campo.value.trim();
-    
-    if (campo.hasAttribute('required') && !valor) {
-        mostrarError(campo, 'Este campo es obligatorio');
-        return false;
-    }
-    
-    if (campo.type === 'email' && valor) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(valor)) {
-            mostrarError(campo, 'Por favor ingresa un email válido');
-            return false;
-        }
-    }
-    
-    if (campo.type === 'tel' && valor) {
-        const telefonoRegex = /^[0-9+\-\s()]{10,}$/;
-        if (!telefonoRegex.test(valor)) {
-            mostrarError(campo, 'Por favor ingresa un teléfono válido');
-            return false;
-        }
-    }
-    
-    limpiarError(campo);
-    return true;
-}
+    console.log('✅ Formulario encontrado, configurando...');
 
-function mostrarError(campo, mensaje) {
-    limpiarError(campo);
-    
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'error-mensaje';
-    errorDiv.style.color = 'red';
-    errorDiv.style.fontSize = '12px';
-    errorDiv.style.marginTop = '5px';
-    errorDiv.textContent = mensaje;
-    
-    campo.parentNode.appendChild(errorDiv);
-    campo.style.borderColor = 'red';
-}
+    // 🔒 INICIALMENTE: Solo teléfono habilitado
+    const otrosCampos = document.querySelectorAll('#formCliente input:not(#telefonoCliente), #formCliente textarea, #formCliente select');
+    otrosCampos.forEach(campo => {
+        campo.disabled = true;
+        campo.style.opacity = '0.6';
+    });
 
-function limpiarError(campo) {
-    const errorExistente = campo.parentNode.querySelector('.error-mensaje');
-    if (errorExistente) {
-        errorExistente.remove();
+    // 📱 EVENTO PARA TELÉFONO - Búsqueda automática
+    const telefonoInput = document.getElementById('telefonoCliente');
+    if (telefonoInput) {
+        telefonoInput.addEventListener('input', debounce(async function() {
+            const telefono = this.value.trim();
+            
+            if (!/^3\d{9}$/.test(telefono)) {
+                console.log('❌ Teléfono no válido');
+                mantenerCamposDeshabilitados();
+                return;
+            }
+
+            console.log('🔍 Buscando cliente con teléfono:', telefono);
+            
+            try {
+                const url = `https://script.google.com/macros/s/AKfycbwt-rFg_coabATigGv_zNOa93aO6u9uNqC-Oynh_HAL4dbuKo6pvmtw7jKlixXagW5o/exec?telefonoCliente=${telefono}`;
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data && data.existe && data.datos) {
+                    console.log('✅ Cliente encontrado, prellenando...');
+                    window.clienteEncontrado = true;
+                    prellenarFormulario(data.datos);
+                    habilitarTodosLosCampos();
+                } else {
+                    console.log('❌ Cliente no encontrado, habilitando para registro nuevo');
+                    window.clienteEncontrado = false;
+                    limpiarFormulario();
+                    habilitarTodosLosCampos();
+                }
+                
+                validarFormularioCompleto();
+                
+            } catch (error) {
+                console.error('❌ Error en búsqueda:', error);
+                habilitarTodosLosCampos(); // Por si acaso, habilitar
+            }
+        }, 500));
     }
-    campo.style.borderColor = '';
-}
 
-function validarFormulario() {
-    console.log('🔍 Validando formulario...');
-    
-    const camposRequeridos = document.querySelectorAll('#registroForm input[required]');
-    let valido = true;
-    
-    camposRequeridos.forEach(campo => {
-        const evento = new Event('blur', { bubbles: true });
-        campo.dispatchEvent(evento);
-        
-        const error = campo.parentNode.querySelector('.error-mensaje');
-        if (error) {
-            valido = false;
+    // 📝 VALIDACIÓN EN TIEMPO REAL
+    const camposValidar = ['nombreCliente', 'telefonoCliente', 'DireccionCompleta', 'ciudadCliente'];
+    camposValidar.forEach(id => {
+        const campo = document.getElementById(id);
+        if (campo) {
+            campo.addEventListener('input', validarFormularioCompleto);
         }
     });
-    
-    if (!valido) {
-        alert('Por favor completa todos los campos requeridos correctamente.');
+
+    // 🚀 EVENTO DE ENVÍO
+    const btnEnviar = document.getElementById('btnEnviarPedido');
+    if (btnEnviar) {
+        btnEnviar.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            if (!validarFormularioCompleto()) {
+                alert('❌ Por favor completa todos los campos requeridos');
+                return;
+            }
+
+            // Construir dirección completa
+            const direccionFinal = construirDireccionCompleta();
+            document.getElementById('DireccionCompleta').value = direccionFinal;
+
+            // Enviar formulario a Google Sheets
+            form.submit();
+            
+            // Enviar WhatsApp
+            enviarWhatsAppPedido();
+            
+            // Cerrar modal/ventana
+            cerrarFormulario();
+        });
     }
-    
-    return valido;
 }
 
-function enviarWhatsapp() {
-    console.log('📤 Enviando WhatsApp...');
+function prellenarFormulario(datos) {
+    console.log('📝 Prellenando formulario con:', datos);
     
-    const telefono = '573126363394';
+    // Mapear campos del formulario con los datos de la API
+    const mapeoCampos = {
+        'clienteId': datos['CLIENTEID'] || '',
+        'telefonoCliente': datos['TELEFONOCLIENTE'] || '',
+        'nombreCliente': datos['NOMBRECLIENTE'] || '',
+        'ciudadCliente': datos['CIUDAD DESTINO'] || '',
+        'emailCliente': datos['CORREO'] || '',
+        'DireccionCompleta': datos['DIRECCIONCLIENTE'] || ''
+    };
+
+    // Llenar campos básicos
+    Object.keys(mapeoCampos).forEach(id => {
+        const campo = document.getElementById(id);
+        if (campo) {
+            campo.value = mapeoCampos[id];
+        }
+    });
+
+    // Procesar dirección si existe
+    if (datos['DIRECCIONCLIENTE']) {
+        procesarDireccion(datos['DIRECCIONCLIENTE']);
+    }
+}
+
+function procesarDireccion(direccionConcatenada) {
+    console.log('🏠 Procesando dirección:', direccionConcatenada);
     
-    // Re-detectar ubicación por si cambió
-    window.ubicacionActual = detectarUbicacion();
-    console.log('📍 Ubicación final:', window.ubicacionActual);
+    if (!direccionConcatenada) return;
+
+    const partes = direccionConcatenada.split(',').map(p => p.trim()).filter(p => p);
+    
+    // Dirección base (siempre primera parte)
+    const direccionBase = document.getElementById('DireccionCompleta');
+    if (direccionBase && partes[0]) {
+        direccionBase.value = partes[0];
+    }
+
+    // Tipo y número (segunda parte)
+    if (partes.length > 1) {
+        const segundaParte = partes[1];
+        const tipos = ['APARTAMENTO', 'CASA', 'PISO', 'BODEGA', 'INTERIOR'];
+        
+        const tipoEncontrado = tipos.find(t => segundaParte.toUpperCase().includes(t));
+        if (tipoEncontrado) {
+            const tipoInput = document.getElementById('tipoUnidad');
+            if (tipoInput) tipoInput.value = tipoEncontrado.charAt(0) + tipoEncontrado.slice(1).toLowerCase();
+            
+            // Extraer número
+            const numeroMatch = segundaParte.replace(new RegExp(tipoEncontrado, 'i'), '').trim();
+            const numeroInput = document.getElementById('numeroApto');
+            if (numeroInput && numeroMatch) numeroInput.value = numeroMatch;
+        }
+    }
+
+    // Barrio (tercera parte)
+    if (partes.length > 2) {
+        const barrioInput = document.getElementById('barrio');
+        if (barrioInput) {
+            barrioInput.value = partes[2].replace(/^barrio\s*/i, '').trim();
+        }
+    }
+
+    // Referencia (cuarta parte)
+    if (partes.length > 3) {
+        const refInput = document.getElementById('observacionDireccion');
+        if (refInput) refInput.value = partes[3];
+    }
+}
+
+function construirDireccionCompleta() {
+    const base = document.getElementById('DireccionCompleta')?.value.trim() || '';
+    const tipo = document.getElementById('tipoUnidad')?.value.trim() || '';
+    const numero = document.getElementById('numeroApto')?.value.trim() || '';
+    const barrio = document.getElementById('barrio')?.value.trim() || '';
+    const referencia = document.getElementById('observacionDireccion')?.value.trim() || '';
+
+    let direccion = base;
+    if (tipo) direccion += `, ${tipo}`;
+    if (numero) direccion += ` ${numero}`;
+    if (barrio) direccion += `, Barrio ${barrio}`;
+    if (referencia) direccion += `, ${referencia}`;
+
+    return direccion;
+}
+
+function validarFormularioCompleto() {
+    const camposRequeridos = [
+        'nombreCliente', 
+        'telefonoCliente', 
+        'DireccionCompleta', 
+        'ciudadCliente'
+    ];
+
+    const todosLlenos = camposRequeridos.every(id => {
+        const campo = document.getElementById(id);
+        return campo && campo.value.trim() !== '';
+    });
+
+    const telefonoValido = /^3\d{9}$/.test(document.getElementById('telefonoCliente')?.value.trim());
+
+    const btnEnviar = document.getElementById('btnEnviarPedido');
+    if (btnEnviar) {
+        btnEnviar.disabled = !(todosLlenos && telefonoValido);
+    }
+
+    console.log('🔍 Validación:', { todosLlenos, telefonoValido, habilitado: !btnEnviar?.disabled });
+
+    return todosLlenos && telefonoValido;
+}
+
+function habilitarTodosLosCampos() {
+    const todosLosCampos = document.querySelectorAll('#formCliente input, #formCliente textarea, #formCliente select');
+    todosLosCampos.forEach(campo => {
+        campo.disabled = false;
+        campo.style.opacity = '1';
+    });
+}
+
+function mantenerCamposDeshabilitados() {
+    const otrosCampos = document.querySelectorAll('#formCliente input:not(#telefonoCliente), #formCliente textarea, #formCliente select');
+    otrosCampos.forEach(campo => {
+        campo.disabled = true;
+        campo.style.opacity = '0.6';
+    });
+}
+
+function limpiarFormulario() {
+    const camposLimpiar = [
+        'clienteId', 'nombreCliente', 'ciudadCliente', 'emailCliente',
+        'tipoUnidad', 'numeroApto', 'barrio', 'observacionDireccion'
+    ];
+    
+    camposLimpiar.forEach(id => {
+        const campo = document.getElementById(id);
+        if (campo) campo.value = '';
+    });
+}
+
+function enviarWhatsAppPedido() {
+    const nombre = document.getElementById('nombreCliente')?.value.trim() || 'Cliente';
+    const telefono = document.getElementById('telefonoCliente')?.value.trim() || '';
     
     let mensaje = '';
 
-    if (window.ubicacionActual === 'carrito') {
-        // 🛍️ MENSAJE PARA PEDIDOS DESDE CARRITO
-        console.log('🛍️ Generando mensaje de PEDIDO');
-        mensaje = generarMensajePedido();
-    } else {
-        // 👤 MENSAJE PARA REGISTRO DE CLIENTE
-        console.log('👤 Generando mensaje de REGISTRO');
-        mensaje = generarMensajeRegistro();
-    }
-    
-    console.log('💬 Mensaje generado:', mensaje);
-
-    const urlWhatsapp = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
-    console.log('🔗 URL WhatsApp:', urlWhatsapp);
-    
-    window.open(urlWhatsapp, '_blank');
-    
-    // Opcional: Limpiar carrito después de enviar pedido
-    if (window.ubicacionActual === 'carrito') {
-        setTimeout(() => {
-            localStorage.removeItem('carrito');
-            console.log('🛒 Carrito limpiado después del pedido');
-        }, 1000);
-    }
-}
-
-function generarMensajeRegistro() {
-    const nombre = document.getElementById('nombre')?.value || 'No especificado';
-    const email = document.getElementById('email')?.value || 'No especificado';
-    const telefono = document.getElementById('telefono')?.value || 'No especificado';
-    
-    return `¡Hola! Soy ${nombre.toUpperCase()} y quiero registrarme como cliente.\n\n📧 Email: ${email}\n📞 Teléfono: ${telefono}\n\n¡Gracias por tu atención!`;
-}
-
-function generarMensajePedido() {
-    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    const nombre = document.getElementById('nombre')?.value || 
-                   document.querySelector('input[name="nombre"]')?.value || 
-                   'No especificado';
-    
-    let mensaje = `🛍️ ¡Hola! Soy ${nombre.toUpperCase()} y quiero realizar el siguiente pedido:\n\n`;
-    
-    let total = 0;
-    
-    if (carrito.length === 0) {
-        return `🛍️ ¡Hola! Soy ${nombre.toUpperCase()} y quiero realizar un pedido.\n\n(Mi carrito está vacío)`;
-    }
-    
-    carrito.forEach((producto, index) => {
-        const subtotal = producto.precio * producto.cantidad;
-        total += subtotal;
+    if (window.articulosCarrito && window.articulosCarrito.length > 0) {
+        // 🛒 PEDIDO CON PRODUCTOS
+        mensaje = `🛍️ ¡Hola! Soy ${nombre.toUpperCase()} (${telefono}) y quiero realizar este pedido:\n\n`;
         
-        mensaje += `${index + 1}. ${producto.nombre}\n`;
-        mensaje += `🖼️ Imagen: ${producto.imagen}\n`;
-        mensaje += `📏 Talla: ${producto.talla || 'N/A'}\n`;
-        mensaje += `💲 Precio: $${producto.precio.toLocaleString()}\n`;
-        mensaje += `🔢 Cantidad: ${producto.cantidad}\n`;
-        mensaje += `💰 Subtotal: $${subtotal.toLocaleString()}\n\n`;
-    });
-    
-    mensaje += `🧾 TOTAL DEL PEDIDO: $${total.toLocaleString()}\n\n`;
-    mensaje += `✅ ¡Gracias por tu atención!`;
-    
-    return mensaje;
+        let total = 0;
+        window.articulosCarrito.forEach((producto, index) => {
+            const subtotal = producto.precio * producto.cantidad;
+            total += subtotal;
+            
+            mensaje += `${index + 1}. ${producto.nombre}\n`;
+            mensaje += `📏 Talla: ${producto.talla || 'N/A'}\n`;
+            mensaje += `💰 Precio: $${producto.precio?.toLocaleString()}\n`;
+            mensaje += `🔢 Cantidad: ${producto.cantidad}\n`;
+            mensaje += `🧮 Subtotal: $${subtotal.toLocaleString()}\n\n`;
+        });
+        
+        mensaje += `🧾 TOTAL: $${total.toLocaleString()}\n\n`;
+        mensaje += `📍 Dirección: ${construirDireccionCompleta()}\n`;
+        mensaje += `✅ ¡Gracias!`;
+    } else {
+        // 👤 SOLO REGISTRO
+        mensaje = `👋 ¡Hola! Soy ${nombre.toUpperCase()} (${telefono}) y quiero registrarme como cliente.\n\n`;
+        mensaje += `📍 Dirección: ${construirDireccionCompleta()}\n`;
+        mensaje += `🏙️ Ciudad: ${document.getElementById('ciudadCliente')?.value || ''}\n`;
+        mensaje += `📧 Email: ${document.getElementById('emailCliente')?.value || ''}\n\n`;
+        mensaje += `✅ ¡Gracias por registrarme!`;
+    }
+
+    const urlWhatsApp = `https://wa.me/573006498710?text=${encodeURIComponent(mensaje)}`;
+    window.open(urlWhatsApp, '_blank');
 }
 
-// Debug helper
-window.mostrarInfoFormulario = function() {
-    console.log('🔍 DEBUG Formulario:');
-    console.log('- Ubicación:', window.ubicacionActual);
-    console.log('- Carrito:', JSON.parse(localStorage.getItem('carrito')) || []);
-    console.log('- Formulario encontrado:', !!document.getElementById('registroForm'));
+function cerrarFormulario() {
+    // Limpiar carrito
+    if (window.articulosCarrito && window.articulosCarrito.length > 0) {
+        window.articulosCarrito = [];
+        localStorage.removeItem('carritoAnmago');
+    }
+
+    // Cerrar ventana/modal
+    if (window.opener) {
+        window.close();
+    } else {
+        const modal = bootstrap.Modal.getInstance(document.getElementById('modalFormularioCliente'));
+        if (modal) modal.hide();
+    }
+}
+
+// 🛠️ UTILIDADES
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// 🆘 DIAGNÓSTICO
+window.diagnosticoFormulario = function() {
+    console.log('🩺 DIAGNÓSTICO FORMULARIO:');
+    console.log('- Formulario encontrado:', !!document.getElementById('formCliente'));
+    console.log('- Teléfono encontrado:', !!document.getElementById('telefonoCliente'));
+    console.log('- Carrito:', window.articulosCarrito);
+    console.log('- Cliente encontrado:', window.clienteEncontrado);
+    validarFormularioCompleto();
 };
