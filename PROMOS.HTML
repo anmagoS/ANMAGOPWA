@@ -3,105 +3,160 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Promociones | ANMAGO STORE</title>
-    <link rel="icon" href="logo.jpg" type="image/x-icon" />
-<!-- 🔁 Versión institucional centralizada -->
-<script>
-  const VERSION_ANMAGO = '20251110'; // ← actualiza este valor cada vez que edites JS o CSS
+  <title>Promociones | Anmago Store - Ofertas Especiales</title>
+  <meta name="description" content="Descubre nuestras promociones exclusivas. Ofertas limitadas con descuentos especiales en Anmago Store.">
+  
+  <!-- Preconexiones optimizadas -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://ik.imagekit.io">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
-  // 🎯 Carga modular de scripts institucionales
-  const scriptsAnmago = [
-    { src: 'app.js', defer: true },
-    { src: 'carrito.js', defer: true },
-    { src: 'buscador.js', type: 'module' }
-  ];
+  <!-- PWA y favicon -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="logo.jpg" type="image/x-icon" />
 
-  scriptsAnmago.forEach(({ src, defer, type }) => {
-    const s = document.createElement('script');
-    s.src = `${src}?v=${VERSION_ANMAGO}`;
-    if (defer) s.defer = true;
-    if (type) s.type = type;
-    document.head.appendChild(s);
-  });
-
-  // 🎨 Carga modular del CSS institucional
-  const cssAnmago = document.createElement('link');
-  cssAnmago.rel = 'stylesheet';
-  cssAnmago.href = `https://ik.imagekit.io/mbsk9dati/CODIGOS/ESTILO.CSS?v=${VERSION_ANMAGO}`;
-  cssAnmago.media = 'print';
-  cssAnmago.onload = () => { cssAnmago.media = 'all'; };
-  document.head.appendChild(cssAnmago);
-</script>
-
+  <!-- Bootstrap e iconos -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+
+  <!-- CSS optimizado -->
+  <link rel="stylesheet" href="https://ik.imagekit.io/mbsk9dati/CODIGOS/ESTILO.CSS?v=20251115" />
 </head>
-<body>
-  <div id="header-container"></div>
-  <div class="container mt-4 position-relative" style="max-width: 500px;">
-    <input id="buscador" class="form-control" placeholder="Buscar productos, categorías, precios..." autocomplete="off">
-    <div id="sugerencias" class="dropdown-menu position-absolute mt-1 w-100 z-3"></div>
+
+<body class="bg-light">
+  <!-- Scripts optimizados -->
+  <script src="app.js?v=20251115" defer></script>
+  <script src="carrito.js?v=20251115" defer></script>
+  <script src="buscador.js?v=20251115" type="module"></script>
+
+  <!-- HEADER STICKY -->
+  <div id="header-container" class="header-sticky"></div>
+
+  <!-- BANNER PROMOCIONAL ESPECIAL -->
+  <div class="container-fluid bg-danger py-2">
+    <div class="container text-center">
+      <small class="fw-bold text-white">🔥 OFERTAS ESPECIALES 🔥 Tiempo limitado</small>
+    </div>
   </div>
 
-  <!-- BOTÓN FLOTANTE DEL CARRITO -->
-  <a href="#" class="btn btn_shopping d-none d-md-block" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito" style="position:fixed; top:60px;">
-    <i class="bi bi-bag-heart"></i>
-    <span id="contador-carrito" class="contador-carrito">0</span>
-  </a>
-
-
+  <!-- BUSCADOR TIPO MERCADOLIBRE -->
   <div class="container mt-3">
-    <a href="javascript:history.back()" class="btn btn-outline-dark">
-      <i class="bi bi-arrow-left"></i> Atrás
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8">
+        <div class="position-relative">
+          <input id="buscador" class="form-control buscador-ml" 
+                 placeholder="Buscar en promociones..." 
+                 autocomplete="on">
+          <div id="sugerencias" class="dropdown-menu position-absolute mt-1 w-100 z-3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTÓN ATRÁS -->
+  <div class="container mt-3">
+    <a href="INICIO.HTML" class="btn btn-outline-dark">
+      <i class="bi bi-arrow-left"></i> Volver al inicio
     </a>
   </div>
-  <main class="contenedor-categoria">
-    <h1 class="titulo-categoria">🔥 Productos en Promoción</h1>
-    <div id="temporizador" class="descripcion-producto text-center"></div>
-    <div id="contenedor-promos" class="grid-productos"></div>
+
+  <!-- CONTENIDO PRINCIPAL - PROMOCIONES -->
+  <main class="container mt-4">
+    <div class="text-center mb-4">
+      <h1 class="h3 fw-bold text-danger">🔥 Productos en Promoción</h1>
+      <p class="text-muted">Ofertas especiales con descuentos exclusivos</p>
+    </div>
+
+    <!-- TEMPORIZADOR -->
+    <div class="alert alert-warning text-center mb-4" role="alert">
+      <i class="bi bi-clock"></i>
+      <span id="temporizador" class="fw-bold ms-2">Cargando...</span>
+    </div>
+    
+    <!-- CONTADOR DE PROMOCIONES -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="h5 fw-bold mb-0">🎯 Ofertas activas</h2>
+      <span class="badge bg-danger" id="contador-promos">0 promociones</span>
+    </div>
+    
+    <div id="contenedor-promos" class="grid-productos-ml">
+      <!-- Las promociones se cargan dinámicamente -->
+      <div class="card-producto-ml skeleton" style="height: 320px;"></div>
+      <div class="card-producto-ml skeleton" style="height: 320px;"></div>
+      <div class="card-producto-ml skeleton" style="height: 320px;"></div>
+      <div class="card-producto-ml skeleton" style="height: 320px;"></div>
+    </div>
   </main>
 
+  <!-- CARRITO OFFCANVAS -->
   <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito">
     <div class="offcanvas-header border-bottom">
-      <h4 class="offcanvas-title text-center">Carrito de compras</h4>
+      <h4 class="offcanvas-title fw-bold">🛒 Tu Carrito</h4>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
     </div>
-    <div class="offcanvas-body border-bottom" id="carrito-contenido"></div>
-    <div class="offcanvas-footer mt-4">
-      <h5 class="justify-content-between mb-2">
-        <span class="fw-bold px-3">SUBTOTAL:</span>
-        <span id="subtotal" class="fw-bold float-end px-2 fs-2">$0.00</span>
-      </h5>
+    <div class="offcanvas-body" id="carrito-contenido">
+      <div class="text-center text-muted py-4">
+        <i class="bi bi-bag-x fs-1"></i>
+        <p class="mt-2">Tu carrito está vacío</p>
+      </div>
+    </div>
+    <div class="offcanvas-footer p-3 border-top">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <span class="fw-bold">Subtotal:</span>
+        <span id="subtotal" class="fw-bold fs-5 text-primary">$0</span>
+      </div>
+      <button class="btn btn-primary w-100 py-2 fw-bold" onclick="abrirFormularioPedido()">
+        Continuar compra
+      </button>
     </div>
   </div>
 
-  <div id="footer-container"></div>
- <!-- BARRA INFERIOR FIJA -->
-  <nav class="barra-inferior fixed-bottom bg-light border-top d-flex justify-content-around py-2 d-md-none">
-    <a href="INICIO.HTML" class="text-center text-dark text-decoration-none">
-      <i class="bi bi-house fs-4"></i><br><small>Inicio</small>
-    </a>
-    <a href="PROMOS.HTML" class="text-center text-dark text-decoration-none">
-      <i class="bi bi-gift fs-4"></i><br><small>Promos</small>
-    </a>
-<!-- 🔴 Carrito centrado y resaltado con contador flotante -->
-<a href="#" class="text-center text-decoration-none position-relative"
-   data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito"
-   style="color:#fff; background:#1b4759; border-radius:50%; width:60px; height:60px; display:flex; align-items:center; justify-content:center;">
-  <i class="bi bi-bag-heart fs-4"></i>
-  <span class="contador-carrito">0</span>
-</a>
+  <!-- BOTÓN CARRITO FLOTANTE -->
+  <a href="#" class="btn-carrito-flotante d-none d-md-flex" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
+    <i class="bi bi-bag-heart fs-5"></i>
+    <span id="contador-carrito" class="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill" style="font-size: 0.7rem;">0</span>
+  </a>
 
+  <!-- FOOTER -->
+  <div id="footer-container" class="mt-5"></div>
 
-    <a href="modalformulario.html" class="text-center text-dark text-decoration-none">
-      <i class="bi bi-person-plus fs-4"></i><br><small>Registro</small>
-    </a>
-    <a href="#video" class="text-center text-dark text-decoration-none">
-      <i class="bi bi-play-circle fs-4"></i><br><small>Video</small>
-    </a>
+  <!-- BARRA INFERIOR MOBILE -->
+  <nav class="navbar fixed-bottom bg-white border-top d-md-none py-2">
+    <div class="container-fluid">
+      <div class="d-flex justify-content-around w-100">
+        <a href="INICIO.HTML" class="text-center text-decoration-none text-dark">
+          <i class="bi bi-house fs-5"></i>
+          <div class="small">Inicio</div>
+        </a>
+        <a href="PROMOS.HTML" class="text-center text-decoration-none text-danger">
+          <i class="bi bi-percent fs-5"></i>
+          <div class="small">Ofertas</div>
+        </a>
+        <a href="#" class="text-center text-decoration-none position-relative"
+           data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
+          <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center" 
+               style="width: 50px; height: 50px; margin-top: -8px;">
+            <i class="bi bi-bag-heart fs-5 text-white"></i>
+          </div>
+          <span id="contador-carrito-mobile" class="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill" style="font-size: 0.6rem;">0</span>
+          <div class="small mt-1">Carrito</div>
+        </a>
+        <a href="CATEGORIAS.HTML" class="text-center text-decoration-none text-dark">
+          <i class="bi bi-grid fs-5"></i>
+          <div class="small">Categorías</div>
+        </a>
+        <a href="modalformulario.html" class="text-center text-decoration-none text-dark">
+          <i class="bi bi-person fs-5"></i>
+          <div class="small">Cuenta</div>
+        </a>
+      </div>
+    </div>
   </nav>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
- 
+
+  <!-- SCRIPTS EXTERNOS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+
+  <!-- JAVASCRIPT OPTIMIZADO -->
   <script type="module">
     import { activarBuscadorGlobal } from './buscador.js';
 
@@ -109,145 +164,210 @@
     const cantidadPorCiclo = 4;
     const ciclosPorDia = 4;
 
-   function obtenerIndicePromocional(totalPromos = 0) {
-  const ahora = new Date();
-  ahora.setMinutes(0, 0, 0); // elimina minutos, segundos y milisegundos
+    // 🎯 Obtener índice promocional
+    function obtenerIndicePromocional(totalPromos = 0) {
+      const ahora = new Date();
+      ahora.setMinutes(0, 0, 0);
 
-  const inicio = new Date(Date.UTC(2025, 10, 8, 0, 0, 0)); // noviembre = 10
-  const diferenciaHoras = Math.floor((ahora - inicio) / (1000 * 60 * 60));
-  const cicloActual = diferenciaHoras % (ciclosPorDia * 365);
-  const indice = cicloActual * cantidadPorCiclo;
+      const inicio = new Date(Date.UTC(2025, 10, 8, 0, 0, 0));
+      const diferenciaHoras = Math.floor((ahora - inicio) / (1000 * 60 * 60));
+      const cicloActual = diferenciaHoras % (ciclosPorDia * 365);
+      const indice = cicloActual * cantidadPorCiclo;
 
-  return totalPromos > 0 ? indice % totalPromos : 0;
-}
-
-    document.addEventListener("DOMContentLoaded", async () => {
-      const headerContainer = document.getElementById('header-container');
-      if (!headerContainer.querySelector(".header")) {
-        const header = await fetch('HEADER.HTML').then(res => res.text());
-        headerContainer.insertAdjacentHTML("afterbegin", header);
-        await new Promise(resolve => requestAnimationFrame(resolve));
-      }
-
-      ajustarCarrito();
-      await new Promise(resolve => requestAnimationFrame(resolve));
-      ajustarCarrito();
-
-      document.querySelector(".btn_shopping")?.addEventListener("click", e => {
-        e.preventDefault();
-        const offcanvas = document.getElementById("offcanvasCarrito");
-        if (offcanvas) {
-          const instancia = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
-          instancia.show();
-        }
-      });
-
-      activarBuscadorGlobal();
-
-      const footer = await fetch('footer.html').then(res => res.text());
-      document.getElementById('footer-container').innerHTML = footer;
-
-      await cargarPromociones();
-      iniciarTemporizador();
-    });
-
-    function ajustarCarrito() {
-      const header = document.querySelector(".header");
-      const carritoBtn = document.querySelector(".btn_shopping");
-      if (header && carritoBtn) {
-        const alturaHeader = header.offsetHeight;
-        carritoBtn.style.top = `${alturaHeader + 12}px`;
-      }
+      return totalPromos > 0 ? indice % totalPromos : 0;
     }
 
-    async function cargarPromociones() {
-      const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json";
-      const res = await fetch(url);
-      const productos = await res.json();
-      window.catalogoGlobal = productos;
-
-      promocionesGlobal = productos.filter(p => {
-        const promo = typeof p.promo === "string" ? p.promo.toLowerCase().trim() : p.promo;
-        return promo === true || promo === "true" || promo === "sí" || promo === "activo";
-      });
-
-      renderPromocionesPorCiclo();
-    }
-
+    // ⏰ Iniciar temporizador mejorado
     function iniciarTemporizador() {
       const temporizador = document.getElementById("temporizador");
 
-     setInterval(() => {
-  const ahora = new Date();
-  const horaActual = ahora.getHours();
-  const siguienteCorte = horaActual % 6 === 0 ? horaActual + 6 : Math.ceil(horaActual / 6) * 6;
+      const actualizarTemporizador = () => {
+        const ahora = new Date();
+        const horaActual = ahora.getHours();
+        const siguienteCorte = horaActual % 6 === 0 ? horaActual + 6 : Math.ceil(horaActual / 6) * 6;
 
-  const siguienteFecha = new Date(ahora);
-  siguienteFecha.setHours(siguienteCorte, 0, 0, 0);
+        const siguienteFecha = new Date(ahora);
+        siguienteFecha.setHours(siguienteCorte, 0, 0, 0);
 
-  const restante = siguienteFecha - ahora;
+        const restante = siguienteFecha - ahora;
 
-  if (restante <= 0) {
-    temporizador.textContent = "⏳ ¡Promociones actualizadas!";
-    return;
-  }
+        if (restante <= 0) {
+          temporizador.textContent = "🔄 ¡Promociones actualizadas!";
+          recargarPromociones();
+          return;
+        }
 
-  const h = Math.floor(restante / (1000 * 60 * 60));
-  const m = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
-  const s = Math.floor((restante % (1000 * 60)) / 1000);
+        const h = Math.floor(restante / (1000 * 60 * 60));
+        const m = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((restante % (1000 * 60)) / 1000);
 
-  temporizador.textContent = `⏰ Cambia en ${h}h ${m}m ${s}s`;
-}, 1000);
-}
+        temporizador.textContent = `⏰ Cambian en ${h}h ${m}m ${s}s`;
+      };
 
-    function renderPromocionesPorCiclo() {
+      actualizarTemporizador();
+      setInterval(actualizarTemporizador, 1000);
+    }
+
+    // 📥 Cargar promociones
+    async function cargarPromociones() {
+      try {
+        const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json?v=" + Date.now();
+        const res = await fetch(url);
+        const productos = await res.json();
+        window.catalogoGlobal = productos;
+
+        promocionesGlobal = productos.filter(p => {
+          const promo = typeof p.promo === "string" ? p.promo.toLowerCase().trim() : p.promo;
+          return promo === true || promo === "true" || promo === "sí" || promo === "activo" || promo === "si";
+        });
+
+        // Actualizar contador
+        document.getElementById("contador-promos").textContent = `${promocionesGlobal.length} promociones`;
+
+        renderPromocionesML();
+      } catch (error) {
+        console.error("❌ Error cargando promociones:", error);
+        mostrarErrorPromociones();
+      }
+    }
+
+    // 🔄 Recargar promociones
+    function recargarPromociones() {
       const contenedor = document.getElementById("contenedor-promos");
-      contenedor.innerHTML = "";
+      contenedor.innerHTML = `
+        <div class="col-12 text-center py-3">
+          <div class="spinner-border text-primary"></div>
+          <p class="mt-2 text-muted">Actualizando promociones...</p>
+        </div>
+      `;
+      
+      setTimeout(() => {
+        renderPromocionesML();
+      }, 1000);
+    }
 
+    // 🎨 Renderizar promociones estilo MercadoLibre
+    function renderPromocionesML() {
+      const contenedor = document.getElementById("contenedor-promos");
+      
       const totalPromos = promocionesGlobal.length;
       if (totalPromos === 0) {
-        contenedor.innerHTML = `<div class="text-center text-muted">No hay promociones disponibles.</div>`;
-        console.warn("⚠️ promocionesGlobal está vacío.");
+        contenedor.innerHTML = `
+          <div class="col-12 text-center py-5">
+            <i class="bi bi-emoji-frown fs-1 text-muted"></i>
+            <p class="text-muted mt-2">No hay promociones disponibles</p>
+            <a href="INICIO.HTML" class="btn btn-outline-primary mt-2">
+              Volver al inicio
+            </a>
+          </div>
+        `;
         return;
       }
 
       const indiceActual = obtenerIndicePromocional(totalPromos);
       const bloque = promocionesGlobal.slice(indiceActual, indiceActual + cantidadPorCiclo);
 
-      contenedor.classList.toggle("bloque-incompleto", bloque.length < cantidadPorCiclo);
-      console.log("🔁 Bloque activo:", bloque.map(p => p.id));
-
-      bloque.forEach(p => {
+      contenedor.innerHTML = bloque.map(p => {
         const precioOriginal = Number(p.precio) || 0;
         const precioDescuento = Math.round(precioOriginal * 0.9);
         const producto = p.producto || "Producto sin nombre";
-        const material = p.material || "";
-        const tallas = p.tallas || "";
-        const imagen = p.imagen || "placeholder.jpg";
+        const material = p.material ? `<small class="text-muted d-block">${p.material}</small>` : "";
+        const tallas = p.tallas ? `<small class="text-muted d-block">Tallas: ${p.tallas}</small>` : "";
+        const imagen = p.imagen || "https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg";
         const id = p.id || "sin-id";
 
-        const tarjeta = document.createElement("div");
-        tarjeta.className = "producto";
-        tarjeta.innerHTML = `
-          <a href="producto.html?id=${id}">
-            <div class="imagen-producto">
-              <img src="${imagen}" alt="${producto}">
-              <span class="etiqueta-promo">🔥 10%</span>
-            </div>
-          </a>
-          <div class="nombre-producto">${producto}</div>
-          <div class="nombre-producto">${material}</div>
-          <div class="nombre-producto">${tallas}</div>
-          <div class="precio-producto">
-                     <s>$${precioOriginal.toLocaleString("es-CO")} COP</s>
-            <span class="text-success fw-bold">$${precioDescuento.toLocaleString("es-CO")} COP</span>
+        return `
+          <div class="card-producto-ml card-promocion" data-producto-id="${id}">
+            <a href="producto.html?id=${id}" class="text-decoration-none">
+              <div class="position-relative">
+                <img src="${imagen}" 
+                     alt="${producto}" 
+                     class="card-img-ml" 
+                     loading="lazy"
+                     onerror="this.src='https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg'">
+                <span class="position-absolute top-0 start-0 badge bg-danger m-2">🔥 10% OFF</span>
+              </div>
+              <div class="card-body-ml">
+                <h3 class="nombre-producto-ml small text-dark mb-2" title="${producto}">
+                  ${producto}
+                </h3>
+                ${material}
+                ${tallas}
+                <div class="precio-promocion mt-2">
+                  <s class="text-muted small">$${precioOriginal.toLocaleString("es-CO")}</s>
+                  <div class="precio-ml text-danger">$${precioDescuento.toLocaleString("es-CO")}</div>
+                </div>
+                <div class="d-grid mt-2">
+                  <button class="btn btn-danger btn-sm" 
+                          onclick="event.preventDefault(); event.stopPropagation(); verProducto('${id}')">
+                    <i class="bi bi-lightning"></i> Ver oferta
+                  </button>
+                </div>
+              </div>
+            </a>
           </div>
-          <a href="producto.html?id=${id}" class="boton-comprar">Ver más</a>
-        </div>
-      `;
-      contenedor.appendChild(tarjeta);
+        `;
+      }).join('');
+
+      console.log("✅ Promociones renderizadas:", bloque.length);
+    }
+
+    // ❌ Mostrar error
+    function mostrarErrorPromociones() {
+      const contenedor = document.getElementById("contenedor-promos");
+      if (contenedor) {
+        contenedor.innerHTML = `
+          <div class="col-12 text-center py-5">
+            <i class="bi bi-emoji-frown fs-1 text-muted"></i>
+            <p class="text-muted mt-2">No pudimos cargar las promociones</p>
+            <button class="btn btn-outline-primary mt-2" onclick="cargarPromociones()">
+              <i class="bi bi-arrow-clockwise"></i> Reintentar
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    // 👁️ Ver producto
+    function verProducto(productoId) {
+      window.location.href = `producto.html?id=${productoId}`;
+    }
+
+    // 🚀 Inicialización
+    document.addEventListener("DOMContentLoaded", async () => {
+      // Cargar header
+      try {
+        const header = await fetch("HEADER.HTML").then(res => res.text());
+        document.getElementById("header-container").innerHTML = header;
+      } catch (error) {
+        console.error("Error cargando header:", error);
+      }
+
+      // Cargar footer
+      try {
+        const footer = await fetch("footer.html").then(res => res.text());
+        document.getElementById("footer-container").innerHTML = footer;
+      } catch (error) {
+        console.error("Error cargando footer:", error);
+      }
+
+      // Activar buscador
+      activarBuscadorGlobal();
+
+      // Cargar promociones
+      setTimeout(() => {
+        cargarPromociones();
+        iniciarTemporizador();
+      }, 100);
     });
-  }
+
+    // 🌐 Funciones globales
+    window.abrirFormularioPedido = function() {
+      window.open('modalformulario.html', '_blank');
+    };
+
+    window.verProducto = verProducto;
+    window.cargarPromociones = cargarPromociones;
   </script>
 </body>
 </html>
