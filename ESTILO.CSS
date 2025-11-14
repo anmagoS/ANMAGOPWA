@@ -643,3 +643,17 @@ body { padding-top: 60px; }
     transition-duration: 0.01ms !important;
   }
 }
+/* Esto va en ESTILO.CSS */
+.imagen-completa {
+    object-fit: contain !important;
+    object-position: center !important;
+    background-color: #f8f9fa !important;
+    padding: 5px !important;
+}
+
+.carousel-promos-ml .carousel-item a {
+    display: block;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+}
