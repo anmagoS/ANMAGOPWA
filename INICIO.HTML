@@ -3,10 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Inicio | Anmago Store</title>
-  <!-- Preconexiones -->
+  <title>Anmago Store - Ropa, Hogar, Belleza y más | Los Mejores Precios</title>
+  <meta name="description" content="Encuentra ropa, relojería, hogar, belleza y más en Anmago Store. Los mejores precios y calidad garantizada. ¡Compra seguro!">
+  
+  <!-- Preconexiones optimizadas -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="preconnect" href="https://ik.imagekit.io">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
   <!-- PWA y favicon -->
   <link rel="manifest" href="manifest.json">
@@ -16,150 +19,257 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 
-  <!-- CSS institucional -->
+ <!-- CSS optimizado -->
   <link rel="stylesheet" href="https://ik.imagekit.io/mbsk9dati/CODIGOS/ESTILO.CSS?v=20251110" />
 </head>
 
-<body>
-  <!-- Scripts institucionales -->
-  <script src="app.js?v=20251110" defer></script>
-  <script src="carrito.js?v=20251110" defer></script>
-  <script src="buscador.js?v=20251110" type="module"></script>
-  <script src="MODULOULTIMOS.JS" defer></script>
-  <!-- HEADER -->
-  <div id="header-container"></div>
+<body class="bg-light">
+  <!-- Scripts optimizados -->
+  <script src="app.js?v=20251115" defer></script>
+  <script src="carrito.js?v=20251115" defer></script>
+  <script src="buscador.js?v=20251115" type="module"></script>
+  <script src="MODULOULTIMOS.JS?v=20251115" defer></script>
 
-  <!-- BUSCADOR + SUGERENCIAS -->
-  <div class="container mt-0 position-relative" style="max-width: 600px;">
-    <input id="buscador" class="form-control" placeholder="Buscar productos, categorías, precios..." autocomplete="on">
-    <div id="sugerencias" class="dropdown-menu position-absolute mt-0 w-100 z-3"></div>
-    <!-- 🔍 Sugerencias contextuales por tipo institucional -->
-<div id="sugerencias-contextuales" class="d-flex flex-wrap gap-2 mt-2 justify-content-center">
-  <a href="SUBTIPOS.HTML?tipo=ROPA" class="btn btn-outline-dark btn-sm">👗 Ropa</a>
-  <a href="SUBTIPOS.HTML?tipo=RELOJERIA" class="btn btn-outline-dark btn-sm">⌚ Relojería</a>
-  <a href="SUBTIPOS.HTML?tipo=HOGAR" class="btn btn-outline-dark btn-sm">🏠 Hogar</a>
-  <a href="SUBTIPOS.HTML?tipo=BELLEZA" class="btn btn-outline-dark btn-sm">💄 Belleza</a>
-  <a href="SUBTIPOS.HTML?tipo=NAVIDAD" class="btn btn-outline-dark btn-sm">🎄 Navidad</a>
-  <a href="SUBTIPOS.HTML?tipo=ESCOLAR" class="btn btn-outline-dark btn-sm">🎒 Escolar</a>
-</div>
-  </div>
-<!-- BOTÓN FLOTANTE DEL CARRITO -->
-  <a href="#" class="btn btn_shopping d-none d-md-block" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito" style="position:fixed; top:60px;">
-    <i class="bi bi-bag-heart"></i>
-    <span id="contador-carrito" class="contador-carrito">0</span>
-  </a>
+  <!-- HEADER STICKY -->
+  <div id="header-container" class="header-sticky"></div>
 
-  <!-- BOTÓN DE INSTALACIÓN PWA -->
-  <div id="instalar-container" class="bloque-superior-pwa d-none">
-    <button id="boton-instalar" class="btn btn-gradient fw-bold d-flex align-items-center justify-content-center mx-auto" style="gap: 12px; padding: 12px 24px; border-radius: 8px; font-size: 1.1rem;">
-      <img src="tina-192.png" alt="Instalar" style="width: 32px; height: 32px;" />
-      Instalar Anmago Store
-    </button>
-  </div>
-
-  <!-- CARRUSEL DE PROMOCIONES -->
-  <div class="container-fluid text-center mt-3 px-3">
-    <a href="PROMOS.HTML" class="btn btn-gradient fw-bold">🎁 Ver promociones exclusivas</a>
-  </div>
-  <div id="temporizador-promos" class="text-center text-muted mt-2 small"></div>
-  <div id="carouselPromos" class="carousel slide mt-4" data-bs-ride="carousel">
-    <div class="carousel-inner" id="carousel-promos-contenido"></div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselPromos" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon"></span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselPromos" data-bs-slide="next">
-      <span class="carousel-control-next-icon"></span>
-    </button>
-  </div>
-
-  <!-- ÚLTIMOS PRODUCTOS -->
-  <main class="contenedor-categoria">
-    <h1 class="titulo-categoria text-center mt-4">🆕 Últimos productos</h1>
-    <div id="grid-ultimos" class="grid-productos"></div>
-  </main>
-
-  <!-- SECCIONES INSTITUCIONALES -->
- <section class="seccion-centrada">
-  <h2 class="titulo-categoria">🎥 Conoce más sobre <span class="text-gradient">Anmago Store</span></h2>
-  <div class="video-wrapper mt-3">
-    <div class="card mx-auto shadow" style="max-width: 560px; border-radius: 12px; overflow: hidden;">
-      <iframe width="560" height="315"
-        src="https://www.youtube.com/embed/E8_rkF1957Y"
-        title="Video Anmago Store"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-        style="border-radius:12px;">
-      </iframe>
+  <!-- BANNER PROMOCIONAL COMPACTO -->
+  <div class="container-fluid banner-promocional py-2">
+    <div class="container text-center">
+      <small class="fw-bold">⭐ Los mejores precios ⭐ Calidad garantizada</small>
     </div>
   </div>
-</section>
 
+  <!-- BUSCADOR TIPO MERCADOLIBRE -->
+  <div class="container mt-3">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8">
+        <div class="position-relative">
+          <input id="buscador" class="form-control buscador-ml" 
+                 placeholder="Buscar productos, marcas y más..." 
+                 autocomplete="on">
+          <div id="sugerencias" class="dropdown-menu position-absolute mt-1 w-100 z-3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <section class="seccion-centrada">
-    <h2 class="titulo-categoria">Aliados</h2>
-    <a class="boton-comprar" href="https://sites.google.com/view/anmagostore/aliados" target="_blank">Catálogos Aliados</a>
+  <!-- CATEGORÍAS RÁPIDAS -->
+  <div class="container-fluid mt-3">
+    <div class="categorias-rapidas">
+      <a href="SUBTIPOS.HTML?tipo=ROPA" class="categoria-rapida">
+        <div>👗</div>
+        <div>Ropa</div>
+      </a>
+      <a href="SUBTIPOS.HTML?tipo=RELOJERIA" class="categoria-rapida">
+        <div>⌚</div>
+        <div>Relojería</div>
+      </a>
+      <a href="SUBTIPOS.HTML?tipo=HOGAR" class="categoria-rapida">
+        <div>🏠</div>
+        <div>Hogar</div>
+      </a>
+      <a href="SUBTIPOS.HTML?tipo=BELLEZA" class="categoria-rapida">
+        <div>💄</div>
+        <div>Belleza</div>
+      </a>
+      <a href="SUBTIPOS.HTML?tipo=NAVIDAD" class="categoria-rapida">
+        <div>🎄</div>
+        <div>Navidad</div>
+      </a>
+      <a href="SUBTIPOS.HTML?tipo=ESCOLAR" class="categoria-rapida">
+        <div>🎒</div>
+        <div>Escolar</div>
+      </a>
+      <a href="CATEGORIAS.HTML" class="categoria-rapida">
+        <div>📂</div>
+        <div>Ver todo</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- BOTÓN PROMOCIONES -->
+  <div class="container text-center mt-3">
+    <a href="PROMOS.HTML" class="btn btn-warning fw-bold px-4 py-2 rounded-pill">
+      🎁 Ofertas Especiales
+    </a>
+    <div id="temporizador-promos" class="text-muted mt-1 small fw-bold"></div>
+  </div>
+
+  <!-- CARRUSEL COMPACTO TIPO MERCADOLIBRE -->
+  <div class="container mt-3">
+    <div id="carouselPromos" class="carousel slide carousel-promos-ml" data-bs-ride="carousel">
+      <div class="carousel-inner" id="carousel-promos-contenido">
+        <!-- El contenido se carga dinámicamente -->
+        <div class="carousel-item active">
+          <div class="skeleton w-100 h-100"></div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselPromos" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon bg-dark rounded-circle p-2"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselPromos" data-bs-slide="next">
+        <span class="carousel-control-next-icon bg-dark rounded-circle p-2"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ÚLTIMOS PRODUCTOS - ESTILO MERCADOLIBRE -->
+  <main class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="h4 fw-bold mb-0">🆕 Productos recién llegados</h2>
+      <a href="PRODUCTOS.HTML" class="btn btn-outline-primary btn-sm">Ver todos</a>
+    </div>
+    
+    <div id="grid-ultimos" class="grid-productos-ml">
+      <!-- Los productos se cargan dinámicamente -->
+      <div class="card-producto-ml skeleton" style="height: 280px;"></div>
+      <div class="card-producto-ml skeleton" style="height: 280px;"></div>
+      <div class="card-producto-ml skeleton" style="height: 280px;"></div>
+      <div class="card-producto-ml skeleton" style="height: 280px;"></div>
+    </div>
+  </main>
+
+  <!-- SECCIÓN VIDEO OPTIMIZADA -->
+  <section class="container mt-5">
+    <div class="text-center mb-4">
+      <h2 class="h3 fw-bold">🎥 Conoce Anmago Store</h2>
+      <p class="text-muted">Descubre nuestra historia y compromiso contigo</p>
+    </div>
+    <div class="ratio ratio-16x9" style="max-width: 560px; margin: 0 auto;">
+      <iframe src="https://www.youtube.com/embed/E8_rkF1957Y" 
+              title="Video Anmago Store" 
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen>
+      </iframe>
+    </div>
   </section>
 
-  <section class="seccion-centrada">
-    <p class="frase-destacada">“La ropa no solo cubre tu cuerpo, sino que también expresa tu alma...”</p>
-    <p class="frase-secundaria">¡Disfruta la experiencia de vestir tus sueños en Anmago Store!</p>
-    <a class="boton-comprar" href="https://docs.google.com/forms/d/e/1FAIpQLSevvlCBgz7L6l2-DecKQLazoswqzf7DRYWOaCq4FtMGOR6D2Q/viewform?usp=header" target="_blank">Deja tus datos</a>
+  <!-- SECCIÓN ALIADOS -->
+  <section class="container mt-5 text-center">
+    <h2 class="h4 fw-bold mb-3">🤝 Nuestros Aliados</h2>
+    <a href="https://sites.google.com/view/anmagostore/aliados" 
+       class="btn btn-outline-primary px-4 py-2 rounded-pill" 
+       target="_blank">
+      Ver catálogos de aliados
+    </a>
   </section>
+
+  <!-- CTA FINAL -->
+  <section class="container mt-5 text-center bg-light py-5 rounded-3">
+    <p class="lead fw-bold text-dark">"La ropa no solo cubre tu cuerpo, sino que también expresa tu alma..."</p>
+    <p class="text-muted mb-4">¡Disfruta la experiencia de vestir tus sueños en Anmago Store!</p>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSevvlCBgz7L6l2-DecKQLazoswqzf7DRYWOaCq4FtMGOR6D2Q/viewform?usp=header" 
+       class="btn btn-gradient px-4 py-2 rounded-pill fw-bold" 
+       target="_blank">
+      ✨ Deja tus datos aquí
+    </a>
+  </section>
+
+  <!-- BOTÓN INSTALAR PWA -->
+  <div id="instalar-container" class="container text-center mt-4 d-none">
+    <button id="boton-instalar" class="btn btn-success fw-bold d-inline-flex align-items-center px-4 py-2 rounded-pill">
+      <img src="tina-192.png" alt="Instalar" class="me-2" style="width: 24px; height: 24px;" />
+      Instalar App
+    </button>
+  </div>
 
   <!-- CARRITO OFFCANVAS -->
   <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito">
     <div class="offcanvas-header border-bottom">
-      <h4 class="offcanvas-title text-center">Carrito de compras</h4>
+      <h4 class="offcanvas-title fw-bold">🛒 Tu Carrito</h4>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
     </div>
-    <div class="offcanvas-body border-bottom" id="carrito-contenido"></div>
-    <div class="offcanvas-footer mt-4">
-      <h5 class="justify-content-between mb-2">
-        <span class="fw-bold px-3">SUBTOTAL:</span>
-        <span id="subtotal" class="fw-bold float-end px-2 fs-2">$0.00</span>
-      </h5>
+    <div class="offcanvas-body" id="carrito-contenido">
+      <div class="text-center text-muted py-4">
+        <i class="bi bi-bag-x fs-1"></i>
+        <p class="mt-2">Tu carrito está vacío</p>
+      </div>
+    </div>
+    <div class="offcanvas-footer p-3 border-top">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <span class="fw-bold">Subtotal:</span>
+        <span id="subtotal" class="fw-bold fs-5 text-primary">$0</span>
+      </div>
+      <button class="btn btn-primary w-100 py-2 fw-bold" onclick="abrirFormularioPedido()">
+        Continuar compra
+      </button>
     </div>
   </div>
 
+  <!-- BOTÓN CARRITO FLOTANTE -->
+  <a href="#" class="btn-carrito-flotante d-none d-md-flex" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
+    <i class="bi bi-bag-heart fs-5"></i>
+    <span id="contador-carrito" class="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill" style="font-size: 0.7rem;">0</span>
+  </a>
+
   <!-- FOOTER -->
-  <div id="footer-container"></div>
+  <div id="footer-container" class="mt-5"></div>
 
-   <!-- BARRA INFERIOR FIJA -->
-  <nav class="barra-inferior fixed-bottom bg-light border-top d-flex justify-content-around py-2 d-md-none">
-    <a href="INICIO.HTML" class="text-center text-dark text-decoration-none">
-      <i class="bi bi-house fs-4"></i><br><small>Inicio</small>
-    </a>
-    <a href="PROMOS.HTML" class="text-center text-dark text-decoration-none">
-      <i class="bi bi-gift fs-4"></i><br><small>Promos</small>
-    </a>
-<!-- 🔴 Carrito centrado y resaltado con contador flotante -->
-<a href="#" class="text-center text-decoration-none position-relative"
-   data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito"
-   style="color:#fff; background:#1b4759; border-radius:50%; width:60px; height:60px; display:flex; align-items:center; justify-content:center;">
-  <i class="bi bi-bag-heart fs-4"></i>
-  <span class="contador-carrito">0</span>
-</a>
-
-
-    <a href="modalformulario.html" class="text-center text-dark text-decoration-none">
-      <i class="bi bi-person-plus fs-4"></i><br><small>Registro</small>
-    </a>
-    <a href="#video" class="text-center text-dark text-decoration-none">
-      <i class="bi bi-play-circle fs-4"></i><br><small>Video</small>
-    </a>
+  <!-- BARRA INFERIOR MOBILE -->
+  <nav class="navbar fixed-bottom bg-white border-top d-md-none py-2">
+    <div class="container-fluid">
+      <div class="d-flex justify-content-around w-100">
+        <a href="INICIO.HTML" class="text-center text-decoration-none text-primary">
+          <i class="bi bi-house-fill fs-5"></i>
+          <div class="small">Inicio</div>
+        </a>
+        <a href="PROMOS.HTML" class="text-center text-decoration-none text-dark">
+          <i class="bi bi-percent fs-5"></i>
+          <div class="small">Ofertas</div>
+        </a>
+        <a href="#" class="text-center text-decoration-none position-relative"
+           data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
+          <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center" 
+               style="width: 50px; height: 50px; margin-top: -8px;">
+            <i class="bi bi-bag-heart fs-5 text-white"></i>
+          </div>
+          <span id="contador-carrito-mobile" class="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill" style="font-size: 0.6rem;">0</span>
+          <div class="small mt-1">Carrito</div>
+        </a>
+        <a href="CATEGORIAS.HTML" class="text-center text-decoration-none text-dark">
+          <i class="bi bi-grid fs-5"></i>
+          <div class="small">Categorías</div>
+        </a>
+        <a href="modalformulario.html" class="text-center text-decoration-none text-dark">
+          <i class="bi bi-person fs-5"></i>
+          <div class="small">Cuenta</div>
+        </a>
+      </div>
+    </div>
   </nav>
 
   <!-- SCRIPTS EXTERNOS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
 
-  <!-- 🔧 Limpieza de parámetros Facebook -->
+  <!-- FUNCIONES ADICIONALES -->
   <script>
+    // Actualizar contadores del carrito
+    function actualizarContadoresCarrito() {
+      const contador = document.getElementById('contador-carrito');
+      const contadorMobile = document.getElementById('contador-carrito-mobile');
+      const count = window.articulosCarrito ? window.articulosCarrito.reduce((sum, item) => sum + item.cantidad, 0) : 0;
+      
+      if (contador) contador.textContent = count;
+      if (contadorMobile) contadorMobile.textContent = count;
+    }
+
+    // Abrir formulario de pedido
+    function abrirFormularioPedido() {
+      window.open('modalformulario.html', '_blank');
+    }
+
+    // Limpieza de parámetros Facebook
     if (window.location.search.includes("fbclid")) {
       const cleanURL = window.location.origin + window.location.pathname;
       window.location.replace(cleanURL);
     }
-  </script>
 
+    // Inicializar cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', function() {
+      actualizarContadoresCarrito();
+    });
+  </script>
 </body>
 </html>
