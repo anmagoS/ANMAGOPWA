@@ -149,12 +149,13 @@
           <span id="contador-carrito-mobile" class="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill" style="font-size: 0.6rem;">0</span>
           <div class="small mt-1">Carrito</div>
         </a>
-       <a href="https://wa.me/573006498710?text=¡Hola!%20Me%20interesan%20sus%20productos%20de%20Anmago%20Store" 
-   class="text-center text-decoration-none text-dark"
-   target="_blank">
-  <i class="bi bi-whatsapp fs-5"></i>
-  <div class="small">Chat</div>
-</a>
+        <!-- BOTÓN WHATSAPP ACTUALIZADO -->
+        <a href="https://wa.me/573006498710?text=¡Hola!%20Me%20interesan%20sus%20productos%20de%20Anmago%20Store" 
+           class="text-center text-decoration-none text-success"
+           target="_blank">
+          <i class="bi bi-whatsapp fs-5"></i>
+          <div class="small">Chat</div>
+        </a>
         <a href="modalformulario.html" class="text-center text-decoration-none text-dark">
           <i class="bi bi-person fs-5"></i>
           <div class="small">Cuenta</div>
@@ -164,9 +165,9 @@
   </nav>
 
   <!-- SCRIPTS EXTERNOS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- JAVASCRIPT OPTIMIZADO -->
+  <!-- JAVASCRIPT ESPECÍFICO DE CATEGORÍAS -->
   <script type="module">
     import { activarBuscadorGlobal } from './buscador.js';
 
@@ -268,7 +269,7 @@
 
       const subtiposUnicos = [...new Set(productosFiltrados.map(p => p.subtipo?.trim().toUpperCase()).filter(Boolean))]
         .filter(sub => sub && sub !== subtipoActual?.toUpperCase())
-        .slice(0, 6); // Limitar a 6 subtipos
+        .slice(0, 6);
 
       if (subtiposUnicos.length === 0) {
         contenedor.innerHTML = '<div class="col-12 text-center py-4"><p class="text-muted">No hay otros subtipos disponibles.</p></div>';
@@ -320,68 +321,32 @@
       }
     }
 
-    // 🛒 INICIALIZACIÓN DEL CARRITO - CORREGIDA
-document.addEventListener('DOMContentLoaded', function() {
-    // Esperar a que cargue el carrito.js
-    setTimeout(() => {
-        inicializarCarrito();
-        actualizarContadoresCarrito();
-    }, 500);
-});
+    // 🚀 Inicialización
+    document.addEventListener("DOMContentLoaded", async () => {
+      // Cargar header
+      try {
+        const header = await fetch("HEADER.HTML").then(res => res.text());
+        document.getElementById("header-container").innerHTML = header;
+      } catch (error) {
+        console.error("Error cargando header:", error);
+      }
 
-// 🔄 FUNCIÓN PARA INICIALIZAR CARRITO
-function inicializarCarrito() {
-    // Recuperar carrito de localStorage
-    const carritoGuardado = localStorage.getItem('carritoAnmago');
-    if (carritoGuardado) {
-        try {
-            window.articulosCarrito = JSON.parse(carritoGuardado);
-        } catch (e) {
-            console.error('Error cargando carrito:', e);
-            window.articulosCarrito = [];
-        }
-    } else {
-        window.articulosCarrito = [];
-    }
-    
-    console.log('Carrito inicializado:', window.articulosCarrito);
-    actualizarContadoresCarrito();
-}
+      // Cargar footer
+      try {
+        const footer = await fetch("footer.html").then(res => res.text());
+        document.getElementById("footer-container").innerHTML = footer;
+      } catch (error) {
+        console.error("Error cargando footer:", error);
+      }
 
-// 🔢 ACTUALIZAR CONTADORES
-function actualizarContadoresCarrito() {
-    const contador = document.getElementById('contador-carrito');
-    const contadorMobile = document.getElementById('contador-carrito-mobile');
-    
-    const count = window.articulosCarrito ? 
-        window.articulosCarrito.reduce((sum, item) => sum + (item.cantidad || 1), 0) : 0;
-    
-    console.log('Actualizando contadores:', count);
-    
-    if (contador) {
-        contador.textContent = count;
-        contador.style.display = count > 0 ? 'block' : 'none';
-    }
-    
-    if (contadorMobile) {
-        contadorMobile.textContent = count;
-        contadorMobile.style.display = count > 0 ? 'block' : 'none';
-    }
-}
+      // Activar buscador
+      activarBuscadorGlobal();
 
-// 📝 ABRIR FORMULARIO
-function abrirFormularioPedido() {
-    if (!window.articulosCarrito || window.articulosCarrito.length === 0) {
-        alert('Tu carrito está vacío');
-        return;
-    }
-    window.open('modalformulario.html', '_blank');
-}
+      // Cargar catálogo
+      setTimeout(cargarCatalogo, 100);
+    });
 
-// 🎯 EXPONER FUNCIONES GLOBALMENTE
-window.actualizarContadoresCarrito = actualizarContadoresCarrito;
-window.abrirFormularioPedido = abrirFormularioPedido;
-
+    // 🌐 Funciones globales
     window.cargarCatalogo = cargarCatalogo;
   </script>
 </body>
