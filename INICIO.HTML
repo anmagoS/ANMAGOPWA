@@ -288,5 +288,53 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+<script>
+// CARRUSEL CON IMÁGENES COMPLETAS Y CLICK A PROMOS
+document.addEventListener('DOMContentLoaded', function() {
+    const carouselContent = document.getElementById('carousel-promos-contenido');
+    
+    if (!carouselContent) return;
+    
+    // Imágenes para el carrusel (puedes cambiar estas URLs por las tuyas)
+    const carouselImages = [
+        {
+            url: "https://ik.imagekit.io/mbsk9dati/banner1.jpg?tr=w-800,q-80",
+            alt: "Ofertas Especiales",
+            link: "PROMOS.HTML"
+        },
+        {
+            url: "https://ik.imagekit.io/mbsk9dati/banner2.jpg?tr=w-800,q-80", 
+            alt: "Nuevos Productos",
+            link: "PROMOS.HTML"
+        },
+        {
+            url: "https://ik.imagekit.io/mbsk9dati/banner3.jpg?tr=w-800,q-80",
+            alt: "Descuentos Exclusivos",
+            link: "PROMOS.HTML"
+        }
+    ];
+    
+    // Limpiar contenido inicial
+    carouselContent.innerHTML = '';
+    
+    // Crear items del carrusel
+    carouselImages.forEach((image, index) => {
+        const carouselItem = document.createElement('div');
+        carouselItem.className = `carousel-item ${index === 0 ? 'active' : ''}`;
+        
+        carouselItem.innerHTML = `
+            <a href="${image.link}" class="d-block h-100">
+                <img src="${image.url}" 
+                     alt="${image.alt}" 
+                     class="w-100 h-100 imagen-completa">
+            </a>
+        `;
+        
+        carouselContent.appendChild(carouselItem);
+    });
+    
+    console.log('🎠 Carrusel configurado con', carouselImages.length, 'imágenes');
+});
+</script>
 </body>
 </html>
