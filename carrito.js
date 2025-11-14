@@ -1,175 +1,234 @@
-// ✅ Función para corregir el formato visual del enlace de imagen
-function corregirFormatoImagen(url) {
-  return url
-    .replace(/producto(\d+)/, "producto_$1")
-    .replace(/PRODUCTOSImages/, "PRODUCTOS_Images")
-    .replace(/IMAGEN(\d+)/, "IMAGEN_$1");
+// carrito.js - Sistema completo del carrito
+class CarritoManager {
+    constructor() {
+        this.articulosCarrito = [];
+        this.observers = [];
+        this.init();
+    }
+
+    init() {
+        this.cargarCarrito();
+        this.setupStorageListener();
+        console.log('🛒 CarritoManager inicializado');
+    }
+
+    cargarCarrito() {
+        const carritoGuardado = localStorage.getItem('carritoAnmago');
+        if (carritoGuardado) {
+            try {
+                this.articulosCarrito = JSON.parse(carritoGuardado);
+            } catch (e) {
+                console.error('Error cargando carrito:', e);
+                this.articulosCarrito = [];
+            }
+        }
+        window.articulosCarrito = this.articulosCarrito;
+        this.notificarObservers();
+    }
+
+    setupStorageListener() {
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'carritoAnmago') {
+                this.cargarCarrito();
+            }
+        });
+    }
+
+    agregarProducto(producto) {
+        const existe = this.articulosCarrito.find(item => 
+            item.id === producto.id && item.talla === producto.talla
+        );
+
+        if (existe) {
+            existe.cantidad += producto.cantidad || 1;
+        } else {
+            this.articulosCarrito.push({
+                ...producto,
+                cantidad: producto.cantidad || 1
+            });
+        }
+
+        this.guardarCarrito();
+        this.mostrarNotificacion('✅ Producto agregado al carrito');
+    }
+
+    eliminarProducto(id, talla) {
+        this.articulosCarrito = this.articulosCarrito.filter(item => 
+            !(item.id === id && item.talla === talla)
+        );
+        this.guardarCarrito();
+    }
+
+    actualizarCantidad(id, talla, nuevaCantidad) {
+        const producto = this.articulosCarrito.find(item => 
+            item.id === id && item.talla === talla
+        );
+        
+        if (producto) {
+            if (nuevaCantidad <= 0) {
+                this.eliminarProducto(id, talla);
+            } else {
+                producto.cantidad = nuevaCantidad;
+                this.guardarCarrito();
+            }
+        }
+    }
+
+    guardarCarrito() {
+        localStorage.setItem('carritoAnmago', JSON.stringify(this.articulosCarrito));
+        window.articulosCarrito = this.articulosCarrito;
+        this.notificarObservers();
+    }
+
+    // Sistema de observadores para actualización en tiempo real
+    agregarObserver(observer) {
+        this.observers.push(observer);
+    }
+
+    notificarObservers() {
+        this.observers.forEach(observer => observer(this.articulosCarrito));
+    }
+
+    obtenerTotalItems() {
+        return this.articulosCarrito.reduce((sum, item) => sum + (item.cantidad || 1), 0);
+    }
+
+    obtenerSubtotal() {
+        return this.articulosCarrito.reduce((total, item) => {
+            return total + (item.precio * item.cantidad);
+        }, 0);
+    }
+
+    mostrarNotificacion(mensaje) {
+        // Crear notificación toast simple
+        const toast = document.createElement('div');
+        toast.className = 'position-fixed bottom-0 end-0 p-3';
+        toast.style.zIndex = '9999';
+        toast.innerHTML = `
+            <div class="toast show" role="alert">
+                <div class="toast-body bg-success text-white rounded">
+                    <i class="bi bi-check-circle me-2"></i>
+                    ${mensaje}
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.remove();
+        }, 3000);
+    }
+
+    limpiarCarrito() {
+        this.articulosCarrito = [];
+        this.guardarCarrito();
+    }
 }
-// ✅ Carga inicial del carrito con corrección de enlaces
-window.articulosCarrito = window.articulosCarrito || JSON.parse(localStorage.getItem("carritoAnmago")) || [];
-let catalogo = [];
-window.articulosCarrito = window.articulosCarrito.map(p => {
-  if (p.imagen) p.imagen = corregirFormatoImagen(p.imagen);
-  return p;
-});
 
-async function cargarCatalogo() {
-  try {
-    const res = await fetch("https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json");
-    catalogo = await res.json();
-    console.log("✅ Catálogo cargado");
-  } catch (error) {
-    console.error("❌ Error al cargar catálogo:", error);
-  }
-}
-function guardarCarrito() {
-  try {
-    localStorage.setItem("carritoAnmago", JSON.stringify(articulosCarrito));
-    window.articulosCarrito = articulosCarrito;
-  } catch (e) {
-    console.error("❌ Error al guardar carrito:", e);
-  }
-}
+// 🚀 INICIALIZACIÓN GLOBAL
+let carritoManager;
 
-function abrirCarrito() {
-  const offcanvas = document.getElementById("offcanvasCarrito");
-  if (offcanvas) bootstrap.Offcanvas.getOrCreateInstance(offcanvas).show();
-}
-function cerrarCarrito() {
-  const offcanvas = document.getElementById("offcanvasCarrito");
-  if (offcanvas) bootstrap.Offcanvas.getOrCreateInstance(offcanvas).hide();
-}
-function actualizarSubtotal() {
-  const subtotal = articulosCarrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
-  const opciones = {
-    minimumFractionDigits: subtotal % 1 === 0 ? 0 : 2,
-    maximumFractionDigits: 2
-  };
-  const subtotalElement = document.getElementById("subtotal");
-  if (subtotalElement) subtotalElement.textContent = `$${subtotal.toLocaleString("es-CO", opciones)}`;
-}
-
-function actualizarContadorCarrito() {
-  const totalUnidades = articulosCarrito.reduce((acc, p) => acc + (p.cantidad || 1), 0);
-  document.querySelectorAll(".contador-carrito").forEach(el => {
-    el.textContent = totalUnidades;
-  });
-}
-
-
-function actualizarEstadoBotonWhatsApp() {
-  const btn = document.querySelector("button[onclick='generarPedidoWhatsApp()']");
-  if (btn) btn.disabled = articulosCarrito.length === 0;
-}
-
-function renderizarCarrito() {
-  const contenedor = document.getElementById("carrito-contenido");
-  if (!contenedor) return;
-  contenedor.innerHTML = "";
-
-  if (articulosCarrito.length === 0) {
-    contenedor.innerHTML = "<p class='text-center'>El carrito está vacío.</p>";
-    return;
-  }
-
-  articulosCarrito.forEach((producto, index) => {
-    contenedor.insertAdjacentHTML("beforeend", `
-      <div class="container mb-3">
-        <div class="row align-items-center border-bottom py-2">
-          <div class="col-3">
-            <img class="img-fluid rounded" src="${producto.imagen}" alt="${producto.nombre}" />
-          </div>
-          <div class="col-6">
-            <h6 class="mb-1 title-product">${producto.nombre}</h6>
-            <p class="mb-0 detalles-product">Talla: ${producto.talla || "No especificada"}</p>
-            <p class="mb-0 detalles-product">Cantidad: ${producto.cantidad}</p>
-            <p class="mb-0 detalles-product">Precio: $${producto.precio.toLocaleString("es-CO")}</p>
-          </div>
-          <div class="col-3 text-end">
-            <button class="boton-comprar" data-index="${index}" title="Eliminar">
-              <i class="bi bi-trash3"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    `);
-  });
-
-  contenedor.insertAdjacentHTML("beforeend", `
-    <div class="text-center mt-3">
-      <button class="btn btn-success w-100" id="btn-comprar">Comprar</button>
-    </div>
-  `);
-
-  document.querySelectorAll(".boton-comprar[data-index]").forEach(btn => {
-    btn.addEventListener("click", e => {
-      const index = parseInt(e.currentTarget.dataset.index);
-      articulosCarrito.splice(index, 1);
-      guardarCarrito();
-      renderizarCarrito();
-      actualizarSubtotal();
-      actualizarContadorCarrito();
-      actualizarEstadoBotonWhatsApp();
+function inicializarCarrito() {
+    carritoManager = new CarritoManager();
+    window.carritoManager = carritoManager;
+    
+    // Observer para actualizar UI automáticamente
+    carritoManager.agregarObserver(() => {
+        actualizarContadoresCarrito();
+        actualizarOffcanvasCarrito();
     });
-  });
 
-const btnComprar = document.getElementById("btn-comprar");
-if (btnComprar) {
-  btnComprar.addEventListener("click", () => {
-    // Redirige al formulario externo
-   window.open("modalformulario.html", "_blank", "width=800,height=700");
-  });
-}
+    return carritoManager;
 }
 
-function agregarAlCarrito(producto) {
-  if (producto.precioDescuento) producto.precio = producto.precioDescuento;
-
-  if (!producto.proveedor && producto.id && catalogo.length > 0) {
-    const desdeCatalogo = catalogo.find(p => producto.id.includes(p.id));
-    if (desdeCatalogo?.proveedor) producto.proveedor = desdeCatalogo.proveedor;
-  }
-
-  if (producto.imagen) {
-    producto.imagen = corregirFormatoImagen(producto.imagen);
-  }
-
-  const existe = articulosCarrito.find(p => p.id === producto.id);
-  if (existe) {
-    existe.cantidad = (existe.cantidad || 1) + 1;
-  } else {
-    producto.cantidad = 1;
-    articulosCarrito.push(producto);
-  }
-
-  guardarCarrito();
-  renderizarCarrito();
-  actualizarSubtotal();
-  actualizarContadorCarrito();
-  actualizarEstadoBotonWhatsApp();
-if (window.innerWidth < 768 && typeof window.mostrarAlertaCarrito === "function") {
-  window.mostrarAlertaCarrito(producto);
-} else {
-  abrirCarrito();
+// 🔢 ACTUALIZAR CONTADORES EN TIEMPO REAL
+function actualizarContadoresCarrito() {
+    const contador = document.getElementById('contador-carrito');
+    const contadorMobile = document.getElementById('contador-carrito-mobile');
+    
+    const totalItems = window.carritoManager ? window.carritoManager.obtenerTotalItems() : 0;
+    
+    [contador, contadorMobile].forEach(el => {
+        if (el) {
+            el.textContent = totalItems;
+            el.style.display = totalItems > 0 ? 'block' : 'none';
+        }
+    });
 }
 
+// 🛒 ACTUALIZAR OFFCANVAS EN TIEMPO REAL
+function actualizarOffcanvasCarrito() {
+    const contenedor = document.getElementById('carrito-contenido');
+    const subtotalElement = document.getElementById('subtotal');
+    
+    if (!contenedor || !window.carritoManager) return;
+
+    const carrito = window.carritoManager.articulosCarrito;
+
+    if (carrito.length === 0) {
+        contenedor.innerHTML = `
+            <div class="text-center text-muted py-4">
+                <i class="bi bi-bag-x fs-1"></i>
+                <p class="mt-2">Tu carrito está vacío</p>
+            </div>
+        `;
+        if (subtotalElement) subtotalElement.textContent = '$0';
+        return;
+    }
+
+    contenedor.innerHTML = carrito.map(item => `
+        <div class="card mb-2">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-3">
+                        <img src="${item.imagen}" alt="${item.nombre}" 
+                             class="img-fluid rounded" style="height: 60px; object-fit: cover;">
+                    </div>
+                    <div class="col-6">
+                        <h6 class="card-title mb-1 small">${item.nombre}</h6>
+                        <p class="card-text mb-1 small text-muted">Talla: ${item.talla}</p>
+                        <p class="card-text mb-0 fw-bold text-primary">$${item.precio?.toLocaleString('es-CO')}</p>
+                    </div>
+                    <div class="col-3">
+                        <div class="d-flex align-items-center">
+                            <button class="btn btn-sm btn-outline-secondary" 
+                                    onclick="carritoManager.actualizarCantidad('${item.id}', '${item.talla}', ${item.cantidad - 1})">-</button>
+                            <span class="mx-2">${item.cantidad}</span>
+                            <button class="btn btn-sm btn-outline-secondary"
+                                    onclick="carritoManager.actualizarCantidad('${item.id}', '${item.talla}', ${item.cantidad + 1})">+</button>
+                        </div>
+                        <button class="btn btn-sm btn-danger mt-1 w-100" 
+                                onclick="carritoManager.eliminarProducto('${item.id}', '${item.talla}')">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+
+    if (subtotalElement) {
+        const subtotal = window.carritoManager.obtenerSubtotal();
+        subtotalElement.textContent = `$${subtotal.toLocaleString('es-CO')}`;
+    }
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
-  await cargarCatalogo();
-  renderizarCarrito();
-  actualizarSubtotal();
-  actualizarContadorCarrito();
-  actualizarEstadoBotonWhatsApp();
-});
-window.addEventListener("message", (event) => {
-  if (event.data === "limpiarCarrito") {
-    window.articulosCarrito = [];
-    guardarCarrito();
-    renderizarCarrito?.();
-    actualizarSubtotal?.();
-    actualizarContadorCarrito?.();
-    actualizarEstadoBotonWhatsApp?.();
-    cerrarCarrito?.();
-  }
+// 📝 ABRIR FORMULARIO
+function abrirFormularioPedido() {
+    if (!window.carritoManager || window.carritoManager.articulosCarrito.length === 0) {
+        alert('Tu carrito está vacío');
+        return;
+    }
+    window.open('modalformulario.html', '_blank');
+}
+
+// 🎯 FUNCIONES GLOBALES
+window.actualizarContadoresCarrito = actualizarContadoresCarrito;
+window.abrirFormularioPedido = abrirFormularioPedido;
+window.actualizarOffcanvasCarrito = actualizarOffcanvasCarrito;
+
+// Inicializar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+    inicializarCarrito();
 });
