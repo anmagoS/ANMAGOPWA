@@ -257,5 +257,36 @@
     // El carrito ahora se maneja completamente en carrito.js
     // No necesitamos funciones duplicadas aquí
   </script>
+<script>
+// Sincronización de contadores para todas las páginas
+document.addEventListener('DOMContentLoaded', function() {
+    // Si el carrito no está inicializado, inicializarlo
+    if (!window.carritoManager) {
+        console.log('🔄 Inicializando carrito desde página secundaria');
+        
+        // Función simple de inicialización para páginas secundarias
+        const carritoGuardado = localStorage.getItem('carritoAnmago');
+        const carrito = carritoGuardado ? JSON.parse(carritoGuardado) : [];
+        const totalItems = carrito.reduce((total, item) => total + (item.cantidad || 1), 0);
+        
+        // Actualizar todos los contadores disponibles
+        ['contador-carrito', 'contador-carrito-mobile', 'contador-carrito-header'].forEach(id => {
+            const elemento = document.getElementById(id);
+            if (elemento) {
+                elemento.textContent = totalItems;
+                elemento.style.display = totalItems > 0 ? 'block' : 'none';
+                console.log(`✅ Contador ${id} actualizado:`, totalItems);
+            }
+        });
+    }
+    
+    // Escuchar cambios en el localStorage entre pestañas
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'carritoAnmago') {
+            location.reload(); // Recargar para sincronizar
+        }
+    });
+});
+</script>
 </body>
 </html>
