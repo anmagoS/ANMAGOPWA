@@ -3,128 +3,172 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Subtipos | Anmago Store</title> 
+  <title>Subtipos | Anmago Store - Los Mejores Precios</title>
+  <meta name="description" content="Explora nuestros subtipos de productos: ropa, relojería, hogar, belleza y más. Calidad garantizada en Anmago Store.">
+  
+  <!-- Preconexiones optimizadas -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://ik.imagekit.io">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+  <!-- PWA y favicon -->
+  <link rel="manifest" href="manifest.json">
   <link rel="icon" href="logo.jpg" type="image/x-icon" />
-<!-- 🔁 Versión institucional centralizada -->
-<script>
-  const VERSION_ANMAGO = '20251110'; // ← actualiza este valor cada vez que edites JS o CSS
-  // 🎯 Carga modular de scripts institucionales
-  const scriptsAnmago = [
-    { src: 'app.js', defer: true },
-    { src: 'carrito.js', defer: true },
-    { src: 'buscador.js', type: 'module' }
-  ];
 
-  scriptsAnmago.forEach(({ src, defer, type }) => {
-    const s = document.createElement('script');
-    s.src = `${src}?v=${VERSION_ANMAGO}`;
-    if (defer) s.defer = true;
-    if (type) s.type = type;
-    document.head.appendChild(s);
-  });
-
-  // 🎨 Carga modular del CSS institucional
-  const cssAnmago = document.createElement('link');
-  cssAnmago.rel = 'stylesheet';
-  cssAnmago.href = `https://ik.imagekit.io/mbsk9dati/CODIGOS/ESTILO.CSS?v=${VERSION_ANMAGO}`;
-  cssAnmago.media = 'print';
-  cssAnmago.onload = () => { cssAnmago.media = 'all'; };
-  document.head.appendChild(cssAnmago);
-</script>
-
+  <!-- Bootstrap e iconos -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-</head>
-<body>
-  <!-- HEADER -->
-  <div id="header-container"></div>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
 
-  <!-- BUSCADOR MODULAR -->
-  <div class="container mt-4 position-relative" style="max-width: 500px;">
-    <input id="buscador" class="form-control" placeholder="Buscar productos, categorías, precios..." autocomplete="off">
-    <div id="sugerencias" class="dropdown-menu position-absolute mt-1 w-100 z-3"></div>
+  <!-- CSS optimizado -->
+<link rel="stylesheet" href="https://ik.imagekit.io/mbsk9dati/CODIGOS/ESTILO.CSS?v=20251115" />
+</head>
+
+<body class="bg-light">
+  <!-- Scripts optimizados -->
+  <script src="app.js?v=20251115" defer></script>
+  <script src="carrito.js?v=20251115" defer></script>
+  <script src="buscador.js?v=20251115" type="module"></script>
+
+  <!-- HEADER STICKY -->
+  <div id="header-container" class="header-sticky"></div>
+
+  <!-- BANNER PROMOCIONAL -->
+  <div class="container-fluid banner-promocional py-2">
+    <div class="container text-center">
+      <small class="fw-bold">⭐ Los mejores precios ⭐ Calidad garantizada</small>
+    </div>
   </div>
 
-<!-- BOTÓN FLOTANTE DEL CARRITO -->
-  <a href="#" class="btn btn_shopping d-none d-md-block" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito" style="position:fixed; top:60px;">
-    <i class="bi bi-bag-heart"></i>
-    <span id="contador-carrito" class="contador-carrito">0</span>
-  </a>
+  <!-- BUSCADOR TIPO MERCADOLIBRE -->
+  <div class="container mt-3">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8">
+        <div class="position-relative">
+          <input id="buscador" class="form-control buscador-ml" 
+                 placeholder="Buscar productos, marcas y más..." 
+                 autocomplete="on">
+          <div id="sugerencias" class="dropdown-menu position-absolute mt-1 w-100 z-3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- BOTÓN ATRÁS -->
   <div class="container mt-3">
     <a href="javascript:history.back()" class="btn btn-outline-dark">
-      <i class="bi bi-arrow-left"></i> Atrás
+      <i class="bi bi-arrow-left"></i> Volver atrás
     </a>
   </div>
 
-  <!-- PROMOCIÓN -->
-  <div class="container-fluid text-center mt-3 px-3">
-    <a href="PROMOS.HTML" class="btn btn-gradient fw-bold">
-      🎁 Ver promociones exclusivas
+  <!-- BOTÓN PROMOCIONES -->
+  <div class="container text-center mt-3">
+    <a href="PROMOS.HTML" class="btn btn-warning fw-bold px-4 py-2 rounded-pill">
+      🎁 Ofertas Especiales
     </a>
   </div>
 
-  <!-- CONTENIDO PRINCIPAL -->
-  <main class="contenedor-categoria">
-    <h1 class="titulo-categoria text-center" id="titulo-subtipos">Subtipos</h1>
-    <div id="grid-subtipos" class="grid-productos"></div>
+  <!-- CONTENIDO PRINCIPAL - SUBTIPOS -->
+  <main class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1 class="h4 fw-bold mb-0" id="titulo-subtipos">Subtipos</h1>
+    </div>
+    
+    <div id="grid-subtipos" class="grid-productos-ml">
+      <!-- Los subtipos se cargan dinámicamente -->
+      <div class="card-producto-ml skeleton" style="height: 280px;"></div>
+      <div class="card-producto-ml skeleton" style="height: 280px;"></div>
+      <div class="card-producto-ml skeleton" style="height: 280px;"></div>
+      <div class="card-producto-ml skeleton" style="height: 280px;"></div>
+    </div>
   </main>
 
-  <!-- SECCIÓN INFERIOR: TIPOS -->
-  <section class="contenedor-categoria">
-    <h2 class="titulo-categoria text-center">Explora más productos</h2>
-    <div id="seccion-tipos" class="grid-productos"></div>
+  <!-- SECCIÓN TIPOS RELACIONADOS -->
+  <section class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="h4 fw-bold mb-0">✨ Explora más categorías</h2>
+    </div>
+    
+    <div id="seccion-tipos" class="grid-productos-ml">
+      <!-- Los tipos se cargan dinámicamente -->
+      <div class="card-producto-ml skeleton" style="height: 280px;"></div>
+      <div class="card-producto-ml skeleton" style="height: 280px;"></div>
+      <div class="card-producto-ml skeleton" style="height: 280px;"></div>
+    </div>
   </section>
 
   <!-- CARRITO OFFCANVAS -->
   <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito">
     <div class="offcanvas-header border-bottom">
-      <h4 class="offcanvas-title text-center">Carrito de compras</h4>
+      <h4 class="offcanvas-title fw-bold">🛒 Tu Carrito</h4>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
     </div>
-    <div class="offcanvas-body border-bottom" id="carrito-contenido"></div>
-    <div class="offcanvas-footer mt-4">
-      <h5 class="justify-content-between mb-2">
-        <span class="fw-bold px-3">SUBTOTAL:</span>
-        <span id="subtotal" class="fw-bold float-end px-2 fs-2">$0.00</span>
-      </h5>
+    <div class="offcanvas-body" id="carrito-contenido">
+      <div class="text-center text-muted py-4">
+        <i class="bi bi-bag-x fs-1"></i>
+        <p class="mt-2">Tu carrito está vacío</p>
+      </div>
+    </div>
+    <div class="offcanvas-footer p-3 border-top">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <span class="fw-bold">Subtotal:</span>
+        <span id="subtotal" class="fw-bold fs-5 text-primary">$0</span>
+      </div>
+      <button class="btn btn-primary w-100 py-2 fw-bold" onclick="abrirFormularioPedido()">
+        Continuar compra
+      </button>
     </div>
   </div>
 
+  <!-- BOTÓN CARRITO FLOTANTE -->
+  <a href="#" class="btn-carrito-flotante d-none d-md-flex" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
+    <i class="bi bi-bag-heart fs-5"></i>
+    <span id="contador-carrito" class="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill" style="font-size: 0.7rem;">0</span>
+  </a>
+
   <!-- FOOTER -->
-  <div id="footer-container"></div>
-  <!-- SCRIPTS EXTERNOS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- BARRA INFERIOR FIJA -->
-  <nav class="barra-inferior fixed-bottom bg-light border-top d-flex justify-content-around py-2 d-md-none">
-    <a href="INICIO.HTML" class="text-center text-dark text-decoration-none">
-      <i class="bi bi-house fs-4"></i><br><small>Inicio</small>
-    </a>
-    <a href="PROMOS.HTML" class="text-center text-dark text-decoration-none">
-      <i class="bi bi-gift fs-4"></i><br><small>Promos</small>
-    </a>
-<!-- 🔴 Carrito centrado y resaltado con contador flotante -->
-<a href="#" class="text-center text-decoration-none position-relative"
-   data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito"
-   style="color:#fff; background:#1b4759; border-radius:50%; width:60px; height:60px; display:flex; align-items:center; justify-content:center;">
-  <i class="bi bi-bag-heart fs-4"></i>
-  <span class="contador-carrito">0</span>
-</a>
+  <div id="footer-container" class="mt-5"></div>
 
-
-    <a href="modalformulario.html" class="text-center text-dark text-decoration-none">
-      <i class="bi bi-person-plus fs-4"></i><br><small>Registro</small>
-    </a>
-    <a href="#video" class="text-center text-dark text-decoration-none">
-      <i class="bi bi-play-circle fs-4"></i><br><small>Video</small>
-    </a>
+  <!-- BARRA INFERIOR MOBILE -->
+  <nav class="navbar fixed-bottom bg-white border-top d-md-none py-2">
+    <div class="container-fluid">
+      <div class="d-flex justify-content-around w-100">
+        <a href="INICIO.HTML" class="text-center text-decoration-none text-primary">
+          <i class="bi bi-house-fill fs-5"></i>
+          <div class="small">Inicio</div>
+        </a>
+        <a href="PROMOS.HTML" class="text-center text-decoration-none text-dark">
+          <i class="bi bi-percent fs-5"></i>
+          <div class="small">Ofertas</div>
+        </a>
+        <a href="#" class="text-center text-decoration-none position-relative"
+           data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
+          <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center" 
+               style="width: 50px; height: 50px; margin-top: -8px;">
+            <i class="bi bi-bag-heart fs-5 text-white"></i>
+          </div>
+          <span id="contador-carrito-mobile" class="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill" style="font-size: 0.6rem;">0</span>
+          <div class="small mt-1">Carrito</div>
+        </a>
+        <a href="CATEGORIAS.HTML" class="text-center text-decoration-none text-dark">
+          <i class="bi bi-grid fs-5"></i>
+          <div class="small">Categorías</div>
+        </a>
+        <a href="modalformulario.html" class="text-center text-decoration-none text-dark">
+          <i class="bi bi-person fs-5"></i>
+          <div class="small">Cuenta</div>
+        </a>
+      </div>
+    </div>
   </nav>
 
-  <!-- INICIALIZACIÓN -->
+  <!-- SCRIPTS EXTERNOS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+
+  <!-- JAVASCRIPT OPTIMIZADO -->
   <script type="module">
     import { activarBuscadorGlobal } from './buscador.js';
 
+    // 🖼️ Imágenes por subtipo
     const imagenesPorSubtipo = {
       "dama": "https://ik.imagekit.io/mbsk9dati/subtipos/ícono%20realista%20para%20.png?tr=w-300,q-80",
       "caballero": "https://ik.imagekit.io/mbsk9dati/subtipos/ícono%20realista%20para%20h.png?tr=w-300,q-80",
@@ -145,121 +189,158 @@
       "decoración navideña": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/navidad_decoracion.jpg?tr=w-300,q-80"
     };
 
+    // 🎯 Obtener tipo desde URL
     function getTipoDesdeURL() {
       const params = new URLSearchParams(window.location.search);
       return params.get("tipo")?.trim();
     }
 
+    // 📥 Cargar catálogo
     async function cargarCatalogo() {
       try {
-        const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json";
+        const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json?v=" + Date.now();
         const respuesta = await fetch(url);
         const productos = await respuesta.json();
         window.catalogoGlobal = productos;
-        renderSubtipos(productos);
-        renderizarTiposDesdeCatalogo(productos);
+        renderSubtiposML(productos);
+        renderizarTiposML(productos);
       } catch (error) {
-        document.getElementById("grid-subtipos").innerHTML = `<p class="text-center text-danger">Error al cargar el catálogo.</p>`;
+        console.error("❌ Error cargando catálogo:", error);
+        mostrarErrorSubtipos();
       }
     }
 
-    function renderSubtipos(productos) {
+    // 🎨 Renderizar subtipos estilo MercadoLibre
+    function renderSubtiposML(productos) {
       const tipoSeleccionado = getTipoDesdeURL();
       const contenedor = document.getElementById("grid-subtipos");
+      
       if (!tipoSeleccionado || !contenedor) {
-        contenedor.innerHTML = `<p class="text-center text-muted">No se ha seleccionado ningún tipo.</p>`;
+        contenedor.innerHTML = '<div class="col-12 text-center py-4"><p class="text-muted">No se ha seleccionado ningún tipo.</p></div>';
         return;
       }
 
-      document.getElementById("titulo-subtipos").textContent = `SELECCIÓN DE ${tipoSeleccionado}`;
-      contenedor.innerHTML = "";
+      // Actualizar título
+      document.getElementById("titulo-subtipos").textContent = tipoSeleccionado;
 
       const productosFiltrados = productos.filter(p => p.tipo?.trim() === tipoSeleccionado);
       const subtiposUnicos = [...new Set(productosFiltrados.map(p => p.subtipo?.trim()).filter(Boolean))];
 
       if (subtiposUnicos.length === 0) {
-        contenedor.innerHTML = `<p class="text-center text-muted">No hay subtipos disponibles para este tipo.</p>`;
+        contenedor.innerHTML = '<div class="col-12 text-center py-4"><p class="text-muted">No hay subtipos disponibles.</p></div>';
         return;
       }
 
-      subtiposUnicos.forEach(subtipo => {
+      contenedor.innerHTML = subtiposUnicos.map(subtipo => {
         const productoRef = productosFiltrados.find(p => p.subtipo?.trim() === subtipo);
-        const imagen = imagenesPorSubtipo[subtipo.toLowerCase()]?.trim() || productoRef?.imagen?.trim() || "REDES_IMAGES/default-subtipo.jpg";
-        const tarjeta = document.createElement("div");
-        tarjeta.className = "producto";
-        tarjeta.innerHTML = `
-          <a href="CATEGORIAS.HTML?tipo=${encodeURIComponent(tipoSeleccionado)}&subtipo=${encodeURIComponent(subtipo)}" class="imagen-producto">
-            <img src="${imagen}" alt="${subtipo}">
-          </a>
-          <div class="nombre-producto">${subtipo}</div>
-          <a class="boton-comprar" href="CATEGORIAS.HTML?tipo=${encodeURIComponent(tipoSeleccionado)}&subtipo=${encodeURIComponent(subtipo)}">Ver más</a>
+        const imagen = imagenesPorSubtipo[subtipo.toLowerCase()]?.trim() || productoRef?.imagen?.trim() || "https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg";
+        
+        return `
+          <div class="card-producto-ml">
+            <a href="CATEGORIAS.HTML?tipo=${encodeURIComponent(tipoSeleccionado)}&subtipo=${encodeURIComponent(subtipo)}" class="text-decoration-none">
+              <img src="${imagen}" 
+                   alt="${subtipo}" 
+                   class="card-img-ml" 
+                   loading="lazy"
+                   onerror="this.src='https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg'">
+              <div class="card-body-ml">
+                <h3 class="nombre-producto-ml small text-dark mb-2">${subtipo}</h3>
+                <div class="d-grid">
+                  <span class="btn btn-outline-primary btn-sm">Ver productos</span>
+                </div>
+              </div>
+            </a>
+          </div>
         `;
-        contenedor.appendChild(tarjeta);
-      });
+      }).join('');
     }
 
-    function renderizarTiposDesdeCatalogo(productos) {
+    // 🎨 Renderizar tipos relacionados
+    function renderizarTiposML(productos) {
       const tipoActual = getTipoDesdeURL();
       const contenedor = document.getElementById("seccion-tipos");
       if (!contenedor) return;
 
-      const tiposUnicos = [...new Set(productos.map(p => p.tipo?.trim()).filter(Boolean))].filter(tipo => tipo && tipo !== tipoActual);
-      contenedor.innerHTML = "";
+      const tiposUnicos = [...new Set(productos.map(p => p.tipo?.trim()).filter(Boolean))]
+        .filter(tipo => tipo && tipo !== tipoActual)
+        .slice(0, 6); // Limitar a 6 tipos
 
       if (tiposUnicos.length === 0) {
-        contenedor.innerHTML = `<p class="text-center text-muted">No hay otros tipos disponibles en este momento.</p>`;
+        contenedor.innerHTML = '<div class="col-12 text-center py-4"><p class="text-muted">No hay otras categorías disponibles.</p></div>';
         return;
       }
 
-      tiposUnicos.forEach(tipo => {
+      contenedor.innerHTML = tiposUnicos.map(tipo => {
         const productoRef = productos.find(p => p.tipo?.trim() === tipo);
-        const imagen = productoRef?.imagen || "REDES_IMAGES/default-categoria.jpg";
-        const tarjeta = document.createElement("div");
-        tarjeta.className = "producto";
-        tarjeta.innerHTML = `
-          <a href="SUBTIPOS.HTML?tipo=${encodeURIComponent(tipo)}" class="imagen-producto">
-            <img src="${imagen}" alt="${tipo}">
-          </a>
-          <div class="nombre-producto">${tipo}</div>
-          <a class="boton-comprar" href="SUBTIPOS.HTML?tipo=${encodeURIComponent(tipo)}">Ver Más</a>
+        const imagen = productoRef?.imagen || "https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg";
+        
+        return `
+          <div class="card-producto-ml">
+            <a href="SUBTIPOS.HTML?tipo=${encodeURIComponent(tipo)}" class="text-decoration-none">
+              <img src="${imagen}" 
+                   alt="${tipo}" 
+                   class="card-img-ml" 
+                   loading="lazy"
+                   onerror="this.src='https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg'">
+              <div class="card-body-ml">
+                <h3 class="nombre-producto-ml small text-dark mb-2">${tipo}</h3>
+                <div class="d-grid">
+                  <span class="btn btn-outline-primary btn-sm">Explorar</span>
+                </div>
+              </div>
+            </a>
+          </div>
         `;
-        contenedor.appendChild(tarjeta);
-      });
+      }).join('');
     }
 
-    function ajustarCarrito() {
-      const header = document.querySelector(".header");
-      const carritoBtn = document.querySelector(".btn_shopping");
-      if (header && carritoBtn) {
-        const alturaHeader = header.offsetHeight;
-        carritoBtn.style.top = `${alturaHeader + 12}px`;
+    // ❌ Mostrar error
+    function mostrarErrorSubtipos() {
+      const contenedor = document.getElementById("grid-subtipos");
+      if (contenedor) {
+        contenedor.innerHTML = `
+          <div class="col-12 text-center py-5">
+            <i class="bi bi-emoji-frown fs-1 text-muted"></i>
+            <p class="text-muted mt-2">No pudimos cargar los subtipos</p>
+            <button class="btn btn-outline-primary mt-2" onclick="cargarCatalogo()">
+              <i class="bi bi-arrow-clockwise"></i> Reintentar
+            </button>
+          </div>
+        `;
       }
     }
 
+    // 🚀 Inicialización
     document.addEventListener("DOMContentLoaded", async () => {
-      const header = await fetch("HEADER.HTML").then(res => res.text());
-      document.getElementById("header-container").insertAdjacentHTML("afterbegin", header);
-      await new Promise(resolve => requestAnimationFrame(resolve));
-      ajustarCarrito();
+      // Cargar header
+      try {
+        const header = await fetch("HEADER.HTML").then(res => res.text());
+        document.getElementById("header-container").innerHTML = header;
+      } catch (error) {
+        console.error("Error cargando header:", error);
+      }
 
-      document.querySelector(".btn_shopping")?.addEventListener("click", e => {
-        e.preventDefault();
-        const offcanvas = document.getElementById("offcanvasCarrito");
-        if (offcanvas) {
-          const instancia = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
-          instancia.show();
-        }
-      });
+      // Cargar footer
+      try {
+        const footer = await fetch("footer.html").then(res => res.text());
+        document.getElementById("footer-container").innerHTML = footer;
+      } catch (error) {
+        console.error("Error cargando footer:", error);
+      }
 
+      // Activar buscador
       activarBuscadorGlobal();
 
-      const footer = await fetch("footer.html").then(res => res.text());
-      document.getElementById("footer-container").innerHTML = footer;
-
-      await cargarCatalogo();
+      // Cargar catálogo
+      setTimeout(cargarCatalogo, 100);
     });
+
+    // 🌐 Funciones globales
+    window.abrirFormularioPedido = function() {
+      window.open('modalformulario.html', '_blank');
+    };
+
+    window.cargarCatalogo = cargarCatalogo;
   </script>
-
-
 </body>
 </html>
