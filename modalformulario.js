@@ -43,8 +43,8 @@ function inicializarFormulario() {
     // 📱 EVENTO PARA TELÉFONO - Búsqueda automática
     const telefonoInput = document.getElementById('telefonoCliente');
     if (telefonoInput) {
-        telefonoInput.addEventListener('input', debounce(async function() {
-            const telefono = this.value.trim();
+       telefonoInput.addEventListener('input', debounce(async function(event) {
+    const telefono = event.target.value.trim();
             
             console.log('📞 Teléfono ingresado:', telefono);
             
