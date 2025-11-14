@@ -7,12 +7,49 @@ if (window.opener && Array.isArray(window.opener.articulosCarrito)) {
 }
 
 // Detectar si viene del carrito
+// 🔍 Cargar productos desde URL parameters
+function cargarProductosDesdeURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const productosParam = urlParams.get('productos');
+    
+    if (productosParam) {
+        try {
+            window.articulosCarrito = JSON.parse(decodeURIComponent(productosParam));
+            console.log('🛒 Productos cargados desde URL:', window.articulosCarrito);
+            return true;
+        } catch (error) {
+            console.error('❌ Error parseando productos:', error);
+        }
+    }
+    
+    // Si no hay productos en URL, verificar localStorage
+    const carritoLocal = localStorage.getItem('carritoAnmago');
+    if (carritoLocal) {
+        try {
+            window.articulosCarrito = JSON.parse(carritoLocal);
+            console.log('🛒 Productos cargados desde localStorage:', window.articulosCarrito);
+            return true;
+        } catch (error) {
+            console.error('❌ Error parseando localStorage:', error);
+        }
+    }
+    
+    return false;
+}
+
+// Detectar si viene del carrito
 function detectarOrigen() {
     const urlParams = new URLSearchParams(window.location.search);
     const desdeCarrito = urlParams.get('carrito') === 'true';
-    const hayProductos = Array.isArray(window.articulosCarrito) && window.articulosCarrito.length > 0;
+    const hayProductos = cargarProductosDesdeURL();
     
-    return desdeCarrito || hayProductos;
+    console.log('🎯 Origen detectado:', { 
+        desdeCarrito, 
+        hayProductos, 
+        productos: window.articulosCarrito 
+    });
+    
+    return desdeCarrito && hayProductos;
 }
 
 // 🆕 FUNCIÓN FALTANTE - AGREGAR ESTA
