@@ -240,9 +240,24 @@ function abrirFormularioPedido() {
         alert('Tu carrito está vacío');
         return;
     }
-    window.open('modalformulario.html', '_blank');
+    
+    // Obtener los productos del carrito
+    const carrito = window.carritoManager.articulosCarrito;
+    console.log('🛒 Carrito a enviar:', carrito);
+    
+    // Crear URL con parámetros
+    const productosParam = encodeURIComponent(JSON.stringify(carrito));
+    const url = `modalformulario.html?carrito=true&productos=${productosParam}`;
+    
+    // Abrir como ventana emergente
+    const width = 600;
+    const height = 700;
+    const left = (screen.width - width) / 2;
+    const top = (screen.height - height) / 2;
+    
+    window.open(url, 'FormularioPedido', 
+        `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes`);
 }
-
 // 🎯 FUNCIONES GLOBALES
 window.abrirFormularioPedido = abrirFormularioPedido;
 window.actualizarOffcanvasCarrito = actualizarOffcanvasCarrito;
