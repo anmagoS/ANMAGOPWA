@@ -4,141 +4,168 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Registro Cliente | Anmago Store</title>
-  <link rel="stylesheet" href="https://ik.imagekit.io/mbsk9dati/CODIGOS/ESTILO.CSS">
-  <link rel="icon" href="logo.jpg" type="image/x-icon" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-</head>
-<body>
-   <div id="header-container"></div>
+  <meta name="description" content="Completa tu registro de cliente para realizar pedidos en Anmago Store">
   
-<div class="container mt-3">
-  <button type="button" class="btn btn-outline-dark" onclick="location.reload()">
-    <i class="bi bi-arrow-clockwise"></i> Refrescar
-  </button>
-</div>
+  <!-- Preconexiones optimizadas -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://ik.imagekit.io">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+  <!-- PWA y favicon -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="logo.jpg" type="image/x-icon" />
+
+  <!-- Bootstrap e iconos -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+
+  <!-- CSS optimizado -->
+  <link rel="stylesheet" href="ESTILO.CSS?v=20251115" />
+</head>
+
+<body class="bg-light">
+  <!-- HEADER -->
+  <div id="header-container"></div>
+  
+  <!-- BOTÓN REFRESCAR -->
+  <div class="container mt-3">
+    <button type="button" class="btn btn-outline-dark" onclick="location.reload()">
+      <i class="bi bi-arrow-clockwise"></i> Refrescar
+    </button>
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL -->
   <main class="container py-4">
     <h2 class="mb-4 text-center">Registro Cliente</h2>
 
     <form id="formCliente">
       <input type="hidden" id="clienteId">
 
+      <!-- Celular principal -->
+      <div class="mb-3">
+        <label for="telefonoCliente" class="form-label">Celular</label>
+        <input type="tel" class="form-control" id="telefonoCliente" placeholder="Ej: 3001234567" maxlength="10" required>
+        <div class="form-text">Debe comenzar por 3 y tener 10 dígitos.</div>
+      </div>
 
-        <!-- Celular principal -->
-          <div class="mb-3">
-            <label for="telefonoCliente" class="form-label">Celular</label>
-            <input type="tel" class="form-control" id="telefonoCliente" placeholder="Ej: 3001234567" maxlength="10">
-            <div class="form-text">Debe comenzar por 3 y tener 10 dígitos.</div>
-          </div>
-          <!-- Nombre -->
-          <div class="mb-3">
-            <label for="nombreCliente" class="form-label">Nombres y Apellidos</label>
-            <input type="text" class="form-control" id="nombreCliente">
-          </div>
+      <!-- Nombre -->
+      <div class="mb-3">
+        <label for="nombreCliente" class="form-label">Nombres y Apellidos</label>
+        <input type="text" class="form-control" id="nombreCliente" required>
+      </div>
 
-       
-          
-      
-<div class="mb-3">
-  <label for="observacionDireccion" class="form-label">Dirección Completa</label>
-  <textarea id="DireccionCompleta" class="form-control" rows="2" maxlength="200" placeholder="Ej: calle, carrera, avenida, transversal, etc. "></textarea>
-   <div class="form-text">Recuerda colocar tu direccion exacta para evitar contratiempos en tu entrega.</div>
-</div>
-      
+      <!-- Dirección Completa -->
+      <div class="mb-3">
+        <label for="DireccionCompleta" class="form-label">Dirección Completa</label>
+        <textarea id="DireccionCompleta" class="form-control" rows="2" maxlength="200" 
+                  placeholder="Ej: calle, carrera, avenida, transversal, etc." required></textarea>
+        <div class="form-text">Recuerda colocar tu dirección exacta para evitar contratiempos en tu entrega.</div>
+      </div>
 
-  <div class="col-4">
-    <label for="tipoUnidad" class="form-label">Tipo de unidad</label>
-    <select id="tipoUnidad" class="form-select">
-      <option value="">Selecciona</option>
-      <option value="Casa">CASA</option>
-      <option value="Apartamento">APARTAMENTO</option>
-      <option value="Piso">PISO</option>
-      <option value="Bodega">BODEGA</option>
-      <option value="Interior">INTERIOR</option>
-    </select>
-  </div>
-  <div class="col-4">
-    <label for="numeroApto" class="form-label">Número</label>
-    <input type="text" class="form-control" id="numeroApto" maxlength="4" inputmode="numeric" pattern="\d{1,4}" title="Solo números entre 0 y 9999">
-  </div>
-</div>
+      <!-- Tipo de Unidad y Número -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="tipoUnidad" class="form-label">Tipo de unidad</label>
+          <select id="tipoUnidad" class="form-select">
+            <option value="">Selecciona</option>
+            <option value="Casa">CASA</option>
+            <option value="Apartamento">APARTAMENTO</option>
+            <option value="Piso">PISO</option>
+            <option value="Bodega">BODEGA</option>
+            <option value="Interior">INTERIOR</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label for="numeroApto" class="form-label">Número</label>
+          <input type="text" class="form-control" id="numeroApto" maxlength="4" inputmode="numeric" 
+                 pattern="\d{1,4}" title="Solo números entre 0 y 9999">
+        </div>
+      </div>
 
-          <!-- Barrio -->
-          <div class="mb-3">
-            <label for="barrio" class="form-label">Barrio (opcional)</label>
-            <input type="text" class="form-control" id="barrio" maxlength="50">
-          </div>
-      
-<!-- Observación adicional -->
-<div class="mb-3">
-  <label for="observacionDireccion" class="form-label">Punto de referencia</label>
-  <textarea id="observacionDireccion" class="form-control" rows="2" maxlength="200" placeholder="Ej: entrada por portería, conjunto.., torre, casa color..., etc."></textarea>
-</div>
-          <!-- Ciudad con autocompletado -->
-          <div class="mb-3 position-relative">
-            <label for="ciudadCliente" class="form-label">Ciudad</label>
-            <input type="text" id="ciudadCliente" class="form-control" placeholder="Escribe tu ciudad" autocomplete="off">
-            <ul id="sugerenciasCiudades" class="dropdown-menu w-100 mt-0 z-3"></ul>
-          </div>
+      <!-- Barrio -->
+      <div class="mb-3">
+        <label for="barrio" class="form-label">Barrio (opcional)</label>
+        <input type="text" class="form-control" id="barrio" maxlength="50">
+      </div>
 
-          <!-- Correo electrónico -->
-          <div class="mb-3">
-            <label for="emailCliente" class="form-label">Correo electrónico</label>
-            <input type="email" class="form-control" id="emailCliente">
-          </div>
+      <!-- Observación adicional -->
+      <div class="mb-3">
+        <label for="observacionDireccion" class="form-label">Punto de referencia</label>
+        <textarea id="observacionDireccion" class="form-control" rows="2" maxlength="200" 
+                  placeholder="Ej: entrada por portería, conjunto.., torre, casa color..., etc."></textarea>
+      </div>
 
-        </form>
-          <div class="text-center mt-3">
-      <button id="btnEnviarPedido" class="btn btn-gradient" disabled>Enviar pedido</button>
-    </div>
+      <!-- Ciudad con autocompletado -->
+      <div class="mb-3 position-relative">
+        <label for="ciudadCliente" class="form-label">Ciudad</label>
+        <input type="text" id="ciudadCliente" class="form-control" placeholder="Escribe tu ciudad" autocomplete="off" required>
+        <ul id="sugerenciasCiudades" class="dropdown-menu w-100 mt-0 z-3"></ul>
+      </div>
+
+      <!-- Correo electrónico -->
+      <div class="mb-3">
+        <label for="emailCliente" class="form-label">Correo electrónico</label>
+        <input type="email" class="form-control" id="emailCliente">
+      </div>
+
+      <!-- Botón Enviar -->
+      <div class="text-center mt-4">
+        <button id="btnEnviarPedido" class="btn btn-primary btn-lg w-100" disabled>
+          <i class="bi bi-send"></i> Enviar pedido
+        </button>
+      </div>
+    </form>
   </main>
 
-  <!-- Bootstrap JS (si usas componentes como dropdowns o autocompletado) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  
+  <!-- SCRIPTS EXTERNOS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- VALIDACIONES BÁSICAS -->
   <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const camposNumericos = [
-      "telefonoCliente",
-      "numeroVia",
-      "numeroAdicional1",
-      "numeroAdicional2",
-      "numeroApto"
-    ];
+    document.addEventListener("DOMContentLoaded", () => {
+      // Validación de campos numéricos
+      const camposNumericos = ["telefonoCliente", "numeroApto"];
 
-    camposNumericos.forEach(id => {
-      const campo = document.getElementById(id);
-      if (!campo) return;
+      camposNumericos.forEach(id => {
+        const campo = document.getElementById(id);
+        if (!campo) return;
 
-      campo.addEventListener("input", () => {
-        const valor = campo.value;
-        if (!/^\d*$/.test(valor)) {
-          campo.value = valor.replace(/\D/g, "");
-          alert("⚠️ Solo se permiten números en este campo.");
-        }
+        campo.addEventListener("input", () => {
+          const valor = campo.value;
+          if (!/^\d*$/.test(valor)) {
+            campo.value = valor.replace(/\D/g, "");
+          }
+        });
       });
-    });
-  });
-</script>
-  <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const campoTelefono = document.getElementById("telefonoCliente");
 
-    campoTelefono.addEventListener("input", () => {
-      const valor = campoTelefono.value.trim();
-      const esValido = /^3\d{9}$/.test(valor);
+      // Validación específica de teléfono
+      const campoTelefono = document.getElementById("telefonoCliente");
+      if (campoTelefono) {
+        campoTelefono.addEventListener("input", () => {
+          const valor = campoTelefono.value.trim();
+          const esValido = /^3\d{9}$/.test(valor);
 
-      // Si no es válido, muestra alerta visual
-      if (!esValido && valor.length === 10) {
-        campoTelefono.classList.add("is-invalid");
-        campoTelefono.setCustomValidity("El número debe comenzar por 3 y tener 10 dígitos.");
-      } else {
-        campoTelefono.classList.remove("is-invalid");
-        campoTelefono.setCustomValidity("");
+          if (!esValido && valor.length === 10) {
+            campoTelefono.classList.add("is-invalid");
+          } else {
+            campoTelefono.classList.remove("is-invalid");
+          }
+        });
       }
+
+      // Cargar header
+      fetch("HEADER.HTML")
+        .then(res => res.text())
+        .then(header => {
+          document.getElementById("header-container").innerHTML = header;
+        })
+        .catch(error => {
+          console.error("Error cargando header:", error);
+        });
     });
-  });
-</script>
-<script src="modalformulario.js" defer></script>
+  </script>
+
+  <!-- SCRIPT PRINCIPAL DEL FORMULARIO -->
+  <script src="modalformulario.js?v=20251115" defer></script>
 </body>
 </html>
