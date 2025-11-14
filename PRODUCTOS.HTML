@@ -346,7 +346,15 @@
       } catch (error) {
         console.error("Error cargando header:", error);
       }
-
+ // Actualizar contadores del carrito
+    function actualizarContadoresCarrito() {
+      const contador = document.getElementById('contador-carrito');
+      const contadorMobile = document.getElementById('contador-carrito-mobile');
+      const count = window.articulosCarrito ? window.articulosCarrito.reduce((sum, item) => sum + item.cantidad, 0) : 0;
+      
+      if (contador) contador.textContent = count;
+      if (contadorMobile) contadorMobile.textContent = count;
+    }
       // Cargar footer
       try {
         const footer = await fetch("footer.html").then(res => res.text());
