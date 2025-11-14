@@ -1,18 +1,11 @@
-// 🔥 CÓDIGO OPTIMIZADO - ÚLTIMOS PRODUCTOS ESTILO MERCADOLIBRE (SIN ENVÍOS GRATIS)
+// MODULOULTIMOS.JS - Solo últimos productos
+const VERSION_ANMAGO = new Date().getTime();
 
-// ✅ Configuración global
-const VERSION_ANMAGO = new Date().getTime(); // Cache busting
-
-// 🚀 Carga los últimos productos optimizados
 async function cargarUltimosProductos() {
   try {
     const contenedor = document.getElementById("grid-ultimos");
-    if (!contenedor) {
-      console.warn("⚠️ No se encontró el contenedor grid-ultimos");
-      return;
-    }
+    if (!contenedor) return;
 
-    // Mostrar skeleton loading
     mostrarSkeletonLoading(contenedor);
 
     const url = `https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json?v=${VERSION_ANMAGO}`;
@@ -29,12 +22,10 @@ async function cargarUltimosProductos() {
   }
 }
 
-// 🎨 Renderiza productos con estilo MercadoLibre (SIN ENVÍOS GRATIS)
 function renderUltimosProductosML(productos) {
   const contenedor = document.getElementById("grid-ultimos");
   if (!contenedor) return;
 
-  // Tomar últimos 12 productos (mejor para grid responsive)
   const ultimos = productos.slice(-12).reverse();
   
   if (ultimos.length === 0) {
@@ -45,7 +36,6 @@ function renderUltimosProductosML(productos) {
   contenedor.innerHTML = ultimos.map(p => {
     if (!p.id || !p.producto || !p.imagen || !p.precio) return '';
 
-    // Formatear precio
     const precioFormateado = p.precio.toLocaleString("es-CO");
     
     return `
@@ -55,7 +45,6 @@ function renderUltimosProductosML(productos) {
                alt="${p.producto}" 
                class="card-img-ml" 
                loading="lazy" 
-               decoding="async"
                onerror="this.src='https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg'">
           
           <div class="card-body-ml">
@@ -77,13 +66,24 @@ function renderUltimosProductosML(productos) {
     `;
   }).join('');
 
-  console.log("✅ Últimos productos renderizados:", ultimos.length);
-  
-  // Inicializar eventos hover
   inicializarEventosProductos();
 }
 
-// 🎭 Mostrar skeleton loading
+function agregarAlCarritoDesdeCard(productoId) {
+  fetch(`https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json?v=${VERSION_ANMAGO}`)
+    .then(res => res.json())
+    .then(productos => {
+      const producto = productos.find(p => p.id === productoId);
+      if (producto && window.carritoManager) {
+        window.carritoManager.agregarProducto(producto);
+      }
+    })
+    .catch(error => {
+      console.error('Error al agregar producto:', error);
+    });
+}
+
+// Funciones auxiliares (mantener las que tienes)
 function mostrarSkeletonLoading(contenedor) {
   contenedor.innerHTML = `
     <div class="card-producto-ml skeleton" style="height: 280px;"></div>
@@ -95,7 +95,6 @@ function mostrarSkeletonLoading(contenedor) {
   `;
 }
 
-// ❌ Mostrar estado de error
 function mostrarErrorUltimosProductos() {
   const contenedor = document.getElementById("grid-ultimos");
   if (!contenedor) return;
@@ -111,7 +110,6 @@ function mostrarErrorUltimosProductos() {
   `;
 }
 
-// 📭 Mostrar estado vacío
 function mostrarEstadoVacio() {
   const contenedor = document.getElementById("grid-ultimos");
   if (!contenedor) return;
@@ -124,7 +122,6 @@ function mostrarEstadoVacio() {
   `;
 }
 
-// 🖱️ Inicializar eventos hover para productos
 function inicializarEventosProductos() {
   const productos = document.querySelectorAll('.card-producto-ml');
   
@@ -141,71 +138,11 @@ function inicializarEventosProductos() {
   });
 }
 
-// 🛒 Agregar al carrito desde la card del producto
-function agregarAlCarritoDesdeCard(productoId) {
-  // Buscar el producto en el catálogo
-  fetch(`https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json?v=${VERSION_ANMAGO}`)
-    .then(res => res.json())
-    .then(productos => {
-      const producto = productos.find(p => p.id === productoId);
-      if (producto) {
-        // Usar la función global agregarAlCarrito si existe
-        if (typeof agregarAlCarrito === 'function') {
-          agregarAlCarrito(producto);
-          mostrarFeedbackAgregado(productoId);
-        } else {
-          console.warn('⚠️ Función agregarAlCarrito no disponible');
-          // Fallback: redirigir a la página del producto
-          window.location.href = `producto.html?id=${productoId}`;
-        }
-      }
-    })
-    .catch(error => {
-      console.error('Error al agregar producto:', error);
-      window.location.href = `producto.html?id=${productoId}`;
-    });
-}
-
-// 💫 Mostrar feedback visual al agregar producto
-function mostrarFeedbackAgregado(productoId) {
-  const productoCard = document.querySelector(`[data-producto-id="${productoId}"]`);
-  if (productoCard) {
-    // Efecto visual
-    productoCard.style.transform = 'scale(0.95)';
-    productoCard.style.transition = 'all 0.3s ease';
-    
-    setTimeout(() => {
-      productoCard.style.transform = 'scale(1)';
-    }, 300);
-    
-    // Mostrar toast notification si existe
-    if (typeof mostrarToast === 'function') {
-      mostrarToast('✅ Producto agregado al carrito', 'success');
-    }
-  }
-  
-  // Actualizar contador del carrito
-  if (typeof actualizarContadoresCarrito === 'function') {
-    actualizarContadoresCarrito();
-  }
-}
-
-// 🔄 Recargar productos manualmente
-function recargarUltimosProductos() {
-  const contenedor = document.getElementById("grid-ultimos");
-  if (contenedor) {
-    contenedor.innerHTML = '<div class="col-12 text-center"><div class="spinner-border text-primary"></div></div>';
-  }
-  cargarUltimosProductos();
-}
-
-// 🚀 Inicialización automática al cargar
+// Inicialización
 document.addEventListener("DOMContentLoaded", () => {
-  // Cargar productos después de un pequeño delay para priorizar contenido crítico
   setTimeout(cargarUltimosProductos, 100);
 });
 
-// 🌐 Exportar funciones para uso global
+// Exportar funciones globales
 window.cargarUltimosProductos = cargarUltimosProductos;
-window.recargarUltimosProductos = recargarUltimosProductos;
 window.agregarAlCarritoDesdeCard = agregarAlCarritoDesdeCard;
