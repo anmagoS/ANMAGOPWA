@@ -5,7 +5,6 @@ class CarritoManager {
         this.observers = [];
         this.init();
     }
-
     init() {
         this.cargarCarrito();
         this.setupStorageListener();
