@@ -289,73 +289,56 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <script>
-// CARRUSEL CON IMÁGENES COMPLETAS Y CLICK A PROMOS - CORREGIDO
+// CARRUSEL - SOLUCIÓN SIMPLE Y DIRECTA
 document.addEventListener('DOMContentLoaded', function() {
     const carouselContent = document.getElementById('carousel-promos-contenido');
     
     if (!carouselContent) return;
     
-    // Imágenes para el carrusel (puedes cambiar estas URLs por las tuyas)
     const carouselImages = [
         {
             url: "https://ik.imagekit.io/mbsk9dati/banner1.jpg?tr=w-800,q-80",
-            alt: "Ofertas Especiales",
-            link: "PROMOS.HTML"
+            alt: "Ofertas Especiales"
         },
         {
             url: "https://ik.imagekit.io/mbsk9dati/banner2.jpg?tr=w-800,q-80", 
-            alt: "Nuevos Productos",
-            link: "PROMOS.HTML"
+            alt: "Nuevos Productos"
         },
         {
             url: "https://ik.imagekit.io/mbsk9dati/banner3.jpg?tr=w-800,q-80",
-            alt: "Descuentos Exclusivos",
-            link: "PROMOS.HTML"
+            alt: "Descuentos Exclusivos"
         }
     ];
     
-    // Limpiar contenido inicial
     carouselContent.innerHTML = '';
     
-    // Crear items del carrusel
     carouselImages.forEach((image, index) => {
         const carouselItem = document.createElement('div');
         carouselItem.className = `carousel-item ${index === 0 ? 'active' : ''}`;
         
         carouselItem.innerHTML = `
-            <a href="${image.link}" class="d-block h-100 carrusel-enlace">
+            <div class="d-block h-100 carrusel-clickable" data-link="PROMOS.HTML">
                 <img src="${image.url}" 
                      alt="${image.alt}" 
                      class="w-100 h-100 imagen-completa">
-            </a>
+            </div>
         `;
         
         carouselContent.appendChild(carouselItem);
     });
     
-    // ✅ PREVENIR QUE BOOTSTRAP INTERCEPTE LOS CLICKS
-    const carouselElement = document.getElementById('carouselPromos');
-    if (carouselElement) {
-        carouselElement.addEventListener('click', function(e) {
-            // Si el click fue en un enlace del carrusel, permitir la navegación
-            if (e.target.closest('.carrusel-enlace')) {
-                e.stopPropagation(); // Detener la propagación para que Bootstrap no lo capture
-                // No prevenir el comportamiento por defecto para permitir la navegación
-            }
+    // ✅ CLICK DIRECTO EN LOS ITEMS DEL CARRUSEL
+    const itemsCarrusel = document.querySelectorAll('.carrusel-clickable');
+    itemsCarrusel.forEach(item => {
+        item.addEventListener('click', function() {
+            window.location.href = this.getAttribute('data-link');
         });
-    }
+        
+        // Hacer que parezca clickeable
+        item.style.cursor = 'pointer';
+    });
     
-    // ✅ ALTERNATIVA: Agregar event listeners directos a los enlaces
-    setTimeout(() => {
-        const enlacesCarrusel = document.querySelectorAll('.carrusel-enlace');
-        enlacesCarrusel.forEach(enlace => {
-            enlace.addEventListener('click', function(e) {
-                e.stopPropagation(); // Importante: evitar que Bootstrap capture el click
-            });
-        });
-    }, 100);
-    
-    console.log('🎠 Carrusel configurado con', carouselImages.length, 'imágenes');
+    console.log('🎠 Carrusel configurado - Click en cualquier parte lleva a PROMOS.HTML');
 });
 </script>
 <script>
