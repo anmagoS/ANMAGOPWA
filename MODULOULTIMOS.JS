@@ -1,4 +1,4 @@
-// MODULOULTIMOS.JS - Solo últimos productos
+// MODULOULTIMOS.JS - Solo últimos productos (CORREGIDO)
 const VERSION_ANMAGO = new Date().getTime();
 
 async function cargarUltimosProductos() {
@@ -55,9 +55,10 @@ function renderUltimosProductosML(productos) {
             <div class="precio-ml mb-3">$${precioFormateado}</div>
             
             <div class="d-grid">
+              <!-- ✅ CORREGIDO: Cambiado a "Ver detalles" que lleva a producto.html -->
               <button class="btn btn-outline-primary btn-sm" 
-                      onclick="event.preventDefault(); event.stopPropagation(); agregarAlCarritoDesdeCard('${p.id}')">
-                <i class="bi bi-cart-plus"></i> Agregar
+                      onclick="event.preventDefault(); event.stopPropagation(); verDetallesProducto('${p.id}')">
+                <i class="bi bi-eye"></i> Ver detalles
               </button>
             </div>
           </div>
@@ -69,19 +70,15 @@ function renderUltimosProductosML(productos) {
   inicializarEventosProductos();
 }
 
-function agregarAlCarritoDesdeCard(productoId) {
-  fetch(`https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json?v=${VERSION_ANMAGO}`)
-    .then(res => res.json())
-    .then(productos => {
-      const producto = productos.find(p => p.id === productoId);
-      if (producto && window.carritoManager) {
-        window.carritoManager.agregarProducto(producto);
-      }
-    })
-    .catch(error => {
-      console.error('Error al agregar producto:', error);
-    });
+// ✅ NUEVA FUNCIÓN: Redirigir a la página del producto
+function verDetallesProducto(productoId) {
+  window.location.href = `producto.html?id=${productoId}`;
 }
+
+// ❌ ELIMINAR: Función antigua que agregaba directamente al carrito
+// function agregarAlCarritoDesdeCard(productoId) {
+//   // Esta función ya no se usa
+// }
 
 // Funciones auxiliares (mantener las que tienes)
 function mostrarSkeletonLoading(contenedor) {
@@ -145,4 +142,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Exportar funciones globales
 window.cargarUltimosProductos = cargarUltimosProductos;
-window.agregarAlCarritoDesdeCard = agregarAlCarritoDesdeCard;
+window.verDetallesProducto = verDetallesProducto;
