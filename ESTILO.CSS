@@ -107,26 +107,38 @@ body { padding-top: 60px; }
   outline: none;
 }
 
-/* === CARRUSEL COMPACTO MOBILE FIRST === */
+/* === CARRUSEL COMPACTO MEJORADO - IMÁGENES COMPLETAS === */
 .carousel-promos-ml {
-  height: 180px;
+  height: 200px;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: var(--shadow);
   margin: 1rem 0;
+  cursor: pointer;
 }
 
 .carousel-promos-ml .carousel-item {
-  height: 180px;
+  height: 200px;
+  position: relative;
 }
 
 .carousel-promos-ml .carousel-item img {
-  object-fit: cover;
+  object-fit: contain; /* Cambiado de cover a contain para ver imagen completa */
+  object-position: center;
   height: 100%;
   width: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 10px;
 }
 
-/* === GRID PRODUCTOS MERCADOLIBRE STYLE === */
+.carousel-promos-ml .carousel-item a {
+  display: block;
+  height: 100%;
+  width: 100%;
+  text-decoration: none;
+}
+
+/* === GRID PRODUCTOS - IMÁGENES SIN CORTAR CABEZAS === */
 .grid-productos-ml {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -151,10 +163,14 @@ body { padding-top: 60px; }
   color: inherit;
 }
 
+/* IMAGENES DE PRODUCTOS - SIN CORTAR */
 .card-img-ml {
   height: 160px;
-  object-fit: cover;
+  object-fit: contain; /* Cambiado de cover a contain */
+  object-position: center top; /* Prioriza parte superior */
   width: 100%;
+  background-color: #f8f9fa; /* Fondo para áreas vacías */
+  padding: 8px;
 }
 
 .card-body-ml {
@@ -376,98 +392,6 @@ body { padding-top: 60px; }
   overflow: hidden;
 }
 
-/* === RESPONSIVE DESIGN === */
-@media (min-width: 768px) {
-  .barra-inferior-mobile { display: none; }
-  
-  .carousel-promos-ml {
-    height: 280px;
-  }
-  
-  .carousel-promos-ml .carousel-item {
-    height: 280px;
-  }
-  
-  .grid-productos-ml {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
-    padding: 0 1rem;
-  }
-  
-  .card-img-ml {
-    height: 200px;
-  }
-  
-  .categorias-rapidas {
-    padding: 1rem;
-    justify-content: center;
-  }
-  
-  .categoria-rapida {
-    font-size: 0.9rem;
-    padding: 0.75rem 1.25rem;
-  }
-}
-
-@media (min-width: 1200px) {
-  .carousel-promos-ml {
-    height: 320px;
-  }
-  
-  .carousel-promos-ml .carousel-item {
-    height: 320px;
-  }
-  
-  .grid-productos-ml {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  }
-}
-
-@media (max-width: 767px) {
-  body { padding-top: 56px; }
-  
-  .header-sticky { height: 56px; }
-  
-  .btn-carrito-flotante { display: none; }
-  
-  .grid-productos-ml {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .card-img-ml { height: 140px; }
-  
-  .nombre-producto-ml { font-size: 0.85rem; }
-  
-  .precio-ml { font-size: 1rem; }
-}
-
-/* === PRINT STYLES === */
-@media print {
-  .btn-carrito-flotante,
-  .barra-inferior-mobile,
-  .categorias-rapidas {
-    display: none !important;
-  }
-}
-
-/* === HIGH CONTRAST MODE SUPPORT === */
-@media (prefers-contrast: high) {
-  :root {
-    --primary-color: #000000;
-    --secondary-color: #000000;
-    --text-dark: #000000;
-    --gray-light: #cccccc;
-  }
-}
-
-/* === REDUCED MOTION SUPPORT === */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
 /* === BOTONES COHERENTES CON LA MARCA === */
 .btn-agregar-carrito,
 .btn-cart,
@@ -537,6 +461,7 @@ body { padding-top: 60px; }
   font-size: 0.9rem;
   padding: 0.5rem;
 }
+
 /* === EFECTOS HOVER PARA MENÚ HAMBURGUESA === */
 .offcanvas-body .nav-link {
   transition: all 0.3s ease;
@@ -588,6 +513,7 @@ body { padding-top: 60px; }
   color: #1B4557 !important;
   transform: translateX(4px);
 }
+
 /* Efecto para enlace activo */
 .offcanvas-body .nav-link.active {
   background-color: #1B4557;
@@ -600,4 +526,120 @@ body { padding-top: 60px; }
   content: "▸";
   margin-right: 8px;
   font-weight: bold;
+}
+
+/* === CLASES ESPECIALES PARA IMÁGENES SIN CORTAR === */
+.imagen-completa {
+  object-fit: contain !important;
+  object-position: center !important;
+  background-color: #f8f9fa !important;
+  padding: 5px !important;
+}
+
+.imagen-producto {
+  object-fit: contain !important;
+  object-position: center top !important;
+  background: white !important;
+  padding: 8px !important;
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (min-width: 768px) {
+  .barra-inferior-mobile { display: none; }
+  
+  .carousel-promos-ml {
+    height: 250px;
+  }
+  
+  .carousel-promos-ml .carousel-item {
+    height: 250px;
+  }
+  
+  .grid-productos-ml {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+  
+  .card-img-ml {
+    height: 180px;
+  }
+  
+  .categorias-rapidas {
+    padding: 1rem;
+    justify-content: center;
+  }
+  
+  .categoria-rapida {
+    font-size: 0.9rem;
+    padding: 0.75rem 1.25rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .carousel-promos-ml {
+    height: 280px;
+  }
+  
+  .carousel-promos-ml .carousel-item {
+    height: 280px;
+  }
+  
+  .grid-productos-ml {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+  
+  .card-img-ml {
+    height: 200px;
+  }
+}
+
+@media (max-width: 767px) {
+  body { padding-top: 56px; }
+  
+  .header-sticky { height: 56px; }
+  
+  .btn-carrito-flotante { display: none; }
+  
+  .grid-productos-ml {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .card-img-ml { 
+    height: 140px; 
+    object-fit: contain;
+    padding: 5px;
+  }
+  
+  .nombre-producto-ml { font-size: 0.85rem; }
+  
+  .precio-ml { font-size: 1rem; }
+}
+
+/* === PRINT STYLES === */
+@media print {
+  .btn-carrito-flotante,
+  .barra-inferior-mobile,
+  .categorias-rapidas {
+    display: none !important;
+  }
+}
+
+/* === HIGH CONTRAST MODE SUPPORT === */
+@media (prefers-contrast: high) {
+  :root {
+    --primary-color: #000000;
+    --secondary-color: #000000;
+    --text-dark: #000000;
+    --gray-light: #cccccc;
+  }
+}
+
+/* === REDUCED MOTION SUPPORT === */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
