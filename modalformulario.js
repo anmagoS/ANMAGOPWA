@@ -182,28 +182,42 @@ function repartirDireccionConcatenada(direccionConc) {
 }
 
 // 🧾 Generar texto para WhatsApp MEJORADO
+// 🧾 Generar texto para WhatsApp MEJORADO
 function generarTextoWhatsApp() {
     const nombreCliente = construirNombreCliente();
     const esDesdeCarrito = detectarOrigen();
-    const hayProductos = Array.isArray(window.articulosCarrito) && window.articulosCarrito.length > 0;
+    
+    console.log('🔍 Estado para WhatsApp:', {
+        nombreCliente,
+        esDesdeCarrito,
+        articulosCarrito: window.articulosCarrito,
+        cantidadProductos: window.articulosCarrito?.length || 0
+    });
 
-    console.log('🔍 Origen detectado:', { esDesdeCarrito, hayProductos });
-
-    if (!esDesdeCarrito || !hayProductos) {
+    if (!esDesdeCarrito || !window.articulosCarrito || window.articulosCarrito.length === 0) {
+        console.log('📝 Enviando mensaje de REGISTRO');
         return `¡Hola! Soy ${nombreCliente} y quiero registrarme como cliente.`;
     }
 
+    console.log('📝 Enviando mensaje de PEDIDO con productos:', window.articulosCarrito);
+
     const productos = window.articulosCarrito.map((p, i) => {
-        return `${i + 1}. ${p.nombre.toUpperCase()}
-🖼️ Imagen: ${p.imagen}
+        // Validar que el producto tenga los datos necesarios
+        console.log(`📦 Producto ${i + 1}:`, p);
+        
+        return `${i + 1}. ${p.nombre || 'Producto sin nombre'}
+🖼️ Imagen: ${p.imagen || 'Sin imagen'}
 📏 Talla: ${p.talla || "No especificada"}
-💲 Precio: $${p.precio.toLocaleString("es-CO")}
-🔢 Cantidad: ${p.cantidad}`;
+💲 Precio: $${(p.precio || 0).toLocaleString("es-CO")}
+🔢 Cantidad: ${p.cantidad || 1}`;
     }).join("\n\n");
 
-    const total = window.articulosCarrito.reduce((sum, p) => sum + (p.precio * p.cantidad), 0);
+    const total = window.articulosCarrito.reduce((sum, p) => sum + ((p.precio || 0) * (p.cantidad || 1)), 0);
 
-    return `🛍️ ¡Hola! Soy ${nombreCliente} y quiero realizar el siguiente pedido:\n\n${productos}\n\n🧾 Total del pedido: $${total.toLocaleString("es-CO")}\n\n✅ ¡Gracias por tu atención!`;
+    const mensaje = `🛍️ ¡Hola! Soy ${nombreCliente} y quiero realizar el siguiente pedido:\n\n${productos}\n\n🧾 Total del pedido: $${total.toLocaleString("es-CO")}\n\n✅ ¡Gracias por tu atención!`;
+    
+    console.log('💬 Mensaje final generado:', mensaje);
+    return mensaje;
 }
 
 // 📤 Envío a WhatsApp
