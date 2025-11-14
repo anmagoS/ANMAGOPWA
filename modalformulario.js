@@ -1,4 +1,4 @@
-// modalformulario.js - VERSIÓN COMPLETA CORREGIDA
+// modalformulario.js - VERSIÓN COMPLETA Y FUNCIONAL
 
 // ✅ FUNCIÓN DEBOUSE FALTANTE
 function debounce(func, wait) {
@@ -87,90 +87,6 @@ function inicializarFormulario() {
         }, 800));
     }
 
-    // ... el resto de las funciones continúan igual
-}
-
-// ... el resto de tu código actual// modalformulario.js - VERSIÓN CORREGIDA PARA TU APPS SCRIPT
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🔧 Formulario cargado en GitHub Pages');
-    
-    // Inicializar variables globales
-    window.articulosCarrito = window.articulosCarrito || [];
-    window.clienteEncontrado = false;
-    
-    // Configurar formulario
-    inicializarFormulario();
-});
-
-function inicializarFormulario() {
-    const form = document.getElementById('formCliente');
-    if (!form) {
-        console.error('❌ No se encontró el formulario con ID formCliente');
-        return;
-    }
-
-    console.log('✅ Formulario encontrado, configurando...');
-
-    // 🔒 INICIALMENTE: Solo teléfono habilitado
-    const otrosCampos = document.querySelectorAll('#formCliente input:not(#telefonoCliente), #formCliente textarea, #formCliente select');
-    otrosCampos.forEach(campo => {
-        campo.disabled = true;
-        campo.style.opacity = '0.6';
-    });
-
-    // 📱 EVENTO PARA TELÉFONO - Búsqueda automática
-    const telefonoInput = document.getElementById('telefonoCliente');
-    if (telefonoInput) {
-        telefonoInput.addEventListener('input', debounce(async function() {
-            const telefono = this.value.trim();
-            
-            if (!/^3\d{9}$/.test(telefono)) {
-                console.log('❌ Teléfono no válido');
-                mantenerCamposDeshabilitados();
-                return;
-            }
-
-            console.log('🔍 Buscando cliente con teléfono:', telefono);
-            
-            try {
-                // ✅ URL CORREGIDA - CON PARÁMETRO EN URL (como tu doGet espera)
-                const url = `https://script.google.com/macros/s/AKfycbwt-rFg_coabATigGv_zNOa93aO6u9uNqC-Oynh_HAL4dbuKo6pvmtw7jKlixXagW5o/exec?telefonoCliente=${telefono}`;
-                
-                console.log('🌐 Consultando API:', url);
-                
-                // ✅ PETICIÓN GET SIMPLE (como tu doGet está configurado)
-                const response = await fetch(url);
-                const data = await response.json();
-                
-                console.log('📦 Respuesta API completa:', data);
-
-                if (data && data.existe && data.datos) {
-                    console.log('✅ Cliente encontrado, prellenando...');
-                    window.clienteEncontrado = true;
-                    prellenarFormulario(data.datos);
-                    habilitarTodosLosCampos();
-                } else if (data && data.existe === false) {
-                    console.log('❌ Cliente no encontrado, habilitando para registro nuevo');
-                    window.clienteEncontrado = false;
-                    limpiarFormulario();
-                    habilitarTodosLosCampos();
-                } else if (data && data.error) {
-                    console.error('❌ Error del servidor:', data.error);
-                    alert('Error del servidor: ' + data.error);
-                    habilitarTodosLosCampos();
-                }
-                
-                validarFormularioCompleto();
-                
-            } catch (error) {
-                console.error('❌ Error en búsqueda:', error);
-                // ✅ MOSTRAR ALERTA AL USUARIO
-                alert('⚠️ Error de conexión. Por favor intenta nuevamente.');
-                habilitarTodosLosCampos();
-            }
-        }, 800));
-    }
-
     // 📝 VALIDACIÓN EN TIEMPO REAL
     const camposValidar = ['nombreCliente', 'telefonoCliente', 'DireccionCompleta', 'ciudadCliente'];
     camposValidar.forEach(id => {
@@ -209,41 +125,57 @@ function inicializarFormulario() {
     console.log('🎯 Formulario inicializado correctamente');
 }
 
-// ✅ FUNCIÓN PARA ENVIAR A GOOGLE SHEETS (POST)
-function enviarFormularioGoogleSheets() {
-    const formData = new FormData();
-    
-    // Agregar todos los campos del formulario
-    const campos = [
-        'clienteId', 'telefonoCliente', 'nombreCliente', 'DireccionCompleta',
-        'tipoUnidad', 'numeroApto', 'barrio', 'observacionDireccion',
-        'ciudadCliente', 'emailCliente'
+// ✅ FUNCIONES FALTANTES
+function validarFormularioCompleto() {
+    const camposRequeridos = [
+        'nombreCliente', 
+        'telefonoCliente', 
+        'DireccionCompleta', 
+        'ciudadCliente'
     ];
-    
-    campos.forEach(campo => {
-        const valor = document.getElementById(campo)?.value || '';
-        formData.append(campo, valor);
+
+    const todosLlenos = camposRequeridos.every(id => {
+        const campo = document.getElementById(id);
+        return campo && campo.value.trim() !== '';
     });
 
-    // Agregar campos fijos que tu Apps Script espera
-    formData.append('ciudadDestino', document.getElementById('ciudadCliente')?.value || '');
-    formData.append('direccionCliente', document.getElementById('DireccionCompleta')?.value || '');
-    formData.append('usuario', 'ANMAGOSTORE@GMAIL.COM');
+    const telefonoValido = /^3\d{9}$/.test(document.getElementById('telefonoCliente')?.value.trim());
+
+    const btnEnviar = document.getElementById('btnEnviarPedido');
+    if (btnEnviar) {
+        btnEnviar.disabled = !(todosLlenos && telefonoValido);
+    }
+
+    console.log('🔍 Validación:', { todosLlenos, telefonoValido, habilitado: !btnEnviar?.disabled });
+
+    return todosLlenos && telefonoValido;
+}
+
+function habilitarTodosLosCampos() {
+    const todosLosCampos = document.querySelectorAll('#formCliente input, #formCliente textarea, #formCliente select');
+    todosLosCampos.forEach(campo => {
+        campo.disabled = false;
+        campo.style.opacity = '1';
+    });
+}
+
+function mantenerCamposDeshabilitados() {
+    const otrosCampos = document.querySelectorAll('#formCliente input:not(#telefonoCliente), #formCliente textarea, #formCliente select');
+    otrosCampos.forEach(campo => {
+        campo.disabled = true;
+        campo.style.opacity = '0.6';
+    });
+}
+
+function limpiarFormulario() {
+    const camposLimpiar = [
+        'clienteId', 'nombreCliente', 'ciudadCliente', 'emailCliente',
+        'tipoUnidad', 'numeroApto', 'barrio', 'observacionDireccion'
+    ];
     
-    const url = 'https://script.google.com/macros/s/AKfycbwt-rFg_coabATigGv_zNOa93aO6u9uNqC-Oynh_HAL4dbuKo6pvmtw7jKlixXagW5o/exec';
-    
-    // Enviar en segundo plano
-    fetch(url, {
-        method: 'POST',
-        body: formData
-    }).then(response => response.json())
-      .then(data => {
-        console.log('✅ Respuesta de Google Sheets:', data);
-        if (data.error) {
-            console.error('❌ Error de Google Sheets:', data.error);
-        }
-    }).catch(error => {
-        console.error('❌ Error enviando a Google Sheets:', error);
+    camposLimpiar.forEach(id => {
+        const campo = document.getElementById(id);
+        if (campo) campo.value = '';
     });
 }
 
@@ -330,5 +262,122 @@ function procesarDireccion(direccionConcatenada) {
     }
 }
 
-// ... (el resto de las funciones se mantienen igual que en el código anterior)
-// [Mantén todas las otras funciones: construirDireccionCompleta, validarFormularioCompleto, etc.]
+function construirDireccionCompleta() {
+    const base = document.getElementById('DireccionCompleta')?.value.trim() || '';
+    const tipo = document.getElementById('tipoUnidad')?.value.trim() || '';
+    const numero = document.getElementById('numeroApto')?.value.trim() || '';
+    const barrio = document.getElementById('barrio')?.value.trim() || '';
+    const referencia = document.getElementById('observacionDireccion')?.value.trim() || '';
+
+    let direccion = base;
+    if (tipo) direccion += `, ${tipo}`;
+    if (numero) direccion += ` ${numero}`;
+    if (barrio) direccion += `, Barrio ${barrio}`;
+    if (referencia) direccion += `, ${referencia}`;
+
+    return direccion;
+}
+
+function enviarFormularioGoogleSheets() {
+    const formData = new FormData();
+    
+    // Agregar todos los campos del formulario
+    const campos = [
+        'clienteId', 'telefonoCliente', 'nombreCliente', 'DireccionCompleta',
+        'tipoUnidad', 'numeroApto', 'barrio', 'observacionDireccion',
+        'ciudadCliente', 'emailCliente'
+    ];
+    
+    campos.forEach(campo => {
+        const valor = document.getElementById(campo)?.value || '';
+        formData.append(campo, valor);
+    });
+
+    // Agregar campos fijos que tu Apps Script espera
+    formData.append('ciudadDestino', document.getElementById('ciudadCliente')?.value || '');
+    formData.append('direccionCliente', document.getElementById('DireccionCompleta')?.value || '');
+    formData.append('usuario', 'ANMAGOSTORE@GMAIL.COM');
+    
+    const url = 'https://script.google.com/macros/s/AKfycbwt-rFg_coabATigGv_zNOa93aO6u9uNqC-Oynh_HAL4dbuKo6pvmtw7jKlixXagW5o/exec';
+    
+    // Enviar en segundo plano
+    fetch(url, {
+        method: 'POST',
+        body: formData
+    }).then(response => response.json())
+      .then(data => {
+        console.log('✅ Respuesta de Google Sheets:', data);
+        if (data.error) {
+            console.error('❌ Error de Google Sheets:', data.error);
+        }
+    }).catch(error => {
+        console.error('❌ Error enviando a Google Sheets:', error);
+    });
+}
+
+function enviarWhatsAppPedido() {
+    const nombre = document.getElementById('nombreCliente')?.value.trim() || 'Cliente';
+    const telefono = document.getElementById('telefonoCliente')?.value.trim() || '';
+    
+    let mensaje = '';
+
+    if (window.articulosCarrito && window.articulosCarrito.length > 0) {
+        // 🛒 PEDIDO CON PRODUCTOS
+        mensaje = `🛍️ ¡Hola! Soy ${nombre.toUpperCase()} (${telefono}) y quiero realizar este pedido:\n\n`;
+        
+        let total = 0;
+        window.articulosCarrito.forEach((producto, index) => {
+            const subtotal = producto.precio * producto.cantidad;
+            total += subtotal;
+            
+            mensaje += `${index + 1}. ${producto.nombre}\n`;
+            mensaje += `📏 Talla: ${producto.talla || 'N/A'}\n`;
+            mensaje += `💰 Precio: $${producto.precio?.toLocaleString()}\n`;
+            mensaje += `🔢 Cantidad: ${producto.cantidad}\n`;
+            mensaje += `🧮 Subtotal: $${subtotal.toLocaleString()}\n\n`;
+        });
+        
+        mensaje += `🧾 TOTAL: $${total.toLocaleString()}\n\n`;
+        mensaje += `📍 Dirección: ${construirDireccionCompleta()}\n`;
+        mensaje += `✅ ¡Gracias!`;
+    } else {
+        // 👤 SOLO REGISTRO
+        mensaje = `👋 ¡Hola! Soy ${nombre.toUpperCase()} (${telefono}) y quiero registrarme como cliente.\n\n`;
+        mensaje += `📍 Dirección: ${construirDireccionCompleta()}\n`;
+        mensaje += `🏙️ Ciudad: ${document.getElementById('ciudadCliente')?.value || ''}\n`;
+        mensaje += `📧 Email: ${document.getElementById('emailCliente')?.value || ''}\n\n`;
+        mensaje += `✅ ¡Gracias por registrarme!`;
+    }
+
+    const urlWhatsApp = `https://wa.me/573006498710?text=${encodeURIComponent(mensaje)}`;
+    window.open(urlWhatsApp, '_blank');
+}
+
+function cerrarFormulario() {
+    // Limpiar carrito
+    if (window.articulosCarrito && window.articulosCarrito.length > 0) {
+        window.articulosCarrito = [];
+        localStorage.removeItem('carritoAnmago');
+    }
+
+    // Cerrar ventana/modal
+    if (window.opener) {
+        window.close();
+    } else {
+        const modal = document.getElementById('modalFormularioCliente');
+        if (modal) {
+            const bsModal = bootstrap.Modal.getInstance(modal);
+            if (bsModal) bsModal.hide();
+        }
+    }
+}
+
+// 🆘 DIAGNÓSTICO
+window.diagnosticoFormulario = function() {
+    console.log('🩺 DIAGNÓSTICO FORMULARIO:');
+    console.log('- Formulario encontrado:', !!document.getElementById('formCliente'));
+    console.log('- Teléfono encontrado:', !!document.getElementById('telefonoCliente'));
+    console.log('- Carrito:', window.articulosCarrito);
+    console.log('- Cliente encontrado:', window.clienteEncontrado);
+    validarFormularioCompleto();
+};
