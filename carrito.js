@@ -231,3 +231,60 @@ window.actualizarOffcanvasCarrito = actualizarOffcanvasCarrito;
 document.addEventListener('DOMContentLoaded', function() {
     inicializarCarrito();
 });
+// ✅ FUNCIÓN PARA ACTUALIZAR CONTADORES DEL CARRITO (FALTANTE)
+function actualizarContadoresCarrito() {
+    const carrito = obtenerCarrito();
+    const totalItems = carrito.reduce((total, item) => total + item.cantidad, 0);
+    
+    // Actualizar contador desktop
+    const contadorDesktop = document.getElementById('contador-carrito');
+    if (contadorDesktop) {
+        contadorDesktop.textContent = totalItems;
+        contadorDesktop.style.display = totalItems > 0 ? 'block' : 'none';
+    }
+    
+    // Actualizar contador mobile
+    const contadorMobile = document.getElementById('contador-carrito-mobile');
+    if (contadorMobile) {
+        contadorMobile.textContent = totalItems;
+        contadorMobile.style.display = totalItems > 0 ? 'block' : 'none';
+    }
+    
+    // Actualizar contador en header si existe
+    const contadorHeader = document.getElementById('contador-carrito-header');
+    if (contadorHeader) {
+        contadorHeader.textContent = totalItems;
+        contadorHeader.style.display = totalItems > 0 ? 'inline' : 'none';
+    }
+}
+
+// ✅ LLAMAR ESTA FUNCIÓN CADA VEZ QUE EL CARRITO CAMBIE
+// Modificar las funciones existentes para incluir esta llamada:
+
+// En la función agregarAlCarrito, DESPUÉS de guardar el carrito:
+function agregarAlCarrito(producto) {
+    // ... código existente ...
+    guardarCarrito(carrito);
+    actualizarContadoresCarrito(); // ← AGREGAR ESTA LÍNEA
+    mostrarNotificacion('✅ Producto agregado al carrito');
+}
+
+// En la función eliminarDelCarrito, DESPUÉS de guardar el carrito:
+function eliminarDelCarrito(id) {
+    // ... código existente ...
+    guardarCarrito(carrito);
+    actualizarContadoresCarrito(); // ← AGREGAR ESTA LÍNEA
+    mostrarNotificacion('🗑️ Producto eliminado');
+}
+
+// En la función actualizarCantidad, DESPUÉS de guardar el carrito:
+function actualizarCantidad(id, nuevaCantidad) {
+    // ... código existente ...
+    guardarCarrito(carrito);
+    actualizarContadoresCarrito(); // ← AGREGAR ESTA LÍNEA
+}
+
+// ✅ ACTUALIZAR CONTADORES AL CARGAR LA PÁGINA
+document.addEventListener('DOMContentLoaded', function() {
+    actualizarContadoresCarrito();
+});
