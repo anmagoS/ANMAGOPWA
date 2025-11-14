@@ -4,7 +4,6 @@ export async function activarBuscadorGlobal() {
     const respuesta = await fetch(url);
     window.catalogoGlobal = await respuesta.json();
   }
-
   const buscador = document.getElementById("buscador");
   const sugerencias = document.getElementById("sugerencias");
   if (!buscador || !sugerencias) return;
