@@ -96,33 +96,37 @@ function inicializarFormulario() {
         }
     });
 
-    // 🚀 EVENTO DE ENVÍO
-    const btnEnviar = document.getElementById('btnEnviarPedido');
-    if (btnEnviar) {
-        btnEnviar.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            if (!validarFormularioCompleto()) {
-                alert('❌ Por favor completa todos los campos requeridos');
-                return;
-            }
+// 🚀 EVENTO DE ENVÍO MEJORADO
+const btnEnviar = document.getElementById('btnEnviarPedido');
+if (btnEnviar) {
+    btnEnviar.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        if (!validarFormularioCompleto()) {
+            alert('❌ Por favor completa todos los campos requeridos');
+            return;
+        }
 
-            // Construir dirección completa
-            const direccionFinal = construirDireccionCompleta();
-            document.getElementById('DireccionCompleta').value = direccionFinal;
+        console.log('🚀 Iniciando proceso de envío completo...');
+        
+        // 1. Construir dirección completa
+        const direccionFinal = construirDireccionCompleta();
+        document.getElementById('DireccionCompleta').value = direccionFinal;
+        console.log('📍 Dirección final:', direccionFinal);
 
-            // Enviar formulario a Google Sheets
-            enviarFormularioGoogleSheets();
-            
-            // Enviar WhatsApp
+        // 2. Enviar a Google Sheets PRIMERO
+        enviarFormularioGoogleSheets();
+        
+        // 3. Esperar un momento y enviar WhatsApp
+        setTimeout(() => {
             enviarWhatsAppPedido();
-            
-            // Cerrar ventana
+        }, 1000);
+        
+        // 4. Cerrar ventana después de un tiempo
+        setTimeout(() => {
             cerrarFormulario();
-        });
-    }
-
-    console.log('🎯 Formulario inicializado correctamente');
+        }, 2000);
+    });
 }
 
 // ✅ FUNCIONES FALTANTES
@@ -277,53 +281,76 @@ function construirDireccionCompleta() {
 
     return direccion;
 }
-
 function enviarFormularioGoogleSheets() {
-    const formData = new FormData();
+    console.log('📝 Iniciando envío a Google Sheets...');
     
-    // Agregar todos los campos del formulario
-    const campos = [
-        'clienteId', 'telefonoCliente', 'nombreCliente', 'DireccionCompleta',
-        'tipoUnidad', 'numeroApto', 'barrio', 'observacionDireccion',
-        'ciudadCliente', 'emailCliente'
-    ];
+    // Construir los parámetros que tu Apps Script espera
+    const params = new URLSearchParams();
     
-    campos.forEach(campo => {
-        const valor = document.getElementById(campo)?.value || '';
-        formData.append(campo, valor);
-    });
-
-    // Agregar campos fijos que tu Apps Script espera
-    formData.append('ciudadDestino', document.getElementById('ciudadCliente')?.value || '');
-    formData.append('direccionCliente', document.getElementById('DireccionCompleta')?.value || '');
-    formData.append('usuario', 'ANMAGOSTORE@GMAIL.COM');
+    // Campos principales (mapeo exacto con tu doPost)
+    params.append('telefonoCliente', document.getElementById('telefonoCliente')?.value || '');
+    params.append('nombreCliente', document.getElementById('nombreCliente')?.value || '');
+    params.append('direccionCliente', document.getElementById('DireccionCompleta')?.value || '');
+    params.append('ciudadDestino', document.getElementById('ciudadCliente')?.value || '');
+    params.append('correo', document.getElementById('emailCliente')?.value || '');
+    params.append('clienteId', document.getElementById('clienteId')?.value || '');
+    
+    // Campos adicionales de dirección
+    params.append('complementoDir', construirDireccionCompleta());
+    params.append('usuario', 'ANMAGOSTORE@GMAIL.COM');
     
     const url = 'https://script.google.com/macros/s/AKfycbwt-rFg_coabATigGv_zNOa93aO6u9uNqC-Oynh_HAL4dbuKo6pvmtw7jKlixXagW5o/exec';
     
-    // Enviar en segundo plano
+    console.log('📦 Datos a enviar:', Object.fromEntries(params));
+    
+    // Enviar usando POST
     fetch(url, {
         method: 'POST',
-        body: formData
-    }).then(response => response.json())
-      .then(data => {
-        console.log('✅ Respuesta de Google Sheets:', data);
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: params
+    })
+    .then(response => {
+        console.log('✅ Response status:', response.status);
+        return response.json();
+    })
+    .then(data => {
+        console.log('📨 Respuesta de Google Sheets:', data);
         if (data.error) {
             console.error('❌ Error de Google Sheets:', data.error);
+            alert('Error al guardar en el sistema: ' + data.error);
+        } else {
+            console.log('✅ Registro exitoso en Google Sheets');
+            if (data.existe) {
+                console.log('📝 Cliente actualizado');
+            } else {
+                console.log('🆕 Nuevo cliente registrado');
+            }
         }
-    }).catch(error => {
+    })
+    .catch(error => {
         console.error('❌ Error enviando a Google Sheets:', error);
+        alert('Error de conexión al guardar los datos.');
     });
 }
 
 function enviarWhatsAppPedido() {
     const nombre = document.getElementById('nombreCliente')?.value.trim() || 'Cliente';
     const telefono = document.getElementById('telefonoCliente')?.value.trim() || '';
+    const direccion = construirDireccionCompleta();
+    const ciudad = document.getElementById('ciudadCliente')?.value || '';
+    const email = document.getElementById('emailCliente')?.value || '';
     
     let mensaje = '';
 
-    if (window.articulosCarrito && window.articulosCarrito.length > 0) {
-        // 🛒 PEDIDO CON PRODUCTOS
-        mensaje = `🛍️ ¡Hola! Soy ${nombre.toUpperCase()} (${telefono}) y quiero realizar este pedido:\n\n`;
+    // Validar si hay productos en el carrito
+    const hayProductos = window.articulosCarrito && window.articulosCarrito.length > 0;
+    console.log('🛒 Validando productos en carrito:', hayProductos, window.articulosCarrito);
+
+    if (hayProductos) {
+        // 🛍️ PEDIDO CON PRODUCTOS
+        mensaje = `🛍️ ¡Hola! Soy ${nombre.toUpperCase()} y quiero realizar el siguiente pedido:\n\n`;
         
         let total = 0;
         window.articulosCarrito.forEach((producto, index) => {
@@ -331,27 +358,31 @@ function enviarWhatsAppPedido() {
             total += subtotal;
             
             mensaje += `${index + 1}. ${producto.nombre}\n`;
+            mensaje += `🖼️ Imagen: ${producto.imagen}\n`;
             mensaje += `📏 Talla: ${producto.talla || 'N/A'}\n`;
-            mensaje += `💰 Precio: $${producto.precio?.toLocaleString()}\n`;
+            mensaje += `💲 Precio: $${producto.precio?.toLocaleString()}\n`;
             mensaje += `🔢 Cantidad: ${producto.cantidad}\n`;
-            mensaje += `🧮 Subtotal: $${subtotal.toLocaleString()}\n\n`;
+            mensaje += `💰 Subtotal: $${subtotal.toLocaleString()}\n\n`;
         });
         
-        mensaje += `🧾 TOTAL: $${total.toLocaleString()}\n\n`;
-        mensaje += `📍 Dirección: ${construirDireccionCompleta()}\n`;
-        mensaje += `✅ ¡Gracias!`;
+        mensaje += `🧾 TOTAL DEL PEDIDO: $${total.toLocaleString()}\n\n`;
+        mensaje += `✅ ¡Gracias por tu atención!`;
     } else {
         // 👤 SOLO REGISTRO
-        mensaje = `👋 ¡Hola! Soy ${nombre.toUpperCase()} (${telefono}) y quiero registrarme como cliente.\n\n`;
-        mensaje += `📍 Dirección: ${construirDireccionCompleta()}\n`;
-        mensaje += `🏙️ Ciudad: ${document.getElementById('ciudadCliente')?.value || ''}\n`;
-        mensaje += `📧 Email: ${document.getElementById('emailCliente')?.value || ''}\n\n`;
-        mensaje += `✅ ¡Gracias por registrarme!`;
+        mensaje = `¡Hola! Me he registrado en tu sitio web.\n\n`;
+        mensaje += `👤 Nombre: ${nombre}\n`;
+        mensaje += `📞 Teléfono: ${telefono}\n`;
+        mensaje += `📍 Dirección: ${direccion}\n`;
+        mensaje += `🏙️ Ciudad: ${ciudad}\n`;
+        if (email) mensaje += `📧 Email: ${email}\n`;
+        mensaje += `\n✅ ¡Gracias por registrarme!`;
     }
 
+    console.log('💬 Mensaje WhatsApp generado:', mensaje);
     const urlWhatsApp = `https://wa.me/573006498710?text=${encodeURIComponent(mensaje)}`;
     window.open(urlWhatsApp, '_blank');
 }
+
 
 function cerrarFormulario() {
     // Limpiar carrito
