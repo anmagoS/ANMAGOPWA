@@ -1,0 +1,603 @@
+/* ===== CSS OPTIMIZADO ANMAGO STORE ===== */
+/* Versión: 2024.1 | Mobile First | Performance */
+
+/* === RESET Y NORMALIZACIÓN === */
+*, *::before, *::after { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background-color: #f8f9fa;
+  scroll-behavior: smooth;
+}
+
+/* === VARIABLES CSS === */
+:root {
+  --primary-color: #1B4557;
+  --secondary-color: #199461;
+  --accent-color: #3a5d75;
+  --text-dark: #212529;
+  --text-light: #6c757d;
+  --white: #ffffff;
+  --gray-light: #e9ecef;
+  --border-radius: 8px;
+  --shadow: 0 2px 8px rgba(0,0,0,0.1);
+  --shadow-hover: 0 4px 16px rgba(0,0,0,0.15);
+  --transition: all 0.3s ease;
+}
+
+/* === LAYOUT PRINCIPAL === */
+body { padding-top: 60px; }
+
+/* === HEADER STICKY OPTIMIZADO === */
+.header-sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: var(--primary-color);
+  color: var(--white);
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1020;
+  box-shadow: var(--shadow);
+}
+
+.logo img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* === BOTÓN CARRITO FLOTANTE MEJORADO === */
+.btn-carrito-flotante {
+  position: fixed;
+  top: 70%;
+  right: 1rem;
+  z-index: 1010;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--secondary-color);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(25, 148, 97, 0.3);
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+.btn-carrito-flotante:hover {
+  transform: scale(1.1);
+  background: #157a4f;
+}
+
+.contador-carrito {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #dc3545;
+  color: var(--white);
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-weight: bold;
+  line-height: 1;
+  min-width: 18px;
+  text-align: center;
+}
+
+/* === BUSCADOR MERCADOLIBRE STYLE === */
+.buscador-ml {
+  border-radius: 24px;
+  border: 2px solid var(--gray-light);
+  padding: 0.75rem 1.25rem;
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+.buscador-ml:focus {
+  border-color: #3483fa;
+  box-shadow: 0 0 0 2px rgba(52, 131, 250, 0.2);
+  outline: none;
+}
+
+/* === CARRUSEL COMPACTO MOBILE FIRST === */
+.carousel-promos-ml {
+  height: 180px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  margin: 1rem 0;
+}
+
+.carousel-promos-ml .carousel-item {
+  height: 180px;
+}
+
+.carousel-promos-ml .carousel-item img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+/* === GRID PRODUCTOS MERCADOLIBRE STYLE === */
+.grid-productos-ml {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.75rem;
+  padding: 0 0.5rem;
+}
+
+.card-producto-ml {
+  border: 1px solid var(--gray-light);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  transition: var(--transition);
+  background: var(--white);
+  text-decoration: none;
+  color: inherit;
+}
+
+.card-producto-ml:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+  text-decoration: none;
+  color: inherit;
+}
+
+.card-img-ml {
+  height: 160px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.card-body-ml {
+  padding: 0.75rem;
+}
+
+.nombre-producto-ml {
+  font-size: 0.9rem;
+  line-height: 1.3;
+  height: 2.6em;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.precio-ml {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 0.75rem;
+}
+
+/* === CATEGORÍAS RÁPIDAS === */
+.categorias-rapidas {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.75rem 0.5rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.categorias-rapidas::-webkit-scrollbar { display: none; }
+
+.categoria-rapida {
+  flex: 0 0 auto;
+  text-align: center;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--gray-light);
+  border-radius: 24px;
+  text-decoration: none;
+  color: var(--text-dark);
+  font-size: 0.8rem;
+  background: var(--white);
+  transition: var(--transition);
+}
+
+.categoria-rapida:hover {
+  border-color: #3483fa;
+  color: #3483fa;
+  text-decoration: none;
+}
+
+/* === BOTONES MEJORADOS === */
+.btn-gradient {
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color), var(--secondary-color));
+  color: var(--white);
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: var(--transition);
+  box-shadow: var(--shadow);
+}
+
+.btn-gradient:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-hover);
+  color: var(--white);
+  text-decoration: none;
+}
+
+.btn-outline-primary {
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  background: transparent;
+  transition: var(--transition);
+}
+
+.btn-outline-primary:hover {
+  background: var(--primary-color);
+  color: var(--white);
+}
+
+/* === OFFCANVAS CARRITO === */
+.offcanvas-end {
+  border-left: 1px solid var(--gray-light);
+}
+
+.offcanvas-header {
+  border-bottom: 1px solid var(--gray-light);
+  padding: 1rem 1.25rem;
+}
+
+.offcanvas-title {
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.offcanvas-body {
+  padding: 1rem 1.25rem;
+}
+
+.offcanvas-footer {
+  border-top: 1px solid var(--gray-light);
+  padding: 1rem 1.25rem;
+  background: var(--white);
+}
+
+/* === FOOTER OPTIMIZADO === */
+.footer {
+  background: var(--primary-color);
+  color: var(--white);
+  padding: 2rem 1rem;
+  margin-top: 3rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer-links a {
+  color: var(--white);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.footer-links a:hover {
+  color: var(--gray-light);
+  text-decoration: underline;
+}
+
+.logos-pago {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.logos-pago img {
+  height: 32px;
+  object-fit: contain;
+  background: var(--white);
+  border-radius: 4px;
+  padding: 4px;
+}
+
+/* === BARRA INFERIOR MOBILE === */
+.barra-inferior-mobile {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  border-top: 1px solid var(--gray-light);
+  padding: 0.5rem 0;
+  z-index: 1030;
+  display: flex;
+  justify-content: space-around;
+}
+
+.barra-inferior-mobile a {
+  text-decoration: none;
+  color: var(--text-dark);
+  text-align: center;
+  flex: 1;
+  padding: 0.25rem;
+}
+
+.barra-inferior-mobile .active {
+  color: var(--primary-color);
+}
+
+.barra-inferior-mobile i {
+  font-size: 1.25rem;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.barra-inferior-mobile .small {
+  font-size: 0.7rem;
+}
+
+/* === SKELETON LOADING === */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* === UTILITY CLASSES === */
+.text-gradient {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (min-width: 768px) {
+  .barra-inferior-mobile { display: none; }
+  
+  .carousel-promos-ml {
+    height: 280px;
+  }
+  
+  .carousel-promos-ml .carousel-item {
+    height: 280px;
+  }
+  
+  .grid-productos-ml {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+  
+  .card-img-ml {
+    height: 200px;
+  }
+  
+  .categorias-rapidas {
+    padding: 1rem;
+    justify-content: center;
+  }
+  
+  .categoria-rapida {
+    font-size: 0.9rem;
+    padding: 0.75rem 1.25rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .carousel-promos-ml {
+    height: 320px;
+  }
+  
+  .carousel-promos-ml .carousel-item {
+    height: 320px;
+  }
+  
+  .grid-productos-ml {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  body { padding-top: 56px; }
+  
+  .header-sticky { height: 56px; }
+  
+  .btn-carrito-flotante { display: none; }
+  
+  .grid-productos-ml {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .card-img-ml { height: 140px; }
+  
+  .nombre-producto-ml { font-size: 0.85rem; }
+  
+  .precio-ml { font-size: 1rem; }
+}
+
+/* === PRINT STYLES === */
+@media print {
+  .btn-carrito-flotante,
+  .barra-inferior-mobile,
+  .categorias-rapidas {
+    display: none !important;
+  }
+}
+
+/* === HIGH CONTRAST MODE SUPPORT === */
+@media (prefers-contrast: high) {
+  :root {
+    --primary-color: #000000;
+    --secondary-color: #000000;
+    --text-dark: #000000;
+    --gray-light: #cccccc;
+  }
+}
+
+/* === REDUCED MOTION SUPPORT === */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+/* === BOTONES COHERENTES CON LA MARCA === */
+.btn-agregar-carrito,
+.btn-cart,
+.boton-comprar,
+.btn-agregar-carrito:hover,
+.btn-cart:hover,
+.boton-comprar:hover {
+  background-color: #1B4557;
+  border-color: #1B4557;
+  color: white;
+}
+
+.btn-agregar-carrito:hover,
+.btn-cart:hover,
+.boton-comprar:hover {
+  background-color: #163544;
+  border-color: #163544;
+}
+
+/* === MODAL MÓVIL PERSONALIZADO === */
+.modal-mobile-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1060;
+  display: none;
+}
+
+.modal-mobile-bottom.show {
+  display: block;
+  animation: slideUp 0.3s ease-out;
+}
+
+.modal-mobile-content {
+  background: white;
+  border-radius: 16px 16px 0 0;
+  padding: 1.5rem;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.modal-mobile-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1055;
+  display: none;
+}
+
+.modal-mobile-backdrop.show {
+  display: block;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+/* === SELECTORES MEJORADOS === */
+.selector-talla, 
+.selector-variable {
+  font-size: 0.9rem;
+  padding: 0.5rem;
+}
+/* === EFECTOS HOVER PARA MENÚ HAMBURGUESA === */
+.offcanvas-body .nav-link {
+  transition: all 0.3s ease;
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  color: #333;
+  font-weight: 500;
+}
+
+/* Resaltado al pasar el cursor */
+.offcanvas-body .nav-link:hover {
+  background-color: #1B4557;
+  color: white !important;
+  transform: translateX(8px);
+  box-shadow: 0 2px 8px rgba(27, 69, 87, 0.3);
+}
+
+/* Efecto para el botón de categorías */
+#toggle-categorias {
+  transition: all 0.3s ease;
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  border: none;
+  background: none;
+  color: #333;
+  font-weight: 500;
+  width: 100%;
+  text-align: left;
+}
+
+#toggle-categorias:hover {
+  background-color: #1B4557;
+  color: white !important;
+  transform: translateX(8px);
+  box-shadow: 0 2px 8px rgba(27, 69, 87, 0.3);
+}
+
+/* Efecto para enlaces dentro del menú desplegable */
+#menu-categorias .nav-link {
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+#menu-categorias .nav-link:hover {
+  background-color: #e9ecef;
+  color: #1B4557 !important;
+  transform: translateX(4px);
+}
+/* Efecto para enlace activo */
+.offcanvas-body .nav-link.active {
+  background-color: #1B4557;
+  color: white !important;
+  font-weight: 600;
+}
+
+/* Indicador visual del enlace activo */
+.offcanvas-body .nav-link.active::before {
+  content: "▸";
+  margin-right: 8px;
+  font-weight: bold;
+}
