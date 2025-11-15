@@ -143,7 +143,12 @@
             </div>
           </div>
 
-          <!-- Selección de talla -->
+          <!-- SELECTOR DE VARIABLES (COLORES/MATERIALES) -->
+          <div class="mb-4" id="seccion-variables">
+            <!-- Selector de variables se carga dinámicamente -->
+          </div>
+
+          <!-- SELECTOR DE TALLAS -->
           <div class="mb-4" id="seccion-tallas">
             <!-- Selector de tallas se carga dinámicamente -->
           </div>
@@ -286,6 +291,7 @@
   // ========== VARIABLES GLOBALES ==========
   let productoActual = null;
   let varianteSeleccionada = '';
+  let variableSeleccionada = '';
   let tallaSeleccionada = '';
   let imagenSeleccionada = '';
   let cantidad = 1;
@@ -639,13 +645,16 @@
       // 4. Breadcrumb
       renderizarBreadcrumb(producto);
 
-      // 5. Selector de tallas
+      // 5. Selector de variables (colores/materiales)
+      renderizarVariables(producto);
+
+      // 6. Selector de tallas
       renderizarTallas(producto);
 
-      // 6. Badges
+      // 7. Badges
       renderizarBadges(producto);
 
-      // 7. Video
+      // 8. Video
       renderizarVideo(producto);
       
       console.log('✅ Producto renderizado completamente');
@@ -750,17 +759,51 @@
       console.log('✅ Variante cambiada a:', variante);
   }
 
+  // 🎨 Renderizar selector de variables (colores/materiales)
+  function renderizarVariables(producto) {
+      const contenedor = document.getElementById('seccion-variables');
+      
+      // Verificar si el producto tiene variables
+      const tieneVariables = producto.variables && 
+                            producto.variables.trim() !== "" && 
+                            producto.variables !== "N/A" &&
+                            producto.variables.toLowerCase() !== "única" &&
+                            producto.variables.toLowerCase() !== "unica";
+      
+      if (tieneVariables) {
+          const variables = producto.variables.split(",").map(v => v.trim()).filter(v => v);
+          console.log('🎨 Variables disponibles:', variables);
+
+          contenedor.innerHTML = `
+              <h5 class="fw-bold mb-3">🎨 Selecciona color/material</h5>
+              <select class="form-select selector-variable" onchange="seleccionarVariable(this.value)" style="max-width: 250px; font-size: 1rem; padding: 10px;">
+                  <option value="">-- Elige una opción --</option>
+                  ${variables.map(variable => `<option value="${variable}">${variable}</option>`).join('')}
+              </select>
+              <div class="form-text mt-2">💡 Selecciona tu color o material preferido</div>
+          `;
+      } else {
+          contenedor.innerHTML = '';
+          // Si no hay variables, habilitar botón (solo necesita variante)
+          verificarEstadoBotonAgregar();
+      }
+  }
+
   // 📏 Renderizar selector de tallas - VERSIÓN MEJORADA
   function renderizarTallas(producto) {
       const contenedor = document.getElementById('seccion-tallas');
       
-      const tallas = producto.tallas ? 
-          producto.tallas.split(",").map(t => t.trim()).filter(t => t && t !== "N/A" && t.toLowerCase() !== "única" && t.toLowerCase() !== "unica") 
-          : [];
+      // Verificar si el producto necesita selector de tallas
+      const necesitaTallas = producto.tallas && 
+                           producto.tallas.trim() !== "" && 
+                           producto.tallas !== "N/A" && 
+                           producto.tallas.toLowerCase() !== "única" &&
+                           producto.tallas.toLowerCase() !== "unica";
 
-      console.log('📏 Tallas disponibles:', tallas);
+      if (necesitaTallas) {
+          const tallas = producto.tallas.split(",").map(t => t.trim()).filter(t => t);
+          console.log('📏 Tallas disponibles:', tallas);
 
-      if (tallas.length > 0) {
           contenedor.innerHTML = `
               <h5 class="fw-bold mb-3">📏 Selecciona tu talla</h5>
               <select class="form-select selector-talla" onchange="seleccionarTalla(this.value)" style="max-width: 250px; font-size: 1rem; padding: 10px;">
@@ -776,6 +819,13 @@
       }
   }
 
+  // ✅ FUNCIÓN: Seleccionar variable (color/material)
+  function seleccionarVariable(variable) {
+      console.log('🎨 Variable seleccionada:', variable);
+      variableSeleccionada = variable;
+      verificarEstadoBotonAgregar();
+  }
+
   // ✅ FUNCIÓN: Seleccionar talla
   function seleccionarTalla(talla) {
       console.log('📏 Talla seleccionada:', talla);
@@ -788,19 +838,36 @@
       const btnAgregar = document.getElementById('btn-agregar-carrito');
       const btnComprar = document.querySelector('.btn-gradient');
       
-      const necesitaTalla = productoActual?.tallas && 
+      const necesitaVariables = productoActual?.variables && 
+                              productoActual.variables.trim() !== "" && 
+                              productoActual.variables !== "N/A" &&
+                              productoActual.variables.toLowerCase() !== "única" &&
+                              productoActual.variables.toLowerCase() !== "unica";
+      
+      const necesitaTallas = productoActual?.tallas && 
+                           productoActual.tallas.trim() !== "" && 
                            productoActual.tallas !== "N/A" && 
                            productoActual.tallas.toLowerCase() !== "única" &&
                            productoActual.tallas.toLowerCase() !== "unica";
       
-      const puedeAgregar = varianteSeleccionada && (!necesitaTalla || tallaSeleccionada);
+      let puedeAgregar = varianteSeleccionada;
+      
+      if (necesitaVariables) {
+          puedeAgregar = puedeAgregar && variableSeleccionada;
+      }
+      
+      if (necesitaTallas) {
+          puedeAgregar = puedeAgregar && tallaSeleccionada;
+      }
       
       if (btnAgregar) {
           btnAgregar.disabled = !puedeAgregar;
           // Cambiar texto del botón según estado
           if (!varianteSeleccionada) {
               btnAgregar.innerHTML = '<i class="bi bi-image"></i> Selecciona una imagen';
-          } else if (necesitaTalla && !tallaSeleccionada) {
+          } else if (necesitaVariables && !variableSeleccionada) {
+              btnAgregar.innerHTML = '<i class="bi bi-palette"></i> Selecciona color/material';
+          } else if (necesitaTallas && !tallaSeleccionada) {
               btnAgregar.innerHTML = '<i class="bi bi-rulers"></i> Selecciona talla';
           } else {
               btnAgregar.innerHTML = '<i class="bi bi-cart-plus"></i> Agregar al carrito';
@@ -809,7 +876,13 @@
       
       if (btnComprar) btnComprar.disabled = !puedeAgregar;
       
-      console.log('🔘 Estado botones:', puedeAgregar ? 'HABILITADO' : 'DESHABILITADO');
+      console.log('🔘 Estado botones:', puedeAgregar ? 'HABILITADO' : 'DESHABILITADO', {
+          varianteSeleccionada,
+          variableSeleccionada,
+          tallaSeleccionada,
+          necesitaVariables,
+          necesitaTallas
+      });
   }
 
   // 🔢 Cambiar cantidad
@@ -836,12 +909,25 @@
         return false;
     }
 
-    const necesitaTalla = productoActual?.tallas && 
+    const necesitaVariables = productoActual?.variables && 
+                            productoActual.variables.trim() !== "" && 
+                            productoActual.variables !== "N/A" &&
+                            productoActual.variables.toLowerCase() !== "única" &&
+                            productoActual.variables.toLowerCase() !== "unica";
+    
+    const necesitaTallas = productoActual?.tallas && 
+                         productoActual.tallas.trim() !== "" && 
                          productoActual.tallas !== "N/A" && 
                          productoActual.tallas.toLowerCase() !== "única" &&
                          productoActual.tallas.toLowerCase() !== "unica";
     
-    if (necesitaTalla && !tallaSeleccionada) {
+    if (necesitaVariables && !variableSeleccionada) {
+        mostrarAlertaTemporal('⚠️ Por favor selecciona un color/material', 'warning');
+        document.getElementById('seccion-variables').scrollIntoView({ behavior: 'smooth' });
+        return false;
+    }
+
+    if (necesitaTallas && !tallaSeleccionada) {
         mostrarAlertaTemporal('⚠️ Por favor selecciona una talla', 'warning');
         document.getElementById('seccion-tallas').scrollIntoView({ behavior: 'smooth' });
         return false;
@@ -849,11 +935,17 @@
 
     // 2. CREAR PRODUCTO CON VALIDACIÓN
     const productoCarrito = {
-        id: productoActual.id + '-' + varianteSeleccionada + (tallaSeleccionada ? '-' + tallaSeleccionada : ''),
-        nombre: `${productoActual.producto} - ${varianteSeleccionada}${tallaSeleccionada ? ' - Talla ' + tallaSeleccionada : ''}`,
+        id: productoActual.id + 
+            '-' + varianteSeleccionada + 
+            (variableSeleccionada ? '-' + variableSeleccionada.replace(/\s+/g, '_') : '') +
+            (tallaSeleccionada ? '-' + tallaSeleccionada : ''),
+        nombre: `${productoActual.producto} - ${varianteSeleccionada}` +
+                (variableSeleccionada ? ` - ${variableSeleccionada}` : '') +
+                (tallaSeleccionada ? ` - Talla ${tallaSeleccionada}` : ''),
         precio: productoActual.precioOferta || productoActual.precio || 0,
         imagen: imagenSeleccionada,
         variante: varianteSeleccionada,
+        variable: variableSeleccionada || 'Única',
         talla: tallaSeleccionada || 'Única',
         cantidad: cantidad
     };
@@ -882,7 +974,7 @@
             
             // Buscar si ya existe
             const existeIndex = carrito.findIndex(item => 
-                item.id === productoCarrito.id && item.talla === productoCarrito.talla
+                item.id === productoCarrito.id
             );
             
             if (existeIndex > -1) {
@@ -914,12 +1006,24 @@
           return;
       }
 
-      const necesitaTalla = productoActual?.tallas && 
+      const necesitaVariables = productoActual?.variables && 
+                              productoActual.variables.trim() !== "" && 
+                              productoActual.variables !== "N/A" &&
+                              productoActual.variables.toLowerCase() !== "única" &&
+                              productoActual.variables.toLowerCase() !== "unica";
+      
+      const necesitaTallas = productoActual?.tallas && 
+                           productoActual.tallas.trim() !== "" && 
                            productoActual.tallas !== "N/A" && 
                            productoActual.tallas.toLowerCase() !== "única" &&
                            productoActual.tallas.toLowerCase() !== "unica";
       
-      if (necesitaTalla && !tallaSeleccionada) {
+      if (necesitaVariables && !variableSeleccionada) {
+          mostrarAlertaTemporal('⚠️ Por favor selecciona un color/material', 'warning');
+          return;
+      }
+
+      if (necesitaTallas && !tallaSeleccionada) {
           mostrarAlertaTemporal('⚠️ Por favor selecciona una talla', 'warning');
           return;
       }
@@ -1095,6 +1199,7 @@
   // ========== FUNCIONES GLOBALES ==========
   window.volverAtras = volverAtras;
   window.seleccionarImagenYVariante = seleccionarImagenYVariante;
+  window.seleccionarVariable = seleccionarVariable;
   window.seleccionarTalla = seleccionarTalla;
   window.cambiarCantidad = cambiarCantidad;
   window.agregarAlCarrito = agregarAlCarrito;
