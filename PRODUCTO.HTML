@@ -40,27 +40,26 @@
   </div>
 
   <!-- BOTONES EN LA MISMA LÍNEA -->
-<div class="container mt-3">
-  <div class="row align-items-center">
-    <!-- Botón Volver al inicio (izquierda) -->
-    <div class="col text-start">
-      <a href="INICIO.HTML" class="btn btn-outline-dark">
-        <i class="bi bi-arrow-left"></i> Volver al inicio
-      </a>
-    </div>
+  <div class="container mt-3">
+    <div class="row align-items-center">
+      <!-- Botón Volver atrás (izquierda) -->
+      <div class="col text-start">
+        <a href="#" id="btn-volver-atras" class="btn btn-outline-dark" onclick="volverAtras()">
+          <i class="bi bi-arrow-left"></i> Volver atrás
+        </a>
+      </div>
 
-    <!-- Botón Ofertas Especiales (centrado) -->
-    <div class="col text-center">
-      <a href="PROMOS.HTML" class="btn btn-warning fw-bold px-4 py-2 rounded-pill">
-        🎁 Ofertas Especiales
-      </a>
-    </div>
+      <!-- Botón Ofertas Especiales (centrado) -->
+      <div class="col text-center">
+        <a href="PROMOS.HTML" class="btn btn-warning fw-bold px-4 py-2 rounded-pill">
+          🎁 Ofertas Especiales
+        </a>
+      </div>
 
-    <!-- Columna vacía para balancear (derecha) -->
-    <div class="col"></div>
+      <!-- Columna vacía para balancear (derecha) -->
+      <div class="col"></div>
+    </div>
   </div>
-</div>
-
 
   <!-- CONTENIDO PRINCIPAL - DETALLE PRODUCTO -->
   <main class="container mt-4">
@@ -282,7 +281,7 @@
   <!-- SCRIPTS EXTERNOS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- SISTEMA DE DETALLE PRODUCTO CORREGIDO CON ZOOM -->
+  <!-- SISTEMA DE DETALLE PRODUCTO CORREGIDO CON ZOOM Y NAVEGACIÓN CON ESTADO -->
   <script>
   // ========== VARIABLES GLOBALES ==========
   let productoActual = null;
@@ -291,26 +290,116 @@
   let imagenSeleccionada = '';
   let cantidad = 1;
 
+  // ========== SISTEMA DE NAVEGACIÓN CON ESTADO ==========
+
+  // 🔄 FUNCIÓN PARA VOLVER ATRÁS CON ESTADO
+  function volverAtras() {
+      console.log('🔙 Ejecutando volverAtras...');
+      
+      const estadoGuardado = localStorage.getItem('navegacionAnmago');
+      
+      if (estadoGuardado) {
+          try {
+              const estado = JSON.parse(estadoGuardado);
+              const ahora = Date.now();
+              const tiempoTranscurrido = ahora - estado.timestamp;
+              
+              // Solo restaurar si ha pasado menos de 30 minutos
+              if (tiempoTranscurrido < 30 * 60 * 1000) {
+                  console.log('📍 Estado de navegación encontrado:', estado);
+                  
+                  // Construir URL de retorno basada en el estado guardado
+                  let urlRetorno = 'INICIO.HTML';
+                  
+                  switch (estado.vistaAnterior) {
+                      case 'productos':
+                          if (estado.tipo && estado.subtipo && estado.categoria) {
+                              urlRetorno = `INICIO.HTML?vista=productos&tipo=${encodeURIComponent(estado.tipo)}&subtipo=${encodeURIComponent(estado.subtipo)}&categoria=${encodeURIComponent(estado.categoria)}`;
+                              console.log('🎯 Redirigiendo a vista productos:', urlRetorno);
+                          }
+                          break;
+                      case 'categorias':
+                          if (estado.tipo && estado.subtipo) {
+                              urlRetorno = `INICIO.HTML?vista=categorias&tipo=${encodeURIComponent(estado.tipo)}&subtipo=${encodeURIComponent(estado.subtipo)}`;
+                              console.log('🎯 Redirigiendo a vista categorías:', urlRetorno);
+                          }
+                          break;
+                      case 'subtipos':
+                          if (estado.tipo) {
+                              urlRetorno = `INICIO.HTML?vista=subtipos&tipo=${encodeURIComponent(estado.tipo)}`;
+                              console.log('🎯 Redirigiendo a vista subtipos:', urlRetorno);
+                          }
+                          break;
+                      default:
+                          console.log('📍 Redirigiendo al inicio por defecto');
+                  }
+                  
+                  // Redirigir a la vista correspondiente
+                  window.location.href = urlRetorno;
+                  return;
+              } else {
+                  console.log('⏰ Estado expirado, redirigiendo al inicio');
+                  localStorage.removeItem('navegacionAnmago');
+              }
+          } catch (error) {
+              console.error('❌ Error procesando estado de navegación:', error);
+              localStorage.removeItem('navegacionAnmago');
+          }
+      }
+      
+      // Fallback: ir al inicio
+      console.log('📍 No hay estado guardado, redirigiendo al inicio');
+      window.location.href = 'INICIO.HTML';
+  }
+
+  // 📝 GUARDAR ESTADO DE NAVEGACIÓN DESDE INICIO.HTML
+  function guardarEstadoNavegacion() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const origen = urlParams.get('origen');
+      const tipo = urlParams.get('tipo');
+      const subtipo = urlParams.get('subtipo');
+      const categoria = urlParams.get('categoria');
+      
+      if (origen === 'tienda' && tipo && subtipo && categoria) {
+          const estadoNavegacion = {
+              vistaAnterior: 'productos',
+              tipo: tipo,
+              subtipo: subtipo,
+              categoria: categoria,
+              timestamp: Date.now(),
+              url: document.referrer
+          };
+          
+          localStorage.setItem('navegacionAnmago', JSON.stringify(estadoNavegacion));
+          console.log('💾 Estado de navegación guardado desde URL:', estadoNavegacion);
+      } else {
+          console.log('📍 No se detectaron parámetros de navegación en URL');
+      }
+  }
+
   // ========== INICIALIZACIÓN MEJORADA ==========
   document.addEventListener('DOMContentLoaded', function() {
       console.log('🚀 INICIANDO CARGA DE PRODUCTO - DOM LISTO');
       
-      // 1. Cargar header y footer
+      // 1. Guardar estado de navegación (si viene de INICIO.HTML)
+      guardarEstadoNavegacion();
+      
+      // 2. Cargar header y footer
       cargarHeaderFooter();
       
-      // 2. Configurar elementos interactivos
+      // 3. Configurar elementos interactivos
       configurarInteracciones();
       
-      // 3. Cargar producto (con retardo para asegurar DOM)
+      // 4. Cargar producto (con retardo para asegurar DOM)
       setTimeout(() => {
           console.log('🔄 Ejecutando carga de producto...');
           cargarProducto();
       }, 500);
       
-      // 4. Inicializar contadores
+      // 5. Inicializar contadores
       actualizarContadoresCarrito();
       
-      // 5. Activar sistema de zoom
+      // 6. Activar sistema de zoom
       configurarZoomDobleClic();
   });
 
@@ -1004,6 +1093,7 @@
   }
 
   // ========== FUNCIONES GLOBALES ==========
+  window.volverAtras = volverAtras;
   window.seleccionarImagenYVariante = seleccionarImagenYVariante;
   window.seleccionarTalla = seleccionarTalla;
   window.cambiarCantidad = cambiarCantidad;
