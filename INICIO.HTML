@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Anmago Store - Ropa, Hogar, Belleza y más</title>
   <meta name="description" content="Encuentra ropa, relojería, hogar, belleza y más en Anmago Store. Los mejores precios y calidad garantizada.">
-    <!-- Preconexiones optimizadas -->
+  
+  <!-- Preconexiones optimizadas -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="preconnect" href="https://ik.imagekit.io">
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
@@ -56,7 +57,7 @@
   <!-- Scripts optimizados -->
   <script src="carrito.js?v=20251115"></script>
   <script src="app.js?v=20251115"></script>
-  <script src="buscador.js?v=20251115" type="module"></script>
+  <script src="buscador.js?v=20251115"></script>
 
   <!-- HEADER STICKY -->
   <div id="header-container" class="header-sticky"></div>
@@ -204,6 +205,130 @@
   </main>
 
   <!-- ... (resto del código igual: carrito, footer, barra mobile) ... -->
+
+    <!-- CARRITO OFFCANVAS -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito">
+    <div class="offcanvas-header border-bottom">
+      <h4 class="offcanvas-title fw-bold">🛒 Tu Carrito</h4>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+    </div>
+    <div class="offcanvas-body" id="carrito-contenido">
+      <div class="text-center text-muted py-4">
+        <i class="bi bi-bag-x fs-1"></i>
+        <p class="mt-2">Tu carrito está vacío</p>
+      </div>
+    </div>
+    <div class="offcanvas-footer p-3 border-top">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <span class="fw-bold">Subtotal:</span>
+        <span id="subtotal" class="fw-bold fs-5 text-primary">$0</span>
+      </div>
+      <button class="btn btn-gradient px-4 py-2 rounded-pill fw-bold" onclick="abrirFormularioPedido()">
+        ✨Continuar compra✨
+      </button>
+    </div>
+  </div>
+
+  <!-- BOTÓN CARRITO FLOTANTE -->
+  <a href="#" class="btn-carrito-flotante d-none d-md-flex" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
+    <i class="bi bi-bag-heart fs-5"></i>
+    <span id="contador-carrito" class="contador-carrito">0</span>
+  </a>
+
+  <!-- ✅ FOOTER FIJADO EN TODAS LAS VISTAS -->
+  <footer class="footer mt-5" id="footer-container">
+    <!-- Enlaces institucionales -->
+    <div class="footer-links">
+      <a href="#" onclick="volverAInicio(); return false;">Inicio</a>
+      <a href="https://sites.google.com/view/anmagostore/quienes-somos" target="_blank">Nosotros</a>
+      <a href="https://sites.google.com/view/anmagostore/politica-de-tratamiento-de-datos" target="_blank">Tratamiento de datos</a>
+      <a href="https://sites.google.com/view/anmagostore/politicas-de-envios" target="_blank">Envíos</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSevvlCBgz7L6l2-DecKQLazoswqzf7DRYWOaCq4FtMGOR6D2Q/viewform?usp=header" target="_blank">Contacto</a>
+    </div>
+    
+    <!-- Redes sociales -->
+    <div class="redes-sociales">
+      <a href="https://www.facebook.com/profile.php?id=100092463703154&mibextid=ZbWKwL" target="_blank">
+        <img src="https://ik.imagekit.io/mbsk9dati/iconos%20redes/4896d785.IMAGEN.155541.jpg?updatedAt=1761587966118" alt="Facebook" width="48" height="48" loading="lazy">
+      </a>
+      <a href="https://www.youtube.com/channel/UCTrvoIT0-3ZbRuE7inPPxDg" target="_blank">
+        <img src="https://ik.imagekit.io/mbsk9dati/iconos%20redes/2a9cda61.IMAGEN.155515.jpg?updatedAt=1761587966369" alt="YouTube" width="48" height="48" loading="lazy">
+      </a>
+      <a href="https://www.tiktok.com/@anmagostore?_t=8g37PtO0Los&_r=1" target="_blank">
+        <img src="https://ik.imagekit.io/mbsk9dati/iconos%20redes/1d8aa1ac.IMAGEN.155420.jpg?updatedAt=1761587966443" alt="TikTok" width="48" height="48" loading="lazy">
+      </a>
+      <a href="https://instagram.com/anmagostore?igshid=OGQ5ZDc2ODk2ZA==" target="_blank">
+        <img src="https://ik.imagekit.io/mbsk9dati/iconos%20redes/cf840649.IMAGEN.155447.jpg?updatedAt=1761587966410" alt="Instagram" width="48" height="48" loading="lazy">
+      </a>
+      <a href="https://wa.me/573006498710" target="_blank">
+        <img src="https://ik.imagekit.io/mbsk9dati/iconos%20redes/9018ebd1.IMAGEN.155401.jpg?updatedAt=1761587966435" alt="WhatsApp" width="48" height="48" loading="lazy">
+      </a>
+      <a href="https://www.google.com/search?q=anmago+store" target="_blank">
+        <img src="https://ik.imagekit.io/mbsk9dati/iconos%20redes/ea6b8532.IMAGEN.155430.jpg?updatedAt=1761587966451" alt="Google" width="48" height="48" loading="lazy">
+      </a>
+    </div>
+
+    <!-- Medios de pago -->
+    <div class="medios-pago">
+      <h4>Medios de pago</h4>
+      <div class="logos-pago">
+        <img src="https://cdn.worldvectorlogo.com/logos/nequi-2.svg" alt="Nequi">
+        <img src="https://cdn.worldvectorlogo.com/logos/daviplata.svg" alt="Daviplata">
+        <img src="https://epayco.com/wp-content/uploads/2023/01/epayco_pago_seguro.jpg" alt="ePayco">
+      </div>
+    </div>
+
+    <!-- Datos de contacto -->
+    <div class="datos-contacto">
+      <h4>Contacto</h4>
+      <p><strong>Email:</strong> anmagostore@gmail.com</p>
+      <p><strong>Celulares:</strong> 3006498710 – 3115046741</p>
+      <p><strong>Administración:</strong> Carrera 13 N° 9-39, C.C. Visto Centro de Moda</p>
+    </div>
+
+    <!-- Derechos -->
+    <div class="copyright">
+      &copy; 2025 Anmago Store. Todos los derechos reservados.
+    </div>
+  </footer>
+
+  <!-- ✅ BARRA INFERIOR MOBILE FIJADA -->
+  <nav class="navbar fixed-bottom bg-white border-top d-md-none py-2" style="z-index: 1030;">
+    <div class="container-fluid">
+      <div class="d-flex justify-content-around w-100">
+        <a href="#" class="text-center text-decoration-none text-primary" onclick="volverAInicio(); return false;">
+          <i class="bi bi-house-fill fs-5"></i>
+          <div class="small">Inicio</div>
+        </a>
+        <a href="PROMOS.HTML" class="text-center text-decoration-none text-dark">
+          <i class="bi bi-percent fs-5"></i>
+          <div class="small">Ofertas</div>
+        </a>
+        <a href="#" class="text-center text-decoration-none position-relative"
+           data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
+          <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center" 
+               style="width: 50px; height: 50px; margin-top: -8px;">
+            <i class="bi bi-bag-heart fs-5 text-white"></i>
+          </div>
+          <span id="contador-carrito-mobile" class="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill" style="font-size: 0.6rem;">0</span>
+          <div class="small mt-1">Carrito</div>
+        </a>
+        <a href="https://wa.me/573006498710?text=¡Hola!%20Me%20interesan%20sus%20productos%20de%20Anmago%20Store" 
+           class="text-center text-decoration-none text-success"
+           target="_blank">
+          <i class="bi bi-whatsapp fs-5"></i>
+          <div class="small">Chat</div>
+        </a>
+        <a href="modalformulario.html" class="text-center text-decoration-none text-dark">
+          <i class="bi bi-person fs-5"></i>
+          <div class="small">Cuenta</div>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- SCRIPTS EXTERNOS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
   // ✅ SISTEMA DE NAVEGACIÓN UNIFICADO
@@ -376,8 +501,8 @@
           <a href="#" onclick="verDetalleProducto('${producto.id}'); return false;">
             <img src="${producto.imagen}" alt="${producto.producto}" class="card-img-ml">
             <div class="card-body-ml">
-              <h3 class="nombre-producto-ml small">${producto.producto}</h3>
-              <div class="precio-ml">$${producto.precio?.toLocaleString('es-CO') || '0'}</div>
+              <h3 class="nombre-producto-ml small line-clamp-2">${producto.producto}</h3>
+              <div class="precio-ml fw-bold text-primary">$${producto.precio?.toLocaleString('es-CO') || '0'}</div>
               <button class="btn btn-outline-primary btn-sm">
                 <i class="bi bi-eye"></i> Ver detalles
               </button>
@@ -399,7 +524,10 @@
 
   // 🚀 INICIALIZACIÓN
   document.addEventListener('DOMContentLoaded', function() {
-    // Tu código de inicialización actual del carrito...
+    // Inicializar carrito
+    if (window.inicializarCarrito) {
+      window.inicializarCarrito();
+    }
     
     // Cargar productos recién llegados
     setTimeout(async () => {
@@ -411,10 +539,10 @@
         grid.innerHTML = ultimosProductos.map(producto => `
           <div class="card-producto-ml">
             <a href="#" onclick="verDetalleProducto('${producto.id}'); return false;">
-              <img src="${producto.imagen}" alt="${producto.producto}" class="card-img-ml">
+              <img src="${producto.imagen}" alt="${producto.producto}" class="card-img-ml imagen-completa">
               <div class="card-body-ml">
-                <h3 class="nombre-producto-ml small">${producto.producto}</h3>
-                <div class="precio-ml">$${producto.precio?.toLocaleString('es-CO') || '0'}</div>
+                <h3 class="nombre-producto-ml small line-clamp-2">${producto.producto}</h3>
+                <div class="precio-ml fw-bold text-primary">$${producto.precio?.toLocaleString('es-CO') || '0'}</div>
                 <button class="btn btn-outline-primary btn-sm">
                   <i class="bi bi-eye"></i> Ver detalles
                 </button>
@@ -428,7 +556,5 @@
     }, 1000);
   });
   </script>
-
-  <!-- ... (el resto de tu código JavaScript unificado del carrito) ... -->
 </body>
 </html>
