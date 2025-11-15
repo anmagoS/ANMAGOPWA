@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="preconnect" href="https://ik.imagekit.io">
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
   <!-- PWA y favicon -->
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="logo.jpg" type="image/x-icon" />
@@ -20,13 +21,34 @@
 
   <!-- CSS optimizado -->
   <link rel="stylesheet" href="ESTILO.CSS?v=20251115" />
+  
+  <style>
+    /* ESTILOS ESPECÍFICOS PARA PROMOCIONES */
+    .card-promocion .card-img-ml {
+      object-fit: contain !important;
+      object-position: center !important;
+      background: white !important;
+      padding: 10px !important;
+      height: 180px !important;
+    }
+    
+    .precio-promocion {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    
+    .precio-promocion s {
+      font-size: 0.8rem;
+    }
+  </style>
 </head>
 
 <body class="bg-light">
   <!-- Scripts optimizados -->
   <script src="app.js?v=20251115" defer></script>
   <script src="carrito.js?v=20251115" defer></script>
-  <script src="buscador.js?v=20251115" type="module"></script>
+  <script src="buscador.js?v=20251115"></script>
 
   <!-- HEADER STICKY -->
   <div id="header-container" class="header-sticky"></div>
@@ -104,8 +126,8 @@
         <span class="fw-bold">Subtotal:</span>
         <span id="subtotal" class="fw-bold fs-5 text-primary">$0</span>
       </div>
-      <button class="btn btn-gradient px-4 py-2 rounded-pill fw-bold " onclick="abrirFormularioPedido()">
-       ✨ Continuar compra ✨
+      <button class="btn btn-gradient px-4 py-2 rounded-pill fw-bold" onclick="abrirFormularioPedido()">
+        ✨ Continuar compra ✨
       </button>
     </div>
   </div>
@@ -140,7 +162,6 @@
           <span id="contador-carrito-mobile" class="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill" style="font-size: 0.6rem;">0</span>
           <div class="small mt-1">Carrito</div>
         </a>
-        <!-- BOTÓN WHATSAPP ACTUALIZADO -->
         <a href="https://wa.me/573006498710?text=¡Hola!%20Me%20interesan%20sus%20productos%20de%20Anmago%20Store" 
            class="text-center text-decoration-none text-success"
            target="_blank">
@@ -159,9 +180,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- JAVASCRIPT ESPECÍFICO DE PROMOCIONES -->
-  <script type="module">
-    import { activarBuscadorGlobal } from './buscador.js';
-
+  <script>
     let promocionesGlobal = [];
     const cantidadPorCiclo = 4;
     const ciclosPorDia = 4;
@@ -354,7 +373,9 @@
       }
 
       // Activar buscador
-      activarBuscadorGlobal();
+      if (window.activarBuscadorGlobal) {
+        window.activarBuscadorGlobal();
+      }
 
       // Cargar promociones
       setTimeout(() => {
@@ -367,11 +388,12 @@
     window.verProducto = verProducto;
     window.cargarPromociones = cargarPromociones;
   </script>
-<script>
-// Sincronización de contadores para todas las páginas
-document.addEventListener('DOMContentLoaded', function() {
-    // Si el carrito no está inicializado, inicializarlo
-    if (!window.carritoManager) {
+
+  <script>
+    // Sincronización de contadores para todas las páginas
+    document.addEventListener('DOMContentLoaded', function() {
+      // Si el carrito no está inicializado, inicializarlo
+      if (!window.carritoManager) {
         console.log('🔄 Inicializando carrito desde página secundaria');
         
         // Función simple de inicialización para páginas secundarias
@@ -381,84 +403,41 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Actualizar todos los contadores disponibles
         ['contador-carrito', 'contador-carrito-mobile', 'contador-carrito-header'].forEach(id => {
-            const elemento = document.getElementById(id);
-            if (elemento) {
-                elemento.textContent = totalItems;
-                elemento.style.display = totalItems > 0 ? 'block' : 'none';
-                console.log(`✅ Contador ${id} actualizado:`, totalItems);
-            }
+          const elemento = document.getElementById(id);
+          if (elemento) {
+            elemento.textContent = totalItems;
+            elemento.style.display = totalItems > 0 ? 'block' : 'none';
+            console.log(`✅ Contador ${id} actualizado:`, totalItems);
+          }
         });
-    }
-    
-    // Escuchar cambios en el localStorage entre pestañas
-    window.addEventListener('storage', function(e) {
+      }
+      
+      // Escuchar cambios en el localStorage entre pestañas
+      window.addEventListener('storage', function(e) {
         if (e.key === 'carritoAnmago') {
-            location.reload(); // Recargar para sincronizar
+          location.reload(); // Recargar para sincronizar
         }
+      });
     });
-});
-</script>
-<script>
-// DIAGNÓSTICO DEL CARRITO - Agregar antes de </body>
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🔍 INICIANDO DIAGNÓSTICO DEL CARRITO...');
-    
-    // Verificar localStorage
-    const carritoGuardado = localStorage.getItem('carritoAnmago');
-    console.log('📦 Carrito en localStorage:', carritoGuardado);
-    
-    if (carritoGuardado) {
-        try {
-            const carrito = JSON.parse(carritoGuardado);
-            console.log('🛒 Productos en carrito:', carrito);
-            console.log('🔢 Total items:', carrito.reduce((sum, item) => sum + (item.cantidad || 1), 0));
-            
-            // Verificar estructura de datos
-            carrito.forEach((item, index) => {
-                console.log(`📝 Producto ${index + 1}:`, {
-                    id: item.id,
-                    nombre: item.nombre,
-                    precio: item.precio,
-                    cantidad: item.cantidad,
-                    talla: item.talla,
-                    imagen: item.imagen ? '✅' : '❌'
-                });
-            });
-            
-        } catch (error) {
-            console.error('❌ Error parseando carrito:', error);
-        }
-    } else {
-        console.log('📭 Carrito vacío en localStorage');
-    }
-    
-    // Verificar si carritoManager está funcionando
-    if (window.carritoManager) {
-        console.log('✅ carritoManager está inicializado');
-        console.log('🛒 carritoManager.articulosCarrito:', window.carritoManager.articulosCarrito);
-    } else {
-        console.log('❌ carritoManager NO está inicializado');
-    }
-});
 
-// Función para forzar actualización del offcanvas
-function forzarActualizacionCarrito() {
-    if (window.carritoManager && window.actualizarOffcanvasCarrito) {
+    // Función para forzar actualización del offcanvas
+    function forzarActualizacionCarrito() {
+      if (window.carritoManager && window.actualizarOffcanvasCarrito) {
         console.log('🔄 Forzando actualización del offcanvas...');
         window.actualizarOffcanvasCarrito();
+      }
     }
-}
 
-// Actualizar offcanvas cuando se abra
-document.addEventListener('DOMContentLoaded', function() {
-    const offcanvasElement = document.getElementById('offcanvasCarrito');
-    if (offcanvasElement) {
+    // Actualizar offcanvas cuando se abra
+    document.addEventListener('DOMContentLoaded', function() {
+      const offcanvasElement = document.getElementById('offcanvasCarrito');
+      if (offcanvasElement) {
         offcanvasElement.addEventListener('show.bs.offcanvas', function() {
-            console.log('🎯 Offcanvas abierto - actualizando contenido...');
-            setTimeout(forzarActualizacionCarrito, 100);
+          console.log('🎯 Offcanvas abierto - actualizando contenido...');
+          setTimeout(forzarActualizacionCarrito, 100);
         });
-    }
-});
-</script>
+      }
+    });
+  </script>
 </body>
 </html>
