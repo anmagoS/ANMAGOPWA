@@ -18,6 +18,7 @@
   <!-- Bootstrap e iconos -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+
   <!-- CSS optimizado -->
   <link rel="stylesheet" href="ESTILO.CSS?v=20251115" />
 </head>
@@ -139,7 +140,6 @@
       </div>
     </div>
 
-    <!-- Las demás vistas se mantienen igual -->
     <!-- VISTA 2: SUBTIPOS -->
     <div id="vista-subtipos" class="vista">
       <div class="container mt-3">
@@ -192,7 +192,6 @@
     </div>
   </main>
 
-  <!-- Resto del código se mantiene igual -->
   <!-- CARRITO OFFCANVAS -->
   <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito">
     <div class="offcanvas-header border-bottom">
@@ -324,7 +323,7 @@
   let subtipoActual = '';
   let categoriaActual = '';
 
-  // 🗂️ IMÁGENES POR SUBTIPO (usa las que ya tienes)
+  // 🗂️ IMÁGENES POR SUBTIPO
   const IMAGENES_POR_SUBTIPO = {
     "dama": "https://ik.imagekit.io/mbsk9dati/subtipos/ícono%20realista%20para%20.png?tr=w-300,q-80",
     "caballero": "https://ik.imagekit.io/mbsk9dati/subtipos/ícono%20realista%20para%20h.png?tr=w-300,q-80",
@@ -345,16 +344,95 @@
     "decoración navideña": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/navidad_decoracion.jpg?tr=w-300,q-80"
   };
 
-  // 🔄 FUNCIONES DE NAVEGACIÓN
+  // 🧭 MANEJAR PARÁMETROS DE URL PARA NAVEGACIÓN DIRECTA
+  function manejarParametrosURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tipo = urlParams.get('tipo');
+    const subtipo = urlParams.get('subtipo');
+    const categoria = urlParams.get('categoria');
+    const vista = urlParams.get('vista');
+    
+    if (vista === 'productos' && tipo && subtipo && categoria) {
+      // Cargar directamente la vista de productos
+      cargarProductos(tipo, subtipo, categoria);
+    } else if (vista === 'categorias' && tipo && subtipo) {
+      // Cargar directamente la vista de categorías
+      cargarCategorias(tipo, subtipo);
+    } else if (vista === 'subtipos' && tipo) {
+      // Cargar directamente la vista de subtipos
+      cargarSubtipos(tipo);
+    } else {
+      // Verificar si hay estado guardado desde PRODUCTO.HTML
+      restaurarNavegacionDesdeProducto();
+    }
+  }
+
+  // 🔄 FUNCIÓN PARA RESTAURAR NAVEGACIÓN AL VOLVER DESDE PRODUCTO
+  function restaurarNavegacionDesdeProducto() {
+    const estadoGuardado = localStorage.getItem('navegacionAnmago');
+    
+    if (estadoGuardado) {
+      try {
+        const estado = JSON.parse(estadoGuardado);
+        const ahora = Date.now();
+        const tiempoTranscurrido = ahora - estado.timestamp;
+        
+        // Solo restaurar si ha pasado menos de 30 minutos
+        if (tiempoTranscurrido < 30 * 60 * 1000) {
+          switch (estado.vistaAnterior) {
+            case 'productos':
+              if (estado.tipo && estado.subtipo && estado.categoria) {
+                cargarProductos(estado.tipo, estado.subtipo, estado.categoria);
+                return true;
+              }
+              break;
+            case 'categorias':
+              if (estado.tipo && estado.subtipo) {
+                cargarCategorias(estado.tipo, estado.subtipo);
+                return true;
+              }
+              break;
+            case 'subtipos':
+              if (estado.tipo) {
+                cargarSubtipos(estado.tipo);
+                return true;
+              }
+              break;
+          }
+        }
+        
+        // Limpiar estado expirado
+        localStorage.removeItem('navegacionAnmago');
+      } catch (error) {
+        console.error('Error restaurando navegación:', error);
+        localStorage.removeItem('navegacionAnmago');
+      }
+    }
+    return false;
+  }
+
+  // 🔄 FUNCIONES DE NAVEGACIÓN MEJORADAS
   function cambiarVista(vistaDestino) {
     document.querySelectorAll('.vista').forEach(vista => {
       vista.classList.remove('vista-activa');
     });
     document.getElementById(`vista-${vistaDestino}`).classList.add('vista-activa');
     navegacionStack.push(vistaDestino);
+    
+    // Actualizar URL sin recargar la página
+    const nuevaURL = new URL(window.location);
+    nuevaURL.searchParams.set('vista', vistaDestino);
+    window.history.replaceState({}, '', nuevaURL);
   }
 
   function cargarSubtipos(tipo) {
+    // Guardar estado de navegación
+    const estadoNavegacion = {
+      vistaAnterior: 'inicio',
+      tipo: tipo,
+      timestamp: Date.now()
+    };
+    
     tipoActual = tipo;
     cambiarVista('subtipos');
     document.getElementById('breadcrumb-tipo').textContent = tipo;
@@ -363,6 +441,14 @@
   }
 
   function cargarCategorias(tipo, subtipo) {
+    // Guardar estado de navegación
+    const estadoNavegacion = {
+      vistaAnterior: 'subtipos',
+      tipo: tipo,
+      subtipo: subtipo,
+      timestamp: Date.now()
+    };
+    
     subtipoActual = subtipo;
     cambiarVista('categorias');
     document.getElementById('breadcrumb-tipo-link').textContent = tipo;
@@ -373,6 +459,15 @@
   }
 
   function cargarProductos(tipo, subtipo, categoria) {
+    // Guardar estado de navegación
+    const estadoNavegacion = {
+      vistaAnterior: 'productos',
+      tipo: tipo,
+      subtipo: subtipo,
+      categoria: categoria,
+      timestamp: Date.now()
+    };
+    
     categoriaActual = categoria;
     cambiarVista('productos');
     document.getElementById('breadcrumb-tipo-link-prod').textContent = tipo;
@@ -387,10 +482,30 @@
   function volverAInicio() {
     navegacionStack = [];
     cambiarVista('inicio');
+    // Limpiar parámetros de URL
+    window.history.replaceState({}, '', window.location.pathname);
   }
 
-  function verDetalleProducto(productoId) {
-    window.location.href = `PRODUCTO.HTML?id=${productoId}`;
+  // 🎯 FUNCIÓN MEJORADA PARA IR AL DETALLE DEL PRODUCTO
+  function irADetalleProducto(productoId, tipo, subtipo, categoria) {
+    // Guardar el estado actual de navegación para poder volver
+    const estadoNavegacion = {
+      vistaAnterior: 'productos',
+      tipo: tipo,
+      subtipo: subtipo,
+      categoria: categoria,
+      timestamp: Date.now(),
+      url: window.location.href
+    };
+    
+    localStorage.setItem('navegacionAnmago', JSON.stringify(estadoNavegacion));
+    
+    // Redirigir a la página de detalle del producto
+    window.location.href = `PRODUCTO.HTML?id=${productoId}&origen=tienda&tipo=${tipo}&subtipo=${subtipo}&categoria=${categoria}`;
+    
+    // Prevenir el comportamiento por defecto del enlace
+    if (event) event.preventDefault();
+    return false;
   }
 
   // ⏰ TEMPORIZADOR PARA PROMOCIONES
@@ -424,15 +539,15 @@
     setInterval(actualizarTemporizador, 1000);
   }
 
-  // 🎯 OBTENER ÍNDICE PROMOCIONAL (misma lógica que PROMOS.HTML)
+  // 🎯 OBTENER ÍNDICE PROMOCIONAL
   function obtenerIndicePromocional(totalPromos = 0) {
     const ahora = new Date();
     ahora.setMinutes(0, 0, 0);
 
     const inicio = new Date(Date.UTC(2025, 10, 8, 0, 0, 0));
     const diferenciaHoras = Math.floor((ahora - inicio) / (1000 * 60 * 60));
-    const cicloActual = diferenciaHoras % (4 * 365); // 4 ciclos por día
-    const indice = cicloActual * 4; // 4 productos por ciclo
+    const cicloActual = diferenciaHoras % (4 * 365);
+    const indice = cicloActual * 4;
 
     return totalPromos > 0 ? indice % totalPromos : 0;
   }
@@ -449,7 +564,6 @@
       });
 
       if (promociones.length === 0) {
-        // Si no hay promociones, mostrar banner genérico
         document.getElementById('carousel-promos-home-contenido').innerHTML = `
           <div class="carousel-item active">
             <a href="PROMOS.HTML" class="producto-carrusel-card">
@@ -500,7 +614,7 @@
     }
   }
 
-  // 📥 FUNCIONES DE CARGA
+  // 📥 FUNCIONES DE CARGA MEJORADAS
   async function cargarYRenderizarSubtipos(tipo) {
     try {
       const productos = await obtenerCatalogo();
@@ -574,20 +688,28 @@
       const grid = document.getElementById('grid-productos');
       grid.innerHTML = productosFiltrados.map(producto => `
         <div class="card-producto-ml">
-          <a href="#" onclick="verDetalleProducto('${producto.id}'); return false;">
+          <a href="#" onclick="irADetalleProducto('${producto.id}', '${tipo}', '${subtipo}', '${categoria}')">
             <img src="${producto.imagen}" alt="${producto.producto}" class="card-img-ml">
             <div class="card-body-ml">
-              <h3 class="nombre-producto-ml small line-clamp-2">${producto.producto}</h3>
-              <div class="precio-ml fw-bold text-primary">$${producto.precio?.toLocaleString('es-CO') || '0'}</div>
-              <button class="btn btn-outline-primary btn-sm">
+              <h3 class="nombre-producto-ml">${producto.producto}</h3>
+              <p class="precio-producto-ml">$${Number(producto.precio).toLocaleString('es-CO')}</p>
+              ${producto.promo === "sí" ? '<span class="badge bg-danger">EN PROMOCIÓN</span>' : ''}
+              ${producto.stock <= 5 ? '<span class="badge bg-warning text-dark">ÚLTIMAS UNIDADES</span>' : ''}
+              <button class="btn btn-outline-primary btn-sm mt-2">
                 <i class="bi bi-eye"></i> Ver detalles
               </button>
             </div>
           </a>
         </div>
       `).join('');
+
     } catch (error) {
       console.error('Error cargando productos:', error);
+      document.getElementById('grid-productos').innerHTML = `
+        <div class="col-12 text-center py-4">
+          <p class="text-muted">Error al cargar los productos. Intenta nuevamente.</p>
+        </div>
+      `;
     }
   }
 
@@ -605,6 +727,9 @@
       window.inicializarCarrito();
     }
     
+    // Manejar parámetros de URL y restaurar navegación
+    manejarParametrosURL();
+    
     // Cargar carrusel de promociones
     cargarCarruselPromociones();
     iniciarTemporizadorHome();
@@ -618,7 +743,7 @@
         const grid = document.getElementById('grid-ultimos');
         grid.innerHTML = ultimosProductos.map(producto => `
           <div class="card-producto-ml">
-            <a href="#" onclick="verDetalleProducto('${producto.id}'); return false;">
+            <a href="#" onclick="irADetalleProducto('${producto.id}', '${producto.tipo}', '${producto.subtipo}', '${producto.categoria}')">
               <img src="${producto.imagen}" alt="${producto.producto}" class="card-img-ml imagen-completa">
               <div class="card-body-ml">
                 <h3 class="nombre-producto-ml small line-clamp-2">${producto.producto}</h3>
