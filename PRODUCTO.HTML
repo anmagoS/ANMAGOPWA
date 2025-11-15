@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detalle Producto | Anmago Store</title>
+  <meta name="description" content="Descubre este producto exclusivo en Anmago Store. Calidad garantizada y los mejores precios.">
+  
+  <!-- Preconexiones optimizadas -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://ik.imagekit.io">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+  <!-- PWA y favicon -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="logo.jpg" type="image/x-icon" />
+
+  <!-- Bootstrap e iconos -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+
+  <!-- CSS optimizado -->
+  <link rel="stylesheet" href="ESTILO.CSS?v=20251115" />
+</head>
+
+<body class="bg-light">
+  <!-- Scripts optimizados -->
+  <script src="carrito.js?v=20251115"></script>
+  <script src="app.js?v=20251115"></script>
+  <script src="buscador.js?v=20251115" type="module"></script>
+
+  <!-- HEADER STICKY -->
+  <div id="header-container" class="header-sticky"></div>
+
+  <!-- BANNER PROMOCIONAL -->
+  <div class="container-fluid banner-promocional py-2">
+    <div class="container text-center">
+      <small class="fw-bold">⭐ Los mejores precios ⭐ Calidad garantizada</small>
+    </div>
+  </div>
+
+  <!-- BOTÓN ATRÁS -->
+  <div class="container mt-3">
+    <a href="INICIO.HTML" class="btn btn-outline-dark">
+      <i class="bi bi-arrow-left"></i> Volver al inicio
+    </a>
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL - DETALLE PRODUCTO -->
+  <main class="container mt-4">
+    <div class="row">
+      <!-- GALERÍA DE IMÁGENES CON ZOOM -->
+      <div class="col-md-6 mb-4">
+        <div class="sticky-top" style="top: 100px;">
+          <!-- IMAGEN PRINCIPAL CON ZOOM MEJORADA -->
+          <div class="position-relative mb-3">
+            <img id="imagen-principal" src="" alt="Producto" 
+                 class="card-img-ml shadow img-fluid"
+                 style="cursor: zoom-in; max-height: 500px; width: 100%; object-fit: contain; transition: all 0.3s ease; border-radius: 12px;"
+                 onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'"
+                 onmouseout="this.style.transform='scale(1)'; this.style.boxShadow=''"
+                 onclick="ampliarImagen(this.src)"
+                 ondblclick="ampliarImagen(this.src)">
+            
+            <!-- Indicador de zoom -->
+            <div class="position-absolute top-0 end-0 m-3">
+              <div class="bg-dark bg-opacity-75 rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                <i class="bi bi-zoom-in text-white fs-6"></i>
+              </div>
+            </div>
+            
+            <!-- Texto ayuda -->
+            <div class="position-absolute bottom-0 start-0 end-0 text-center mb-2">
+              <small class="badge bg-dark bg-opacity-75 text-white px-3 py-2">
+                <i class="bi bi-mouse"></i> Clic para ampliar • 
+                <i class="bi bi-arrows-fullscreen"></i> Doble clic para zoom máximo
+              </small>
+            </div>
+          </div>
+          
+          <!-- ALERTA PARA SELECCIONAR IMAGEN -->
+          <div id="alerta-seleccion-imagen" class="alert alert-warning mt-3" style="display: none;">
+            <i class="bi bi-exclamation-triangle"></i> 
+            <strong>¡Selecciona una imagen!</strong> Por favor elige la variante que deseas.
+          </div>
+          
+          <div class="galeria-miniaturas" id="galeria-miniaturas">
+            <!-- Miniaturas se cargan dinámicamente -->
+          </div>
+
+          <!-- Badges de estado -->
+          <div class="mt-3" id="badges-producto">
+            <!-- Badges se cargan dinámicamente -->
+          </div>
+        </div>
+      </div>
+
+      <!-- INFORMACIÓN DEL PRODUCTO -->
+      <div class="col-md-6">
+        <div class="ps-md-4">
+          <!-- Categorías -->
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb" id="breadcrumb-producto">
+              <li class="breadcrumb-item"><a href="INICIO.HTML">Inicio</a></li>
+              <!-- Categorías se cargan dinámicamente -->
+            </ol>
+          </nav>
+
+          <!-- Nombre y precio -->
+          <h1 id="nombre-producto" class="h3 fw-bold mb-2"></h1>
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <span id="precio-actual" class="h4 fw-bold text-primary mb-0"></span>
+            <span id="precio-original" class="text-muted h5 mb-0 text-decoration-line-through"></span>
+            <span id="descuento" class="badge badge-oferta fs-6"></span>
+          </div>
+
+          <!-- Descripción -->
+          <div class="mb-4">
+            <h5 class="fw-bold mb-2">📋 Descripción</h5>
+            <p id="descripcion-producto" class="text-muted"></p>
+          </div>
+
+          <!-- VARIANTE ACTUAL (se muestra cuando se selecciona imagen) -->
+          <div class="mb-3" id="variante-actual-container" style="display: none;">
+            <h5 class="fw-bold mb-2">🎨 Variante seleccionada</h5>
+            <div class="alert alert-info py-2">
+              <span id="variante-actual-texto"></span>
+            </div>
+          </div>
+
+          <!-- Selección de talla -->
+          <div class="mb-4" id="seccion-tallas">
+            <!-- Selector de tallas se carga dinámicamente -->
+          </div>
+
+          <!-- Cantidad -->
+          <div class="mb-4">
+            <h5 class="fw-bold mb-3">🔢 Cantidad</h5>
+            <div class="d-flex align-items-center gap-3">
+              <button class="btn btn-outline-secondary" onclick="cambiarCantidad(-1)">-</button>
+              <input type="number" id="input-cantidad" class="form-control text-center" value="1" min="1" max="10" style="width: 80px;">
+              <button class="btn btn-outline-secondary" onclick="cambiarCantidad(1)">+</button>
+            </div>
+          </div>
+
+          <!-- Botones de acción -->
+          <div class="d-grid gap-2 d-md-flex mb-4">
+            <button id="btn-agregar-carrito" class="btn btn-agregar-carrito btn-lg flex-fw-bold" onclick="agregarAlCarrito()" disabled>
+              <i class="bi bi-cart-plus"></i> Agregar al carrito
+            </button>
+            <button class="btn btn-gradient btn-lg" onclick="comprarAhora()" disabled>
+              <i class="bi bi-lightning"></i> Comprar ahora
+            </button>
+          </div>
+
+          <!-- SERVICIOS (REEMPLAZA ENVÍO GRATIS) -->
+          <div class="card border-0 bg-light">
+            <div class="card-body">
+              <div class="row text-center">
+                <div class="col-4">
+                  <i class="bi bi-shield-check text-primary fs-4"></i>
+                  <div class="small mt-1">Calidad</div>
+                </div>
+                <div class="col-4">
+                  <i class="bi bi-star text-primary fs-4"></i>
+                  <div class="small mt-1">Garantía</div>
+                </div>
+                <div class="col-4">
+                  <i class="bi bi-arrow-repeat text-primary fs-4"></i>
+                  <div class="small mt-1">Cambios</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO DEL PRODUCTO -->
+    <div class="row mt-5">
+      <div class="col-12">
+        <div id="video-producto"></div>
+      </div>
+    </div>
+
+    <!-- PRODUCTOS RELACIONADOS -->
+    <section class="mt-5 pt-4 border-top">
+      <h3 class="h4 fw-bold mb-4">🛍️ Productos relacionados</h3>
+      <div id="productos-relacionados" class="grid-productos-ml">
+        <!-- Productos relacionados se cargan dinámicamente -->
+        <div class="card-producto-ml skeleton" style="height: 280px;"></div>
+        <div class="card-producto-ml skeleton" style="height: 280px;"></div>
+        <div class="card-producto-ml skeleton" style="height: 280px;"></div>
+        <div class="card-producto-ml skeleton" style="height: 280px;"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- CARRITO OFFCANVAS -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito">
+    <div class="offcanvas-header border-bottom">
+      <h4 class="offcanvas-title fw-bold">🛒 Tu Carrito</h4>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+    </div>
+    <div class="offcanvas-body" id="carrito-contenido">
+      <div class="text-center text-muted py-4">
+        <i class="bi bi-bag-x fs-1"></i>
+        <p class="mt-2">Tu carrito está vacío</p>
+      </div>
+    </div>
+    <div class="offcanvas-footer p-3 border-top">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <span class="fw-bold">Subtotal:</span>
+        <span id="subtotal" class="fw-bold fs-5 text-primary">$0</span>
+      </div>
+      <button class="btn btn-gradient px-4 py-2 rounded-pill fw-bold" onclick="abrirFormularioPedido()">
+        ✨Continuar compra✨
+      </button>
+    </div>
+  </div>
+
+  <!-- BOTÓN CARRITO FLOTANTE -->
+  <a href="#" class="btn-carrito-flotante d-none d-md-flex" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
+    <i class="bi bi-bag-heart fs-5"></i>
+    <span id="contador-carrito" class="contador-carrito">0</span>
+  </a>
+
+  <!-- FOOTER -->
+  <div id="footer-container" class="mt-5"></div>
+
+  <!-- BARRA INFERIOR MOBILE -->
+  <nav class="navbar fixed-bottom bg-white border-top d-md-none py-2">
+    <div class="container-fluid">
+      <div class="d-flex justify-content-around w-100">
+        <a href="INICIO.HTML" class="text-center text-decoration-none text-primary">
+          <i class="bi bi-house-fill fs-5"></i>
+          <div class="small">Inicio</div>
+        </a>
+        <a href="PROMOS.HTML" class="text-center text-decoration-none text-dark">
+          <i class="bi bi-percent fs-5"></i>
+          <div class="small">Ofertas</div>
+        </a>
+        <a href="#" class="text-center text-decoration-none position-relative"
+           data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
+          <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center" 
+               style="width: 50px; height: 50px; margin-top: -8px;">
+            <i class="bi bi-bag-heart fs-5 text-white"></i>
+          </div>
+          <span id="contador-carrito-mobile" class="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill" style="font-size: 0.6rem;">0</span>
+          <div class="small mt-1">Carrito</div>
+        </a>
+        <a href="https://wa.me/573006498710?text=¡Hola!%20Me%20interesan%20sus%20productos%20de%20Anmago%20Store" 
+           class="text-center text-decoration-none text-success"
+           target="_blank">
+          <i class="bi bi-whatsapp fs-5"></i>
+          <div class="small">Chat</div>
+        </a>
+        <a href="modalformulario.html" class="text-center text-decoration-none text-dark">
+          <i class="bi bi-person fs-5"></i>
+          <div class="small">Cuenta</div>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- SCRIPTS EXTERNOS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- SISTEMA DE DETALLE PRODUCTO CORREGIDO CON ZOOM -->
+  <script>
+  // ========== VARIABLES GLOBALES ==========
+  let productoActual = null;
+  let varianteSeleccionada = '';
+  let tallaSeleccionada = '';
+  let imagenSeleccionada = '';
+  let cantidad = 1;
+
+  // ========== INICIALIZACIÓN MEJORADA ==========
+  document.addEventListener('DOMContentLoaded', function() {
+      console.log('🚀 INICIANDO CARGA DE PRODUCTO - DOM LISTO');
+      
+      // 1. Cargar header y footer
+      cargarHeaderFooter();
+      
+      // 2. Configurar elementos interactivos
+      configurarInteracciones();
+      
+      // 3. Cargar producto (con retardo para asegurar DOM)
+      setTimeout(() => {
+          console.log('🔄 Ejecutando carga de producto...');
+          cargarProducto();
+      }, 500);
+      
+      // 4. Inicializar contadores
+      actualizarContadoresCarrito();
+      
+      // 5. Activar sistema de zoom
+      configurarZoomDobleClic();
+  });
+
+  // ========== SISTEMA DE ZOOM PARA IMAGENES ==========
+
+  // 🔍 FUNCIÓN PARA AMPLIAR IMAGEN
+  function ampliarImagen(src) {
+      console.log('🔍 Ampliando imagen...');
+      
+      // Crear modal de zoom
+      const modalZoom = document.createElement('div');
+      modalZoom.id = 'modal-zoom';
+      modalZoom.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0,0,0,0.95);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 9999;
+          cursor: zoom-out;
+          animation: fadeIn 0.3s ease;
+      `;
+      
+      modalZoom.innerHTML = `
+          <div style="position: relative; max-width: 95%; max-height: 95%;">
+              <img src="${src}" 
+                   alt="Vista ampliada" 
+                   style="max-width: 100%; max-height: 95vh; object-fit: contain; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.3);"
+                   onclick="cerrarZoom()">
+              <button onclick="cerrarZoom()" 
+                      style="position: absolute; top: -50px; right: 0; background: #ff4444; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;">
+                  ✕
+              </button>
+              <div style="color: white; text-align: center; margin-top: 15px; font-size: 14px; background: rgba(0,0,0,0.7); padding: 8px 16px; border-radius: 20px;">
+                  <i class="bi bi-mouse"></i> Haz clic en la imagen para cerrar • 
+                  <i class="bi bi-escape"></i> Presiona ESC para salir
+              </div>
+          </div>
+      `;
+      
+      document.body.appendChild(modalZoom);
+      
+      // Cerrar al hacer clic fuera
+      modalZoom.addEventListener('click', function(e) {
+          if (e.target === modalZoom) {
+              cerrarZoom();
+          }
+      });
+      
+      // Cerrar con ESC
+      document.addEventListener('keydown', function zoomKeyHandler(e) {
+          if (e.key === 'Escape') {
+              cerrarZoom();
+              document.removeEventListener('keydown', zoomKeyHandler);
+          }
+      });
+      
+      // Prevenir scroll del body
+      document.body.style.overflow = 'hidden';
+  }
+
+  // ❌ FUNCIÓN PARA CERRAR ZOOM
+  function cerrarZoom() {
+      const modal = document.getElementById('modal-zoom');
+      if (modal) {
+          modal.remove();
+          // Restaurar scroll
+          document.body.style.overflow = '';
+      }
+  }
+
+  // 🔄 ZOOM CON DOBLE CLIC
+  function configurarZoomDobleClic() {
+      const imagenPrincipal = document.getElementById('imagen-principal');
+      if (imagenPrincipal) {
+          imagenPrincipal.addEventListener('dblclick', function() {
+              ampliarImagen(this.src);
+          });
+      }
+  }
+
+  // ========== FUNCIONES DE INICIALIZACIÓN ==========
+  function cargarHeaderFooter() {
+      Promise.all([
+          fetch("HEADER.HTML").then(res => res.text()),
+          fetch("footer.html").then(res => res.text())
+      ]).then(([header, footer]) => {
+          document.getElementById("header-container").innerHTML = header;
+          document.getElementById("footer-container").innerHTML = footer;
+          console.log('✅ Header y footer cargados');
+      }).catch(error => {
+          console.error("❌ Error cargando header/footer:", error);
+      });
+  }
+
+  function configurarInteracciones() {
+      // Configurar input de cantidad
+      const inputCantidad = document.getElementById('input-cantidad');
+      if (inputCantidad) {
+          inputCantidad.addEventListener('change', function() {
+              cantidad = Math.max(1, Math.min(10, parseInt(this.value) || 1));
+              this.value = cantidad;
+          });
+      }
+  }
+
+  // ========== FUNCIONES PRINCIPALES CORREGIDAS ==========
+
+  // 🎯 Obtener ID del producto desde URL
+  function obtenerIdProducto() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get('id');
+      console.log('🎯 ID del producto desde URL:', id);
+      return id;
+  }
+
+  // 📥 Cargar datos del producto - VERSIÓN MEJORADA Y ROBUSTA
+  async function cargarProducto() {
+      console.log('🔄 INICIANDO CARGA DEL PRODUCTO MEJORADA...');
+      
+      const productoId = obtenerIdProducto();
+      
+      if (!productoId) {
+          console.error('❌ No se especificó ID de producto');
+          mostrarError('No se especificó ningún producto');
+          return;
+      }
+
+      try {
+          console.log('🔍 Buscando producto:', productoId);
+          
+          const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json?t=" + Date.now();
+          console.log('📡 Cargando desde:', url);
+          
+          const respuesta = await fetch(url);
+          
+          if (!respuesta.ok) {
+              throw new Error(`Error HTTP: ${respuesta.status}`);
+          }
+          
+          const productos = await respuesta.json();
+          console.log('📦 Catálogo cargado:', productos.length, 'productos');
+          
+          // Buscar producto
+          productoActual = productos.find(p => p.id === productoId);
+          
+          if (!productoActual) {
+              console.error('❌ Producto no encontrado:', productoId);
+              mostrarError('Producto no encontrado en el catálogo');
+              return;
+          }
+
+          console.log('✅ Producto encontrado:', productoActual.producto);
+          
+          // ✅ INICIALIZAR VARIABLES GLOBALES INMEDIATAMENTE
+          varianteSeleccionada = 'Variante 1';
+          cantidad = 1;
+          
+          // Obtener primera imagen para imagenSeleccionada
+          if (productoActual.url && productoActual.url.includes("[]")) {
+              const imagenes = productoActual.url.split("[]").map(u => u.trim()).filter(Boolean);
+              imagenSeleccionada = imagenes[0];
+          } else {
+              imagenSeleccionada = productoActual.imagen;
+          }
+          
+          console.log('🎯 Variables inicializadas:', {
+              varianteSeleccionada,
+              imagenSeleccionada,
+              cantidad
+          });
+          
+          // Renderizar producto
+          renderizarProducto(productoActual);
+          
+          // Cargar productos relacionados
+          cargarProductosRelacionados(productos, productoActual);
+
+      } catch (error) {
+          console.error('💥 Error cargando producto:', error);
+          mostrarError('Error al cargar el producto: ' + error.message);
+          
+          // ✅ FALLBACK: Intentar cargar producto de ejemplo
+          cargarProductoEjemplo(productoId);
+      }
+  }
+
+  // ✅ FUNCIÓN DE FALLBACK
+  function cargarProductoEjemplo(productoId) {
+      console.log('🔄 Intentando cargar producto de ejemplo...');
+      const productoEjemplo = {
+          id: productoId,
+          producto: "Producto de Ejemplo",
+          descripcion: "Este es un producto de ejemplo",
+          precio: 29900,
+          imagen: "https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg",
+          url: "https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg",
+          tallas: "S,M,L"
+      };
+      
+      productoActual = productoEjemplo;
+      varianteSeleccionada = 'Variante 1';
+      imagenSeleccionada = productoEjemplo.imagen;
+      cantidad = 1;
+      
+      renderizarProducto(productoEjemplo);
+  }
+
+  // 🎨 Renderizar producto en la página
+  function renderizarProducto(producto) {
+      console.log('🎨 Renderizando producto:', producto.producto);
+      
+      // 1. Información básica
+      document.getElementById('nombre-producto').textContent = producto.producto;
+      document.getElementById('descripcion-producto').textContent = producto.descripcion || 'Producto de alta calidad disponible en Anmago Store.';
+      
+      // 2. Precios
+      const precioActual = producto.precioOferta || producto.precio || 0;
+      document.getElementById('precio-actual').textContent = `$${precioActual.toLocaleString('es-CO')}`;
+      
+      if (producto.precioOferta && producto.precio) {
+          document.getElementById('precio-original').textContent = `$${producto.precio.toLocaleString('es-CO')}`;
+          const descuento = Math.round((1 - producto.precioOferta / producto.precio) * 100);
+          document.getElementById('descuento').textContent = `-${descuento}%`;
+      } else {
+          document.getElementById('precio-original').style.display = 'none';
+          document.getElementById('descuento').style.display = 'none';
+      }
+
+      // 3. Galería de imágenes (IMPORTANTE: con miniaturas pequeñas)
+      renderizarGaleriaConVariantes(producto);
+
+      // 4. Breadcrumb
+      renderizarBreadcrumb(producto);
+
+      // 5. Selector de tallas
+      renderizarTallas(producto);
+
+      // 6. Badges
+      renderizarBadges(producto);
+
+      // 7. Video
+      renderizarVideo(producto);
+      
+      console.log('✅ Producto renderizado completamente');
+  }
+
+  // 🖼️ Renderizar galería CON MINIATURAS PEQUEÑAS
+  function renderizarGaleriaConVariantes(producto) {
+      const imagenPrincipal = document.getElementById('imagen-principal');
+      const galeria = document.getElementById('galeria-miniaturas');
+      const alertaSeleccion = document.getElementById('alerta-seleccion-imagen');
+      
+      // Obtener imágenes
+      let imagenes = [];
+      if (producto.url && producto.url.includes("[]")) {
+          imagenes = producto.url.split("[]").map(u => u.trim()).filter(Boolean);
+      } else if (producto.imagen) {
+          imagenes = [producto.imagen];
+      }
+      
+      console.log('🖼️ Imágenes para galería:', imagenes.length);
+
+      if (imagenes.length === 0) {
+          imagenPrincipal.src = 'https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg';
+          return;
+      }
+
+      // Imagen principal
+      imagenPrincipal.src = imagenes[0];
+      imagenPrincipal.alt = producto.producto;
+      
+      // ✅ VARIANTE POR DEFECTO
+      varianteSeleccionada = 'Variante 1';
+      imagenSeleccionada = imagenes[0];
+      
+      // Mostrar variante actual
+      mostrarVarianteActual('Variante 1');
+
+      // MINIATURAS PEQUEÑAS Y SELECCIONABLES
+      if (imagenes.length > 1) {
+          galeria.innerHTML = imagenes.map((img, index) => {
+              const nombreVariante = `Variante ${index + 1}`;
+              return `
+                  <img src="${img}" 
+                       alt="${producto.producto} - ${nombreVariante}" 
+                       class="miniatura ${index === 0 ? 'active' : ''}"
+                       onclick="seleccionarImagenYVariante('${img}', '${nombreVariante}', this)"
+                       style="width: 80px; height: 80px; object-fit: cover; border: 2px solid #ddd; border-radius: 8px; cursor: pointer; margin: 5px; transition: all 0.3s ease;"
+                       onmouseover="this.style.borderColor='#007bff'"
+                       onmouseout="if(!this.classList.contains('active')) this.style.borderColor='#ddd'"
+                       title="${nombreVariante}">
+              `;
+          }).join('');
+          
+          console.log('✅ Miniaturas creadas:', imagenes.length);
+          
+          // Mostrar alerta si hay múltiples imágenes
+          alertaSeleccion.style.display = 'block';
+      } else {
+          galeria.innerHTML = '';
+          alertaSeleccion.style.display = 'none';
+      }
+  }
+
+  // ✅ FUNCIÓN: Mostrar variante actual
+  function mostrarVarianteActual(nombreVariante) {
+      const container = document.getElementById('variante-actual-container');
+      const texto = document.getElementById('variante-actual-texto');
+      const alertaSeleccion = document.getElementById('alerta-seleccion-imagen');
+      
+      texto.textContent = nombreVariante;
+      container.style.display = 'block';
+      
+      // Ocultar alerta cuando se selecciona una imagen
+      alertaSeleccion.style.display = 'none';
+  }
+
+  // ✅ FUNCIÓN: Seleccionar imagen Y variante
+  function seleccionarImagenYVariante(imagenSrc, variante, elemento) {
+      console.log('🖱️ Seleccionando variante:', variante);
+      
+      // Cambiar imagen principal
+      document.getElementById('imagen-principal').src = imagenSrc;
+      
+      // Actualizar variables globales
+      varianteSeleccionada = variante;
+      imagenSeleccionada = imagenSrc;
+      
+      // Mostrar variante actual
+      mostrarVarianteActual(variante);
+      
+      // Actualizar miniaturas activas
+      document.querySelectorAll('.miniatura').forEach(img => {
+          img.classList.remove('active');
+          img.style.borderColor = '#ddd';
+      });
+      elemento.classList.add('active');
+      elemento.style.borderColor = '#007bff';
+      
+      // Verificar estado del botón
+      verificarEstadoBotonAgregar();
+      
+      console.log('✅ Variante cambiada a:', variante);
+  }
+
+  // 📏 Renderizar selector de tallas - VERSIÓN MEJORADA
+  function renderizarTallas(producto) {
+      const contenedor = document.getElementById('seccion-tallas');
+      
+      const tallas = producto.tallas ? 
+          producto.tallas.split(",").map(t => t.trim()).filter(t => t && t !== "N/A" && t.toLowerCase() !== "única" && t.toLowerCase() !== "unica") 
+          : [];
+
+      console.log('📏 Tallas disponibles:', tallas);
+
+      if (tallas.length > 0) {
+          contenedor.innerHTML = `
+              <h5 class="fw-bold mb-3">📏 Selecciona tu talla</h5>
+              <select class="form-select selector-talla" onchange="seleccionarTalla(this.value)" style="max-width: 250px; font-size: 1rem; padding: 10px;">
+                  <option value="">-- Elige una talla --</option>
+                  ${tallas.map(talla => `<option value="${talla}">${talla}</option>`).join('')}
+              </select>
+              <div class="form-text mt-2">💡 Asegúrate de seleccionar tu talla correcta</div>
+          `;
+      } else {
+          contenedor.innerHTML = '';
+          // Si no hay tallas, habilitar botón (solo necesita variante)
+          verificarEstadoBotonAgregar();
+      }
+  }
+
+  // ✅ FUNCIÓN: Seleccionar talla
+  function seleccionarTalla(talla) {
+      console.log('📏 Talla seleccionada:', talla);
+      tallaSeleccionada = talla;
+      verificarEstadoBotonAgregar();
+  }
+
+  // ✅ FUNCIÓN: Verificar estado del botón - VERSIÓN MEJORADA
+  function verificarEstadoBotonAgregar() {
+      const btnAgregar = document.getElementById('btn-agregar-carrito');
+      const btnComprar = document.querySelector('.btn-gradient');
+      
+      const necesitaTalla = productoActual?.tallas && 
+                           productoActual.tallas !== "N/A" && 
+                           productoActual.tallas.toLowerCase() !== "única" &&
+                           productoActual.tallas.toLowerCase() !== "unica";
+      
+      const puedeAgregar = varianteSeleccionada && (!necesitaTalla || tallaSeleccionada);
+      
+      if (btnAgregar) {
+          btnAgregar.disabled = !puedeAgregar;
+          // Cambiar texto del botón según estado
+          if (!varianteSeleccionada) {
+              btnAgregar.innerHTML = '<i class="bi bi-image"></i> Selecciona una imagen';
+          } else if (necesitaTalla && !tallaSeleccionada) {
+              btnAgregar.innerHTML = '<i class="bi bi-rulers"></i> Selecciona talla';
+          } else {
+              btnAgregar.innerHTML = '<i class="bi bi-cart-plus"></i> Agregar al carrito';
+          }
+      }
+      
+      if (btnComprar) btnComprar.disabled = !puedeAgregar;
+      
+      console.log('🔘 Estado botones:', puedeAgregar ? 'HABILITADO' : 'DESHABILITADO');
+  }
+
+  // 🔢 Cambiar cantidad
+  function cambiarCantidad(delta) {
+      cantidad = parseInt(document.getElementById('input-cantidad').value) + delta;
+      cantidad = Math.max(1, Math.min(10, cantidad));
+      document.getElementById('input-cantidad').value = cantidad;
+  }
+
+  // 🛒 Agregar al carrito - CON VALIDACIÓN MEJORADA
+  function agregarAlCarrito() {
+    console.log('🎯 EJECUTANDO agregarAlCarrito CORREGIDA...');
+    
+    // 1. VALIDACIONES MEJORADAS
+    if (!productoActual) {
+        console.error('❌ ERROR CRÍTICO: productoActual no definido');
+        mostrarAlertaTemporal('❌ Error: El producto no se cargó correctamente', 'danger');
+        return false;
+    }
+    
+    if (!varianteSeleccionada) {
+        mostrarAlertaTemporal('⚠️ Por favor selecciona una imagen/variante', 'warning');
+        document.getElementById('galeria-miniaturas').scrollIntoView({ behavior: 'smooth' });
+        return false;
+    }
+
+    const necesitaTalla = productoActual?.tallas && 
+                         productoActual.tallas !== "N/A" && 
+                         productoActual.tallas.toLowerCase() !== "única" &&
+                         productoActual.tallas.toLowerCase() !== "unica";
+    
+    if (necesitaTalla && !tallaSeleccionada) {
+        mostrarAlertaTemporal('⚠️ Por favor selecciona una talla', 'warning');
+        document.getElementById('seccion-tallas').scrollIntoView({ behavior: 'smooth' });
+        return false;
+    }
+
+    // 2. CREAR PRODUCTO CON VALIDACIÓN
+    const productoCarrito = {
+        id: productoActual.id + '-' + varianteSeleccionada + (tallaSeleccionada ? '-' + tallaSeleccionada : ''),
+        nombre: `${productoActual.producto} - ${varianteSeleccionada}${tallaSeleccionada ? ' - Talla ' + tallaSeleccionada : ''}`,
+        precio: productoActual.precioOferta || productoActual.precio || 0,
+        imagen: imagenSeleccionada,
+        variante: varianteSeleccionada,
+        talla: tallaSeleccionada || 'Única',
+        cantidad: cantidad
+    };
+
+    console.log('🛒 Producto para carrito:', productoCarrito);
+
+    // 3. AGREGAR AL CARRITO - USANDO MÉTODO CORRECTO
+    if (window.carritoManager && typeof window.carritoManager.agregarProducto === 'function') {
+        // ✅ MÉTODO CORRECTO: agregarProducto()
+        const resultado = window.carritoManager.agregarProducto(productoCarrito);
+        console.log('✅ Resultado de agregarProducto:', resultado);
+        
+        if (resultado) {
+            mostrarConfirmacionAgregado();
+            return true;
+        } else {
+            mostrarAlertaTemporal('❌ Error al agregar al carrito', 'danger');
+            return false;
+        }
+    } else {
+        console.warn('⚠️ carritoManager no disponible, usando fallback...');
+        
+        // FALLBACK MANUAL
+        try {
+            const carrito = JSON.parse(localStorage.getItem('carritoAnmago') || '[]');
+            
+            // Buscar si ya existe
+            const existeIndex = carrito.findIndex(item => 
+                item.id === productoCarrito.id && item.talla === productoCarrito.talla
+            );
+            
+            if (existeIndex > -1) {
+                carrito[existeIndex].cantidad += productoCarrito.cantidad;
+            } else {
+                carrito.push(productoCarrito);
+            }
+            
+            localStorage.setItem('carritoAnmago', JSON.stringify(carrito));
+            console.log('✅ Producto agregado via localStorage');
+            
+            // Actualizar contadores
+            actualizarContadoresCarrito();
+            mostrarConfirmacionAgregado();
+            return true;
+            
+        } catch (error) {
+            console.error('❌ Error en fallback:', error);
+            mostrarAlertaTemporal('❌ Error crítico al agregar al carrito', 'danger');
+            return false;
+        }
+    }
+}
+
+  // ⚡ Comprar ahora
+  function comprarAhora() {
+      if (!varianteSeleccionada) {
+          mostrarAlertaTemporal('⚠️ Por favor selecciona una imagen (variante) del producto', 'warning');
+          return;
+      }
+
+      const necesitaTalla = productoActual?.tallas && 
+                           productoActual.tallas !== "N/A" && 
+                           productoActual.tallas.toLowerCase() !== "única" &&
+                           productoActual.tallas.toLowerCase() !== "unica";
+      
+      if (necesitaTalla && !tallaSeleccionada) {
+          mostrarAlertaTemporal('⚠️ Por favor selecciona una talla', 'warning');
+          return;
+      }
+
+      agregarAlCarrito();
+      
+      setTimeout(() => {
+          abrirFormularioPedido();
+      }, 500);
+  }
+
+  // ✅ Mostrar confirmación
+  function mostrarConfirmacionAgregado() {
+      const btn = document.getElementById('btn-agregar-carrito');
+      const originalText = btn.innerHTML;
+      
+      btn.innerHTML = '<i class="bi bi-check2"></i> ¡Agregado!';
+      btn.classList.remove('btn-agregar-carrito');
+      btn.classList.add('btn-success');
+      
+      setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.classList.remove('btn-success');
+          btn.classList.add('btn-agregar-carrito');
+      }, 2000);
+  }
+
+  // 🚨 Función para mostrar alertas temporales
+  function mostrarAlertaTemporal(mensaje, tipo = 'warning') {
+      const alerta = document.createElement('div');
+      alerta.className = `alert alert-${tipo} alert-dismissible fade show position-fixed`;
+      alerta.style.cssText = 'top: 100px; right: 20px; z-index: 9999; min-width: 300px;';
+      alerta.innerHTML = `
+          ${mensaje}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      `;
+      
+      document.body.appendChild(alerta);
+      
+      // Auto-eliminar después de 4 segundos
+      setTimeout(() => {
+          if (alerta.parentNode) {
+              alerta.remove();
+          }
+      }, 4000);
+  }
+
+  // ========== FUNCIONES RESTANTES ==========
+  
+  function renderizarBreadcrumb(producto) {
+      const breadcrumb = document.getElementById('breadcrumb-producto');
+      
+      let categorias = [];
+      
+      if (producto.tipo) categorias.push(producto.tipo);
+      if (producto.categoria) categorias.push(producto.categoria);
+      if (producto.subcategoria) categorias.push(producto.subcategoria);
+      
+      const breadcrumbItems = categorias.map(cat => 
+          `<li class="breadcrumb-item"><a href="INICIO.HTML?categoria=${cat}">${cat}</a></li>`
+      ).join('');
+      
+      breadcrumb.innerHTML += breadcrumbItems + 
+          `<li class="breadcrumb-item active" aria-current="page">${producto.producto}</li>`;
+  }
+
+  function renderizarBadges(producto) {
+      const contenedor = document.getElementById('badges-producto');
+      const badges = [];
+
+      if (producto.promo || producto.precioOferta) {
+          badges.push('<span class="badge bg-danger me-2">🔥 Oferta</span>');
+      }
+      if (producto.nuevo) {
+          badges.push('<span class="badge bg-success me-2">🆕 Nuevo</span>');
+      }
+      if (producto.stock <= 5 && producto.stock > 0) {
+          badges.push('<span class="badge bg-warning me-2">⚠️ Últimas unidades</span>');
+      }
+
+      contenedor.innerHTML = badges.join('');
+  }
+
+  function renderizarVideo(producto) {
+      const contenedor = document.getElementById('video-producto');
+      
+      if (!producto.video_url) {
+          contenedor.innerHTML = '';
+          return;
+      }
+
+      if (producto.video_url.includes("ik.imagekit.io")) {
+          contenedor.innerHTML = `
+              <h5 class="fw-bold mb-3">🎥 Video del producto</h5>
+              <div class="ratio ratio-16x9">
+                  <video controls class="rounded shadow" poster="${producto.imagen}">
+                      <source src="${producto.video_url}" type="video/mp4">
+                      Tu navegador no soporta el elemento video.
+                  </video>
+              </div>
+          `;
+      } else {
+          contenedor.innerHTML = '';
+      }
+  }
+
+  function cargarProductosRelacionados(productos, productoActual) {
+      const relacionados = productos
+          .filter(p => p.id !== productoActual.id && 
+              (p.tipo === productoActual.tipo || 
+               p.categoria === productoActual.categoria))
+          .slice(0, 4);
+
+      const contenedor = document.getElementById('productos-relacionados');
+      
+      if (relacionados.length === 0) {
+          contenedor.innerHTML = '<p class="text-muted text-center py-4">No hay productos relacionados</p>';
+          return;
+      }
+
+      contenedor.innerHTML = relacionados.map(producto => `
+          <div class="card-producto-ml">
+              <a href="PRODUCTO.HTML?id=${producto.id}">
+                  <img src="${producto.imagen}" alt="${producto.producto}" class="card-img-ml imagen-completa">
+                  <div class="card-body-ml">
+                      <h3 class="nombre-producto-ml small line-clamp-2">${producto.producto}</h3>
+                      <p class="precio-ml fw-bold text-primary">$${(producto.precio || 0).toLocaleString('es-CO')}</p>
+                      <span class="btn btn-outline-primary btn-sm">Ver detalle</span>
+                  </div>
+              </a>
+          </div>
+      `).join('');
+  }
+
+  function mostrarError(mensaje) {
+      const main = document.querySelector('main');
+      main.innerHTML = `
+          <div class="container py-5">
+              <div class="row justify-content-center">
+                  <div class="col-md-6 text-center">
+                      <i class="bi bi-emoji-frown fs-1 text-muted mb-4"></i>
+                      <h3 class="h4 text-muted mb-3">${mensaje}</h3>
+                      <p class="text-muted mb-4">Estamos teniendo problemas técnicos. Por favor intenta:</p>
+                      
+                      <div class="d-grid gap-2 d-md-flex justify-content-center">
+                          <button class="btn btn-primary" onclick="location.reload()">
+                              <i class="bi bi-arrow-clockwise"></i> Reintentar
+                          </button>
+                          <a href="INICIO.HTML" class="btn btn-outline-primary">
+                              <i class="bi bi-house"></i> Volver al inicio
+                          </a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      `;
+  }
+
+  // 🔄 Actualizar contadores del carrito
+  function actualizarContadoresCarrito() {
+      const carrito = JSON.parse(localStorage.getItem('carritoAnmago') || '[]');
+      const totalItems = carrito.reduce((total, item) => total + (item.cantidad || 1), 0);
+      
+      ['contador-carrito', 'contador-carrito-mobile'].forEach(id => {
+          const elemento = document.getElementById(id);
+          if (elemento) {
+              elemento.textContent = totalItems;
+              elemento.style.display = totalItems > 0 ? 'block' : 'none';
+          }
+      });
+  }
+
+  // ========== FUNCIONES GLOBALES ==========
+  window.seleccionarImagenYVariante = seleccionarImagenYVariante;
+  window.seleccionarTalla = seleccionarTalla;
+  window.cambiarCantidad = cambiarCantidad;
+  window.agregarAlCarrito = agregarAlCarrito;
+  window.comprarAhora = comprarAhora;
+  window.ampliarImagen = ampliarImagen;
+  window.cerrarZoom = cerrarZoom;
+  </script>
+</body>
+</html>
