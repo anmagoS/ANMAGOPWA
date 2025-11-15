@@ -1,9 +1,11 @@
-export async function activarBuscadorGlobal() {
+// buscador.js - Versión auto-ejecutable
+(async function() {
   if (!window.catalogoGlobal) {
     const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json";
     const respuesta = await fetch(url);
     window.catalogoGlobal = await respuesta.json();
   }
+  
   const buscador = document.getElementById("buscador");
   const sugerencias = document.getElementById("sugerencias");
   if (!buscador || !sugerencias) return;
@@ -41,4 +43,4 @@ export async function activarBuscadorGlobal() {
   document.addEventListener("click", () => {
     sugerencias.classList.remove("show");
   });
-}
+})();
