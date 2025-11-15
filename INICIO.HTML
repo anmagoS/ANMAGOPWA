@@ -21,36 +21,6 @@
 
   <!-- CSS optimizado -->
   <link rel="stylesheet" href="ESTILO.CSS?v=20251115" />
-  
-  <style>
-    /* ✅ SISTEMA DE VISTAS DINÁMICAS */
-    .vista {
-      display: none;
-      animation: fadeIn 0.3s ease-in;
-    }
-    .vista-activa {
-      display: block;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    /* ✅ BREADCRUMB DE NAVEGACIÓN */
-    .breadcrumb-vista {
-      background: #f8f9fa;
-      border-radius: 10px;
-      padding: 10px 15px;
-      margin-bottom: 20px;
-    }
-    .breadcrumb-vista .breadcrumb-item a {
-      text-decoration: none;
-      color: #007bff;
-    }
-    .breadcrumb-vista .breadcrumb-item.active {
-      color: #6c757d;
-    }
-  </style>
 </head>
 
 <body class="bg-light">
@@ -120,21 +90,39 @@
       <!-- BOTÓN PROMOCIONES -->
       <div class="container text-center mt-3">
         <a href="PROMOS.HTML" class="btn btn-warning fw-bold px-4 py-2 rounded-pill">
-          🎁 Ofertas Especiales
+          🎁 Ver Todas las Ofertas
         </a>
       </div>
 
-      <!-- CARRUSEL -->
+      <!-- CARRUSEL DE PROMOCIONES MEJORADO -->
       <div class="container mt-3">
-        <div id="carouselPromos" class="carousel slide carousel-promos-ml" data-bs-ride="carousel">
-          <div class="carousel-inner" id="carousel-promos-contenido">
+        <div class="carrusel-temporizador mb-2">
+          <i class="bi bi-clock"></i>
+          <span id="temporizador-home" class="fw-bold ms-1">Cargando promociones...</span>
+        </div>
+        
+        <div id="carouselPromosHome" class="carousel slide carousel-promos-home" data-bs-ride="carousel">
+          <div class="carousel-inner" id="carousel-promos-home-contenido">
+            <!-- Se carga dinámicamente con productos en promoción -->
             <div class="carousel-item active">
-              <div class="carrusel-emergencia" onclick="window.location.href='PROMOS.HTML'">
-                🎁 ¡OFERTAS ESPECIALES! 🎁<br>
-                <small>Haz clic para ver promociones</small>
+              <div class="text-center py-4">
+                <div class="spinner-border text-primary"></div>
+                <p class="mt-2 text-muted">Cargando ofertas...</p>
               </div>
             </div>
           </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselPromosHome" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselPromosHome" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+          </button>
+        </div>
+        
+        <div class="text-center mt-2">
+          <small class="text-muted">Desliza para ver más ofertas</small>
         </div>
       </div>
 
@@ -152,6 +140,7 @@
       </div>
     </div>
 
+    <!-- Las demás vistas se mantienen igual -->
     <!-- VISTA 2: SUBTIPOS -->
     <div id="vista-subtipos" class="vista">
       <div class="container mt-3">
@@ -204,9 +193,8 @@
     </div>
   </main>
 
-  <!-- ... (resto del código igual: carrito, footer, barra mobile) ... -->
-
-    <!-- CARRITO OFFCANVAS -->
+  <!-- Resto del código se mantiene igual -->
+  <!-- CARRITO OFFCANVAS -->
   <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito">
     <div class="offcanvas-header border-bottom">
       <h4 class="offcanvas-title fw-bold">🛒 Tu Carrito</h4>
@@ -360,57 +348,40 @@
 
   // 🔄 FUNCIONES DE NAVEGACIÓN
   function cambiarVista(vistaDestino) {
-    // Ocultar todas las vistas
     document.querySelectorAll('.vista').forEach(vista => {
       vista.classList.remove('vista-activa');
     });
-    
-    // Mostrar vista destino
     document.getElementById(`vista-${vistaDestino}`).classList.add('vista-activa');
-    
-    // Actualizar historial
     navegacionStack.push(vistaDestino);
   }
 
   function cargarSubtipos(tipo) {
     tipoActual = tipo;
     cambiarVista('subtipos');
-    
-    // Actualizar breadcrumb
     document.getElementById('breadcrumb-tipo').textContent = tipo;
     document.getElementById('titulo-subtipos').textContent = tipo;
-    
-    // Cargar subtipos
     cargarYRenderizarSubtipos(tipo);
   }
 
   function cargarCategorias(tipo, subtipo) {
     subtipoActual = subtipo;
     cambiarVista('categorias');
-    
-    // Actualizar breadcrumbs
     document.getElementById('breadcrumb-tipo-link').textContent = tipo;
     document.getElementById('breadcrumb-tipo-link').onclick = () => cargarSubtipos(tipo);
     document.getElementById('breadcrumb-subtipo').textContent = subtipo;
     document.getElementById('titulo-categorias').textContent = subtipo;
-    
-    // Cargar categorías
     cargarYRenderizarCategorias(tipo, subtipo);
   }
 
   function cargarProductos(tipo, subtipo, categoria) {
     categoriaActual = categoria;
     cambiarVista('productos');
-    
-    // Actualizar breadcrumbs
     document.getElementById('breadcrumb-tipo-link-prod').textContent = tipo;
     document.getElementById('breadcrumb-tipo-link-prod').onclick = () => cargarSubtipos(tipo);
     document.getElementById('breadcrumb-subtipo-link').textContent = subtipo;
     document.getElementById('breadcrumb-subtipo-link').onclick = () => cargarCategorias(tipo, subtipo);
     document.getElementById('breadcrumb-categoria').textContent = categoria;
     document.getElementById('titulo-productos').textContent = categoria;
-    
-    // Cargar productos
     cargarYRenderizarProductos(tipo, subtipo, categoria);
   }
 
@@ -420,11 +391,117 @@
   }
 
   function verDetalleProducto(productoId) {
-    // Redirigir a PRODUCTO.HTML para el detalle individual
     window.location.href = `PRODUCTO.HTML?id=${productoId}`;
   }
 
-  // 📥 FUNCIONES DE CARGA (usa tu lógica actual)
+  // ⏰ TEMPORIZADOR PARA PROMOCIONES
+  function iniciarTemporizadorHome() {
+    const temporizador = document.getElementById("temporizador-home");
+
+    const actualizarTemporizador = () => {
+      const ahora = new Date();
+      const horaActual = ahora.getHours();
+      const siguienteCorte = horaActual % 6 === 0 ? horaActual + 6 : Math.ceil(horaActual / 6) * 6;
+
+      const siguienteFecha = new Date(ahora);
+      siguienteFecha.setHours(siguienteCorte, 0, 0, 0);
+
+      const restante = siguienteFecha - ahora;
+
+      if (restante <= 0) {
+        temporizador.textContent = "🔄 ¡Ofertas actualizadas!";
+        cargarCarruselPromociones();
+        return;
+      }
+
+      const h = Math.floor(restante / (1000 * 60 * 60));
+      const m = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((restante % (1000 * 60)) / 1000);
+
+      temporizador.textContent = `⏰ Ofertas cambian en ${h}h ${m}m ${s}s`;
+    };
+
+    actualizarTemporizador();
+    setInterval(actualizarTemporizador, 1000);
+  }
+
+  // 🎯 OBTENER ÍNDICE PROMOCIONAL (misma lógica que PROMOS.HTML)
+  function obtenerIndicePromocional(totalPromos = 0) {
+    const ahora = new Date();
+    ahora.setMinutes(0, 0, 0);
+
+    const inicio = new Date(Date.UTC(2025, 10, 8, 0, 0, 0));
+    const diferenciaHoras = Math.floor((ahora - inicio) / (1000 * 60 * 60));
+    const cicloActual = diferenciaHoras % (4 * 365); // 4 ciclos por día
+    const indice = cicloActual * 4; // 4 productos por ciclo
+
+    return totalPromos > 0 ? indice % totalPromos : 0;
+  }
+
+  // 🎠 CARGAR CARRUSEL DE PROMOCIONES
+  async function cargarCarruselPromociones() {
+    try {
+      const productos = await obtenerCatalogo();
+      
+      // Filtrar productos en promoción
+      const promociones = productos.filter(p => {
+        const promo = typeof p.promo === "string" ? p.promo.toLowerCase().trim() : p.promo;
+        return promo === true || promo === "true" || promo === "sí" || promo === "activo" || promo === "si";
+      });
+
+      if (promociones.length === 0) {
+        // Si no hay promociones, mostrar banner genérico
+        document.getElementById('carousel-promos-home-contenido').innerHTML = `
+          <div class="carousel-item active">
+            <a href="PROMOS.HTML" class="producto-carrusel-card">
+              <div class="producto-carrusel-img" style="background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
+                🎁
+              </div>
+              <div class="producto-carrusel-info text-center">
+                <div class="producto-carrusel-nombre">¡Descubre nuestras ofertas!</div>
+                <div class="producto-carrusel-oferta">Haz clic para ver promociones</div>
+              </div>
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      // Obtener bloque de productos para este ciclo
+      const indiceActual = obtenerIndicePromocional(promociones.length);
+      const bloquePromociones = promociones.slice(indiceActual, indiceActual + 4);
+
+      const carouselContent = document.getElementById('carousel-promos-home-contenido');
+      carouselContent.innerHTML = bloquePromociones.map((producto, index) => {
+        const precioOriginal = Number(producto.precio) || 0;
+        const precioDescuento = Math.round(precioOriginal * 0.9);
+        
+        return `
+          <div class="carousel-item ${index === 0 ? 'active' : ''}">
+            <a href="PROMOS.HTML" class="producto-carrusel-card">
+              <img src="${producto.imagen}" 
+                   alt="${producto.producto}" 
+                   class="producto-carrusel-img"
+                   loading="lazy"
+                   onerror="this.src='https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg'">
+              <div class="producto-carrusel-info">
+                <div class="producto-carrusel-nombre">${producto.producto}</div>
+                <div class="producto-carrusel-precio">$${precioDescuento.toLocaleString('es-CO')}</div>
+                <div class="producto-carrusel-oferta">10% OFF</div>
+              </div>
+            </a>
+          </div>
+        `;
+      }).join('');
+
+      console.log("✅ Carrusel de promociones cargado:", bloquePromociones.length, "productos");
+
+    } catch (error) {
+      console.error("❌ Error cargando carrusel de promociones:", error);
+    }
+  }
+
+  // 📥 FUNCIONES DE CARGA
   async function cargarYRenderizarSubtipos(tipo) {
     try {
       const productos = await obtenerCatalogo();
@@ -515,7 +592,7 @@
     }
   }
 
-  // 🎯 FUNCIÓN PARA OBTENER CATÁLOGO (usa tu lógica actual)
+  // 🎯 FUNCIÓN PARA OBTENER CATÁLOGO
   async function obtenerCatalogo() {
     const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json?v=" + Date.now();
     const respuesta = await fetch(url);
@@ -529,11 +606,15 @@
       window.inicializarCarrito();
     }
     
+    // Cargar carrusel de promociones
+    cargarCarruselPromociones();
+    iniciarTemporizadorHome();
+    
     // Cargar productos recién llegados
     setTimeout(async () => {
       try {
         const productos = await obtenerCatalogo();
-        const ultimosProductos = productos.slice(-8); // Últimos 8 productos
+        const ultimosProductos = productos.slice(-8);
         
         const grid = document.getElementById('grid-ultimos');
         grid.innerHTML = ultimosProductos.map(producto => `
