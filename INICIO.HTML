@@ -22,12 +22,10 @@
   <!-- CSS optimizado -->
   <link rel="stylesheet" href="ESTILO.CSS?v=20251115" />
 </head>
-
 <body class="bg-light">
   <!-- Scripts optimizados -->
   <script src="carrito.js?v=20251115"></script>
   <script src="app.js?v=20251115"></script>
-  <script src="buscador.js?v=20251115"></script>
 
   <!-- HEADER STICKY -->
   <div id="header-container" class="header-sticky"></div>
@@ -39,12 +37,16 @@
     </div>
   </div>
 
-<!-- BOTÓN INSTALAR APP - DEBE ESTAR EN EL HTML -->
-<div id="instalar-container" class="instalar-container d-none">
-  <button id="boton-instalar" class="btn-instalar-app">
-    <i class="bi bi-download"></i> Instalar App
-  </button>
-</div>
+  <!-- BOTÓN INSTALAR APP -->
+  <div id="instalar-container" class="instalar-container d-none">
+    <button id="boton-instalar" class="btn-instalar-app">
+      <i class="bi bi-download"></i> Instalar App
+    </button>
+  </div>
+
+  <!-- 🔥 BUSCADOR SE CARGA DESPUÉS DEL HEADER -->
+  <script src="buscador.js?v=20251115"></script>
+
 
   <!-- ✅ SISTEMA DE VISTAS DINÁMICAS -->
   <main>
