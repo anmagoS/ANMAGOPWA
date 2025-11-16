@@ -70,7 +70,7 @@ body { padding-top: 70px; }
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   max-height: 400px;
   overflow-y: auto;
-  z-index: 1060;
+  z-index: 9999;
   margin-top: 5px;
   display: none;
 }
@@ -201,7 +201,6 @@ body { padding-top: 70px; }
 .card-img-ml {
   height: 160px; width: 100%; object-fit: contain; object-position: center top;
   background-color: #f8f9fa; padding: 8px;
-  position: relative; z-index: 1;
 }
 
 .card-body-ml { padding: 0.75rem; }
@@ -233,7 +232,6 @@ body { padding-top: 70px; }
   height: 100%; width: 100%;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
   padding: 10px;
-  position: relative; z-index: 1;
 }
 
 .carousel-promos-home .carousel-item { 
@@ -261,7 +259,6 @@ body { padding-top: 70px; }
   height: 200px; /* AUMENTADO de 120px */
   object-fit: contain; object-position: center;
   background: #f8f9fa; padding: 10px;
-  position: relative; z-index: 1;
 }
 
 .producto-carrusel-info { 
@@ -292,7 +289,6 @@ body { padding-top: 70px; }
 .carousel-control-prev, .carousel-control-next {
   width: 30px; height: 30px; background: rgba(0,0,0,0.5); border-radius: 50%;
   top: 50%; transform: translateY(-50%); opacity: 0.7;
-  z-index: 5;
 }
 
 .carousel-control-prev { left: 5px; }
@@ -339,11 +335,7 @@ body { padding-top: 70px; }
 .btn-outline-primary:hover { background: var(--primary-color); color: var(--white); }
 
 /* === CARRITO Y MODALES === */
-.offcanvas-end { 
-  border-left: 1px solid var(--gray-light); 
-  z-index: 1045 !important;
-}
-
+.offcanvas-end { border-left: 1px solid var(--gray-light); }
 .offcanvas-header { border-bottom: 1px solid var(--gray-light); padding: 1rem 1.25rem; }
 .offcanvas-title { font-weight: 700; color: var(--primary-color); }
 .offcanvas-body { padding: 1rem 1.25rem; }
@@ -452,13 +444,11 @@ body { padding-top: 70px; }
 .imagen-completa {
   object-fit: contain !important; object-position: center !important;
   background-color: #f8f9fa !important; padding: 5px !important;
-  position: relative; z-index: 1;
 }
 
 .imagen-producto {
   object-fit: contain !important; object-position: center top !important;
   background: white !important; padding: 8px !important;
-  position: relative; z-index: 1;
 }
 
 /* === EFECTOS HOVER MENÚ === */
@@ -540,58 +530,6 @@ body { padding-top: 70px; }
     transform: translateY(0);
     opacity: 1;
   }
-}
-
-/* === CORRECCIÓN Z-INDEX PARA MENÚ Y BUSCADOR === */
-/* Header mantiene su z-index */
-.header-sticky {
-  z-index: 1020;
-}
-
-/* Offcanvas/menú lateral necesita mayor z-index */
-.offcanvas {
-  z-index: 1045 !important;
-}
-
-/* Modal de búsqueda si existe */
-.modal {
-  z-index: 1050 !important;
-}
-
-/* Backdrop de modales */
-.modal-backdrop {
-  z-index: 1040 !important;
-}
-
-/* Dropdown menus */
-.dropdown-menu {
-  z-index: 1030 !important;
-}
-
-/* Navbar toggler para móvil */
-.navbar-toggler {
-  position: relative;
-  z-index: 1021;
-}
-
-/* Corrección específica para el offcanvas del carrito */
-#offcanvasCarrito {
-  z-index: 1045 !important;
-}
-
-/* Barra inferior mobile */
-.barra-inferior-mobile {
-  z-index: 1030;
-}
-
-/* Botón carrito flotante */
-.btn-carrito-flotante {
-  z-index: 1010;
-}
-
-/* Asegurar que elementos modales de Bootstrap tengan prioridad */
-.navbar-collapse {
-  z-index: 1021;
 }
 
 /* === RESPONSIVE DESIGN - CON IMÁGENES MÁS GRANDES === */
@@ -723,49 +661,4 @@ body { padding-top: 70px; }
     padding: 10px 20px;
     font-size: 0.85rem;
   }
-}
-/* ===== CORRECCIÓN URGENTE PARA OFFCANVAS ===== */
-.offcanvas {
-  z-index: 99999 !important;
-}
-
-.offcanvas-backdrop {
-  z-index: 99998 !important;
-}
-
-/* Header debe estar por debajo del offcanvas */
-.header-sticky {
-  z-index: 1020;
-}
-
-/* Asegurar que el navbar toggler funcione correctamente */
-.navbar-toggler {
-  z-index: 1021;
-  position: relative;
-}
-
-/* El offcanvas content necesita z-index alto */
-.offcanvas-header,
-.offcanvas-body {
-  position: relative;
-  z-index: 99999;
-}
-
-/* Corrección específica para el menú lateral */
-#offcanvasMenu {
-  z-index: 99999 !important;
-}
-
-/* Si hay algún elemento que esté interfiriendo */
-.bg-light,
-.container,
-.row,
-.col-md-6 {
-  position: static !important;
-}
-
-/* Forzar que el offcanvas esté por encima de TODO */
-.offcanvas.show {
-  z-index: 99999 !important;
-  transform: none !important;
 }
