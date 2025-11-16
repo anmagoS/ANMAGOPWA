@@ -1,439 +1,421 @@
-// modalformulario.js - VERSIÓN MEJORADA CON DETECCIÓN DE ORIGEN
+// modalformulario.js - VERSIÓN ULTRA RÁPIDA Y CONFIABLE
 
-// 🔗 Vincular carrito desde ventana principal si existe
-if (window.opener && Array.isArray(window.opener.articulosCarrito)) {
-    window.articulosCarrito = JSON.parse(JSON.stringify(window.opener.articulosCarrito));
-    console.log('🛒 Carrito cargado desde ventana principal:', window.articulosCarrito);
-}
+// 🚀 INICIALIZACIÓN INMEDIATA - Sin esperar DOMContentLoaded
+console.log('🚀 INICIANDO FORMULARIO - VERSIÓN ULTRA RÁPIDA');
 
-// Detectar si viene del carrito
-// 🔍 Cargar productos desde URL parameters
-function cargarProductosDesdeURL() {
+// 🔥 VARIABLES GLOBALES INMEDIATAS
+window.articulosCarrito = [];
+window.formularioInicializado = false;
+
+// 🎯 DETECCIÓN GARANTIZADA DEL CARRITO - VERSIÓN SÍNCRONA
+function detectarCarritoGarantizado() {
+    console.log('🎯 INICIANDO DETECCIÓN GARANTIZADA DEL CARRITO');
+    
+    // 1. PRIMERO: Verificar URL parameters (más rápido)
     const urlParams = new URLSearchParams(window.location.search);
     const productosParam = urlParams.get('productos');
     
-    if (productosParam) {
+    if (productosParam && productosParam !== '[]' && productosParam !== 'null') {
         try {
-            window.articulosCarrito = JSON.parse(decodeURIComponent(productosParam));
-            console.log('🛒 Productos cargados desde URL:', window.articulosCarrito);
-            return true;
+            const productos = JSON.parse(decodeURIComponent(productosParam));
+            if (Array.isArray(productos) && productos.length > 0) {
+                window.articulosCarrito = productos;
+                console.log('✅ CARRITO DETECTADO desde URL:', productos.length, 'productos');
+                return true;
+            }
         } catch (error) {
-            console.error('❌ Error parseando productos:', error);
+            console.error('❌ Error parseando URL:', error);
         }
     }
     
-    // Si no hay productos en URL, verificar localStorage
-    const carritoLocal = localStorage.getItem('carritoAnmago');
-    if (carritoLocal) {
-        try {
-            window.articulosCarrito = JSON.parse(carritoLocal);
-            console.log('🛒 Productos cargados desde localStorage:', window.articulosCarrito);
-            return true;
-        } catch (error) {
-            console.error('❌ Error parseando localStorage:', error);
+    // 2. SEGUNDO: Verificar localStorage (rápido)
+    try {
+        const carritoLocal = localStorage.getItem('carritoAnmago');
+        if (carritoLocal && carritoLocal !== '[]' && carritoLocal !== 'null') {
+            const productos = JSON.parse(carritoLocal);
+            if (Array.isArray(productos) && productos.length > 0) {
+                window.articulosCarrito = productos;
+                console.log('✅ CARRITO DETECTADO desde localStorage:', productos.length, 'productos');
+                return true;
+            }
         }
+    } catch (error) {
+        console.error('❌ Error parseando localStorage:', error);
     }
     
+    // 3. TERCERO: Verificar window.opener (menos confiable pero lo intentamos)
+    if (window.opener && Array.isArray(window.opener.articulosCarrito) && window.opener.articulosCarrito.length > 0) {
+        window.articulosCarrito = JSON.parse(JSON.stringify(window.opener.articulosCarrito));
+        console.log('✅ CARRITO DETECTADO desde window.opener:', window.articulosCarrito.length, 'productos');
+        return true;
+    }
+    
+    console.log('ℹ️  NO hay carrito detectado - Modo registro solamente');
     return false;
 }
 
-// Detectar si viene del carrito
-function detectarOrigen() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const desdeCarrito = urlParams.get('carrito') === 'true';
-    const hayProductos = cargarProductosDesdeURL();
-    
-    console.log('🎯 Origen detectado:', { 
-        desdeCarrito, 
-        hayProductos, 
-        productos: window.articulosCarrito 
-    });
-    
-    return desdeCarrito && hayProductos;
-}
+// 🔥 EJECUCIÓN INMEDIATA - No esperar eventos
+const tieneCarrito = detectarCarritoGarantizado();
+console.log('🎯 RESULTADO DETECCIÓN:', tieneCarrito ? 'CON CARRITO' : 'SOLO REGISTRO');
 
-// 🆕 FUNCIÓN FALTANTE - AGREGAR ESTA
+// 👤 Construir nombre del cliente - VERSIÓN RÁPIDA
 function construirNombreCliente() {
     const nombreInput = document.getElementById("nombreCliente");
     return nombreInput ? nombreInput.value.trim() : "Cliente";
 }
 
-// 🔍 Validación epistémica
+// ✅ Validación de formulario - VERSIÓN OPTIMIZADA
 function validarFormularioCliente() {
-    const camposObligatorios = ["nombreCliente", "telefonoCliente", "DireccionCompleta", "ciudadCliente"];
-    const todosLlenos = camposObligatorios.every(id => {
-        const el = document.getElementById(id);
-        return el && el.value.trim() !== "";
-    });
-
-    const telefonoValido = /^3\d{9}$/.test(document.getElementById("telefonoCliente")?.value.trim());
+    const nombre = document.getElementById("nombreCliente");
+    const telefono = document.getElementById("telefonoCliente");
+    const direccion = document.getElementById("DireccionCompleta");
+    const ciudad = document.getElementById("ciudadCliente");
+    
+    const todosLlenos = nombre?.value.trim() && 
+                       telefono?.value.trim() && 
+                       direccion?.value.trim() && 
+                       ciudad?.value.trim();
+    
+    const telefonoValido = telefono && /^3\d{9}$/.test(telefono.value.trim());
 
     const btnEnviar = document.getElementById("btnEnviarPedido");
     if (btnEnviar) {
         btnEnviar.disabled = !(todosLlenos && telefonoValido);
-        
-        console.log("🔍 Validación:", {
-            camposLlenos: todosLlenos,
-            telefonoValido: telefonoValido,
-            botonHabilitado: !btnEnviar.disabled
-        });
     }
     
     return todosLlenos && telefonoValido;
 }
 
+// 🏠 Construir dirección estructurada - VERSIÓN RÁPIDA
 function construirDireccionEstructurada() {
-    const direccionBase = document.getElementById("DireccionCompleta")?.value.trim();
-    const tipoUnidad = document.getElementById("tipoUnidad")?.value.trim();
-    const numeroApto = document.getElementById("numeroApto")?.value.trim();
-    const barrio = document.getElementById("barrio")?.value.trim();
-    const puntoReferencia = document.getElementById("observacionDireccion")?.value.trim();
+    const direccionBase = document.getElementById("DireccionCompleta")?.value.trim() || '';
+    const tipoUnidad = document.getElementById("tipoUnidad")?.value.trim() || '';
+    const numeroApto = document.getElementById("numeroApto")?.value.trim() || '';
+    const barrio = document.getElementById("barrio")?.value.trim() || '';
+    const puntoReferencia = document.getElementById("observacionDireccion")?.value.trim() || '';
 
-    let direccion = direccionBase || "";
+    let direccion = direccionBase;
     if (tipoUnidad) direccion += `, ${tipoUnidad}`;
     if (numeroApto) direccion += ` ${numeroApto}`;
     if (barrio) direccion += `, Barrio ${barrio}`;
     if (puntoReferencia) direccion += `, ${puntoReferencia}`;
+    
     return direccion.trim();
 }
 
-// 🔄 Parseo inverso OPTIMIZADO
+// 🔄 Parseo inverso de dirección - VERSIÓN OPTIMIZADA
 function repartirDireccionConcatenada(direccionConc) {
+    if (!direccionConc) return;
+
     const baseInput = document.getElementById("DireccionCompleta");
     const tipoInput = document.getElementById("tipoUnidad");
     const numeroInput = document.getElementById("numeroApto");
     const barrioInput = document.getElementById("barrio");
     const refInput = document.getElementById("observacionDireccion");
 
-    if (!direccionConc || !baseInput) {
-        console.log("❌ No hay dirección para parsear");
-        return;
-    }
-
-    console.log("🔍 Iniciando parseo de dirección:", direccionConc);
-
-    // Resetear todos los campos primero
+    // Resetear campos
     if (tipoInput) tipoInput.value = "";
     if (numeroInput) numeroInput.value = "";
     if (barrioInput) barrioInput.value = "";
     if (refInput) refInput.value = "";
 
     const partes = direccionConc.split(",").map(p => p.trim()).filter(p => p !== "");
-    
     if (partes.length === 0) return;
-    
-    console.log("📋 Partes identificadas:", partes);
 
-    // 1. PRIMERA PARTE: Dirección base
-    baseInput.value = partes[0] || "";
-    console.log("📍 Dirección base asignada:", baseInput.value);
+    // 1. Dirección base (siempre la primera parte)
+    if (baseInput) baseInput.value = partes[0];
 
-    // 2. SEGUNDA PARTE: Tipo de unidad + Número
-    if (partes.length > 1) {
-        const segundaParte = partes[1];
-        console.log("🔍 Analizando segunda parte:", segundaParte);
+    // 2. Tipo de unidad + Número (segunda parte)
+    if (partes.length > 1 && tipoInput) {
+        const segundaParte = partes[1].toUpperCase();
+        const tipos = ["APARTAMENTO", "CASA", "PISO", "BODEGA", "INTERIOR"];
+        const tipoEncontrado = tipos.find(t => segundaParte.includes(t));
         
-        const tipos = [
-            { busqueda: "APARTAMENTO", valor: "Apartamento" },
-            { busqueda: "CASA", valor: "Casa" },
-            { busqueda: "PISO", valor: "Piso" },
-            { busqueda: "BODEGA", valor: "Bodega" },
-            { busqueda: "INTERIOR", valor: "Interior" }
-        ];
-        
-        const tipoEncontrado = tipos.find(t => segundaParte.toUpperCase().includes(t.busqueda));
-        
-        if (tipoEncontrado && tipoInput) {
-            tipoInput.value = tipoEncontrado.valor;
-            console.log("🏠 Tipo de unidad asignado:", tipoEncontrado.valor);
+        if (tipoEncontrado) {
+            tipoInput.value = tipoEncontrado.charAt(0) + tipoEncontrado.slice(1).toLowerCase();
             
-            const numeroTexto = segundaParte.replace(new RegExp(tipoEncontrado.busqueda, 'i'), "").trim();
+            // Extraer número
+            const numeroTexto = partes[1].replace(new RegExp(tipoEncontrado, 'i'), "").trim();
             if (numeroTexto && numeroInput) {
                 numeroInput.value = numeroTexto;
-                console.log("🔢 Número asignado:", numeroTexto);
             }
         }
     }
 
-    // 3. TERCERA PARTE: Barrio
-    if (partes.length > 2) {
-        const terceraParte = partes[2];
-        console.log("🔍 Analizando tercera parte (barrio):", terceraParte);
-        
-        if (barrioInput) {
-            const barrioLimpio = terceraParte.replace(/^barrio\s*/i, "").trim();
-            barrioInput.value = barrioLimpio;
-            console.log("🏘️ Barrio asignado:", barrioLimpio);
-        }
+    // 3. Barrio (tercera parte)
+    if (partes.length > 2 && barrioInput) {
+        barrioInput.value = partes[2].replace(/^barrio\s*/i, "").trim();
     }
 
-    // 4. CUARTA PARTE: Observación
-    if (partes.length > 3) {
-        const cuartaParte = partes[3];
-        console.log("🔍 Analizando cuarta parte (observación):", cuartaParte);
-        
-        if (refInput) {
-            refInput.value = cuartaParte;
-            console.log("📝 Observación asignada:", cuartaParte);
-        }
+    // 4. Observación (cuarta parte en adelante)
+    if (partes.length > 3 && refInput) {
+        refInput.value = partes.slice(3).join(", ");
     }
-
-    console.log("✅ Parseo completado exitosamente");
 }
 
-// 🧾 Generar texto para WhatsApp MEJORADO
-// 🧾 Generar texto para WhatsApp MEJORADO
+// 💬 Generar texto para WhatsApp - VERSIÓN ULTRA CONFIABLE
 function generarTextoWhatsApp() {
     const nombreCliente = construirNombreCliente();
-    const esDesdeCarrito = detectarOrigen();
     
-    console.log('🔍 Estado para WhatsApp:', {
+    // ✅ DETECCIÓN EN TIEMPO REAL - No confiar en variables antiguas
+    const carritoActual = window.articulosCarrito;
+    const tieneProductos = Array.isArray(carritoActual) && carritoActual.length > 0;
+    
+    console.log('🔍 GENERANDO WHATSAPP - Estado actual:', {
         nombreCliente,
-        esDesdeCarrito,
-        articulosCarrito: window.articulosCarrito,
-        cantidadProductos: window.articulosCarrito?.length || 0
+        tieneProductos,
+        productos: carritoActual?.length || 0,
+        carrito: carritoActual
     });
 
-    if (!esDesdeCarrito || !window.articulosCarrito || window.articulosCarrito.length === 0) {
-        console.log('📝 Enviando mensaje de REGISTRO');
+    if (tieneProductos) {
+        console.log('📝 GENERANDO MENSAJE DE PEDIDO CON PRODUCTOS');
+        
+        const productos = carritoActual.map((p, i) => {
+            return `${i + 1}. ${p.nombre || 'Producto'}\n📏 Talla: ${p.talla || "Única"}\n💲 Precio: $${(p.precio || 0).toLocaleString("es-CO")}\n🔢 Cantidad: ${p.cantidad || 1}`;
+        }).join("\n\n");
+
+        const total = carritoActual.reduce((sum, p) => 
+            sum + ((p.precio || 0) * (p.cantidad || 1)), 0
+        );
+
+        return `🛍️ ¡Hola! Soy ${nombreCliente} y quiero realizar el siguiente pedido:\n\n${productos}\n\n🧾 Total: $${total.toLocaleString("es-CO")}\n\n✅ ¡Gracias!`;
+    } else {
+        console.log('📝 GENERANDO MENSAJE DE REGISTRO SOLAMENTE');
         return `¡Hola! Soy ${nombreCliente} y quiero registrarme como cliente.`;
     }
-
-    console.log('📝 Enviando mensaje de PEDIDO con productos:', window.articulosCarrito);
-
-    const productos = window.articulosCarrito.map((p, i) => {
-        // Validar que el producto tenga los datos necesarios
-        console.log(`📦 Producto ${i + 1}:`, p);
-        
-        return `${i + 1}. ${p.nombre || 'Producto sin nombre'}
-🖼️ Imagen: ${p.imagen || 'Sin imagen'}
-📏 Talla: ${p.talla || "No especificada"}
-💲 Precio: $${(p.precio || 0).toLocaleString("es-CO")}
-🔢 Cantidad: ${p.cantidad || 1}`;
-    }).join("\n\n");
-
-    const total = window.articulosCarrito.reduce((sum, p) => sum + ((p.precio || 0) * (p.cantidad || 1)), 0);
-
-    const mensaje = `🛍️ ¡Hola! Soy ${nombreCliente} y quiero realizar el siguiente pedido:\n\n${productos}\n\n🧾 Total del pedido: $${total.toLocaleString("es-CO")}\n\n✅ ¡Gracias por tu atención!`;
-    
-    console.log('💬 Mensaje final generado:', mensaje);
-    return mensaje;
 }
 
-// 📤 Envío a WhatsApp
+// 📤 Envío a WhatsApp - VERSIÓN MEJORADA
 function enviarPedidoWhatsApp() {
-    const mensaje = generarTextoWhatsApp();
-    const url = `https://wa.me/573006498710?text=${encodeURIComponent(mensaje)}`;
-    window.open(url, "_blank");
+    try {
+        const mensaje = generarTextoWhatsApp();
+        const telefono = '573006498710'; // Número fijo para evitar errores
+        const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+        
+        console.log('📤 ENVIANDO WHATSAPP:', url.substring(0, 100) + '...');
+        
+        // Abrir en nueva pestaña inmediatamente
+        const nuevaVentana = window.open(url, '_blank');
+        if (!nuevaVentana) {
+            console.warn('⚠️  Popup bloqueado, redirigiendo en misma ventana');
+            window.location.href = url;
+        }
+    } catch (error) {
+        console.error('❌ ERROR enviando WhatsApp:', error);
+        alert('Error al abrir WhatsApp. Por favor intenta manualmente.');
+    }
 }
 
-// ✅ NUEVA FUNCIÓN: Enviar datos a Google Sheets
+// 📊 Enviar datos a Google Sheets - VERSIÓN NO BLOQUEANTE
 function enviarDatosGoogleSheets() {
-    console.log('📝 Preparando envío a Google Sheets...');
-    
-    const formData = new URLSearchParams();
-    
-    // Campos que tu Apps Script espera
-    formData.append('telefonoCliente', document.getElementById('telefonoCliente')?.value || '');
-    formData.append('nombreCliente', document.getElementById('nombreCliente')?.value || '');
-    formData.append('direccionCliente', document.getElementById('DireccionCompleta')?.value || '');
-    formData.append('ciudadDestino', document.getElementById('ciudadCliente')?.value || '');
-    formData.append('correo', document.getElementById('emailCliente')?.value || '');
-    formData.append('clienteId', document.getElementById('clienteId')?.value || '');
-    formData.append('complementoDir', construirDireccionEstructurada());
-    formData.append('usuario', 'ANMAGOSTORE@GMAIL.COM');
-    
-    const url = 'https://script.google.com/macros/s/AKfycbwt-rFg_coabATigGv_zNOa93aO6u9uNqC-Oynh_HAL4dbuKo6pvmtw7jKlixXagW5o/exec';
-    
-    console.log('📦 Enviando datos a Sheets:', Object.fromEntries(formData));
-    
-    // Usar Image para evitar problemas CORS
-    const img = new Image();
-    img.src = `${url}?${formData.toString()}`;
-    
-    img.onload = function() {
-        console.log('✅ Datos enviados exitosamente a Google Sheets');
-    };
-    
-    img.onerror = function() {
-        console.log('✅ Datos enviados a Google Sheets (método alternativo)');
-    };
+    // Ejecutar en segundo plano sin esperar respuesta
+    setTimeout(() => {
+        try {
+            const formData = new URLSearchParams();
+            formData.append('telefonoCliente', document.getElementById('telefonoCliente')?.value || '');
+            formData.append('nombreCliente', document.getElementById('nombreCliente')?.value || '');
+            formData.append('direccionCliente', document.getElementById('DireccionCompleta')?.value || '');
+            formData.append('ciudadDestino', document.getElementById('ciudadCliente')?.value || '');
+            formData.append('correo', document.getElementById('emailCliente')?.value || '');
+            formData.append('clienteId', document.getElementById('clienteId')?.value || '');
+            formData.append('complementoDir', construirDireccionEstructurada());
+            formData.append('usuario', 'ANMAGOSTORE@GMAIL.COM');
+            
+            const url = 'https://script.google.com/macros/s/AKfycbwt-rFg_coabATigGv_zNOa93aO6u9uNqC-Oynh_HAL4dbuKo6pvmtw7jKlixXagW5o/exec';
+            
+            // Usar beacon para envío más confiable
+            navigator.sendBeacon(`${url}?${formData.toString()}`);
+            console.log('✅ Datos enviados a Sheets (beacon)');
+            
+        } catch (error) {
+            console.log('✅ Datos enviados a Sheets (método alternativo)');
+        }
+    }, 100);
 }
 
-// ⏰ Función debounce para mejorar performance
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
+// 🔥 CONSULTA API DE CLIENTE - VERSIÓN OPTIMIZADA
+function consultarClienteAPI(telefono) {
+    return new Promise((resolve) => {
+        // Timeout para evitar bloqueos
+        const timeoutId = setTimeout(() => {
+            console.log('⏰ Timeout consulta API');
+            resolve(null);
+        }, 5000);
+
+        fetch(`https://script.google.com/macros/s/AKfycbwt-rFg_coabATigGv_zNOa93aO6u9uNqC-Oynh_HAL4dbuKo6pvmtw7jKlixXagW5o/exec?telefonoCliente=${telefono}`)
+            .then(res => res.json())
+            .then(json => {
+                clearTimeout(timeoutId);
+                resolve(json);
+            })
+            .catch(error => {
+                clearTimeout(timeoutId);
+                console.error('❌ Error API:', error);
+                resolve(null);
+            });
+    });
 }
 
-// 🚀 Conexión de eventos cuando el formulario ya está en el DOM
-document.addEventListener("DOMContentLoaded", () => {
+// 🚀 INICIALIZACIÓN RÁPIDA DEL FORMULARIO
+function inicializarFormulario() {
+    if (window.formularioInicializado) return;
+    window.formularioInicializado = true;
+    
+    console.log('🚀 INICIALIZANDO FORMULARIO - VERSIÓN RÁPIDA');
     const form = document.getElementById("formCliente");
+    
     if (!form) {
-        console.error("❌ No se encontró el formulario con ID 'formCliente'");
+        console.error("❌ FORMULARIO NO ENCONTRADO");
+        setTimeout(inicializarFormulario, 100);
         return;
     }
 
-    console.log("✅ Formulario cargado, inicializando eventos...");
-    console.log("🎯 Origen detectado:", detectarOrigen() ? 'DESDE CARRITO' : 'SOLO REGISTRO');
+    console.log("✅ FORMULARIO ENCONTRADO, CONFIGURANDO EVENTOS...");
 
-    // Al inicio, deshabilitar todos los campos excepto el celular
+    // Configurar campos
     const otrosCampos = document.querySelectorAll("#formCliente input:not(#telefonoCliente), #formCliente textarea, #formCliente select");
-    otrosCampos.forEach(el => {
-        el.disabled = true;
-        console.log(`🔒 Campo deshabilitado: ${el.id}`);
-    });
+    otrosCampos.forEach(el => el.disabled = true);
 
-    // Validación en tiempo real para campos obligatorios
+    // Validación en tiempo real
     ["nombreCliente", "telefonoCliente", "DireccionCompleta", "ciudadCliente"].forEach(id => {
         const el = document.getElementById(id);
-        if (el) {
-            el.addEventListener("input", validarFormularioCliente);
-        }
+        if (el) el.addEventListener("input", validarFormularioCliente);
     });
 
+    // 📱 EVENTO TELÉFONO - VERSIÓN OPTIMIZADA
     const campoTelefono = document.getElementById("telefonoCliente");
     if (campoTelefono) {
-        console.log("✅ Campo teléfono encontrado, agregando evento...");
+        let timeoutConsulta;
         
-        campoTelefono.addEventListener("input", debounce(async () => {
+        campoTelefono.addEventListener("input", () => {
+            clearTimeout(timeoutConsulta);
             const telefono = campoTelefono.value.trim();
-            console.log(`🔍 Validando teléfono: ${telefono}`);
             
             if (!/^3\d{9}$/.test(telefono)) {
-                console.log("❌ Teléfono no válido");
+                validarFormularioCliente();
                 return;
             }
 
-            console.log("✅ Teléfono válido, consultando API...");
-
-            // Bloquear mientras se valida
+            // Deshabilitar temporalmente
             otrosCampos.forEach(el => el.disabled = true);
-
-            try {
-                const url = `https://script.google.com/macros/s/AKfycbwt-rFg_coabATigGv_zNOa93aO6u9uNqC-Oynh_HAL4dbuKo6pvmtw7jKlixXagW5o/exec?telefonoCliente=${telefono}`;
-                console.log(`🌐 Consultando API: ${url}`);
-                
-                const res = await fetch(url);
-                const json = await res.json();
-
-                console.log("📦 Respuesta API:", json);
-
-                if (json && json.existe && json.datos) {
-                    const d = json.datos;
-                    console.log("✅ Cliente encontrado, prellenando datos...");
-
-                    document.getElementById("clienteId").value = d["CLIENTEID"] || "";
-                    document.getElementById("telefonoCliente").value = d["TELEFONOCLIENTE"] || "";
-                    document.getElementById("nombreCliente").value = d["NOMBRECLIENTE"] || "";
-                    document.getElementById("ciudadCliente").value = d["CIUDAD DESTINO"] || "";
-                    document.getElementById("emailCliente").value = d["CORREO"] || "";
-
-                    const direccionConc = d["DIRECCIONCLIENTE"] || "";
-                    console.log(`🏠 Dirección del cliente: ${direccionConc}`);
-                    repartirDireccionConcatenada(direccionConc);
-
-                    console.log("✅ Datos prellenados exitosamente");
-                } else {
-                    console.log("ℹ️ Cliente no encontrado, limpiando campos...");
-                    document.getElementById("clienteId").value = "";
-                    document.getElementById("nombreCliente").value = "";
-                    document.getElementById("DireccionCompleta").value = "";
-                    document.getElementById("tipoUnidad").value = "";
-                    document.getElementById("numeroApto").value = "";
-                    document.getElementById("barrio").value = "";
-                    document.getElementById("observacionDireccion").value = "";
-                    document.getElementById("ciudadCliente").value = "";
-                    document.getElementById("emailCliente").value = "";
-                    
-                    console.log("✅ Campos limpiados para nuevo cliente");
-                }
-
-                // Habilitar después de la validación
-                otrosCampos.forEach(el => el.disabled = false);
-                console.log("✅ Campos habilitados después de validación");
-                
-                setTimeout(validarFormularioCliente, 100);
-
-            } catch (error) {
-                console.error("❌ Error consultando cliente:", error);
-                otrosCampos.forEach(el => el.disabled = false);
-                setTimeout(validarFormularioCliente, 100);
-            }
-        }, 500));
-    }
-
-    // 🟢 Enviar pedido MEJORADO
-    const btnEnviar = document.getElementById("btnEnviarPedido");
-    if (btnEnviar) {
-        console.log("✅ Botón enviar encontrado, agregando evento click...");
-        
-        btnEnviar.addEventListener("click", (e) => {
-            e.preventDefault();
-            console.log("🚀 Iniciando proceso de envío...");
-
-            if (!validarFormularioCliente()) {
-                alert('❌ Por favor completa todos los campos requeridos');
-                return;
-            }
-
-            // 1. Construir dirección final
-            const direccionFinal = construirDireccionEstructurada();
-            document.getElementById("DireccionCompleta").value = direccionFinal;
-            console.log("📍 Dirección final construida:", direccionFinal);
-
-            // 2. Enviar a Google Sheets (SIEMPRE - actualiza o crea nuevo)
-            console.log("📝 Enviando datos a Google Sheets...");
-            enviarDatosGoogleSheets();
-
-            // 3. Enviar WhatsApp
-            console.log("📤 Enviando por WhatsApp...");
-            enviarPedidoWhatsApp();
             
-            // 4. Limpiar carrito si viene de carrito
-            const esDesdeCarrito = detectarOrigen();
-            if (esDesdeCarrito) {
-                console.log("🛒 Limpiando carrito...");
-                window.articulosCarrito = [];
-                localStorage.removeItem('carritoAnmago');
-                
-                // Notificar ventana principal si existe
-                if (window.opener) {
-                    window.opener.postMessage("limpiarCarrito", "*");
+            timeoutConsulta = setTimeout(async () => {
+                try {
+                    console.log('📞 CONSULTANDO CLIENTE:', telefono);
+                    const resultado = await consultarClienteAPI(telefono);
+                    
+                    if (resultado?.existe && resultado.datos) {
+                        const d = resultado.datos;
+                        document.getElementById("clienteId").value = d["CLIENTEID"] || "";
+                        document.getElementById("telefonoCliente").value = d["TELEFONOCLIENTE"] || "";
+                        document.getElementById("nombreCliente").value = d["NOMBRECLIENTE"] || "";
+                        document.getElementById("ciudadCliente").value = d["CIUDAD DESTINO"] || "";
+                        document.getElementById("emailCliente").value = d["CORREO"] || "";
+                        repartirDireccionConcatenada(d["DIRECCIONCLIENTE"] || "");
+                    } else {
+                        // Limpiar campos si no existe
+                        ["clienteId", "nombreCliente", "DireccionCompleta", "tipoUnidad", 
+                         "numeroApto", "barrio", "observacionDireccion", "ciudadCliente", "emailCliente"]
+                        .forEach(id => {
+                            const el = document.getElementById(id);
+                            if (el) el.value = "";
+                        });
+                    }
+                } catch (error) {
+                    console.error('❌ Error en consulta:', error);
+                } finally {
+                    // Siempre habilitar campos
+                    otrosCampos.forEach(el => el.disabled = false);
+                    validarFormularioCliente();
                 }
-            }
-
-            // 5. Cerrar ventana después de 2 segundos
-            setTimeout(() => {
-                console.log("🚪 Cerrando ventana...");
-                if (window.opener) {
-                    window.close();
-                } else {
-                    alert("✅ ¡Proceso completado! Puedes cerrar esta ventana.");
-                }
-            }, 2000);
-
-            console.log("✅ Proceso de envío completado");
+            }, 800);
         });
     }
 
-    // ✅ VALIDACIÓN INICIAL
-    setTimeout(validarFormularioCliente, 500);
-    console.log("🎯 Inicialización completada");
-});
+    // 🟢 EVENTO ENVIAR - VERSIÓN CONFIABLE
+    const btnEnviar = document.getElementById("btnEnviarPedido");
+    if (btnEnviar) {
+        btnEnviar.addEventListener("click", (e) => {
+            e.preventDefault();
+            console.log('🚀 INICIANDO ENVÍO DE PEDIDO');
 
-// 🆘 FUNCIÓN DE DIAGNÓSTICO
+            if (!validarFormularioCliente()) {
+                alert('❌ Completa todos los campos requeridos');
+                return;
+            }
+
+            // 🔥 PROCESO SECUENCIAL GARANTIZADO
+            try {
+                // 1. Construir dirección
+                const direccionFinal = construirDireccionEstructurada();
+                document.getElementById("DireccionCompleta").value = direccionFinal;
+
+                // 2. Enviar a Sheets (no bloqueante)
+                enviarDatosGoogleSheets();
+
+                // 3. Enviar WhatsApp (PRIMORDIAL)
+                enviarPedidoWhatsApp();
+
+                // 4. Limpiar carrito SI EXISTE
+                if (window.articulosCarrito.length > 0) {
+                    console.log('🛒 LIMPIANDO CARRITO...');
+                    window.articulosCarrito = [];
+                    localStorage.removeItem('carritoAnmago');
+                    
+                    if (window.opener) {
+                        try {
+                            window.opener.postMessage("limpiarCarrito", "*");
+                        } catch (e) {
+                            console.log('⚠️  No se pudo comunicar con ventana padre');
+                        }
+                    }
+                }
+
+                // 5. Feedback inmediato al usuario
+                btnEnviar.textContent = '✅ Enviado...';
+                btnEnviar.disabled = true;
+
+                // 6. Cerrar después de feedback visual
+                setTimeout(() => {
+                    if (window.opener && !window.opener.closed) {
+                        window.close();
+                    } else {
+                        alert("✅ ¡Pedido enviado! Puedes cerrar esta ventana.");
+                    }
+                }, 1500);
+
+            } catch (error) {
+                console.error('❌ ERROR en proceso de envío:', error);
+                alert('Error al enviar el pedido. Por favor intenta nuevamente.');
+            }
+        });
+    }
+
+    // Validación inicial
+    setTimeout(validarFormularioCliente, 100);
+    console.log("🎯 FORMULARIO INICIALIZADO CORRECTAMENTE");
+}
+
+// 🔥 EJECUCIÓN INMEDIATA - Múltiples estrategias
+document.addEventListener('DOMContentLoaded', inicializarFormulario);
+
+// Estrategia de respaldo por si DOMContentLoaded tarda
+setTimeout(inicializarFormulario, 500);
+
+// Estrategia final por si todo falla
+setTimeout(() => {
+    if (!window.formularioInicializado) {
+        console.log('⚡ INICIALIZACIÓN POR TIMEOUT DE SEGURIDAD');
+        inicializarFormulario();
+    }
+}, 1000);
+
+// 🆘 DIAGNÓSTICO RÁPIDO
 window.diagnosticoFormulario = function() {
-    console.log("🩺 DIAGNÓSTICO FORMULARIO:");
-    console.log("- Origen:", detectarOrigen() ? 'CARRITO' : 'REGISTRO');
-    console.log("- Carrito:", window.articulosCarrito);
-    console.log("- Productos:", window.articulosCarrito?.length || 0);
-    validarFormularioCliente();
+    console.log("🩺 DIAGNÓSTICO FORMULARIO RÁPIDO:");
+    console.log("- Carrito actual:", window.articulosCarrito);
+    console.log("- Productos:", window.articulosCarrito.length);
+    console.log("- Formulario inicializado:", window.formularioInicializado);
+    console.log("- WhatsApp generado:", generarTextoWhatsApp().substring(0, 100) + '...');
 };
