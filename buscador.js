@@ -29,7 +29,7 @@
     coincidencias.forEach(p => {
       const item = document.createElement("a");
       item.className = "dropdown-item d-flex align-items-center gap-2";
-      item.href = `producto.html?id=${p.id}`;
+      item.href = `PRODUCTO.HTML?id=${p.id}`;
       item.innerHTML = `
         <img src="${p.imagen}" alt="${p.producto}" style="width:40px; height:40px; object-fit:cover; border-radius:4px;">
         <span>${p.producto} <small class="text-muted">(${p.tipo} > ${p.subtipo})</small></span>
