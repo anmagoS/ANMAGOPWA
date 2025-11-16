@@ -1,25 +1,30 @@
-// buscador.js - VERSIÓN QUE SÍ FUNCIONA
-console.log('🔍 Iniciando buscador simple...');
+// buscador.js - Versión optimizada para header
+console.log('🔍 Iniciando buscador...');
 
-document.addEventListener('DOMContentLoaded', function() {
-    const buscador = document.getElementById('buscador');
-    const sugerencias = document.getElementById('sugerencias');
+function inicializarBuscador() {
+    console.log('🔍 Buscando elementos del buscador...');
     
-    if (!buscador) {
-        console.error('❌ No se encontró el elemento buscador');
-        return;
-    }
-        if (!sugerencias) {
-        console.error('❌ No se encontró el elemento sugerencias');
+    const buscador = document.getElementById("buscador");
+    const sugerencias = document.getElementById("sugerencias");
+    
+    console.log('Elementos encontrados:', { 
+        buscador: !!buscador, 
+        sugerencias: !!sugerencias 
+    });
+    
+    if (!buscador || !sugerencias) {
+        console.log('⏳ Elementos no encontrados, reintentando en 500ms...');
+        setTimeout(inicializarBuscador, 500);
         return;
     }
 
-    console.log('✅ Elementos del buscador encontrados');
+    console.log('✅ Elementos del buscador encontrados - INICIANDO');
 
+    // Variables
     let catalogo = [];
     let timeoutBusqueda = null;
 
-    // Función para cargar el catálogo
+    // Cargar catálogo
     async function cargarCatalogo() {
         try {
             console.log('📦 Cargando catálogo...');
@@ -31,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Función para buscar productos
+    // Buscar productos
     function buscarProductos(texto) {
         if (!texto || texto.length < 2) {
             return [];
@@ -46,9 +51,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 producto.tipo, 
                 producto.subtipo,
                 producto.categoria,
-                producto.material
+                producto.material,
+                producto.descripcion
             ];
-            
+
             return campos.some(campo => 
                 campo && campo.toString().toLowerCase().includes(textoBusqueda)
             );
@@ -58,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return resultados;
     }
 
-    // Función para mostrar sugerencias
+    // Mostrar sugerencias
     function mostrarSugerencias(productos, textoBusqueda) {
         sugerencias.innerHTML = '';
         
@@ -73,8 +79,8 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Limitar a 6 sugerencias
-        const productosMostrar = productos.slice(0, 6);
+        // Limitar a 8 sugerencias
+        const productosMostrar = productos.slice(0, 8);
         
         productosMostrar.forEach(producto => {
             const item = document.createElement('div');
@@ -93,21 +99,22 @@ document.addEventListener('DOMContentLoaded', function() {
             item.addEventListener('click', function() {
                 console.log('🎯 Producto seleccionado:', producto.producto);
                 window.location.href = `PRODUCTO.HTML?id=${producto.id}`;
+                ocultarSugerencias();
             });
             
             sugerencias.appendChild(item);
         });
-        
+
         sugerencias.classList.add('mostrar');
         console.log('✅ Mostrando', productosMostrar.length, 'sugerencias');
     }
 
-    // Función para ocultar sugerencias
+    // Ocultar sugerencias
     function ocultarSugerencias() {
         sugerencias.classList.remove('mostrar');
     }
 
-    // Función principal de búsqueda con debounce
+    // Búsqueda con debounce
     function ejecutarBusqueda(texto) {
         clearTimeout(timeoutBusqueda);
         
@@ -157,15 +164,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 buscador.blur();
             }
         });
+
+        console.log('✅ Eventos del buscador configurados');
     }
 
     // Inicializar
-    async function inicializar() {
+    async function iniciar() {
         await cargarCatalogo();
         configurarEventos();
-        console.log('✅ Buscador simple inicializado correctamente');
+        console.log('✅ Buscador completamente inicializado');
     }
 
-    // Iniciar
-    inicializar();
-});
+    // Iniciar todo
+    iniciar();
+}
+
+// Esperar a que el DOM esté listo y el header se cargue
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('📄 DOM cargado, esperando header...');
+        setTimeout(inicializarBuscador, 1000);
+    });
+} else {
+    console.log('📄 DOM ya listo, esperando header...');
+    setTimeout(inicializarBuscador, 1000);
+}
+
+// Reintentar si falla la primera vez
+setTimeout(inicializarBuscador, 3000);
