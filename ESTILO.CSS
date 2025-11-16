@@ -724,3 +724,48 @@ body { padding-top: 70px; }
     font-size: 0.85rem;
   }
 }
+/* ===== CORRECCIÓN URGENTE PARA OFFCANVAS ===== */
+.offcanvas {
+  z-index: 99999 !important;
+}
+
+.offcanvas-backdrop {
+  z-index: 99998 !important;
+}
+
+/* Header debe estar por debajo del offcanvas */
+.header-sticky {
+  z-index: 1020;
+}
+
+/* Asegurar que el navbar toggler funcione correctamente */
+.navbar-toggler {
+  z-index: 1021;
+  position: relative;
+}
+
+/* El offcanvas content necesita z-index alto */
+.offcanvas-header,
+.offcanvas-body {
+  position: relative;
+  z-index: 99999;
+}
+
+/* Corrección específica para el menú lateral */
+#offcanvasMenu {
+  z-index: 99999 !important;
+}
+
+/* Si hay algún elemento que esté interfiriendo */
+.bg-light,
+.container,
+.row,
+.col-md-6 {
+  position: static !important;
+}
+
+/* Forzar que el offcanvas esté por encima de TODO */
+.offcanvas.show {
+  z-index: 99999 !important;
+  transform: none !important;
+}
