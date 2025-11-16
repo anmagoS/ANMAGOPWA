@@ -1,443 +1,462 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Promociones | Anmago Store - Ofertas Especiales</title>
-  <meta name="description" content="Descubre nuestras promociones exclusivas. Ofertas limitadas con descuentos especiales en Anmago Store.">
-  
-  <!-- Preconexiones optimizadas -->
-  <link rel="preconnect" href="https://cdn.jsdelivr.net">
-  <link rel="preconnect" href="https://ik.imagekit.io">
-  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-
-  <!-- PWA y favicon -->
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="logo.jpg" type="image/x-icon" />
-
-  <!-- Bootstrap e iconos -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
-
-  <!-- CSS optimizado -->
-  <link rel="stylesheet" href="ESTILO.CSS?v=20251115" />
-  
-  <style>
-    /* ESTILOS ESPECÍFICOS PARA PROMOCIONES */
-    .card-promocion .card-img-ml {
-      object-fit: contain !important;
-      object-position: center !important;
-      background: white !important;
-      padding: 10px !important;
-      height: 180px !important;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ofertas Especiales | Anmago Store</title>
+    <meta name="description" content="¡Aprovecha nuestras ofertas especiales! Descuentos exclusivos por tiempo limitado en Anmago Store.">
     
-    .precio-promocion {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-    
-    .precio-promocion s {
-      font-size: 0.8rem;
-    }
-  </style>
+    <!-- Preconexiones optimizadas -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://ik.imagekit.io">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+    <!-- PWA y favicon -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="logo.jpg" type="image/x-icon" />
+
+    <!-- Bootstrap e iconos -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+
+    <!-- CSS optimizado -->
+    <link rel="stylesheet" href="ESTILO.CSS?v=20251115" />
 </head>
 
 <body class="bg-light">
-  <!-- Scripts optimizados -->
-  <script src="app.js?v=20251115" defer></script>
-  <script src="carrito.js?v=20251115" defer></script>
-  <script src="buscador.js?v=20251115"></script>
+    <!-- Scripts optimizados -->
+    <script src="carrito.js?v=20251115"></script>
+    <script src="app.js?v=20251115"></script>
+    <script src="buscador.js?v=20251115" type="module"></script>
 
-  <!-- HEADER STICKY -->
-  <div id="header-container" class="header-sticky"></div>
+    <!-- HEADER STICKY -->
+    <div id="header-container" class="header-sticky"></div>
 
-  <!-- BANNER PROMOCIONAL ESPECIAL -->
-  <div class="container-fluid bg-danger py-2">
-    <div class="container text-center">
-      <small class="fw-bold text-white">🔥 OFERTAS ESPECIALES 🔥 Tiempo limitado</small>
-    </div>
-  </div>
-
-  <!-- BUSCADOR TIPO MERCADOLIBRE -->
-  <div class="container mt-3">
-    <div class="row justify-content-center">
-      <div class="col-12 col-md-8">
-        <div class="position-relative">
-          <input id="buscador" class="form-control buscador-ml" 
-                 placeholder="Buscar en promociones..." 
-                 autocomplete="on">
-          <div id="sugerencias" class="dropdown-menu position-absolute mt-1 w-100 z-3"></div>
+    <!-- BANNER PROMOCIONAL -->
+    <div class="container-fluid banner-promocional py-2">
+        <div class="container text-center">
+            <small class="fw-bold">⭐ Los mejores precios ⭐ Calidad garantizada</small>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- BOTÓN ATRÁS -->
-  <div class="container mt-3">
-    <a href="INICIO.HTML" class="btn btn-outline-dark">
-      <i class="bi bi-arrow-left"></i> Volver al inicio
-    </a>
-  </div>
-
-  <!-- CONTENIDO PRINCIPAL - PROMOCIONES -->
-  <main class="container mt-4">
-    <div class="text-center mb-4">
-      <h1 class="h3 fw-bold text-danger">🔥 Productos en Promoción</h1>
-      <p class="text-muted">Ofertas especiales con descuentos exclusivos</p>
     </div>
 
-    <!-- TEMPORIZADOR -->
-    <div class="alert alert-warning text-center mb-4" role="alert">
-      <i class="bi bi-clock"></i>
-      <span id="temporizador" class="fw-bold ms-2">Cargando...</span>
-    </div>
-    
-    <!-- CONTADOR DE PROMOCIONES -->
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h2 class="h5 fw-bold mb-0">🎯 Ofertas activas</h2>
-      <span class="badge bg-danger" id="contador-promos">0 promociones</span>
-    </div>
-    
-    <div id="contenedor-promos" class="grid-productos-ml">
-      <!-- Las promociones se cargan dinámicamente -->
-      <div class="card-producto-ml skeleton" style="height: 320px;"></div>
-      <div class="card-producto-ml skeleton" style="height: 320px;"></div>
-      <div class="card-producto-ml skeleton" style="height: 320px;"></div>
-      <div class="card-producto-ml skeleton" style="height: 320px;"></div>
-    </div>
-  </main>
-
-  <!-- CARRITO OFFCANVAS -->
-  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito">
-    <div class="offcanvas-header border-bottom">
-      <h4 class="offcanvas-title fw-bold">🛒 Tu Carrito</h4>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
-    </div>
-    <div class="offcanvas-body" id="carrito-contenido">
-      <div class="text-center text-muted py-4">
-        <i class="bi bi-bag-x fs-1"></i>
-        <p class="mt-2">Tu carrito está vacío</p>
-      </div>
-    </div>
-    <div class="offcanvas-footer p-3 border-top">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <span class="fw-bold">Subtotal:</span>
-        <span id="subtotal" class="fw-bold fs-5 text-primary">$0</span>
-      </div>
-      <button class="btn btn-gradient px-4 py-2 rounded-pill fw-bold" onclick="abrirFormularioPedido()">
-        ✨ Continuar compra ✨
-      </button>
-    </div>
-  </div>
-
-  <!-- BOTÓN CARRITO FLOTANTE -->
-  <a href="#" class="btn-carrito-flotante d-none d-md-flex" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
-    <i class="bi bi-bag-heart fs-5"></i>
-    <span id="contador-carrito" class="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill" style="font-size: 0.7rem;">0</span>
-  </a>
-
-  <!-- FOOTER -->
-  <div id="footer-container" class="mt-5"></div>
-
-  <!-- BARRA INFERIOR MOBILE -->
-  <nav class="navbar fixed-bottom bg-white border-top d-md-none py-2">
-    <div class="container-fluid">
-      <div class="d-flex justify-content-around w-100">
-        <a href="INICIO.HTML" class="text-center text-decoration-none text-dark">
-          <i class="bi bi-house fs-5"></i>
-          <div class="small">Inicio</div>
+    <!-- BOTÓN VOLVER -->
+    <div class="container mt-3">
+        <a href="INICIO.HTML" class="btn btn-outline-dark">
+            <i class="bi bi-arrow-left"></i> Volver al inicio
         </a>
-        <a href="PROMOS.HTML" class="text-center text-decoration-none text-danger">
-          <i class="bi bi-percent fs-5"></i>
-          <div class="small">Ofertas</div>
-        </a>
-        <a href="#" class="text-center text-decoration-none position-relative"
-           data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
-          <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center" 
-               style="width: 50px; height: 50px; margin-top: -8px;">
-            <i class="bi bi-bag-heart fs-5 text-white"></i>
-          </div>
-          <span id="contador-carrito-mobile" class="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill" style="font-size: 0.6rem;">0</span>
-          <div class="small mt-1">Carrito</div>
-        </a>
-        <a href="https://wa.me/573006498710?text=¡Hola!%20Me%20interesan%20sus%20productos%20de%20Anmago%20Store" 
-           class="text-center text-decoration-none text-success"
-           target="_blank">
-          <i class="bi bi-whatsapp fs-5"></i>
-          <div class="small">Chat</div>
-        </a>
-        <a href="modalformulario.html" class="text-center text-decoration-none text-dark">
-          <i class="bi bi-person fs-5"></i>
-          <div class="small">Cuenta</div>
-        </a>
-      </div>
     </div>
-  </nav>
 
-  <!-- SCRIPTS EXTERNOS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- JAVASCRIPT ESPECÍFICO DE PROMOCIONES -->
-  <script>
-    let promocionesGlobal = [];
-    const cantidadPorCiclo = 4;
-    const ciclosPorDia = 4;
-
-    // 🎯 Obtener índice promocional
-    function obtenerIndicePromocional(totalPromos = 0) {
-      const ahora = new Date();
-      ahora.setMinutes(0, 0, 0);
-
-      const inicio = new Date(Date.UTC(2025, 10, 8, 0, 0, 0));
-      const diferenciaHoras = Math.floor((ahora - inicio) / (1000 * 60 * 60));
-      const cicloActual = diferenciaHoras % (ciclosPorDia * 365);
-      const indice = cicloActual * cantidadPorCiclo;
-
-      return totalPromos > 0 ? indice % totalPromos : 0;
-    }
-
-    // ⏰ Iniciar temporizador
-    function iniciarTemporizador() {
-      const temporizador = document.getElementById("temporizador");
-
-      const actualizarTemporizador = () => {
-        const ahora = new Date();
-        const horaActual = ahora.getHours();
-        const siguienteCorte = horaActual % 6 === 0 ? horaActual + 6 : Math.ceil(horaActual / 6) * 6;
-
-        const siguienteFecha = new Date(ahora);
-        siguienteFecha.setHours(siguienteCorte, 0, 0, 0);
-
-        const restante = siguienteFecha - ahora;
-
-        if (restante <= 0) {
-          temporizador.textContent = "🔄 ¡Promociones actualizadas!";
-          recargarPromociones();
-          return;
-        }
-
-        const h = Math.floor(restante / (1000 * 60 * 60));
-        const m = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
-        const s = Math.floor((restante % (1000 * 60)) / 1000);
-
-        temporizador.textContent = `⏰ Cambian en ${h}h ${m}m ${s}s`;
-      };
-
-      actualizarTemporizador();
-      setInterval(actualizarTemporizador, 1000);
-    }
-
-    // 📥 Cargar promociones
-    async function cargarPromociones() {
-      try {
-        const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json?v=" + Date.now();
-        const res = await fetch(url);
-        const productos = await res.json();
-        window.catalogoGlobal = productos;
-
-        promocionesGlobal = productos.filter(p => {
-          const promo = typeof p.promo === "string" ? p.promo.toLowerCase().trim() : p.promo;
-          return promo === true || promo === "true" || promo === "sí" || promo === "activo" || promo === "si";
-        });
-
-        // Actualizar contador
-        document.getElementById("contador-promos").textContent = `${promocionesGlobal.length} promociones`;
-
-        renderPromocionesML();
-      } catch (error) {
-        console.error("❌ Error cargando promociones:", error);
-        mostrarErrorPromociones();
-      }
-    }
-
-    // 🔄 Recargar promociones
-    function recargarPromociones() {
-      const contenedor = document.getElementById("contenedor-promos");
-      contenedor.innerHTML = `
-        <div class="col-12 text-center py-3">
-          <div class="spinner-border text-primary"></div>
-          <p class="mt-2 text-muted">Actualizando promociones...</p>
+    <!-- CONTENIDO PRINCIPAL - OFERTAS -->
+    <main class="container mt-4">
+        <!-- HEADER DE OFERTAS -->
+        <div class="text-center mb-5">
+            <h1 class="display-5 fw-bold text-gradient mb-3">🎁 Ofertas Especiales</h1>
+            <p class="lead text-muted mb-4">Descuentos exclusivos por tiempo limitado</p>
+            
+            <!-- TEMPORIZADOR DE OFERTAS -->
+            <div class="card border-warning bg-light mb-4">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h5 class="card-title fw-bold text-warning mb-2">
+                                <i class="bi bi-clock"></i> ¡Oferta por tiempo limitado!
+                            </h5>
+                            <p class="card-text mb-0">Estas promociones rotan cada 6 horas</p>
+                        </div>
+                        <div class="col-md-4 text-md-end">
+                            <div id="temporizador-ofertas" class="fw-bold fs-5 text-danger">
+                                <i class="bi bi-stopwatch"></i> 
+                                <span id="contador-ofertas">Cargando...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      `;
-      
-      setTimeout(() => {
-        renderPromocionesML();
-      }, 1000);
-    }
 
-    // 🎨 Renderizar promociones estilo MercadoLibre
-    function renderPromocionesML() {
-      const contenedor = document.getElementById("contenedor-promos");
-      
-      const totalPromos = promocionesGlobal.length;
-      if (totalPromos === 0) {
-        contenedor.innerHTML = `
-          <div class="col-12 text-center py-5">
-            <i class="bi bi-emoji-frown fs-1 text-muted"></i>
-            <p class="text-muted mt-2">No hay promociones disponibles</p>
-            <a href="INICIO.HTML" class="btn btn-outline-primary mt-2">
-              Volver al inicio
-            </a>
-          </div>
-        `;
-        return;
-      }
-
-      const indiceActual = obtenerIndicePromocional(totalPromos);
-      const bloque = promocionesGlobal.slice(indiceActual, indiceActual + cantidadPorCiclo);
-
-      contenedor.innerHTML = bloque.map(p => {
-        const precioOriginal = Number(p.precio) || 0;
-        const precioDescuento = Math.round(precioOriginal * 0.9);
-        const producto = p.producto || "Producto sin nombre";
-        const material = p.material ? `<small class="text-muted d-block">${p.material}</small>` : "";
-        const tallas = p.tallas ? `<small class="text-muted d-block">Tallas: ${p.tallas}</small>` : "";
-        const imagen = p.imagen || "https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg";
-        const id = p.id || "sin-id";
-
-        return `
-          <div class="card-producto-ml card-promocion" data-producto-id="${id}">
-            <a href="PRODUCTO.HTML?id=${id}" class="text-decoration-none">
-              <div class="position-relative">
-                <img src="${imagen}" 
-                     alt="${producto}" 
-                     class="card-img-ml" 
-                     loading="lazy"
-                     onerror="this.src='https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg'">
-                <span class="position-absolute top-0 start-0 badge bg-danger m-2">🔥 10% OFF</span>
-              </div>
-              <div class="card-body-ml">
-                <h3 class="nombre-producto-ml small text-dark mb-2" title="${producto}">
-                  ${producto}
-                </h3>
-                ${material}
-                ${tallas}
-                <div class="precio-promocion mt-2">
-                  <s class="text-muted small">$${precioOriginal.toLocaleString("es-CO")}</s>
-                  <div class="precio-ml text-danger">$${precioDescuento.toLocaleString("es-CO")}</div>
+        <!-- INDICADOR DE BLOQUE ACTUAL -->
+        <div class="alert alert-info mb-4">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-info-circle fs-4 me-3"></i>
+                <div>
+                    <strong>Bloque de ofertas actual:</strong> 
+                    <span id="indicador-bloque" class="badge bg-primary ms-2">Cargando...</span>
+                    <small class="d-block text-muted mt-1">Las ofertas rotan automáticamente cada 6 horas</small>
                 </div>
-                <div class="d-grid mt-2">
-                  <button class="btn btn-danger btn-sm" 
-                          onclick="event.preventDefault(); event.stopPropagation(); verProducto('${id}')">
-                    <i class="bi bi-lightning"></i> Ver oferta
-                  </button>
+            </div>
+        </div>
+
+        <!-- PRODUCTOS EN OFERTA -->
+        <section>
+            <h2 class="h4 fw-bold mb-4">🔥 Productos en Oferta</h2>
+            <div id="grid-ofertas" class="grid-productos-ml">
+                <!-- Productos se cargan dinámicamente -->
+                <div class="card-producto-ml skeleton" style="height: 280px;"></div>
+                <div class="card-producto-ml skeleton" style="height: 280px;"></div>
+                <div class="card-producto-ml skeleton" style="height: 280px;"></div>
+                <div class="card-producto-ml skeleton" style="height: 280px;"></div>
+            </div>
+        </section>
+
+        <!-- PIE DE PÁGINA INFORMATIVO -->
+        <div class="row mt-5 pt-4 border-top">
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <i class="bi bi-lightning text-warning fs-1 mb-3"></i>
+                    <h5 class="fw-bold">Ofertas Relámpago</h5>
+                    <p class="text-muted small">Precios especiales por tiempo limitado</p>
                 </div>
-              </div>
-            </a>
-          </div>
-        `;
-      }).join('');
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <i class="bi bi-arrow-repeat text-primary fs-1 mb-3"></i>
+                    <h5 class="fw-bold">Rotación Constante</h5>
+                    <p class="text-muted small">Nuevas ofertas cada 6 horas</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <i class="bi bi-percent text-success fs-1 mb-3"></i>
+                    <h5 class="fw-bold">Descuentos Reales</h5>
+                    <p class="text-muted small">Hasta 50% de descuento</p>
+                </div>
+            </div>
+        </div>
+    </main>
 
-      console.log("✅ Promociones renderizadas:", bloque.length);
-    }
-
-    // ❌ Mostrar error
-    function mostrarErrorPromociones() {
-      const contenedor = document.getElementById("contenedor-promos");
-      if (contenedor) {
-        contenedor.innerHTML = `
-          <div class="col-12 text-center py-5">
-            <i class="bi bi-emoji-frown fs-1 text-muted"></i>
-            <p class="text-muted mt-2">No pudimos cargar las promociones</p>
-            <button class="btn btn-outline-primary mt-2" onclick="cargarPromociones()">
-              <i class="bi bi-arrow-clockwise"></i> Reintentar
+    <!-- CARRITO OFFCANVAS -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito">
+        <div class="offcanvas-header border-bottom">
+            <h4 class="offcanvas-title fw-bold">🛒 Tu Carrito</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+        </div>
+        <div class="offcanvas-body" id="carrito-contenido">
+            <div class="text-center text-muted py-4">
+                <i class="bi bi-bag-x fs-1"></i>
+                <p class="mt-2">Tu carrito está vacío</p>
+            </div>
+        </div>
+        <div class="offcanvas-footer p-3 border-top">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="fw-bold">Subtotal:</span>
+                <span id="subtotal" class="fw-bold fs-5 text-primary">$0</span>
+            </div>
+            <button class="btn btn-gradient px-4 py-2 rounded-pill fw-bold" onclick="abrirFormularioPedido()">
+                ✨Continuar compra✨
             </button>
-          </div>
-        `;
-      }
-    }
+        </div>
+    </div>
 
-    // 👁️ Ver producto
-    function verProducto(productoId) {
-      window.location.href = `PRODUCTO.HTML?id=${productoId}`;
-    }
+    <!-- BOTÓN CARRITO FLOTANTE -->
+    <a href="#" class="btn-carrito-flotante d-none d-md-flex" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
+        <i class="bi bi-bag-heart fs-5"></i>
+        <span id="contador-carrito" class="contador-carrito">0</span>
+    </a>
 
-    // 🚀 Inicialización
-    document.addEventListener("DOMContentLoaded", async () => {
-      // Cargar header
-      try {
-        const header = await fetch("HEADER.HTML").then(res => res.text());
-        document.getElementById("header-container").innerHTML = header;
-      } catch (error) {
-        console.error("Error cargando header:", error);
-      }
+    <!-- FOOTER -->
+    <div id="footer-container" class="mt-5"></div>
 
-      // Cargar footer
-      try {
-        const footer = await fetch("footer.html").then(res => res.text());
-        document.getElementById("footer-container").innerHTML = footer;
-      } catch (error) {
-        console.error("Error cargando footer:", error);
-      }
+    <!-- BARRA INFERIOR MOBILE -->
+    <nav class="navbar fixed-bottom bg-white border-top d-md-none py-2">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-around w-100">
+                <a href="INICIO.HTML" class="text-center text-decoration-none text-primary">
+                    <i class="bi bi-house-fill fs-5"></i>
+                    <div class="small">Inicio</div>
+                </a>
+                <a href="PROMOS.HTML" class="text-center text-decoration-none text-warning">
+                    <i class="bi bi-percent fs-5"></i>
+                    <div class="small">Ofertas</div>
+                </a>
+                <a href="#" class="text-center text-decoration-none position-relative"
+                   data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
+                    <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center" 
+                         style="width: 50px; height: 50px; margin-top: -8px;">
+                        <i class="bi bi-bag-heart fs-5 text-white"></i>
+                    </div>
+                    <span id="contador-carrito-mobile" class="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill" style="font-size: 0.6rem;">0</span>
+                    <div class="small mt-1">Carrito</div>
+                </a>
+                <a href="https://wa.me/573006498710?text=¡Hola!%20Me%20interesan%20sus%20productos%20de%20Anmago%20Store" 
+                   class="text-center text-decoration-none text-success"
+                   target="_blank">
+                    <i class="bi bi-whatsapp fs-5"></i>
+                    <div class="small">Chat</div>
+                </a>
+                <a href="modalformulario.html" class="text-center text-decoration-none text-dark">
+                    <i class="bi bi-person fs-5"></i>
+                    <div class="small">Cuenta</div>
+                </a>
+            </div>
+        </div>
+    </nav>
 
-      // Activar buscador
-      if (window.activarBuscadorGlobal) {
-        window.activarBuscadorGlobal();
-      }
+    <!-- SCRIPTS EXTERNOS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-      // Cargar promociones
-      setTimeout(() => {
-        cargarPromociones();
-        iniciarTemporizador();
-      }, 100);
+    <!-- SISTEMA DE OFERTAS CON ÍNDICE FIJO -->
+    <script>
+    // ========== CONFIGURACIÓN CON ÍNDICE FIJO ==========
+    const CONFIG_PROMOS = {
+        productosPorBloque: 4,
+        indicePromoActual: 16 // ÍNDICE FIJO DE TU CONFIGURACIÓN
+    };
+
+    // ========== VARIABLES GLOBALES ==========
+    let productosEnPromocion = [];
+
+    // ========== INICIALIZACIÓN ==========
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('🚀 INICIANDO PÁGINA DE OFERTAS CON ÍNDICE FIJO');
+        
+        // 1. Cargar header y footer
+        cargarHeaderFooter();
+        
+        // 2. Iniciar temporizador
+        iniciarTemporizadorOfertas();
+        
+        // 3. Cargar productos en promoción
+        cargarProductosPromocion();
+        
+        // 4. Inicializar contadores del carrito
+        actualizarContadoresCarrito();
     });
 
-    // 🌐 Funciones globales
-    window.verProducto = verProducto;
-    window.cargarPromociones = cargarPromociones;
-  </script>
+    // ========== SISTEMA DE TEMPORIZADOR ==========
 
-  <script>
-    // Sincronización de contadores para todas las páginas
-    document.addEventListener('DOMContentLoaded', function() {
-      // Si el carrito no está inicializado, inicializarlo
-      if (!window.carritoManager) {
-        console.log('🔄 Inicializando carrito desde página secundaria');
+    function iniciarTemporizadorOfertas() {
+        const temporizador = document.getElementById("contador-ofertas");
+
+        const actualizarTemporizador = () => {
+            const ahora = new Date();
+            const horaActual = ahora.getHours();
+            const siguienteCorte = horaActual % 6 === 0 ? horaActual + 6 : Math.ceil(horaActual / 6) * 6;
+
+            const siguienteFecha = new Date(ahora);
+            siguienteFecha.setHours(siguienteCorte, 0, 0, 0);
+
+            const restante = siguienteFecha - ahora;
+
+            if (restante <= 0) {
+                temporizador.textContent = "🔄 ¡Ofertas actualizadas!";
+                cargarProductosPromocion(); // Recargar ofertas
+                return;
+            }
+
+            const h = Math.floor(restante / (1000 * 60 * 60));
+            const m = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((restante % (1000 * 60)) / 1000);
+
+            temporizador.textContent = `${h}h ${m}m ${s}s`;
+        };
+
+        actualizarTemporizador();
+        setInterval(actualizarTemporizador, 1000);
+    }
+
+    // ========== SISTEMA DE PROMOCIONES CON ÍNDICE FIJO ==========
+
+    // 🎯 OBTENER PRODUCTOS DEL BLOQUE FIJO
+    function obtenerProductosDelBloqueFijo() {
+        if (!productosEnPromocion.length) return [];
         
-        // Función simple de inicialización para páginas secundarias
-        const carritoGuardado = localStorage.getItem('carritoAnmago');
-        const carrito = carritoGuardado ? JSON.parse(carritoGuardado) : [];
+        const totalPromos = productosEnPromocion.length;
+        const indiceReal = CONFIG_PROMOS.indicePromoActual % totalPromos;
+        const inicio = indiceReal;
+        const fin = inicio + CONFIG_PROMOS.productosPorBloque;
+        
+        console.log('🎯 Obteniendo productos con índice fijo:', {
+            indiceConfigurado: CONFIG_PROMOS.indicePromoActual,
+            indiceReal: indiceReal,
+            totalPromos: totalPromos,
+            inicio: inicio,
+            fin: fin
+        });
+        
+        return productosEnPromocion.slice(inicio, fin);
+    }
+
+    // ========== CARGA Y RENDERIZADO ==========
+
+    async function cargarProductosPromocion() {
+        try {
+            console.log('🔄 Cargando productos en promoción...');
+            
+            const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json?t=" + Date.now();
+            const respuesta = await fetch(url);
+            
+            if (!respuesta.ok) {
+                throw new Error(`Error HTTP: ${respuesta.status}`);
+            }
+            
+            const todosProductos = await respuesta.json();
+            
+            // Filtrar productos en promoción
+            productosEnPromocion = todosProductos.filter(p => {
+                const promo = typeof p.promo === "string" ? p.promo.toLowerCase().trim() : p.promo;
+                return promo === true || promo === "true" || promo === "sí" || promo === "activo" || promo === "si";
+            });
+
+            console.log('✅ Productos en promoción encontrados:', productosEnPromocion.length);
+
+            if (productosEnPromocion.length === 0) {
+                mostrarSinOfertas();
+                return;
+            }
+
+            // Actualizar indicador de bloque
+            const bloqueNumero = Math.floor(CONFIG_PROMOS.indicePromoActual / CONFIG_PROMOS.productosPorBloque) + 1;
+            document.getElementById('indicador-bloque').textContent = `Bloque ${bloqueNumero}`;
+            
+            // Obtener productos del bloque fijo
+            const productosBloque = obtenerProductosDelBloqueFijo();
+            
+            console.log('🎁 Productos del bloque fijo:', productosBloque.length);
+            
+            // Renderizar productos
+            renderizarProductosOferta(productosBloque);
+
+        } catch (error) {
+            console.error('💥 Error cargando ofertas:', error);
+            mostrarErrorOfertas();
+        }
+    }
+
+    function renderizarProductosOferta(productos) {
+        const grid = document.getElementById('grid-ofertas');
+        
+        if (productos.length === 0) {
+            grid.innerHTML = `
+                <div class="col-12 text-center py-5">
+                    <i class="bi bi-emoji-frown fs-1 text-muted mb-3"></i>
+                    <h4 class="text-muted">No hay ofertas en este momento</h4>
+                    <p class="text-muted">Vuelve más tarde para descubrir nuevas promociones</p>
+                </div>
+            `;
+            return;
+        }
+
+        grid.innerHTML = productos.map(producto => {
+            const precioOriginal = Number(producto.precio) || 0;
+            const precioOferta = producto.precioOferta ? Number(producto.precioOferta) : Math.round(precioOriginal * 0.9);
+            const descuento = producto.precioOferta ? 
+                Math.round((1 - precioOferta / precioOriginal) * 100) : 10;
+
+            return `
+                <div class="card-producto-ml">
+                    <a href="PRODUCTO.HTML?id=${producto.id}&origen=promos" class="text-decoration-none">
+                        <div class="position-relative">
+                            <img src="${producto.imagen}" alt="${producto.producto}" class="card-img-ml">
+                            <div class="position-absolute top-0 start-0 m-2">
+                                <span class="badge bg-danger fs-6">-${descuento}%</span>
+                            </div>
+                            ${producto.stock <= 5 ? '<div class="position-absolute top-0 end-0 m-2"><span class="badge bg-warning text-dark">Últimas</span></div>' : ''}
+                        </div>
+                        <div class="card-body-ml">
+                            <h3 class="nombre-producto-ml small line-clamp-2">${producto.producto}</h3>
+                            
+                            <div class="precios-oferta">
+                                <div class="d-flex align-items-center gap-2 mb-1">
+                                    <span class="precio-oferta fw-bold text-danger fs-5">$${precioOferta.toLocaleString('es-CO')}</span>
+                                    <span class="precio-original text-muted text-decoration-line-through small">$${precioOriginal.toLocaleString('es-CO')}</span>
+                                </div>
+                                <div class="ahorro text-success small fw-bold">
+                                    Ahorras: $${(precioOriginal - precioOferta).toLocaleString('es-CO')}
+                                </div>
+                            </div>
+                            
+                            <a href="PRODUCTO.HTML?id=${producto.id}&origen=promos" class="btn btn-warning btn-sm w-100 mt-2 fw-bold text-white">
+                                <i class="bi bi-eye"></i> Ver Oferta
+                            </a>
+                        </div>
+                    </a>
+                </div>
+            `;
+        }).join('');
+
+        console.log('✅ Productos de oferta renderizados:', productos.length);
+    }
+
+    // ========== FUNCIONES DE ESTADO ==========
+
+    function mostrarSinOfertas() {
+        const grid = document.getElementById('grid-ofertas');
+        grid.innerHTML = `
+            <div class="col-12 text-center py-5">
+                <i class="bi bi-emoji-frown fs-1 text-muted mb-3"></i>
+                <h4 class="text-muted">No hay ofertas activas</h4>
+                <p class="text-muted">Estamos preparando nuevas promociones para ti</p>
+                <a href="INICIO.HTML" class="btn btn-primary mt-3">
+                    <i class="bi bi-arrow-left"></i> Volver al inicio
+                </a>
+            </div>
+        `;
+    }
+
+    function mostrarErrorOfertas() {
+        const grid = document.getElementById('grid-ofertas');
+        grid.innerHTML = `
+            <div class="col-12 text-center py-5">
+                <i class="bi bi-exclamation-triangle fs-1 text-warning mb-3"></i>
+                <h4 class="text-muted">Error cargando ofertas</h4>
+                <p class="text-muted">Intenta recargar la página</p>
+                <button class="btn btn-warning mt-3" onclick="location.reload()">
+                    <i class="bi bi-arrow-clockwise"></i> Reintentar
+                </button>
+            </div>
+        `;
+    }
+
+    // ========== FUNCIONES AUXILIARES ==========
+
+    function cargarHeaderFooter() {
+        Promise.all([
+            fetch("HEADER.HTML").then(res => res.text()),
+            fetch("footer.html").then(res => res.text())
+        ]).then(([header, footer]) => {
+            document.getElementById("header-container").innerHTML = header;
+            document.getElementById("footer-container").innerHTML = footer;
+            console.log('✅ Header y footer cargados');
+        }).catch(error => {
+            console.error("❌ Error cargando header/footer:", error);
+        });
+    }
+
+    function actualizarContadoresCarrito() {
+        const carrito = JSON.parse(localStorage.getItem('carritoAnmago') || '[]');
         const totalItems = carrito.reduce((total, item) => total + (item.cantidad || 1), 0);
         
-        // Actualizar todos los contadores disponibles
-        ['contador-carrito', 'contador-carrito-mobile', 'contador-carrito-header'].forEach(id => {
-          const elemento = document.getElementById(id);
-          if (elemento) {
-            elemento.textContent = totalItems;
-            elemento.style.display = totalItems > 0 ? 'block' : 'none';
-            console.log(`✅ Contador ${id} actualizado:`, totalItems);
-          }
+        ['contador-carrito', 'contador-carrito-mobile'].forEach(id => {
+            const elemento = document.getElementById(id);
+            if (elemento) {
+                elemento.textContent = totalItems;
+                elemento.style.display = totalItems > 0 ? 'block' : 'none';
+            }
         });
-      }
-      
-      // Escuchar cambios en el localStorage entre pestañas
-      window.addEventListener('storage', function(e) {
-        if (e.key === 'carritoAnmago') {
-          location.reload(); // Recargar para sincronizar
-        }
-      });
-    });
-
-    // Función para forzar actualización del offcanvas
-    function forzarActualizacionCarrito() {
-      if (window.carritoManager && window.actualizarOffcanvasCarrito) {
-        console.log('🔄 Forzando actualización del offcanvas...');
-        window.actualizarOffcanvasCarrito();
-      }
     }
 
-    // Actualizar offcanvas cuando se abra
-    document.addEventListener('DOMContentLoaded', function() {
-      const offcanvasElement = document.getElementById('offcanvasCarrito');
-      if (offcanvasElement) {
-        offcanvasElement.addEventListener('show.bs.offcanvas', function() {
-          console.log('🎯 Offcanvas abierto - actualizando contenido...');
-          setTimeout(forzarActualizacionCarrito, 100);
+    // ========== FUNCIONES PARA DEBUG EN CONSOLA ==========
+    
+    function verPromocionesActivas() {
+        const productosBloque = obtenerProductosDelBloqueFijo();
+        
+        console.log('🔥 PROMOCIONES ACTIVAS (Índice fijo 16):');
+        console.log('📍 Índice configurado:', CONFIG_PROMOS.indicePromoActual);
+        console.log('📦 Total de promociones:', productosEnPromocion.length);
+        console.log('🎯 Productos en promoción activa:');
+        
+        productosBloque.forEach((producto, index) => {
+            console.log(`   ${index + 1}. ${producto.producto} - $${producto.precio} - ID: ${producto.id}`);
         });
-      }
-    });
-  </script>
+        
+        console.log('📋 IDs activos:', productosBloque.map(p => p.id));
+        
+        return productosBloque;
+    }
+
+    // Hacer funciones disponibles en consola
+    window.verPromocionesActivas = verPromocionesActivas;
+    
+    </script>
 </body>
 </html>
