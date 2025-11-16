@@ -1,4 +1,4 @@
-// buscador-simple.js - VERSIÓN QUE SÍ FUNCIONA
+// buscador.js - VERSIÓN QUE SÍ FUNCIONA
 console.log('🔍 Iniciando buscador simple...');
 
 document.addEventListener('DOMContentLoaded', function() {
