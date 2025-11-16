@@ -40,7 +40,7 @@ function renderUltimosProductosML(productos) {
     
     return `
       <div class="card-producto-ml" data-producto-id="${p.id}">
-        <a href="producto.html?id=${p.id}" class="text-decoration-none">
+        <a href="PRODUCTO.HTML?id=${p.id}" class="text-decoration-none">
           <img src="${p.imagen}" 
                alt="${p.producto}" 
                class="card-img-ml" 
@@ -72,7 +72,7 @@ function renderUltimosProductosML(productos) {
 
 // ✅ NUEVA FUNCIÓN: Redirigir a la página del producto
 function verDetallesProducto(productoId) {
-  window.location.href = `producto.html?id=${productoId}`;
+  window.location.href = `PRODUCTO.HTML?id=${productoId}`;
 }
 
 // ❌ ELIMINAR: Función antigua que agregaba directamente al carrito
