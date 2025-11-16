@@ -2,66 +2,23 @@
   <!-- LOGO -->
   <div class="logo">
     <a href="#" id="logo-inicio" onclick="volverAInicio()">
-      <img
-        src="https://ik.imagekit.io/mbsk9dati/logo.jpg?tr=w-48,h-48"
-        alt="ANMAGO STORE"
-        width="48"
-        height="48"
-        loading="lazy"
-        style="display: block; object-fit: contain; border-radius: 6px;"
-      />
+      <img src="https://ik.imagekit.io/mbsk9dati/logo.jpg?tr=w-48,h-48" alt="ANMAGO STORE">
     </a>
   </div>
-<!-- 🔥 BUSCADOR FIJO EN TODAS LAS VISTAS -->
-  <div class="container mt-3" id="buscador-global-container">
-    <div class="row justify-content-center">
-      <div class="col-12 col-md-8">
-        <div class="position-relative">
-          <input id="buscador" class="form-control buscador-ml" 
-                 placeholder="Buscar productos, marcas y más..." 
-                 autocomplete="on">
-          <div id="sugerencias" class="dropdown-menu position-absolute mt-1 w-100 z-3"></div>
-        </div>
-      </div>
-    </div>
+
+  <!-- BUSCADOR -->
+  <div class="flex-grow-1 mx-3 position-relative">
+    <input id="buscador" class="form-control buscador-header" 
+           placeholder="Buscar productos, marcas y más..." 
+           autocomplete="on">
+    <!-- 🔥 ESTE ES EL CONTENEDOR CRÍTICO -->
+    <div id="sugerencias" class="dropdown-menu"></div>
   </div>
+
   <!-- BOTÓN HAMBURGUESA -->
   <button class="navbar-toggler border-0 bg-transparent" type="button"
           data-bs-toggle="offcanvas"
-          data-bs-target="#menuLateral"
-          aria-controls="menuLateral"
-          aria-label="Abrir menú">
+          data-bs-target="#menuLateral">
     <i class="bi bi-list fs-1 text-white"></i>
   </button>
 </header>
-
-<!-- MENÚ LATERAL -->
-<div class="offcanvas offcanvas-start" tabindex="-1" id="menuLateral" aria-labelledby="menuLateralLabel">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="menuLateralLabel">Menú</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
-  </div>
-
-  <div class="offcanvas-body d-flex flex-column gap-3">
-    <a href="INICIO.HTML" class="nav-link">Inicio</a>
-    <a href="PROMOS.HTML" class="nav-link">Promociones</a>
-
-    <!-- BOTÓN CATEGORÍAS -->
-    <button class="nav-link text-start fw-bold" id="toggle-categorias" style="cursor: pointer;">
-      Categorías ▾
-    </button>
-
-    <!-- MENÚ DESPLEGABLE DE CATEGORÍAS -->
-    <div id="menu-categorias"
-         class="d-flex flex-column ps-3 gap-2"
-         style="display: none; background: #f8f9fa; padding: 0.5rem 0;">
-      <!-- Se insertan dinámicamente desde app.js -->
-    </div>
-
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSevvlCBgz7L6l2-DecKQLazoswqzf7DRYWOaCq4FtMGOR6D2Q/viewform?usp=header"
-       target="_blank"
-       class="nav-link">
-      Contacto
-    </a>
-  </div>
-</div>
