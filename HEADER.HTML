@@ -13,7 +13,7 @@
     </a>
   </div>
 
-  <!-- BUSCADOR SIMPLIFICADO -->
+  <!-- BUSCADOR EN HEADER -->
   <div class="flex-grow-1 mx-3 position-relative" style="max-width: 500px;">
     <input id="buscador" class="form-control buscador-header" 
            placeholder="Buscar productos..." 
@@ -30,3 +30,34 @@
     <i class="bi bi-list fs-1 text-white"></i>
   </button>
 </header>
+
+<!-- MENÚ LATERAL - ESTO DEBE ESTAR INCLUIDO EN EL HEADER -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="menuLateral" aria-labelledby="menuLateralLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="menuLateralLabel">Menú</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+  </div>
+
+  <div class="offcanvas-body d-flex flex-column gap-3">
+    <a href="INICIO.HTML" class="nav-link">Inicio</a>
+    <a href="PROMOS.HTML" class="nav-link">Promociones</a>
+
+    <!-- BOTÓN CATEGORÍAS -->
+    <button class="nav-link text-start fw-bold" id="toggle-categorias" style="cursor: pointer;">
+      Categorías ▾
+    </button>
+
+    <!-- MENÚ DESPLEGABLE DE CATEGORÍAS -->
+    <div id="menu-categorias"
+         class="d-flex flex-column ps-3 gap-2"
+         style="display: none; background: #f8f9fa; padding: 0.5rem 0;">
+      <!-- Se insertan dinámicamente desde app.js -->
+    </div>
+
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSevvlCBgz7L6l2-DecKQLazoswqzf7DRYWOaCq4FtMGOR6D2Q/viewform?usp=header"
+       target="_blank"
+       class="nav-link">
+      Contacto
+    </a>
+  </div>
+</div>
