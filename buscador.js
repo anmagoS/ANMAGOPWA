@@ -9,8 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('❌ No se encontró el elemento buscador');
         return;
     }
-    
-    if (!sugerencias) {
+        if (!sugerencias) {
         console.error('❌ No se encontró el elemento sugerencias');
         return;
     }
