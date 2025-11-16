@@ -600,3 +600,84 @@ body {
     transform: translateX(-50%);
   }
 }
+/* === BUSCADOR HEADER - ESTILOS CRÍTICOS === */
+
+/* Contenedor del buscador en header */
+.header-sticky .position-relative {
+  position: relative !important;
+}
+
+/* Dropdown de sugerencias - POSICIONAMIENTO CORRECTO */
+#sugerencias.dropdown-menu {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 9999 !important;
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  margin-top: 5px !important;
+  display: none;
+}
+
+#sugerencias.dropdown-menu.show {
+  display: block !important;
+}
+
+/* Items de sugerencias */
+#sugerencias .dropdown-item {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #f8f9fa;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+#sugerencias .dropdown-item:hover {
+  background-color: #e9ecef;
+  transform: translateX(2px);
+}
+
+#sugerencias .dropdown-item:last-child {
+  border-bottom: none;
+}
+
+/* Texto pequeño para categorías */
+.extra-small {
+  font-size: 0.75rem;
+  line-height: 1.2;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  #sugerencias.dropdown-menu {
+    max-height: 300px;
+    width: 100vw !important;
+    left: 50% !important;
+    transform: translateX(-50%);
+    position: fixed !important;
+    top: 70px !important;
+  }
+  
+  .header-sticky {
+    height: 70px;
+  }
+}
+
+/* Asegurar que el input sea visible */
+.buscador-header {
+  border-radius: 20px !important;
+  border: none !important;
+  padding: 0.5rem 1rem !important;
+  font-size: 0.85rem !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  width: 100% !important;
+}
+
+.buscador-header:focus {
+  background: white !important;
+  box-shadow: 0 0 0 2px rgba(52, 131, 250, 0.5) !important;
+  outline: none !important;
+}
