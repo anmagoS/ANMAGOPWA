@@ -44,15 +44,11 @@
     </button>
   </div>
 
- 
-
-
   <!-- ✅ SISTEMA DE VISTAS DINÁMICAS -->
   <main>
     <!-- VISTA 1: INICIO (HOME) -->
     <div id="vista-inicio" class="vista vista-activa">
      
-
       <!-- CATEGORÍAS RÁPIDAS -->
       <div class="container-fluid mt-3">
         <div class="categorias-rapidas">
@@ -309,12 +305,11 @@
     </div>
   </nav>
 
- 
   <script>
-  // ✅ CONFIGURACIÓN CON ÍNDICE FIJO
+  // ✅ CONFIGURACIÓN CON ÍNDICE DINÁMICO
   const CONFIG_PROMOS = {
       productosPorBloque: 4,
-      indicePromoActual: 16 // ÍNDICE FIJO
+      horasPorBloque: 6
   };
 
   // ✅ SISTEMA DE NAVEGACIÓN UNIFICADO
@@ -344,6 +339,115 @@
     "luces": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/navidad_luces.jpg?tr=w-300,q-80",
     "decoración navideña": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/navidad_decoracion.jpg?tr=w-300,q-80"
   };
+
+  // 🎯 OBTENER ÍNDICE DINÁMICO BASADO EN LA HORA ACTUAL
+  function obtenerIndicePromocionalDinamico() {
+      const ahora = new Date();
+      const horaActual = ahora.getHours();
+      const bloqueActual = Math.floor(horaActual / CONFIG_PROMOS.horasPorBloque);
+      const indice = bloqueActual * CONFIG_PROMOS.productosPorBloque;
+      
+      console.log('🔄 Índice dinámico calculado:', {
+          horaActual: horaActual,
+          bloqueActual: bloqueActual,
+          indiceCalculado: indice
+      });
+      
+      return indice;
+  }
+
+  // 🎯 OBTENER PRODUCTOS DEL BLOQUE DINÁMICO
+  function obtenerProductosDelBloqueDinamico(promociones) {
+      if (!promociones || !promociones.length) return [];
+      
+      const indiceDinamico = obtenerIndicePromocionalDinamico();
+      const totalPromos = promociones.length;
+      const indiceReal = indiceDinamico % totalPromos;
+      const inicio = indiceReal;
+      const fin = inicio + CONFIG_PROMOS.productosPorBloque;
+      
+      console.log('🎯 Obteniendo productos con índice dinámico:', {
+          indiceDinamico: indiceDinamico,
+          indiceReal: indiceReal,
+          totalPromos: totalPromos,
+          inicio: inicio,
+          fin: fin
+      });
+      
+      // Si llegamos al final del array, volvemos al inicio
+      if (fin > totalPromos) {
+          const sobrante = fin - totalPromos;
+          const productosCombinados = [
+              ...promociones.slice(inicio),
+              ...promociones.slice(0, sobrante)
+          ];
+          console.log('🔄 Combinando productos (fin del array):', productosCombinados.length);
+          return productosCombinados;
+      }
+      
+      return promociones.slice(inicio, fin);
+  }
+
+  // 🎠 CARGAR CARRUSEL DE PROMOCIONES CON ÍNDICE DINÁMICO
+  async function cargarCarruselPromociones() {
+      try {
+          const productos = await obtenerCatalogo();
+          
+          // Filtrar productos en promoción
+          const promociones = productos.filter(p => {
+              const promo = typeof p.promo === "string" ? p.promo.toLowerCase().trim() : p.promo;
+              return promo === true || promo === "true" || promo === "sí" || promo === "activo" || promo === "si";
+          });
+
+          if (promociones.length === 0) {
+              document.getElementById('carousel-promos-home-contenido').innerHTML = `
+                  <div class="carousel-item active">
+                      <a href="PROMOS.HTML" class="producto-carrusel-card">
+                          <div class="producto-carrusel-img" style="background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
+                              🎁
+                          </div>
+                          <div class="producto-carrusel-info text-center">
+                              <div class="producto-carrusel-nombre">¡Descubre nuestras ofertas!</div>
+                              <div class="producto-carrusel-oferta">Haz clic para ver promociones</div>
+                          </div>
+                      </a>
+                  </div>
+              `;
+              return;
+          }
+
+          // Obtener bloque de productos con índice dinámico
+          const bloquePromociones = obtenerProductosDelBloqueDinamico(promociones);
+
+          const carouselContent = document.getElementById('carousel-promos-home-contenido');
+          carouselContent.innerHTML = bloquePromociones.map((producto, index) => {
+              const precioOriginal = Number(producto.precio) || 0;
+              const precioDescuento = Math.round(precioOriginal * 0.9);
+              
+              return `
+                  <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                      <a href="PRODUCTO.HTML?id=${producto.id}&origen=home" class="producto-carrusel-card">
+                          <img src="${producto.imagen}" 
+                               alt="${producto.producto}" 
+                               class="producto-carrusel-img"
+                               loading="lazy"
+                               onerror="this.src='https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg'">
+                          <div class="producto-carrusel-info">
+                              <div class="producto-carrusel-nombre">${producto.producto}</div>
+                              <div class="producto-carrusel-precio">$${precioDescuento.toLocaleString('es-CO')}</div>
+                              <div class="producto-carrusel-oferta">10% OFF</div>
+                          </div>
+                      </a>
+                  </div>
+              `;
+          }).join('');
+
+          console.log("✅ Carrusel de promociones cargado con índice dinámico:", bloquePromociones.length, "productos");
+
+      } catch (error) {
+          console.error("❌ Error cargando carrusel de promociones:", error);
+      }
+  }
 
   // 🎯 FUNCIONES FALTANTES PARA CARGAR Y RENDERIZAR PRODUCTOS
   async function cargarYRenderizarSubtipos(tipo) {
@@ -442,87 +546,6 @@
         </div>
       `;
     }
-  }
-
-  // 🎯 OBTENER PRODUCTOS DEL BLOQUE FIJO
-  function obtenerProductosDelBloqueFijo(promociones) {
-      if (!promociones || !promociones.length) return [];
-      
-      const totalPromos = promociones.length;
-      const indiceReal = CONFIG_PROMOS.indicePromoActual % totalPromos;
-      const inicio = indiceReal;
-      const fin = inicio + CONFIG_PROMOS.productosPorBloque;
-      
-      console.log('🎯 Obteniendo productos con índice fijo:', {
-          indiceConfigurado: CONFIG_PROMOS.indicePromoActual,
-          indiceReal: indiceReal,
-          totalPromos: totalPromos,
-          inicio: inicio,
-          fin: fin
-      });
-      
-      return promociones.slice(inicio, fin);
-  }
-
-  // 🎠 CARGAR CARRUSEL DE PROMOCIONES CON ÍNDICE FIJO
-  async function cargarCarruselPromociones() {
-      try {
-          const productos = await obtenerCatalogo();
-          
-          // Filtrar productos en promoción
-          const promociones = productos.filter(p => {
-              const promo = typeof p.promo === "string" ? p.promo.toLowerCase().trim() : p.promo;
-              return promo === true || promo === "true" || promo === "sí" || promo === "activo" || promo === "si";
-          });
-
-          if (promociones.length === 0) {
-              document.getElementById('carousel-promos-home-contenido').innerHTML = `
-                  <div class="carousel-item active">
-                      <a href="PROMOS.HTML" class="producto-carrusel-card">
-                          <div class="producto-carrusel-img" style="background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
-                              🎁
-                          </div>
-                          <div class="producto-carrusel-info text-center">
-                              <div class="producto-carrusel-nombre">¡Descubre nuestras ofertas!</div>
-                              <div class="producto-carrusel-oferta">Haz clic para ver promociones</div>
-                          </div>
-                      </a>
-                  </div>
-              `;
-              return;
-          }
-
-          // Obtener bloque de productos con índice fijo
-          const bloquePromociones = obtenerProductosDelBloqueFijo(promociones);
-
-          const carouselContent = document.getElementById('carousel-promos-home-contenido');
-          carouselContent.innerHTML = bloquePromociones.map((producto, index) => {
-              const precioOriginal = Number(producto.precio) || 0;
-              const precioDescuento = Math.round(precioOriginal * 0.9);
-              
-              return `
-                  <div class="carousel-item ${index === 0 ? 'active' : ''}">
-                      <a href="PRODUCTO.HTML?id=${producto.id}&origen=home" class="producto-carrusel-card">
-                          <img src="${producto.imagen}" 
-                               alt="${producto.producto}" 
-                               class="producto-carrusel-img"
-                               loading="lazy"
-                               onerror="this.src='https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg'">
-                          <div class="producto-carrusel-info">
-                              <div class="producto-carrusel-nombre">${producto.producto}</div>
-                              <div class="producto-carrusel-precio">$${precioDescuento.toLocaleString('es-CO')}</div>
-                              <div class="producto-carrusel-oferta">10% OFF</div>
-                          </div>
-                      </a>
-                  </div>
-              `;
-          }).join('');
-
-          console.log("✅ Carrusel de promociones cargado con índice fijo:", bloquePromociones.length, "productos");
-
-      } catch (error) {
-          console.error("❌ Error cargando carrusel de promociones:", error);
-      }
   }
 
   // 📲 SISTEMA DE INSTALACIÓN PWA
@@ -753,7 +776,7 @@
       // Manejar parámetros de URL y restaurar navegación
       manejarParametrosURL();
       
-      // Cargar carrusel de promociones con índice fijo
+      // Cargar carrusel de promociones con índice dinámico
       cargarCarruselPromociones();
       iniciarTemporizadorHome();
       
