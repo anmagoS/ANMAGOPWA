@@ -112,6 +112,21 @@ function renderizarMenuLateral(catalogo) {
     menu.appendChild(bloqueTipo);
   });
 }
+// ✅ FUNCIÓN PARA CERRAR EL MENÚ LATERAL
+function cerrarMenuLateral() {
+  const menu = document.getElementById("menu-categorias");
+  const toggle = document.getElementById("toggle-categorias");
+  
+  if (menu && window.innerWidth < 768) { // Solo en móvil
+    menu.style.display = "none";
+    
+    // También cerrar todos los details abiertos
+    const detailsAbiertos = menu.querySelectorAll('details[open]');
+    detailsAbiertos.forEach(detail => {
+      detail.removeAttribute('open');
+    });
+  }
+}
 // === Renderizar carrusel de promociones ===
 function renderCarruselPromosDesdePromos() {
   const contenedor = document.getElementById("carousel-promos-contenido");
