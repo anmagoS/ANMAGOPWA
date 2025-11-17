@@ -1,10 +1,154 @@
-// modalformulario.js - VERSIÓN ULTRA RÁPIDA Y CONFIABLE
+// modalformulario.js - VERSIÓN ULTRA RÁPIDA Y CONFIABLE CON AUTOCOMPLETADO DE CIUDADES
 // 🚀 INICIALIZACIÓN INMEDIATA - Sin esperar DOMContentLoaded
-console.log('🚀 INICIANDO FORMULARIO - VERSIÓN ULTRA RÁPIDA');
+console.log('🚀 INICIANDO FORMULARIO - VERSIÓN ULTRA RÁPIDA CON CIUDADES');
 
 // 🔥 VARIABLES GLOBALES INMEDIATAS
 window.articulosCarrito = [];
 window.formularioInicializado = false;
+window.ciudadesColombia = [];
+
+// ✅ CARGAR BASE DE DATOS DE CIUDADES
+async function cargarCiudades() {
+    try {
+        const response = await fetch('ciudades.json');
+        window.ciudadesColombia = await response.json();
+        console.log('✅ Ciudades cargadas:', window.ciudadesColombia.length);
+        
+        // Inicializar autocompletado después de cargar ciudades
+        inicializarAutocompletadoCiudades();
+    } catch (error) {
+        console.error('❌ Error cargando ciudades:', error);
+        // Fallback con algunas ciudades básicas
+        window.ciudadesColombia = [
+            {departamento: "AMAZONAS", ciudad: "LETICIA"},
+            {departamento: "ANTIOQUIA", ciudad: "MEDELLÍN"},
+            {departamento: "BOGOTÁ", ciudad: "BOGOTÁ"},
+            {departamento: "VALLE DEL CAUCA", ciudad: "CALI"},
+            {departamento: "ATLÁNTICO", ciudad: "BARRANQUILLA"}
+        ];
+        inicializarAutocompletadoCiudades();
+    }
+}
+
+// ✅ FUNCIONES DE AUTOCOMPLETADO DE CIUDADES
+function inicializarAutocompletadoCiudades() {
+    const inputCiudad = document.getElementById('ciudadCliente');
+    const sugerencias = document.getElementById('sugerenciasCiudades');
+
+    if (!inputCiudad || !sugerencias) {
+        console.log('⚠️ Campos de ciudad no encontrados, reintentando...');
+        setTimeout(inicializarAutocompletadoCiudades, 500);
+        return;
+    }
+
+    console.log('✅ Inicializando autocompletado de ciudades...');
+
+    inputCiudad.addEventListener('input', function() {
+        const valor = this.value.trim();
+        
+        if (valor.length < 2) {
+            sugerencias.style.display = 'none';
+            return;
+        }
+
+        // Filtrar ciudades que coincidan (ciudad o departamento)
+        const coincidencias = window.ciudadesColombia.filter(item =>
+            item.ciudad.toLowerCase().includes(valor.toLowerCase()) ||
+            item.departamento.toLowerCase().includes(valor.toLowerCase())
+        );
+
+        mostrarSugerenciasCiudades(coincidencias);
+    });
+
+    // Ocultar sugerencias al hacer clic fuera
+    document.addEventListener('click', function(e) {
+        if (!inputCiudad.contains(e.target) && !sugerencias.contains(e.target)) {
+            sugerencias.style.display = 'none';
+        }
+    });
+
+    // Manejar teclado
+    inputCiudad.addEventListener('keydown', function(e) {
+        const items = sugerencias.querySelectorAll('.sugerencia-item');
+        let itemActivo = sugerencias.querySelector('.sugerencia-item.active');
+        
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (!itemActivo && items.length > 0) {
+                items[0].classList.add('active');
+            } else if (itemActivo) {
+                itemActivo.classList.remove('active');
+                const siguiente = itemActivo.nextElementSibling;
+                if (siguiente) siguiente.classList.add('active');
+            }
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (itemActivo) {
+                itemActivo.classList.remove('active');
+                const anterior = itemActivo.previousElementSibling;
+                if (anterior) anterior.classList.add('active');
+            }
+        } else if (e.key === 'Enter' && itemActivo) {
+            e.preventDefault();
+            seleccionarCiudad(itemActivo);
+        } else if (e.key === 'Escape') {
+            sugerencias.style.display = 'none';
+        }
+    });
+
+    console.log('✅ Autocompletado de ciudades inicializado');
+}
+
+function mostrarSugerenciasCiudades(coincidencias) {
+    const sugerencias = document.getElementById('sugerenciasCiudades');
+    const inputCiudad = document.getElementById('ciudadCliente');
+    
+    if (!sugerencias || !inputCiudad) return;
+
+    if (coincidencias.length === 0) {
+        sugerencias.style.display = 'none';
+        return;
+    }
+
+    sugerencias.innerHTML = '';
+    
+    // Mostrar máximo 8 sugerencias
+    coincidencias.slice(0, 8).forEach(item => {
+        const li = document.createElement('li');
+        li.className = 'dropdown-item sugerencia-item';
+        li.style.cursor = 'pointer';
+        li.style.padding = '8px 12px';
+        li.innerHTML = `
+            <div class="fw-bold">${item.ciudad} - ${item.departamento}</div>
+        `;
+        
+        li.addEventListener('click', () => {
+            inputCiudad.value = `${item.ciudad} - ${item.departamento}`;
+            sugerencias.style.display = 'none';
+            validarFormularioCliente(); // Validar después de seleccionar
+        });
+        
+        li.addEventListener('mouseenter', () => {
+            sugerencias.querySelectorAll('.sugerencia-item').forEach(i => i.classList.remove('active'));
+            li.classList.add('active');
+        });
+        
+        sugerencias.appendChild(li);
+    });
+
+    sugerencias.style.display = 'block';
+}
+
+function seleccionarCiudad(elemento) {
+    const inputCiudad = document.getElementById('ciudadCliente');
+    const sugerencias = document.getElementById('sugerenciasCiudades');
+    
+    if (inputCiudad && sugerencias) {
+        inputCiudad.value = elemento.textContent.trim();
+        sugerencias.style.display = 'none';
+        validarFormularioCliente(); // Validar después de seleccionar
+    }
+}
 
 // 🎯 DETECCIÓN GARANTIZADA DEL CARRITO - VERSIÓN SÍNCRONA
 function detectarCarritoGarantizado() {
@@ -153,7 +297,6 @@ function repartirDireccionConcatenada(direccionConc) {
 }
 
 // 💬 Generar texto para WhatsApp - VERSIÓN ULTRA CONFIABLE
-// 💬 Generar texto para WhatsApp - VERSIÓN ULTRA CONFIABLE
 function generarTextoWhatsApp() {
     const nombreCliente = construirNombreCliente();
     
@@ -218,7 +361,6 @@ function enviarPedidoWhatsApp() {
     }
 }
 
-// 📊 Enviar datos a Google Sheets - VERSIÓN NO BLOQUEANTE
 // 📊 Enviar datos a Google Sheets - VERSIÓN GET CON TODOS LOS PARÁMETROS
 function enviarDatosGoogleSheets() {
     return new Promise((resolve, reject) => {
@@ -293,6 +435,7 @@ function fallbackImageRequest(url) {
         console.log('✅ Request enviado (fallback completado)');
     }
 }
+
 // 🚀 INICIALIZACIÓN RÁPIDA DEL FORMULARIO
 function inicializarFormulario() {
     if (window.formularioInicializado) return;
@@ -369,73 +512,73 @@ function inicializarFormulario() {
         });
     }
 
- // 🟢 EVENTO ENVIAR - VERSIÓN CORREGIDA
-const btnEnviar = document.getElementById("btnEnviarPedido");
-if (btnEnviar) {
-    btnEnviar.addEventListener("click", async (e) => {
-        e.preventDefault();
-        console.log('🚀 INICIANDO ENVÍO DE PEDIDO Y CLIENTE');
+    // 🟢 EVENTO ENVIAR - VERSIÓN CORREGIDA
+    const btnEnviar = document.getElementById("btnEnviarPedido");
+    if (btnEnviar) {
+        btnEnviar.addEventListener("click", async (e) => {
+            e.preventDefault();
+            console.log('🚀 INICIANDO ENVÍO DE PEDIDO Y CLIENTE');
 
-        if (!validarFormularioCliente()) {
-            alert('❌ Completa todos los campos requeridos');
-            return;
-        }
-
-        // 🔥 PROCESO SECUENCIAL MEJORADO
-        try {
-            btnEnviar.textContent = '📤 Enviando...';
-            btnEnviar.disabled = true;
-
-            // 1. Construir dirección final
-            const direccionFinal = construirDireccionEstructurada();
-            document.getElementById("DireccionCompleta").value = direccionFinal;
-
-            // 2. ENVIAR CLIENTE A SHEETS (ESPERAR ESTO)
-            console.log('👤 ENVIANDO/ACTUALIZANDO CLIENTE...');
-            await enviarDatosGoogleSheets();
-            console.log('✅ CLIENTE PROCESADO EN SHEETS');
-
-            // 3. Enviar WhatsApp
-            console.log('📱 ENVIANDO WHATSAPP...');
-            enviarPedidoWhatsApp();
-            console.log('✅ WHATSAPP INICIADO');
-
-            // 4. Limpiar carrito SI EXISTE
-            if (window.articulosCarrito.length > 0) {
-                console.log('🛒 LIMPIANDO CARRITO...');
-                window.articulosCarrito = [];
-                localStorage.removeItem('carritoAnmago');
-                
-                if (window.opener) {
-                    try {
-                        window.opener.postMessage("limpiarCarrito", "*");
-                    } catch (e) {
-                        console.log('⚠️  No se pudo comunicar con ventana padre');
-                    }
-                }
+            if (!validarFormularioCliente()) {
+                alert('❌ Completa todos los campos requeridos');
+                return;
             }
 
-            // 5. Feedback final
-            btnEnviar.textContent = '✅ ¡Enviado!';
-            console.log('🎯 PROCESO COMPLETADO - Cliente y pedido enviados');
+            // 🔥 PROCESO SECUENCIAL MEJORADO
+            try {
+                btnEnviar.textContent = '📤 Enviando...';
+                btnEnviar.disabled = true;
 
-            // 6. Cerrar después de feedback visual
-            setTimeout(() => {
-                if (window.opener && !window.opener.closed) {
-                    window.close();
-                } else {
-                    alert("✅ ¡Cliente registrado y pedido enviado! Revisa WhatsApp.");
+                // 1. Construir dirección final
+                const direccionFinal = construirDireccionEstructurada();
+                document.getElementById("DireccionCompleta").value = direccionFinal;
+
+                // 2. ENVIAR CLIENTE A SHEETS (ESPERAR ESTO)
+                console.log('👤 ENVIANDO/ACTUALIZANDO CLIENTE...');
+                await enviarDatosGoogleSheets();
+                console.log('✅ CLIENTE PROCESADO EN SHEETS');
+
+                // 3. Enviar WhatsApp
+                console.log('📱 ENVIANDO WHATSAPP...');
+                enviarPedidoWhatsApp();
+                console.log('✅ WHATSAPP INICIADO');
+
+                // 4. Limpiar carrito SI EXISTE
+                if (window.articulosCarrito.length > 0) {
+                    console.log('🛒 LIMPIANDO CARRITO...');
+                    window.articulosCarrito = [];
+                    localStorage.removeItem('carritoAnmago');
+                    
+                    if (window.opener) {
+                        try {
+                            window.opener.postMessage("limpiarCarrito", "*");
+                        } catch (e) {
+                            console.log('⚠️  No se pudo comunicar con ventana padre');
+                        }
+                    }
                 }
-            }, 2000);
 
-        } catch (error) {
-            console.error('❌ ERROR en proceso de envío:', error);
-            btnEnviar.textContent = '❌ Error - Reintentar';
-            btnEnviar.disabled = false;
-            alert('Error al enviar. Por favor intenta nuevamente.');
-        }
-    });
-}
+                // 5. Feedback final
+                btnEnviar.textContent = '✅ ¡Enviado!';
+                console.log('🎯 PROCESO COMPLETADO - Cliente y pedido enviados');
+
+                // 6. Cerrar después de feedback visual
+                setTimeout(() => {
+                    if (window.opener && !window.opener.closed) {
+                        window.close();
+                    } else {
+                        alert("✅ ¡Cliente registrado y pedido enviado! Revisa WhatsApp.");
+                    }
+                }, 2000);
+
+            } catch (error) {
+                console.error('❌ ERROR en proceso de envío:', error);
+                btnEnviar.textContent = '❌ Error - Reintentar';
+                btnEnviar.disabled = false;
+                alert('Error al enviar. Por favor intenta nuevamente.');
+            }
+        });
+    }
 
     // Validación inicial
     setTimeout(validarFormularioCliente, 100);
@@ -443,16 +586,30 @@ if (btnEnviar) {
 }
 
 // 🔥 EJECUCIÓN INMEDIATA - Múltiples estrategias
-document.addEventListener('DOMContentLoaded', inicializarFormulario);
+document.addEventListener('DOMContentLoaded', function() {
+    inicializarFormulario();
+    cargarCiudades(); // Cargar ciudades después de que el DOM esté listo
+});
 
 // Estrategia de respaldo por si DOMContentLoaded tarda
-setTimeout(inicializarFormulario, 500);
+setTimeout(() => {
+    if (!window.formularioInicializado) {
+        inicializarFormulario();
+    }
+    if (window.ciudadesColombia.length === 0) {
+        cargarCiudades();
+    }
+}, 500);
 
 // Estrategia final por si todo falla
 setTimeout(() => {
     if (!window.formularioInicializado) {
         console.log('⚡ INICIALIZACIÓN POR TIMEOUT DE SEGURIDAD');
         inicializarFormulario();
+    }
+    if (window.ciudadesColombia.length === 0) {
+        console.log('⚡ CARGANDO CIUDADES POR TIMEOUT DE SEGURIDAD');
+        cargarCiudades();
     }
 }, 1000);
 
@@ -462,6 +619,13 @@ window.diagnosticoFormulario = function() {
     console.log("- Carrito actual:", window.articulosCarrito);
     console.log("- Productos:", window.articulosCarrito.length);
     console.log("- Formulario inicializado:", window.formularioInicializado);
+    console.log("- Ciudades cargadas:", window.ciudadesColombia.length);
     console.log("- WhatsApp generado:", generarTextoWhatsApp().substring(0, 100) + '...');
+    
+    // Verificar campo ciudad
+    const ciudadInput = document.getElementById('ciudadCliente');
+    console.log("- Campo ciudad:", ciudadInput ? 'ENCONTRADO' : 'NO ENCONTRADO');
+    if (ciudadInput) {
+        console.log("- Valor ciudad:", ciudadInput.value);
+    }
 };
-
