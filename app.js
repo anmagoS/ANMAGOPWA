@@ -72,40 +72,70 @@ async function cargarAccesosGlobal() {
   }
 }
 
-// ✅ FUNCIÓN MEJORADA PARA CERRAR EL MENÚ LATERAL
+// ✅ FUNCIÓN CORREGIDA PARA CERRAR EL MENÚ LATERAL
 function cerrarMenuLateral() {
-  const menu = document.getElementById("menu-categorias");
-  const toggle = document.getElementById("toggle-categorias");
+  console.log("🔒 Intentando cerrar menú lateral...");
+  
+  // Buscar el menú en el documento principal Y en los iframes/importados
+  let menu = document.getElementById("menu-categorias");
+  
+  // Si no se encuentra, buscar en todo el documento
+  if (!menu) {
+    console.log("⚠️ Menú no encontrado, buscando en todo el documento...");
+    menu = document.querySelector("#menu-categorias");
+  }
   
   if (menu) {
-    // 1. Ocultar el menú completo
+    console.log("✅ Menú encontrado, cerrando...");
     menu.style.display = "none";
     
-    // 2. Cerrar TODOS los details abiertos (importante)
+    // Cerrar todos los details abiertos
     const detailsAbiertos = menu.querySelectorAll('details[open]');
     detailsAbiertos.forEach(detail => {
       detail.removeAttribute('open');
     });
     
-    // 3. También cerrar el menú principal si es un offcanvas/modal
-    const offcanvasMenu = document.getElementById("offcanvasMenu");
-    if (offcanvasMenu) {
-      const bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvasMenu);
-      if (bsOffcanvas) {
-        bsOffcanvas.hide();
-      }
-    }
+    console.log("✅ Menú cerrado correctamente");
+  } else {
+    console.log("❌ No se pudo encontrar el menú lateral");
     
-    console.log("✅ Menú lateral cerrado completamente");
+    // Fallback: intentar cerrar cualquier elemento que parezca un menú
+    const posiblesMenus = document.querySelectorAll('[class*="menu"], [class*="categorias"], [id*="menu"]');
+    posiblesMenus.forEach(element => {
+      if (element.style.display === "flex" || element.style.display === "block") {
+        element.style.display = "none";
+        console.log("🔒 Cerrado elemento alternativo:", element);
+      }
+    });
   }
 }
 
 // === Renderizar menú lateral desde catálogo ===
-// === Renderizar menú lateral desde catálogo ===
 function renderizarMenuLateral(catalogo) {
-  const menu = document.getElementById("menu-categorias");
-  if (!menu) return;
+  // Esperar a que el DOM esté completamente listo
+  setTimeout(() => {
+    const menu = document.getElementById("menu-categorias");
+    if (!menu) {
+      console.log("❌ menu-categorias no encontrado, reintentando...");
+      setTimeout(() => {
+        const menuRetry = document.getElementById("menu-categorias");
+        if (menuRetry) {
+          renderizarMenuLateralReal(catalogo, menuRetry);
+        } else {
+          console.error("❌ No se pudo encontrar menu-categorias después de reintento");
+        }
+      }, 500);
+      return;
+    }
+    
+    renderizarMenuLateralReal(catalogo, menu);
+  }, 100);
+}
 
+// Función real de renderizado
+function renderizarMenuLateralReal(catalogo, menu) {
+  console.log("🎯 Renderizando menú lateral...");
+  
   const mapa = {};
   catalogo.forEach(p => {
     if (!p.tipo || !p.subtipo || !p.categoria) return;
@@ -113,6 +143,9 @@ function renderizarMenuLateral(catalogo) {
     if (!mapa[p.tipo][p.subtipo]) mapa[p.tipo][p.subtipo] = new Set();
     mapa[p.tipo][p.subtipo].add(p.categoria);
   });
+
+  // Limpiar menú existente
+  menu.innerHTML = '';
 
   Object.entries(mapa).forEach(([tipo, subtipos]) => {
     const bloqueTipo = document.createElement("details");
@@ -130,19 +163,22 @@ function renderizarMenuLateral(catalogo) {
         
         link.onclick = (e) => {
           e.preventDefault();
-          e.stopPropagation(); // ✅ IMPORTANTE: Detener propagación
+          e.stopPropagation(); // IMPORTANTE
+          console.log(`🖱️ Click en: ${tipo} > ${subtipo} > ${categoria}`);
+          
+          // Cerrar el menú inmediatamente
           cerrarMenuLateral();
           
-          // Pequeña pausa para asegurar que el menú se cierre antes de navegar
+          // Pequeño delay para asegurar el cierre antes de navegar
           setTimeout(() => {
             if (typeof window.cargarProductos === 'function') {
+              console.log("🚀 Navegando con cargarProductos...");
               window.cargarProductos(tipo, subtipo, categoria);
-            } else if (typeof window.cargarYRenderizarProductos === 'function') {
-              window.cargarYRenderizarProductos(tipo, subtipo, categoria);
             } else {
+              console.log("🚀 Redirigiendo a PRODUCTOS.HTML...");
               window.location.href = `PRODUCTOS.HTML?tipo=${encodeURIComponent(tipo)}&subtipo=${encodeURIComponent(subtipo)}&categoria=${encodeURIComponent(categoria)}`;
             }
-          }, 100);
+          }, 50);
         };
         
         bloqueSubtipo.appendChild(link);
@@ -153,7 +189,10 @@ function renderizarMenuLateral(catalogo) {
 
     menu.appendChild(bloqueTipo);
   });
+  
+  console.log("✅ Menú lateral renderizado correctamente");
 }
+
 // === Renderizar carrusel de promociones ===
 function renderCarruselPromosDesdePromos() {
   const contenedor = document.getElementById("carousel-promos-contenido");
@@ -336,17 +375,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   });
 
-  // ✅ Cargar encabezado
+  // ✅ Cargar encabezado (VERSIÓN CORREGIDA)
   const headerContainer = document.getElementById("header-container");
   if (!headerContainer.querySelector(".header")) {
     const header = await fetch("HEADER.HTML").then(res => res.text());
     headerContainer.insertAdjacentHTML("afterbegin", header);
-    await new Promise(resolve => requestAnimationFrame(resolve));
+    
+    // ✅ ESPERAR a que el header se renderice completamente
+    await new Promise(resolve => setTimeout(resolve, 100));
   }
 
-  // ✅ Renderizar menú lateral y promociones
+  // ✅ Renderizar menú lateral y promociones (DESPUÉS de cargar el header)
   if (Array.isArray(window.catalogoGlobal) && window.catalogoGlobal.length > 0) {
-    renderizarMenuLateral(window.catalogoGlobal);
+    // Darle más tiempo al header para renderizar
+    setTimeout(() => {
+      renderizarMenuLateral(window.catalogoGlobal);
+    }, 200);
+    
     renderCarruselPromosDesdePromos();
     renderPromocionesPorCiclo();
   }
