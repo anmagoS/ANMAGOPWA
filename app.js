@@ -7,6 +7,7 @@ function getParametrosDesdeURL() {
     categoria: params.get("categoria")?.trim()
   };
 }
+
 // === Función compartida para índice promocional ===
 function obtenerIndicePromocional(cantidadPorCiclo = 4, ciclosPorDia = 4, totalPromos = 0) {
   const ahora = new Date();
@@ -20,7 +21,6 @@ function obtenerIndicePromocional(cantidadPorCiclo = 4, ciclosPorDia = 4, totalP
 
   return totalPromos > 0 ? indice % totalPromos : 0;
 }
-
 
 // === Mostrar temporizador de promociones ===
 function mostrarTemporizadorPromos() {
@@ -72,6 +72,29 @@ async function cargarAccesosGlobal() {
   }
 }
 
+// ✅ FUNCIÓN PARA CERRAR EL MENÚ LATERAL
+function cerrarMenuLateral() {
+  const menu = document.getElementById("menu-categorias");
+  const toggle = document.getElementById("toggle-categorias");
+  
+  if (menu && window.innerWidth < 768) { // Solo en móvil
+    menu.style.display = "none";
+    
+    // También cerrar todos los details abiertos
+    const detailsAbiertos = menu.querySelectorAll('details[open]');
+    detailsAbiertos.forEach(detail => {
+      detail.removeAttribute('open');
+    });
+  }
+}
+
+// ✅ FUNCIÓN PARA NAVEGAR A PRODUCTOS (REEMPLAZO DE cargarProductos)
+function navegarAProductos(tipo, subtipo, categoria) {
+  cerrarMenuLateral();
+  // Redirigir a la página de productos con los parámetros
+  window.location.href = `PRODUCTOS.HTML?tipo=${encodeURIComponent(tipo)}&subtipo=${encodeURIComponent(subtipo)}&categoria=${encodeURIComponent(categoria)}`;
+}
+
 // === Renderizar menú lateral desde catálogo ===
 function renderizarMenuLateral(catalogo) {
   const menu = document.getElementById("menu-categorias");
@@ -98,11 +121,10 @@ function renderizarMenuLateral(catalogo) {
         link.className = "nav-link ps-3";
         link.textContent = categoria;
         link.href = "#";
-        // ✅ USAR EL NUEVO SISTEMA DE NAVEGACIÓN
+        // ✅ USAR LA NUEVA FUNCIÓN navegarAProductos
         link.onclick = (e) => {
           e.preventDefault();
-           cerrarMenuLateral();
-          cargarProductos(tipo, subtipo, categoria);
+          navegarAProductos(tipo, subtipo, categoria);
         };
         bloqueSubtipo.appendChild(link);
       });
@@ -113,21 +135,7 @@ function renderizarMenuLateral(catalogo) {
     menu.appendChild(bloqueTipo);
   });
 }
-// ✅ FUNCIÓN PARA CERRAR EL MENÚ LATERAL
-function cerrarMenuLateral() {
-  const menu = document.getElementById("menu-categorias");
-  const toggle = document.getElementById("toggle-categorias");
-  
-  if (menu && window.innerWidth < 768) { // Solo en móvil
-    menu.style.display = "none";
-    
-    // También cerrar todos los details abiertos
-    const detailsAbiertos = menu.querySelectorAll('details[open]');
-    detailsAbiertos.forEach(detail => {
-      detail.removeAttribute('open');
-    });
-  }
-}
+
 // === Renderizar carrusel de promociones ===
 function renderCarruselPromosDesdePromos() {
   const contenedor = document.getElementById("carousel-promos-contenido");
@@ -135,12 +143,14 @@ function renderCarruselPromosDesdePromos() {
 
   const cantidadPorCiclo = 4;
   const ciclosPorDia = 4;
-const totalPromos = window.promocionesGlobal.length;
-const indiceActual = obtenerIndicePromocional(cantidadPorCiclo, ciclosPorDia, totalPromos);
- let bloqueCarrusel = window.promocionesGlobal.slice(indiceActual, indiceActual + cantidadPorCiclo);
+  const totalPromos = window.promocionesGlobal.length;
+  const indiceActual = obtenerIndicePromocional(cantidadPorCiclo, ciclosPorDia, totalPromos);
+  
+  let bloqueCarrusel = window.promocionesGlobal.slice(indiceActual, indiceActual + cantidadPorCiclo);
   if (bloqueCarrusel.length < cantidadPorCiclo && totalPromos >= cantidadPorCiclo) {
     bloqueCarrusel = window.promocionesGlobal.slice(0, cantidadPorCiclo); // fallback si el índice se desborda
   }
+  
   contenedor.innerHTML = "";
 
   bloqueCarrusel.forEach((p, index) => {
@@ -219,7 +229,6 @@ function renderPromocionesPorCiclo() {
   });
 }
 
-
 // === Inicialización principal ===
 document.addEventListener("DOMContentLoaded", async () => {
   const { tipo, subtipo, categoria } = getParametrosDesdeURL();
@@ -241,7 +250,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   // ✅ Mostrar botón de instalación PWA si no está instalado
-   const esPWAInstalado = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  const esPWAInstalado = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 
   if (!esPWAInstalado) {
     const contenedor = document.getElementById("instalar-container");
