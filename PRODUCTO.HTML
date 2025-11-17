@@ -132,7 +132,8 @@
           </div>
 
           <!-- VIDEO DEL PRODUCTO EN DESKTOP (debajo de las imágenes) -->
-          <div id="video-producto-desktop"></div>
+          <!-- SOLO SE MUESTRA EN DESKTOP -->
+          <div id="video-producto-desktop" class="d-none d-md-block mt-4"></div>
         </div>
       </div>
 
@@ -156,7 +157,8 @@
           </div>
 
           <!-- VIDEO DEL PRODUCTO EN MÓVIL (antes de la descripción) -->
-          <div id="video-producto-mobile" class="d-md-none mb-4"></div>
+          <!-- SOLO SE MUESTRA EN MÓVIL -->
+          <div id="video-producto-mobile" class="d-block d-md-none mb-4"></div>
 
           <!-- VARIANTE ACTUAL (se muestra cuando se selecciona imagen) -->
           <div class="mb-3" id="variante-actual-container" style="display: none;">
@@ -1274,8 +1276,8 @@
         const contenedorMobile = document.getElementById('video-producto-mobile');
         
         if (!producto.video_url) {
-            contenedorDesktop.innerHTML = '';
-            contenedorMobile.innerHTML = '';
+            contenedorDesktop.style.display = 'none';
+            contenedorMobile.style.display = 'none';
             return;
         }
 
@@ -1333,6 +1335,10 @@
         // Asignar a ambos contenedores
         contenedorDesktop.innerHTML = videoHTML;
         contenedorMobile.innerHTML = videoHTML;
+        
+        // Asegurar que los contenedores sean visibles según su clase
+        contenedorDesktop.style.display = ''; // Se controla con clases Bootstrap
+        contenedorMobile.style.display = '';  // Se controla con clases Bootstrap
         
         console.log('🎥 Video renderizado:', {
             urlOriginal: producto.video_url,
