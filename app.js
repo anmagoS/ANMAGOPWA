@@ -75,7 +75,6 @@ async function cargarAccesosGlobal() {
 // ✅ FUNCIÓN PARA CERRAR EL MENÚ LATERAL
 function cerrarMenuLateral() {
   const menu = document.getElementById("menu-categorias");
-  const toggle = document.getElementById("toggle-categorias");
   
   if (menu && window.innerWidth < 768) { // Solo en móvil
     menu.style.display = "none";
@@ -86,13 +85,6 @@ function cerrarMenuLateral() {
       detail.removeAttribute('open');
     });
   }
-}
-
-// ✅ FUNCIÓN PARA NAVEGAR A PRODUCTOS (REEMPLAZO DE cargarProductos)
-function navegarAProductos(tipo, subtipo, categoria) {
-  cerrarMenuLateral();
-  // Redirigir a la página de productos con los parámetros
-  window.location.href = `PRODUCTOS.HTML?tipo=${encodeURIComponent(tipo)}&subtipo=${encodeURIComponent(subtipo)}&categoria=${encodeURIComponent(categoria)}`;
 }
 
 // === Renderizar menú lateral desde catálogo ===
@@ -121,11 +113,24 @@ function renderizarMenuLateral(catalogo) {
         link.className = "nav-link ps-3";
         link.textContent = categoria;
         link.href = "#";
-        // ✅ USAR LA NUEVA FUNCIÓN navegarAProductos
+        
         link.onclick = (e) => {
           e.preventDefault();
-          navegarAProductos(tipo, subtipo, categoria);
+          cerrarMenuLateral();
+          
+          // ✅ NAVEGACIÓN MEJORADA - VERIFICAR FUNCIONES DISPONIBLES
+          if (typeof window.cargarProductos === 'function') {
+            // Usar función del sistema de vistas dinámicas
+            window.cargarProductos(tipo, subtipo, categoria);
+          } else if (typeof window.cargarYRenderizarProductos === 'function') {
+            // Usar función alternativa
+            window.cargarYRenderizarProductos(tipo, subtipo, categoria);
+          } else {
+            // Fallback: redirigir a página de productos tradicional
+            window.location.href = `PRODUCTOS.HTML?tipo=${encodeURIComponent(tipo)}&subtipo=${encodeURIComponent(subtipo)}&categoria=${encodeURIComponent(categoria)}`;
+          }
         };
+        
         bloqueSubtipo.appendChild(link);
       });
 
@@ -229,6 +234,49 @@ function renderPromocionesPorCiclo() {
   });
 }
 
+// === Renderizar productos en grid ===
+function renderizarProductos(productos) {
+  const contenedor = document.getElementById("contenido-productos");
+  if (!contenedor) return;
+
+  if (!productos || productos.length === 0) {
+    contenedor.innerHTML = `
+      <div class="text-center py-5">
+        <i class="bi bi-search fs-1 text-muted"></i>
+        <p class="mt-3 text-muted">No se encontraron productos</p>
+      </div>
+    `;
+    return;
+  }
+
+  contenedor.innerHTML = productos.map(producto => {
+    const precioOriginal = Number(producto.precio) || 0;
+    const precioDescuento = producto.promo === "sí" ? Math.round(precioOriginal * 0.9) : precioOriginal;
+
+    return `
+      <div class="producto">
+        <a href="PRODUCTO.HTML?id=${producto.id}">
+          <div class="imagen-producto">
+            <img src="${producto.imagen}" alt="${producto.producto}">
+            ${producto.promo === "sí" ? '<span class="etiqueta-promo">🔥 10%</span>' : ''}
+            ${producto.stock <= 5 ? '<span class="etiqueta-stock">ÚLTIMAS UNIDADES</span>' : ''}
+          </div>
+        </a>
+        <div class="nombre-producto">${producto.producto}</div>
+        ${producto.material ? `<div class="material-producto">${producto.material}</div>` : ''}
+        ${producto.tallas ? `<div class="tallas-producto">${producto.tallas}</div>` : ''}
+        <div class="precio-producto">
+          ${producto.promo === "sí" ? `<s>$${precioOriginal.toLocaleString("es-CO")} COP</s>` : ''}
+          <span class="${producto.promo === "sí" ? 'text-success fw-bold' : ''}">
+            $${precioDescuento.toLocaleString("es-CO")} COP
+          </span>
+        </div>
+        <a href="PRODUCTO.HTML?id=${producto.id}" class="boton-comprar">Ver más</a>
+      </div>
+    `;
+  }).join('');
+}
+
 // === Inicialización principal ===
 document.addEventListener("DOMContentLoaded", async () => {
   const { tipo, subtipo, categoria } = getParametrosDesdeURL();
@@ -265,11 +313,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const boton = document.getElementById("boton-instalar");
     boton?.addEventListener("click", async () => {
-      deferredPrompt.prompt();
-      const resultado = await deferredPrompt.userChoice;
-      console.log("📲 Resultado instalación:", resultado.outcome);
-      deferredPrompt = null;
-      document.getElementById("instalar-container")?.classList.add("d-none");
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const resultado = await deferredPrompt.userChoice;
+        console.log("📲 Resultado instalación:", resultado.outcome);
+        deferredPrompt = null;
+        document.getElementById("instalar-container")?.classList.add("d-none");
+      }
     });
   });
 
@@ -315,7 +365,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const toggle = document.getElementById("toggle-categorias");
   const menu = document.getElementById("menu-categorias");
   toggle?.addEventListener("click", () => {
-    menu.style.display = menu.style.display === "none" ? "flex" : "none";
+    const isVisible = menu.style.display === "flex";
+    menu.style.display = isVisible ? "none" : "flex";
   });
 
   // ✅ Renderizar productos si aplica
