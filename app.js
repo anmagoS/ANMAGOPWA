@@ -136,7 +136,7 @@ const indiceActual = obtenerIndicePromocional(cantidadPorCiclo, ciclosPorDia, to
               <s class="text-muted me-2">$${p.precio.toLocaleString("es-CO")}</s>
               <span class="text-success fw-bold">$${(p.precio * 0.9).toLocaleString("es-CO")}</span>
             </p>
-            <a href="producto.html?id=${p.id}" class="boton-comprar">Ver producto</a>
+            <a href="PRODUCTO.HTML?id=${p.id}" class="boton-comprar">Ver producto</a>
           </div>
         </div>
       </div>
@@ -180,7 +180,7 @@ function renderPromocionesPorCiclo() {
     const tarjeta = document.createElement("div");
     tarjeta.className = "producto";
     tarjeta.innerHTML = `
-      <a href="producto.html?id=${p.id}">
+      <a href="PRODUCTO.HTML?id=${p.id}">
         <div class="imagen-producto">
           <img src="${p.imagen}" alt="${p.producto}">
           <span class="etiqueta-promo">🔥 10%</span>
@@ -193,7 +193,7 @@ function renderPromocionesPorCiclo() {
         <s>$${precioOriginal.toLocaleString("es-CO")} COP</s>
         <span class="text-success fw-bold">$${precioDescuento.toLocaleString("es-CO")} COP</span>
       </div>
-      <a href="producto.html?id=${p.id}" class="boton-comprar">Ver más</a>
+      <a href="PRODUCTO.HTML?id=${p.id}" class="boton-comprar">Ver más</a>
     `;
     contenedor.appendChild(tarjeta);
   });
