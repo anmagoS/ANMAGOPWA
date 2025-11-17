@@ -662,3 +662,29 @@ body { padding-top: 70px; }
     font-size: 0.85rem;
   }
 }
+
+    /* Estilos para el video responsive */
+    #video-producto {
+        transition: all 0.3s ease;
+    }
+
+    #video-producto iframe {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+
+    /* En móvil, el video va antes de la descripción */
+    @media (max-width: 768px) {
+        #video-producto {
+            margin-bottom: 1.5rem;
+        }
+    }
+
+    /* En desktop, el video se mantiene en su sección */
+    @media (min-width: 769px) {
+        #video-producto {
+            margin-top: 2rem;
+        }
+    }
+  
