@@ -5,10 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Detalle Producto | Anmago Store</title>
   <meta name="description" content="Descubre este producto exclusivo en Anmago Store. Calidad garantizada y los mejores precios.">
-    <!-- Preconexiones optimizadas -->
+  
+  <!-- Preconexiones optimizadas -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="preconnect" href="https://ik.imagekit.io">
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  
   <!-- PWA y favicon -->
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="logo.jpg" type="image/x-icon" />
@@ -19,14 +21,6 @@
 
   <!-- CSS optimizado -->
   <link rel="stylesheet" href="ESTILO.CSS?v=20251115" />
-<!-- BUSCADOR EN HEADER -->
-  <div class="flex-grow-1 mx-3 position-relative" style="max-width: 500px;">
-    <input id="buscador" class="form-control buscador-header" 
-           placeholder="Buscar productos..." 
-           autocomplete="off">
-    <div id="sugerencias" class="sugerencias-container"></div>
-  </div>
-
 </head>
 
 <body class="bg-light">
@@ -34,6 +28,9 @@
   <script src="carrito.js?v=20251115"></script>
   <script src="app.js?v=20251115"></script>
 
+  <!-- HEADER STICKY -->
+  <div id="header-container" class="header-sticky"></div>
+  
   <!-- BANNER PROMOCIONAL -->
   <div class="container-fluid banner-promocional py-2">
     <div class="container text-center">
@@ -59,26 +56,29 @@
       </div>
     </div>
   </div>
- <!-- INFORMACIÓN DEL PRODUCTO -->
-      <div class="col-md-6">
-        <div class="ps-md-4">
-          <!-- Categorías -->
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb" id="breadcrumb-producto">
-              <li class="breadcrumb-item"><a href="INICIO.HTML">ATRÁS</a></li>
-              <!-- Categorías se cargan dinámicamente -->
-            </ol>
-          </nav>
 
-          <!-- Nombre y precio -->
-          <h1 id="nombre-producto" class="h3 fw-bold mb-2"></h1>
-          <div class="d-flex align-items-center gap-3 mb-3">
-            <span id="precio-actual" class="h4 fw-bold text-primary mb-0"></span>
-            <span id="precio-original" class="text-muted h5 mb-0 text-decoration-line-through"></span>
-            <span id="descuento" class="badge badge-oferta fs-6"></span>
-          </div>
   <!-- CONTENIDO PRINCIPAL - DETALLE PRODUCTO -->
   <main class="container mt-4">
+    
+    <!-- TÍTULO Y PRECIO PARA MÓVIL (ARRIBA DE TODO) -->
+    <div class="d-block d-md-none mb-4">
+      <!-- Categorías -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" id="breadcrumb-producto-mobile">
+          <li class="breadcrumb-item"><a href="INICIO.HTML">ATRÁS</a></li>
+          <!-- Categorías se cargan dinámicamente -->
+        </ol>
+      </nav>
+
+      <!-- Nombre y precio -->
+      <h1 id="nombre-producto-mobile" class="h3 fw-bold mb-2"></h1>
+      <div class="d-flex align-items-center gap-3 mb-3">
+        <span id="precio-actual-mobile" class="h4 fw-bold text-primary mb-0"></span>
+        <span id="precio-original-mobile" class="text-muted h5 mb-0 text-decoration-line-through"></span>
+        <span id="descuento-mobile" class="badge badge-oferta fs-6"></span>
+      </div>
+    </div>
+
     <div class="row">
       <!-- GALERÍA DE IMÁGENES CON ZOOM -->
       <div class="col-md-6 mb-4">
@@ -130,9 +130,33 @@
         </div>
       </div>
 
-     
+      <!-- INFORMACIÓN DEL PRODUCTO -->
+      <div class="col-md-6">
+        <div class="ps-md-4">
+          <!-- TÍTULO Y PRECIO PARA DESKTOP (DENTRO DE LA COLUMNA) -->
+          <div class="d-none d-md-block">
+            <!-- Categorías -->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb" id="breadcrumb-producto-desktop">
+                <li class="breadcrumb-item"><a href="INICIO.HTML">ATRÁS</a></li>
+                <!-- Categorías se cargan dinámicamente -->
+              </ol>
+            </nav>
 
-         <!-- VARIANTE ACTUAL (se muestra cuando se selecciona imagen) -->
+            <!-- Nombre y precio -->
+            <h1 id="nombre-producto-desktop" class="h3 fw-bold mb-2"></h1>
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <span id="precio-actual-desktop" class="h4 fw-bold text-primary mb-0"></span>
+              <span id="precio-original-desktop" class="text-muted h5 mb-0 text-decoration-line-through"></span>
+              <span id="descuento-desktop" class="badge badge-oferta fs-6"></span>
+            </div>
+          </div>
+
+          <!-- VIDEO DEL PRODUCTO EN MÓVIL (antes de la descripción) -->
+          <!-- SOLO SE MUESTRA EN MÓVIL -->
+          <div id="video-producto-mobile" class="d-block d-md-none mb-4"></div>
+
+          <!-- VARIANTE ACTUAL (se muestra cuando se selecciona imagen) -->
           <div class="mb-3" id="variante-actual-container" style="display: none;">
             <h5 class="fw-bold mb-2">🎨 Variante seleccionada</h5>
             <div class="alert alert-info py-2">
@@ -170,9 +194,6 @@
             </button>
           </div>
 
-  <!-- VIDEO DEL PRODUCTO EN MÓVIL (antes de la descripción) -->
-          <!-- SOLO SE MUESTRA EN MÓVIL -->
-          <div id="video-producto-mobile" class="d-block d-md-none mb-4"></div>
           <!-- Descripción -->
           <div class="mb-4">
             <h5 class="fw-bold mb-2">📋 Descripción</h5>
@@ -732,8 +753,9 @@
     function renderizarProducto(producto) {
       console.log('🎨 Renderizando producto:', producto.producto);
       
-      // 1. Información básica
-      document.getElementById('nombre-producto').textContent = producto.producto;
+      // 1. Información básica - ACTUALIZAR AMBAS VERSIONES
+      document.getElementById('nombre-producto-mobile').textContent = producto.producto;
+      document.getElementById('nombre-producto-desktop').textContent = producto.producto;
       document.getElementById('descripcion-producto').textContent = producto.descripcion || 'Producto de alta calidad disponible en Anmago Store.';
       
       // 2. PRECIOS DINÁMICOS - VERIFICAR PROMOCIÓN ACTUAL
@@ -751,18 +773,29 @@
         promocionesGlobal: promocionesGlobal.length
       });
       
-      document.getElementById('precio-actual').textContent = `$${precioActual.toLocaleString('es-CO')}`;
+      // Actualizar precios en ambas versiones
+      document.getElementById('precio-actual-mobile').textContent = `$${precioActual.toLocaleString('es-CO')}`;
+      document.getElementById('precio-actual-desktop').textContent = `$${precioActual.toLocaleString('es-CO')}`;
       
-      // Mostrar precio original y descuento solo si hay promoción activa
+      // Mostrar precio original y descuento solo si hay promoción activa (ambas versiones)
       if (estaEnPromo && precioBase > precioActual) {
-        document.getElementById('precio-original').textContent = `$${precioBase.toLocaleString('es-CO')}`;
-        const descuento = Math.round((1 - precioActual / precioBase) * 100);
-        document.getElementById('descuento').textContent = `-${descuento}%`;
-        document.getElementById('precio-original').style.display = 'inline';
-        document.getElementById('descuento').style.display = 'inline';
+        // Versión móvil
+        document.getElementById('precio-original-mobile').textContent = `$${precioBase.toLocaleString('es-CO')}`;
+        document.getElementById('descuento-mobile').textContent = `-${Math.round((1 - precioActual / precioBase) * 100)}%`;
+        document.getElementById('precio-original-mobile').style.display = 'inline';
+        document.getElementById('descuento-mobile').style.display = 'inline';
+        
+        // Versión desktop
+        document.getElementById('precio-original-desktop').textContent = `$${precioBase.toLocaleString('es-CO')}`;
+        document.getElementById('descuento-desktop').textContent = `-${Math.round((1 - precioActual / precioBase) * 100)}%`;
+        document.getElementById('precio-original-desktop').style.display = 'inline';
+        document.getElementById('descuento-desktop').style.display = 'inline';
       } else {
-        document.getElementById('precio-original').style.display = 'none';
-        document.getElementById('descuento').style.display = 'none';
+        // Ocultar en ambas versiones
+        document.getElementById('precio-original-mobile').style.display = 'none';
+        document.getElementById('descuento-mobile').style.display = 'none';
+        document.getElementById('precio-original-desktop').style.display = 'none';
+        document.getElementById('descuento-desktop').style.display = 'none';
       }
 
       // 3. Galería de imágenes
@@ -1208,7 +1241,8 @@
     // ========== FUNCIONES RESTANTES ==========
 
     function renderizarBreadcrumb(producto) {
-        const breadcrumb = document.getElementById('breadcrumb-producto');
+        const breadcrumbMobile = document.getElementById('breadcrumb-producto-mobile');
+        const breadcrumbDesktop = document.getElementById('breadcrumb-producto-desktop');
         
         let categorias = [];
         
@@ -1220,8 +1254,12 @@
             `<li class="breadcrumb-item"><a href="INICIO.HTML?categoria=${cat}">${cat}</a></li>`
         ).join('');
         
-        breadcrumb.innerHTML += breadcrumbItems + 
+        const breadcrumbFinal = breadcrumbItems + 
             `<li class="breadcrumb-item active" aria-current="page">${producto.producto}</li>`;
+        
+        // Actualizar ambas versiones
+        if (breadcrumbMobile) breadcrumbMobile.innerHTML = breadcrumbMobile.firstElementChild.outerHTML + breadcrumbFinal;
+        if (breadcrumbDesktop) breadcrumbDesktop.innerHTML = breadcrumbDesktop.firstElementChild.outerHTML + breadcrumbFinal;
     }
 
     // 🏷️ Renderizar badges con verificación de promoción actual
