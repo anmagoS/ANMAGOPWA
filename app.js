@@ -97,7 +97,12 @@ function renderizarMenuLateral(catalogo) {
         const link = document.createElement("a");
         link.className = "nav-link ps-3";
         link.textContent = categoria;
-        link.href = `PRODUCTOS.HTML?tipo=${encodeURIComponent(tipo)}&subtipo=${encodeURIComponent(subtipo)}&categoria=${encodeURIComponent(categoria)}`;
+        link.href = "#";
+        // ✅ USAR EL NUEVO SISTEMA DE NAVEGACIÓN
+        link.onclick = (e) => {
+          e.preventDefault();
+          cargarProductos(tipo, subtipo, categoria);
+        };
         bloqueSubtipo.appendChild(link);
       });
 
@@ -107,7 +112,6 @@ function renderizarMenuLateral(catalogo) {
     menu.appendChild(bloqueTipo);
   });
 }
-
 // === Renderizar carrusel de promociones ===
 function renderCarruselPromosDesdePromos() {
   const contenedor = document.getElementById("carousel-promos-contenido");
