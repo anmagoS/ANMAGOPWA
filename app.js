@@ -101,6 +101,7 @@ function renderizarMenuLateral(catalogo) {
         // ✅ USAR EL NUEVO SISTEMA DE NAVEGACIÓN
         link.onclick = (e) => {
           e.preventDefault();
+           cerrarMenuLateral();
           cargarProductos(tipo, subtipo, categoria);
         };
         bloqueSubtipo.appendChild(link);
