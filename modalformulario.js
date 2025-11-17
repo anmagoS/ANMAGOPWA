@@ -154,6 +154,7 @@ function repartirDireccionConcatenada(direccionConc) {
 }
 
 // 💬 Generar texto para WhatsApp - VERSIÓN ULTRA CONFIABLE
+// 💬 Generar texto para WhatsApp - VERSIÓN ULTRA CONFIABLE
 function generarTextoWhatsApp() {
     const nombreCliente = construirNombreCliente();
     
@@ -172,7 +173,18 @@ function generarTextoWhatsApp() {
         console.log('📝 GENERANDO MENSAJE DE PEDIDO CON PRODUCTOS');
         
         const productos = carritoActual.map((p, i) => {
-            return `${i + 1}. ${p.nombre || 'Producto'}\n📏 Talla: ${p.talla || "Única"}\n💲 Precio: $${(p.precio || 0).toLocaleString("es-CO")}\n🔢 Cantidad: ${p.cantidad || 1}`;
+            let productoTexto = `${i + 1}. ${p.nombre || 'Producto'}\n`;
+            
+            // ✅ AGREGAR LA LÍNEA DE LA IMAGEN SI EXISTE
+            if (p.imagen) {
+                productoTexto += `🖼️ Imagen: ${p.imagen}\n`;
+            }
+            
+            productoTexto += `📏 Talla: ${p.talla || "Única"}\n`;
+            productoTexto += `💲 Precio: $${(p.precio || 0).toLocaleString("es-CO")}\n`;
+            productoTexto += `🔢 Cantidad: ${p.cantidad || 1}`;
+            
+            return productoTexto;
         }).join("\n\n");
 
         const total = carritoActual.reduce((sum, p) => 
@@ -419,3 +431,4 @@ window.diagnosticoFormulario = function() {
     console.log("- Formulario inicializado:", window.formularioInicializado);
     console.log("- WhatsApp generado:", generarTextoWhatsApp().substring(0, 100) + '...');
 };
+
