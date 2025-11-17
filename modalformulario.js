@@ -1,5 +1,4 @@
 // modalformulario.js - VERSIÓN ULTRA RÁPIDA Y CONFIABLE
-
 // 🚀 INICIALIZACIÓN INMEDIATA - Sin esperar DOMContentLoaded
 console.log('🚀 INICIANDO FORMULARIO - VERSIÓN ULTRA RÁPIDA');
 
