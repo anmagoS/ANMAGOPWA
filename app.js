@@ -11,10 +11,9 @@ function getParametrosDesdeURL() {
 // === Función compartida para índice promocional ===
 function obtenerIndicePromocional(cantidadPorCiclo = 4, ciclosPorDia = 4, totalPromos = 0) {
   const ahora = new Date();
-  ahora.setMinutes(0, 0, 0); // elimina minutos, segundos y milisegundos
+  ahora.setMinutes(0, 0, 0);
 
-  const inicio = new Date(Date.UTC(2025, 10, 8, 0, 0, 0)); // noviembre = 10, UTC fijo
-
+  const inicio = new Date(Date.UTC(2025, 10, 8, 0, 0, 0));
   const diferenciaHoras = Math.floor((ahora - inicio) / (1000 * 60 * 60));
   const cicloActual = diferenciaHoras % (ciclosPorDia * 365);
   const indice = cicloActual * cantidadPorCiclo;
@@ -72,70 +71,38 @@ async function cargarAccesosGlobal() {
   }
 }
 
-// ✅ FUNCIÓN CORREGIDA PARA CERRAR EL MENÚ LATERAL
+// ✅ FUNCIÓN CORREGIDA - CERRAR EL OFFICANVAS DEL MENÚ
 function cerrarMenuLateral() {
-  console.log("🔒 Intentando cerrar menú lateral...");
-  
-  // Buscar el menú en el documento principal Y en los iframes/importados
-  let menu = document.getElementById("menu-categorias");
-  
-  // Si no se encuentra, buscar en todo el documento
-  if (!menu) {
-    console.log("⚠️ Menú no encontrado, buscando en todo el documento...");
-    menu = document.querySelector("#menu-categorias");
+  // Cerrar el offcanvas usando Bootstrap
+  const offcanvasElement = document.getElementById('menuLateral');
+  if (offcanvasElement) {
+    const offcanvasInstance = bootstrap.Offcanvas.getInstance(offcanvasElement);
+    if (offcanvasInstance) {
+      offcanvasInstance.hide();
+    } else {
+      const newInstance = new bootstrap.Offcanvas(offcanvasElement);
+      newInstance.hide();
+    }
   }
   
+  // También cerrar todos los details abiertos dentro del menú
+  const menu = document.getElementById("menu-categorias");
   if (menu) {
-    console.log("✅ Menú encontrado, cerrando...");
-    menu.style.display = "none";
-    
-    // Cerrar todos los details abiertos
     const detailsAbiertos = menu.querySelectorAll('details[open]');
     detailsAbiertos.forEach(detail => {
       detail.removeAttribute('open');
-    });
-    
-    console.log("✅ Menú cerrado correctamente");
-  } else {
-    console.log("❌ No se pudo encontrar el menú lateral");
-    
-    // Fallback: intentar cerrar cualquier elemento que parezca un menú
-    const posiblesMenus = document.querySelectorAll('[class*="menu"], [class*="categorias"], [id*="menu"]');
-    posiblesMenus.forEach(element => {
-      if (element.style.display === "flex" || element.style.display === "block") {
-        element.style.display = "none";
-        console.log("🔒 Cerrado elemento alternativo:", element);
-      }
     });
   }
 }
 
 // === Renderizar menú lateral desde catálogo ===
 function renderizarMenuLateral(catalogo) {
-  // Esperar a que el DOM esté completamente listo
-  setTimeout(() => {
-    const menu = document.getElementById("menu-categorias");
-    if (!menu) {
-      console.log("❌ menu-categorias no encontrado, reintentando...");
-      setTimeout(() => {
-        const menuRetry = document.getElementById("menu-categorias");
-        if (menuRetry) {
-          renderizarMenuLateralReal(catalogo, menuRetry);
-        } else {
-          console.error("❌ No se pudo encontrar menu-categorias después de reintento");
-        }
-      }, 500);
-      return;
-    }
-    
-    renderizarMenuLateralReal(catalogo, menu);
-  }, 100);
-}
+  const menu = document.getElementById("menu-categorias");
+  if (!menu) {
+    console.log("❌ menu-categorias no encontrado");
+    return;
+  }
 
-// Función real de renderizado
-function renderizarMenuLateralReal(catalogo, menu) {
-  console.log("🎯 Renderizando menú lateral...");
-  
   const mapa = {};
   catalogo.forEach(p => {
     if (!p.tipo || !p.subtipo || !p.categoria) return;
@@ -163,19 +130,16 @@ function renderizarMenuLateralReal(catalogo, menu) {
         
         link.onclick = (e) => {
           e.preventDefault();
-          e.stopPropagation(); // IMPORTANTE
-          console.log(`🖱️ Click en: ${tipo} > ${subtipo} > ${categoria}`);
+          e.stopPropagation();
           
-          // Cerrar el menú inmediatamente
+          // ✅ CERRAR EL MENÚ COMPLETO (OFFCANVAS)
           cerrarMenuLateral();
           
-          // Pequeño delay para asegurar el cierre antes de navegar
+          // Navegar después de cerrar el menú
           setTimeout(() => {
             if (typeof window.cargarProductos === 'function') {
-              console.log("🚀 Navegando con cargarProductos...");
               window.cargarProductos(tipo, subtipo, categoria);
             } else {
-              console.log("🚀 Redirigiendo a PRODUCTOS.HTML...");
               window.location.href = `PRODUCTOS.HTML?tipo=${encodeURIComponent(tipo)}&subtipo=${encodeURIComponent(subtipo)}&categoria=${encodeURIComponent(categoria)}`;
             }
           }, 50);
@@ -189,8 +153,6 @@ function renderizarMenuLateralReal(catalogo, menu) {
 
     menu.appendChild(bloqueTipo);
   });
-  
-  console.log("✅ Menú lateral renderizado correctamente");
 }
 
 // === Renderizar carrusel de promociones ===
@@ -205,7 +167,7 @@ function renderCarruselPromosDesdePromos() {
   
   let bloqueCarrusel = window.promocionesGlobal.slice(indiceActual, indiceActual + cantidadPorCiclo);
   if (bloqueCarrusel.length < cantidadPorCiclo && totalPromos >= cantidadPorCiclo) {
-    bloqueCarrusel = window.promocionesGlobal.slice(0, cantidadPorCiclo); // fallback si el índice se desborda
+    bloqueCarrusel = window.promocionesGlobal.slice(0, cantidadPorCiclo);
   }
   
   contenedor.innerHTML = "";
@@ -243,7 +205,6 @@ function renderPromocionesPorCiclo() {
 
   if (totalPromos === 0) {
     contenedor.innerHTML = `<div class="text-center text-muted">No hay promociones disponibles.</div>`;
-    console.warn("⚠️ promocionesGlobal está vacío.");
     return;
   }
 
@@ -252,13 +213,11 @@ function renderPromocionesPorCiclo() {
 
   if (bloque.length === 0) {
     contenedor.innerHTML = `<div class="text-center text-muted">No hay promociones activas en este momento.</div>`;
-    console.warn("⚠️ Bloque vacío. índiceActual:", indiceActual);
     return;
   }
 
   contenedor.innerHTML = "";
   contenedor.classList.toggle("bloque-incompleto", bloque.length < cantidadPorCiclo);
-  console.log("🔁 Bloque activo:", bloque.map(p => p.id));
 
   bloque.forEach(p => {
     const precioOriginal = Number(p.precio) || 0;
@@ -375,7 +334,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   });
 
-  // ✅ Cargar encabezado (VERSIÓN CORREGIDA)
+  // ✅ Cargar encabezado
   const headerContainer = document.getElementById("header-container");
   if (!headerContainer.querySelector(".header")) {
     const header = await fetch("HEADER.HTML").then(res => res.text());
@@ -419,12 +378,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   const footer = await fetch("footer.html").then(res => res.text());
   document.getElementById("footer-container").innerHTML = footer;
 
-  // ✅ Activar menú lateral si existe
+  // ✅ Activar menú lateral si existe - VERSIÓN CORREGIDA
   const toggle = document.getElementById("toggle-categorias");
-  const menu = document.getElementById("menu-categorias");
-  toggle?.addEventListener("click", () => {
-    const isVisible = menu.style.display === "flex";
-    menu.style.display = isVisible ? "none" : "flex";
+  toggle?.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const menu = document.getElementById("menu-categorias");
+    if (menu) {
+      const isVisible = menu.style.display === "flex";
+      menu.style.display = isVisible ? "none" : "flex";
+    }
   });
 
   // ✅ Renderizar productos si aplica
