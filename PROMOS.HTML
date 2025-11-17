@@ -79,7 +79,7 @@
                 <div>
                     <strong>Bloque de ofertas actual:</strong> 
                     <span id="indicador-bloque" class="badge bg-primary ms-2">Cargando...</span>
-                    <small class="d-block text-muted mt-1"></small>
+                    <small class="d-block text-muted mt-1">Las ofertas cambian automáticamente cada 6 horas</small>
                 </div>
             </div>
         </div>
@@ -192,20 +192,21 @@
     <!-- SCRIPTS EXTERNOS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- SISTEMA DE OFERTAS CON ÍNDICE FIJO -->
+    <!-- SISTEMA DE OFERTAS CON ÍNDICE DINÁMICO -->
     <script>
-    // ========== CONFIGURACIÓN CON ÍNDICE FIJO ==========
+    // ========== CONFIGURACIÓN CON ÍNDICE DINÁMICO ==========
     const CONFIG_PROMOS = {
         productosPorBloque: 4,
-        indicePromoActual: 16 // ÍNDICE FIJO DE TU CONFIGURACIÓN
+        horasPorBloque: 6
     };
 
     // ========== VARIABLES GLOBALES ==========
     let productosEnPromocion = [];
+    let intervaloActualizacion = null;
 
     // ========== INICIALIZACIÓN ==========
     document.addEventListener('DOMContentLoaded', function() {
-        console.log('🚀 INICIANDO PÁGINA DE OFERTAS CON ÍNDICE FIJO');
+        console.log('🚀 INICIANDO PÁGINA DE OFERTAS CON ROTACIÓN AUTOMÁTICA');
         
         // 1. Cargar header y footer
         cargarHeaderFooter();
@@ -218,6 +219,9 @@
         
         // 4. Inicializar contadores del carrito
         actualizarContadoresCarrito();
+        
+        // 5. Programar actualización automática cada 6 horas
+        programarActualizacionAutomatica();
     });
 
     // ========== SISTEMA DE TEMPORIZADOR ==========
@@ -228,12 +232,18 @@
         const actualizarTemporizador = () => {
             const ahora = new Date();
             const horaActual = ahora.getHours();
-            const siguienteCorte = horaActual % 6 === 0 ? horaActual + 6 : Math.ceil(horaActual / 6) * 6;
-
-            const siguienteFecha = new Date(ahora);
-            siguienteFecha.setHours(siguienteCorte, 0, 0, 0);
-
-            const restante = siguienteFecha - ahora;
+            const minutosActual = ahora.getMinutes();
+            const segundosActual = ahora.getSeconds();
+            
+            // Calcular tiempo restante para el siguiente bloque (cada 6 horas)
+            const bloqueActual = Math.floor(horaActual / CONFIG_PROMOS.horasPorBloque);
+            const horaInicioBloque = bloqueActual * CONFIG_PROMOS.horasPorBloque;
+            const horaFinBloque = horaInicioBloque + CONFIG_PROMOS.horasPorBloque;
+            
+            const siguienteBloque = new Date(ahora);
+            siguienteBloque.setHours(horaFinBloque, 0, 0, 0);
+            
+            const restante = siguienteBloque - ahora;
 
             if (restante <= 0) {
                 temporizador.textContent = "🔄 ¡Ofertas actualizadas!";
@@ -245,31 +255,68 @@
             const m = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((restante % (1000 * 60)) / 1000);
 
-            temporizador.textContent = `${h}h ${m}m ${s}s`;
+            temporizador.textContent = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            
+            // Información de debug
+            console.log('⏰ Temporizador:', {
+                horaActual: `${horaActual}:${minutosActual}:${segundosActual}`,
+                bloqueActual: bloqueActual,
+                siguienteBloque: horaFinBloque + ':00',
+                tiempoRestante: `${h}h ${m}m ${s}s`
+            });
         };
 
         actualizarTemporizador();
         setInterval(actualizarTemporizador, 1000);
     }
 
-    // ========== SISTEMA DE PROMOCIONES CON ÍNDICE FIJO ==========
+    // ========== SISTEMA DE PROMOCIONES CON ÍNDICE DINÁMICO ==========
 
-    // 🎯 OBTENER PRODUCTOS DEL BLOQUE FIJO
-    function obtenerProductosDelBloqueFijo() {
+    // 🎯 OBTENER ÍNDICE DINÁMICO BASADO EN LA HORA ACTUAL
+    function obtenerIndicePromocionalDinamico() {
+        const ahora = new Date();
+        const horaActual = ahora.getHours();
+        const bloqueActual = Math.floor(horaActual / CONFIG_PROMOS.horasPorBloque);
+        const indice = bloqueActual * CONFIG_PROMOS.productosPorBloque;
+        
+        console.log('🔄 Índice dinámico calculado:', {
+            horaActual: horaActual,
+            bloqueActual: bloqueActual,
+            indiceCalculado: indice,
+            totalBloques: Math.ceil(24 / CONFIG_PROMOS.horasPorBloque)
+        });
+        
+        return indice;
+    }
+
+    // 🎯 OBTENER PRODUCTOS DEL BLOQUE DINÁMICO
+    function obtenerProductosDelBloqueDinamico() {
         if (!productosEnPromocion.length) return [];
         
+        const indiceDinamico = obtenerIndicePromocionalDinamico();
         const totalPromos = productosEnPromocion.length;
-        const indiceReal = CONFIG_PROMOS.indicePromoActual % totalPromos;
+        const indiceReal = indiceDinamico % totalPromos;
         const inicio = indiceReal;
         const fin = inicio + CONFIG_PROMOS.productosPorBloque;
         
-        console.log('🎯 Obteniendo productos con índice fijo:', {
-            indiceConfigurado: CONFIG_PROMOS.indicePromoActual,
+        console.log('🎯 Obteniendo productos con índice dinámico:', {
+            indiceDinamico: indiceDinamico,
             indiceReal: indiceReal,
             totalPromos: totalPromos,
             inicio: inicio,
             fin: fin
         });
+        
+        // Si llegamos al final del array, volvemos al inicio
+        if (fin > totalPromos) {
+            const sobrante = fin - totalPromos;
+            const productosCombinados = [
+                ...productosEnPromocion.slice(inicio),
+                ...productosEnPromocion.slice(0, sobrante)
+            ];
+            console.log('🔄 Combinando productos (fin del array):', productosCombinados.length);
+            return productosCombinados;
+        }
         
         return productosEnPromocion.slice(inicio, fin);
     }
@@ -296,20 +343,25 @@
             });
 
             console.log('✅ Productos en promoción encontrados:', productosEnPromocion.length);
+            console.log('📋 IDs de productos en promoción:', productosEnPromocion.map(p => p.id));
 
             if (productosEnPromocion.length === 0) {
                 mostrarSinOfertas();
                 return;
             }
 
+            // Obtener productos del bloque dinámico
+            const productosBloque = obtenerProductosDelBloqueDinamico();
+            
             // Actualizar indicador de bloque
-            const bloqueNumero = Math.floor(CONFIG_PROMOS.indicePromoActual / CONFIG_PROMOS.productosPorBloque) + 1;
-            document.getElementById('indicador-bloque').textContent = `Bloque ${bloqueNumero}`;
+            const indiceDinamico = obtenerIndicePromocionalDinamico();
+            const bloqueNumero = (indiceDinamico / CONFIG_PROMOS.productosPorBloque) + 1;
+            const totalBloques = Math.ceil(productosEnPromocion.length / CONFIG_PROMOS.productosPorBloque);
             
-            // Obtener productos del bloque fijo
-            const productosBloque = obtenerProductosDelBloqueFijo();
+            document.getElementById('indicador-bloque').textContent = `Bloque ${bloqueNumero} de ${totalBloques}`;
             
-            console.log('🎁 Productos del bloque fijo:', productosBloque.length);
+            console.log('🎁 Productos del bloque dinámico:', productosBloque.length);
+            console.log('📦 Productos mostrados:', productosBloque.map(p => ({id: p.id, nombre: p.producto})));
             
             // Renderizar productos
             renderizarProductosOferta(productosBloque);
@@ -375,6 +427,23 @@
         console.log('✅ Productos de oferta renderizados:', productos.length);
     }
 
+    // ========== ACTUALIZACIÓN AUTOMÁTICA ==========
+
+    function programarActualizacionAutomatica() {
+        // Limpiar intervalo anterior si existe
+        if (intervaloActualizacion) {
+            clearInterval(intervaloActualizacion);
+        }
+        
+        // Actualizar cada 6 horas (21600000 ms)
+        intervaloActualizacion = setInterval(() => {
+            console.log('🔄 Actualización automática de ofertas (cada 6 horas)');
+            cargarProductosPromocion();
+        }, CONFIG_PROMOS.horasPorBloque * 60 * 60 * 1000);
+        
+        console.log('⏰ Actualización automática programada cada', CONFIG_PROMOS.horasPorBloque, 'horas');
+    }
+
     // ========== FUNCIONES DE ESTADO ==========
 
     function mostrarSinOfertas() {
@@ -436,10 +505,10 @@
     // ========== FUNCIONES PARA DEBUG EN CONSOLA ==========
     
     function verPromocionesActivas() {
-        const productosBloque = obtenerProductosDelBloqueFijo();
+        const productosBloque = obtenerProductosDelBloqueDinamico();
         
-        console.log('🔥 PROMOCIONES ACTIVAS (Índice fijo 16):');
-        console.log('📍 Índice configurado:', CONFIG_PROMOS.indicePromoActual);
+        console.log('🔥 PROMOCIONES ACTIVAS (Rotación automática):');
+        console.log('📍 Índice dinámico:', obtenerIndicePromocionalDinamico());
         console.log('📦 Total de promociones:', productosEnPromocion.length);
         console.log('🎯 Productos en promoción activa:');
         
@@ -451,9 +520,15 @@
         
         return productosBloque;
     }
+    
+    function forzarRotacion() {
+        console.log('🔄 Forzando rotación de ofertas...');
+        cargarProductosPromocion();
+    }
 
     // Hacer funciones disponibles en consola
     window.verPromocionesActivas = verPromocionesActivas;
+    window.forzarRotacion = forzarRotacion;
     
     </script>
 </body>
