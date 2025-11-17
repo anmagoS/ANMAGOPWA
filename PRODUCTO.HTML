@@ -28,8 +28,13 @@
   <script src="carrito.js?v=20251115"></script>
   <script src="app.js?v=20251115"></script>
 
-  <!-- HEADER STICKY -->
-  <div id="header-container" class="header-sticky"></div>
+<!-- BUSCADOR EN HEADER -->
+  <div class="flex-grow-1 mx-3 position-relative" style="max-width: 500px;">
+    <input id="buscador" class="form-control buscador-header" 
+           placeholder="Buscar productos..." 
+           autocomplete="off">
+    <div id="sugerencias" class="sugerencias-container"></div>
+  </div>
   
   <!-- BANNER PROMOCIONAL -->
   <div class="container-fluid banner-promocional py-2">
