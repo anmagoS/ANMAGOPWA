@@ -76,9 +76,8 @@ async function cargarAccesosGlobal() {
 function cerrarMenuLateral() {
   const menu = document.getElementById("menu-categorias");
   
-  if (menu && window.innerWidth < 768) { // Solo en móvil
+  if (menu) {
     menu.style.display = "none";
-    
     // También cerrar todos los details abiertos
     const detailsAbiertos = menu.querySelectorAll('details[open]');
     detailsAbiertos.forEach(detail => {
