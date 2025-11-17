@@ -21,33 +21,14 @@
 
   <!-- CSS optimizado -->
   <link rel="stylesheet" href="ESTILO.CSS?v=20251115" />
+<!-- BUSCADOR EN HEADER -->
+  <div class="flex-grow-1 mx-3 position-relative" style="max-width: 500px;">
+    <input id="buscador" class="form-control buscador-header" 
+           placeholder="Buscar productos..." 
+           autocomplete="off">
+    <div id="sugerencias" class="sugerencias-container"></div>
+  </div>
 
-  <style>
-    /* Estilos para el video responsive */
-    #video-producto {
-        transition: all 0.3s ease;
-    }
-
-    #video-producto iframe {
-        border: none;
-        border-radius: 12px;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-    }
-
-    /* En móvil, el video va antes de la descripción */
-    @media (max-width: 768px) {
-        #video-producto {
-            margin-bottom: 1.5rem;
-        }
-    }
-
-    /* En desktop, el video se mantiene en su sección */
-    @media (min-width: 769px) {
-        #video-producto {
-            margin-top: 2rem;
-        }
-    }
-  </style>
 </head>
 
 <body class="bg-light">
@@ -55,9 +36,6 @@
   <script src="carrito.js?v=20251115"></script>
   <script src="app.js?v=20251115"></script>
 
-  <!-- HEADER STICKY -->
-  <div id="header-container" class="header-sticky"></div>
-  
   <!-- BANNER PROMOCIONAL -->
   <div class="container-fluid banner-promocional py-2">
     <div class="container text-center">
