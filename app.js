@@ -72,20 +72,35 @@ async function cargarAccesosGlobal() {
   }
 }
 
-// ✅ FUNCIÓN PARA CERRAR EL MENÚ LATERAL
+// ✅ FUNCIÓN MEJORADA PARA CERRAR EL MENÚ LATERAL
 function cerrarMenuLateral() {
   const menu = document.getElementById("menu-categorias");
+  const toggle = document.getElementById("toggle-categorias");
   
   if (menu) {
+    // 1. Ocultar el menú completo
     menu.style.display = "none";
-    // También cerrar todos los details abiertos
+    
+    // 2. Cerrar TODOS los details abiertos (importante)
     const detailsAbiertos = menu.querySelectorAll('details[open]');
     detailsAbiertos.forEach(detail => {
       detail.removeAttribute('open');
     });
+    
+    // 3. También cerrar el menú principal si es un offcanvas/modal
+    const offcanvasMenu = document.getElementById("offcanvasMenu");
+    if (offcanvasMenu) {
+      const bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvasMenu);
+      if (bsOffcanvas) {
+        bsOffcanvas.hide();
+      }
+    }
+    
+    console.log("✅ Menú lateral cerrado completamente");
   }
 }
 
+// === Renderizar menú lateral desde catálogo ===
 // === Renderizar menú lateral desde catálogo ===
 function renderizarMenuLateral(catalogo) {
   const menu = document.getElementById("menu-categorias");
@@ -115,19 +130,19 @@ function renderizarMenuLateral(catalogo) {
         
         link.onclick = (e) => {
           e.preventDefault();
+          e.stopPropagation(); // ✅ IMPORTANTE: Detener propagación
           cerrarMenuLateral();
           
-          // ✅ NAVEGACIÓN MEJORADA - VERIFICAR FUNCIONES DISPONIBLES
-          if (typeof window.cargarProductos === 'function') {
-            // Usar función del sistema de vistas dinámicas
-            window.cargarProductos(tipo, subtipo, categoria);
-          } else if (typeof window.cargarYRenderizarProductos === 'function') {
-            // Usar función alternativa
-            window.cargarYRenderizarProductos(tipo, subtipo, categoria);
-          } else {
-            // Fallback: redirigir a página de productos tradicional
-            window.location.href = `PRODUCTOS.HTML?tipo=${encodeURIComponent(tipo)}&subtipo=${encodeURIComponent(subtipo)}&categoria=${encodeURIComponent(categoria)}`;
-          }
+          // Pequeña pausa para asegurar que el menú se cierre antes de navegar
+          setTimeout(() => {
+            if (typeof window.cargarProductos === 'function') {
+              window.cargarProductos(tipo, subtipo, categoria);
+            } else if (typeof window.cargarYRenderizarProductos === 'function') {
+              window.cargarYRenderizarProductos(tipo, subtipo, categoria);
+            } else {
+              window.location.href = `PRODUCTOS.HTML?tipo=${encodeURIComponent(tipo)}&subtipo=${encodeURIComponent(subtipo)}&categoria=${encodeURIComponent(categoria)}`;
+            }
+          }, 100);
         };
         
         bloqueSubtipo.appendChild(link);
@@ -139,7 +154,6 @@ function renderizarMenuLateral(catalogo) {
     menu.appendChild(bloqueTipo);
   });
 }
-
 // === Renderizar carrusel de promociones ===
 function renderCarruselPromosDesdePromos() {
   const contenedor = document.getElementById("carousel-promos-contenido");
