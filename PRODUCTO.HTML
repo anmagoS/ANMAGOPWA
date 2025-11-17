@@ -43,22 +43,24 @@
     </div>
   </div>
 
-  <!-- BOTONES EN LA MISMA LÍNEA -->
-  <div class="container mt-3">
-    <div class="row align-items-center">
-      <!-- Botón Volver atrás (izquierda) -->
-      <div class="col text-start">
-        <a href="#" id="btn-volver-atras" class="btn btn-outline-dark" onclick="volverAtras()">
-          <i class="bi bi-arrow-left"></i> Volver atrás
-        </a>
-      </div>
+<!-- BOTONES EN LA MISMA LÍNEA - COMPACTO -->
+<div class="container mt-3">
+  <div class="row align-items-center">
+    <!-- Botón Volver atrás (izquierda) -->
+    <div class="col text-start">
+      <a href="#" id="btn-volver-atras" class="btn btn-outline-dark btn-sm" onclick="volverAtras()">
+        <i class="bi bi-arrow-left"></i> Volver
+      </a>
+    </div>
 
-      <!-- Botón Ofertas Especiales (centrado) -->
-      <div class="col text-center">
-        <a href="PROMOS.HTML" class="btn btn-warning fw-bold px-4 py-2 rounded-pill">
-          🎁 Ofertas Especiales
-        </a>
-      </div>
+    <!-- Botón Ofertas Especiales (derecha) -->
+    <div class="col text-end">
+      <a href="PROMOS.HTML" class="btn btn-warning fw-bold px-3 py-2 rounded-pill">
+        🎁 Ofertas
+      </a>
+    </div>
+  </div>
+</div>
 
       <!-- Columna vacía para balancear (derecha) -->
       <div class="col"></div>
@@ -133,11 +135,7 @@
             <span id="descuento" class="badge badge-oferta fs-6"></span>
           </div>
 
-          <!-- Descripción -->
-          <div class="mb-4">
-            <h5 class="fw-bold mb-2">📋 Descripción</h5>
-            <p id="descripcion-producto" class="text-muted"></p>
-          </div>
+         
 
           <!-- VARIANTE ACTUAL (se muestra cuando se selecciona imagen) -->
           <div class="mb-3" id="variante-actual-container" style="display: none;">
@@ -175,6 +173,11 @@
             <button class="btn btn-gradient btn-lg" onclick="comprarAhora()" disabled>
               <i class="bi bi-lightning"></i> Comprar ahora
             </button>
+          </div>
+           <!-- Descripción -->
+          <div class="mb-4">
+            <h5 class="fw-bold mb-2">📋 Descripción</h5>
+            <p id="descripcion-producto" class="text-muted"></p>
           </div>
 
           <!-- SERVICIOS (REEMPLAZA ENVÍO GRATIS) -->
