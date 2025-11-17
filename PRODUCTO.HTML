@@ -59,7 +59,24 @@
       </div>
     </div>
   </div>
+ <!-- INFORMACIÓN DEL PRODUCTO -->
+      <div class="col-md-6">
+        <div class="ps-md-4">
+          <!-- Categorías -->
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb" id="breadcrumb-producto">
+              <li class="breadcrumb-item"><a href="INICIO.HTML">ATRÁS</a></li>
+              <!-- Categorías se cargan dinámicamente -->
+            </ol>
+          </nav>
 
+          <!-- Nombre y precio -->
+          <h1 id="nombre-producto" class="h3 fw-bold mb-2"></h1>
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <span id="precio-actual" class="h4 fw-bold text-primary mb-0"></span>
+            <span id="precio-original" class="text-muted h5 mb-0 text-decoration-line-through"></span>
+            <span id="descuento" class="badge badge-oferta fs-6"></span>
+          </div>
   <!-- CONTENIDO PRINCIPAL - DETALLE PRODUCTO -->
   <main class="container mt-4">
     <div class="row">
@@ -113,24 +130,7 @@
         </div>
       </div>
 
-      <!-- INFORMACIÓN DEL PRODUCTO -->
-      <div class="col-md-6">
-        <div class="ps-md-4">
-          <!-- Categorías -->
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb" id="breadcrumb-producto">
-              <li class="breadcrumb-item"><a href="INICIO.HTML">ATRÁS</a></li>
-              <!-- Categorías se cargan dinámicamente -->
-            </ol>
-          </nav>
-
-          <!-- Nombre y precio -->
-          <h1 id="nombre-producto" class="h3 fw-bold mb-2"></h1>
-          <div class="d-flex align-items-center gap-3 mb-3">
-            <span id="precio-actual" class="h4 fw-bold text-primary mb-0"></span>
-            <span id="precio-original" class="text-muted h5 mb-0 text-decoration-line-through"></span>
-            <span id="descuento" class="badge badge-oferta fs-6"></span>
-          </div>
+     
 
          <!-- VARIANTE ACTUAL (se muestra cuando se selecciona imagen) -->
           <div class="mb-3" id="variante-actual-container" style="display: none;">
