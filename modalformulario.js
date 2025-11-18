@@ -7,12 +7,13 @@ window.articulosCarrito = [];
 window.formularioInicializado = false;
 window.ciudadesColombia = [];
 
-// 🔍 FUNCIÓN MEJORADA - CONSULTA CLIENTE EXISTENTE SIN LIMPIAR CAMPOS
+// 🔍 FUNCIÓN CORREGIDA - CONSULTA CLIENTE EXISTENTE (SOLO CONSULTA, NO ACTUALIZA)
 async function consultarClienteAPI(telefono) {
     try {
         console.log('🔍 CONSULTANDO CLIENTE EXISTENTE:', telefono);
         
-        const url = `https://script.google.com/macros/s/AKfycbwt-rFg_coabATigGv_zNOa93aO6u9uNqC-Oynh_HAL4dbuKo6pvmtw7jKlixXagW5o/exec?telefonoCliente=${telefono}&accion=consultar`;
+        // ✅ SOLO enviar el teléfono - NO enviar 'accion=consultar'
+        const url = `https://script.google.com/macros/s/AKfycbwt-rFg_coabATigGv_zNOa93aO6u9uNqC-Oynh_HAL4dbuKo6pvmtw7jKlixXagW5o/exec?telefonoCliente=${telefono}`;
         
         const response = await fetch(url);
         const data = await response.json();
@@ -272,9 +273,14 @@ function construirDireccionEstructurada() {
     return direccion.trim();
 }
 
-// 🔄 Parseo inverso de dirección - VERSIÓN OPTIMIZADA
+// 🔄 Parseo inverso de dirección - VERSIÓN MEJORADA CON LOGGING
 function repartirDireccionConcatenada(direccionConc) {
-    if (!direccionConc) return;
+    console.log('📍 INICIANDO PARSEO DE DIRECCIÓN:', direccionConc);
+    
+    if (!direccionConc) {
+        console.log('📍 DIRECCIÓN VACÍA - No hay nada que parsear');
+        return;
+    }
 
     const baseInput = document.getElementById("DireccionCompleta");
     const tipoInput = document.getElementById("tipoUnidad");
@@ -289,37 +295,52 @@ function repartirDireccionConcatenada(direccionConc) {
     if (refInput) refInput.value = "";
 
     const partes = direccionConc.split(",").map(p => p.trim()).filter(p => p !== "");
+    console.log('📍 PARTES DE DIRECCIÓN:', partes);
+    
     if (partes.length === 0) return;
 
     // 1. Dirección base (siempre la primera parte)
-    if (baseInput) baseInput.value = partes[0];
+    if (baseInput) {
+        baseInput.value = partes[0];
+        console.log('📍 DIRECCIÓN BASE:', partes[0]);
+    }
 
     // 2. Tipo de unidad + Número (segunda parte)
     if (partes.length > 1 && tipoInput) {
         const segundaParte = partes[1].toUpperCase();
+        console.log('📍 SEGUNDA PARTE:', segundaParte);
+        
         const tipos = ["APARTAMENTO", "CASA", "PISO", "BODEGA", "INTERIOR"];
         const tipoEncontrado = tipos.find(t => segundaParte.includes(t));
         
         if (tipoEncontrado) {
             tipoInput.value = tipoEncontrado.charAt(0) + tipoEncontrado.slice(1).toLowerCase();
+            console.log('📍 TIPO UNIDAD:', tipoInput.value);
             
             // Extraer número
             const numeroTexto = partes[1].replace(new RegExp(tipoEncontrado, 'i'), "").trim();
             if (numeroTexto && numeroInput) {
                 numeroInput.value = numeroTexto;
+                console.log('📍 NÚMERO:', numeroInput.value);
             }
         }
     }
 
     // 3. Barrio (tercera parte)
     if (partes.length > 2 && barrioInput) {
-        barrioInput.value = partes[2].replace(/^barrio\s*/i, "").trim();
+        const barrioValue = partes[2].replace(/^barrio\s*/i, "").trim();
+        barrioInput.value = barrioValue;
+        console.log('📍 BARRIO:', barrioValue);
     }
 
     // 4. Observación (cuarta parte en adelante)
     if (partes.length > 3 && refInput) {
-        refInput.value = partes.slice(3).join(", ");
+        const referenciaValue = partes.slice(3).join(", ");
+        refInput.value = referenciaValue;
+        console.log('📍 REFERENCIA:', referenciaValue);
     }
+    
+    console.log('📍 PARSEO DE DIRECCIÓN COMPLETADO');
 }
 
 // 💬 Generar texto para WhatsApp - VERSIÓN ULTRA CONFIABLE
@@ -488,7 +509,7 @@ function inicializarFormulario() {
         if (el) el.addEventListener("input", validarFormularioCliente);
     });
 
-// 📱 EVENTO TELÉFONO - VERSIÓN CORRECTA (PRECARGA COMPLETA SI EXISTE)
+    // 📱 EVENTO TELÉFONO - VERSIÓN MEJORADA (NO LIMPIA CAMPOS EXISTENTES)
 const campoTelefono = document.getElementById("telefonoCliente");
 if (campoTelefono) {
     let timeoutConsulta;
@@ -512,40 +533,39 @@ if (campoTelefono) {
                 
                 if (resultado?.existe && resultado.datos) {
                     const d = resultado.datos;
-                    console.log('✅ CLIENTE EXISTENTE - PRECARGANDO TODOS LOS CAMPOS:', d);
+                    console.log('✅ CLIENTE EXISTENTE - PRECARGANDO DATOS:', d);
                     
-                    // ✅ PRECARGAR TODOS LOS CAMPOS CON DATOS DE BD (sobreescribe todo)
-                    document.getElementById("clienteId").value = d["CLIENTEID"] || "";
-                    document.getElementById("telefonoCliente").value = d["TELEFONOCLIENTE"] || telefono;
-                    document.getElementById("nombreCliente").value = d["NOMBRECLIENTE"] || "";
-                    document.getElementById("ciudadCliente").value = d["CIUDAD DESTINO"] || "";
-                    document.getElementById("emailCliente").value = d["CORREO"] || "";
-                    
-                    // Precargar dirección completa
-                    if (d["DIRECCIONCLIENTE"]) {
-                        repartirDireccionConcatenada(d["DIRECCIONCLIENTE"]);
-                    } else {
-                        // Si no hay dirección en BD, limpiar campos de dirección
-                        ["DireccionCompleta", "tipoUnidad", "numeroApto", "barrio", "observacionDireccion"]
-                        .forEach(id => {
-                            const el = document.getElementById(id);
-                            if (el) el.value = "";
-                        });
+                    // ✅ PRECARGAR SOLO SI LOS CAMPOS ESTÁN VACÍOS
+                    if (!document.getElementById("clienteId").value) {
+                        document.getElementById("clienteId").value = d["CLIENTEID"] || "";
                     }
                     
-                    console.log('✅ PRECARGA COMPLETADA - Todos los campos actualizados con datos BD');
+                    if (!document.getElementById("nombreCliente").value) {
+                        document.getElementById("nombreCliente").value = d["NOMBRECLIENTE"] || "";
+                    }
+                    
+                    if (!document.getElementById("ciudadCliente").value) {
+                        document.getElementById("ciudadCliente").value = d["CIUDAD DESTINO"] || "";
+                    }
+                    
+                    if (!document.getElementById("emailCliente").value) {
+                        document.getElementById("emailCliente").value = d["CORREO"] || "";
+                    }
+                    
+                    // Solo precargar dirección si está vacía
+                    if (!document.getElementById("DireccionCompleta").value && d["DIRECCIONCLIENTE"]) {
+                        repartirDireccionConcatenada(d["DIRECCIONCLIENTE"]);
+                    }
+                    
+                    console.log('✅ PRECARGA COMPLETADA - Campos actualizados');
                     
                 } else {
-                    console.log('🆕 CLIENTE NUEVO - Limpiando campos para nuevo registro');
-                    // ✅ LIMPIAR TODOS LOS CAMPOS PARA CLIENTE NUEVO
-                    ["clienteId", "nombreCliente", "DireccionCompleta", "tipoUnidad", 
-                     "numeroApto", "barrio", "observacionDireccion", "ciudadCliente", "emailCliente"]
-                    .forEach(id => {
-                        const el = document.getElementById(id);
-                        if (el) el.value = "";
-                    });
-                    // Mantener solo el teléfono que ya escribió
-                    document.getElementById("telefonoCliente").value = telefono;
+                    console.log('🆕 CLIENTE NUEVO - Manteniendo campos existentes');
+                    // ✅ NO LIMPIAR CAMPOS - el usuario puede estar escribiendo
+                    // Solo asegurar que clienteId esté vacío para nuevo cliente
+                    if (!document.getElementById("clienteId").value) {
+                        document.getElementById("clienteId").value = "";
+                    }
                 }
             } catch (error) {
                 console.error('❌ Error en consulta:', error);
