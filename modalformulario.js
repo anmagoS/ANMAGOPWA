@@ -488,7 +488,7 @@ function inicializarFormulario() {
         if (el) el.addEventListener("input", validarFormularioCliente);
     });
 
-  // 📱 EVENTO TELÉFONO - VERSIÓN SIMPLIFICADA (NO TOCA NADA)
+// 📱 EVENTO TELÉFONO - VERSIÓN CORRECTA (PRECARGA COMPLETA SI EXISTE)
 const campoTelefono = document.getElementById("telefonoCliente");
 if (campoTelefono) {
     let timeoutConsulta;
@@ -512,19 +512,40 @@ if (campoTelefono) {
                 
                 if (resultado?.existe && resultado.datos) {
                     const d = resultado.datos;
-                    console.log('✅ CLIENTE ENCONTRADO EN BD:', d);
+                    console.log('✅ CLIENTE EXISTENTE - PRECARGANDO TODOS LOS CAMPOS:', d);
                     
-                    // ✅ SOLO PRECARGAR SI EL CAMPO ESTÁ VACÍO Y HAY DATOS VÁLIDOS
-                    if (!document.getElementById("clienteId").value && d["CLIENTEID"]) {
-                        document.getElementById("clienteId").value = d["CLIENTEID"];
+                    // ✅ PRECARGAR TODOS LOS CAMPOS CON DATOS DE BD (sobreescribe todo)
+                    document.getElementById("clienteId").value = d["CLIENTEID"] || "";
+                    document.getElementById("telefonoCliente").value = d["TELEFONOCLIENTE"] || telefono;
+                    document.getElementById("nombreCliente").value = d["NOMBRECLIENTE"] || "";
+                    document.getElementById("ciudadCliente").value = d["CIUDAD DESTINO"] || "";
+                    document.getElementById("emailCliente").value = d["CORREO"] || "";
+                    
+                    // Precargar dirección completa
+                    if (d["DIRECCIONCLIENTE"]) {
+                        repartirDireccionConcatenada(d["DIRECCIONCLIENTE"]);
+                    } else {
+                        // Si no hay dirección en BD, limpiar campos de dirección
+                        ["DireccionCompleta", "tipoUnidad", "numeroApto", "barrio", "observacionDireccion"]
+                        .forEach(id => {
+                            const el = document.getElementById(id);
+                            if (el) el.value = "";
+                        });
                     }
                     
-                    // Los demás campos se dejan como están - NO SE TOCAN
-                    console.log('✅ CONSULTA COMPLETADA - Campos preservados');
+                    console.log('✅ PRECARGA COMPLETADA - Todos los campos actualizados con datos BD');
                     
                 } else {
-                    console.log('🆕 CLIENTE NUEVO - Campos se mantienen intactos');
-                    // ✅ ABSOLUTAMENTE NO SE TOCA NADA
+                    console.log('🆕 CLIENTE NUEVO - Limpiando campos para nuevo registro');
+                    // ✅ LIMPIAR TODOS LOS CAMPOS PARA CLIENTE NUEVO
+                    ["clienteId", "nombreCliente", "DireccionCompleta", "tipoUnidad", 
+                     "numeroApto", "barrio", "observacionDireccion", "ciudadCliente", "emailCliente"]
+                    .forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.value = "";
+                    });
+                    // Mantener solo el teléfono que ya escribió
+                    document.getElementById("telefonoCliente").value = telefono;
                 }
             } catch (error) {
                 console.error('❌ Error en consulta:', error);
