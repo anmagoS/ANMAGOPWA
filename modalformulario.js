@@ -488,7 +488,7 @@ function inicializarFormulario() {
         if (el) el.addEventListener("input", validarFormularioCliente);
     });
 
-   // 📱 EVENTO TELÉFONO - VERSIÓN CORREGIDA (NO LIMPIA CAMPOS)
+  // 📱 EVENTO TELÉFONO - VERSIÓN SIMPLIFICADA (NO TOCA NADA)
 const campoTelefono = document.getElementById("telefonoCliente");
 if (campoTelefono) {
     let timeoutConsulta;
@@ -512,39 +512,19 @@ if (campoTelefono) {
                 
                 if (resultado?.existe && resultado.datos) {
                     const d = resultado.datos;
-                    console.log('✅ CLIENTE ENCONTRADO - PRECARGANDO DATOS:', d);
+                    console.log('✅ CLIENTE ENCONTRADO EN BD:', d);
                     
-                    // SOLO PRECARGAR CAMPOS QUE ESTÉN VACÍOS O QUE TENGAN DATOS EN BD
-                    // No sobreescribir lo que el usuario ya haya escrito
-                    
-                    if (!document.getElementById("clienteId").value) {
-                        document.getElementById("clienteId").value = d["CLIENTEID"] || "";
+                    // ✅ SOLO PRECARGAR SI EL CAMPO ESTÁ VACÍO Y HAY DATOS VÁLIDOS
+                    if (!document.getElementById("clienteId").value && d["CLIENTEID"]) {
+                        document.getElementById("clienteId").value = d["CLIENTEID"];
                     }
                     
-                    if (!document.getElementById("nombreCliente").value && d["NOMBRECLIENTE"]) {
-                        document.getElementById("nombreCliente").value = d["NOMBRECLIENTE"];
-                    }
-                    
-                    if (!document.getElementById("ciudadCliente").value && d["CIUDAD DESTINO"]) {
-                        document.getElementById("ciudadCliente").value = d["CIUDAD DESTINO"];
-                    }
-                    
-                    if (!document.getElementById("emailCliente").value && d["CORREO"]) {
-                        document.getElementById("emailCliente").value = d["CORREO"];
-                    }
-                    
-                    // Solo precargar dirección si el campo principal está vacío
-                    if (!document.getElementById("DireccionCompleta").value && d["DIRECCIONCLIENTE"]) {
-                        repartirDireccionConcatenada(d["DIRECCIONCLIENTE"]);
-                    }
-                    
-                    console.log('✅ PRECARGA COMPLETADA - Campos preservados');
+                    // Los demás campos se dejan como están - NO SE TOCAN
+                    console.log('✅ CONSULTA COMPLETADA - Campos preservados');
                     
                 } else {
-                    console.log('🆕 CLIENTE NUEVO - Manteniendo campos existentes');
-                    // NO LIMPIAR CAMPOS - el usuario puede estar escribiendo
-                    // Solo asegurar que clienteId esté vacío para nuevo cliente
-                    document.getElementById("clienteId").value = "";
+                    console.log('🆕 CLIENTE NUEVO - Campos se mantienen intactos');
+                    // ✅ ABSOLUTAMENTE NO SE TOCA NADA
                 }
             } catch (error) {
                 console.error('❌ Error en consulta:', error);
@@ -556,7 +536,6 @@ if (campoTelefono) {
         }, 800);
     });
 }
-
     // 🟢 EVENTO ENVIAR - VERSIÓN CORREGIDA
     const btnEnviar = document.getElementById("btnEnviarPedido");
     if (btnEnviar) {
