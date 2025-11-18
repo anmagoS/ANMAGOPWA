@@ -7,6 +7,32 @@ window.articulosCarrito = [];
 window.formularioInicializado = false;
 window.ciudadesColombia = [];
 
+// 🔍 FUNCIÓN FALTANTE - CONSULTA CLIENTE EXISTENTE
+async function consultarClienteAPI(telefono) {
+    try {
+        console.log('🔍 CONSULTANDO CLIENTE EXISTENTE:', telefono);
+        
+        const url = `https://script.google.com/macros/s/AKfycbwt-rFg_coabATigGv_zNOa93aO6u9uNqC-Oynh_HAL4dbuKo6pvmtw7jKlixXagW5o/exec?telefonoCliente=${telefono}&accion=consultar`;
+        
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        console.log('📊 RESPUESTA CONSULTA:', data);
+        
+        if (data.existe && data.datos) {
+            return {
+                existe: true,
+                datos: data.datos
+            };
+        } else {
+            return { existe: false };
+        }
+    } catch (error) {
+        console.error('❌ ERROR en consulta:', error);
+        return { existe: false };
+    }
+}
+
 // ✅ CARGAR BASE DE DATOS DE CIUDADES
 async function cargarCiudades() {
     try {
