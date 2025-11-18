@@ -686,5 +686,13 @@
   {
     "id_producto": "FEC8CB6F",
     "ruta": "/ROPA/DAMA/VESTIDOS/PANTALÓN"
+  },
+  {
+    "id_producto": "E8873BEE",
+    "ruta": "/NAVIDAD/HOGAR/JUGUETES/CONSOLAS"
+  },
+  {
+    "id_producto": "E8873BEE",
+    "ruta": "/HOGAR/JUGUETES/CONSOLAS"
   }
 ]
