@@ -21,20 +21,16 @@
 
   <!-- CSS optimizado -->
   <link rel="stylesheet" href="ESTILO.CSS?v=20251115" />
-</head>
+  
+  </head>
 
 <body class="bg-light">
   <!-- Scripts optimizados -->
   <script src="carrito.js?v=20251115"></script>
   <script src="app.js?v=20251115"></script>
 
-<!-- BUSCADOR EN HEADER -->
-  <div class="flex-grow-1 mx-3 position-relative" style="max-width: 500px;">
-    <input id="buscador" class="form-control buscador-header" 
-           placeholder="Buscar productos..." 
-           autocomplete="off">
-    <div id="sugerencias" class="sugerencias-container"></div>
-  </div>
+  <!-- HEADER STICKY -->
+  <div id="header-container" class="header-sticky"></div>
   
   <!-- BANNER PROMOCIONAL -->
   <div class="container-fluid banner-promocional py-2">
@@ -318,6 +314,8 @@
     let imagenSeleccionada = '';
     let cantidad = 1;
     let promocionesGlobal = [];
+    let imagenesProducto = [];
+    let nombresVariantes = [];
 
     // ========== SISTEMA DE PROMOCIONES DINÁMICAS ==========
 
@@ -454,8 +452,6 @@
                                 console.log('🎯 Redirigiendo a vista subtipos:', urlRetorno);
                             }
                             break;
-                        default:
-                            console.log('📍 Redirigiendo al inicio por defecto');
                     }
                     
                     // Redirigir a la vista correspondiente
@@ -527,43 +523,77 @@
         configurarZoomDobleClic();
     });
 
-    // ========== SISTEMA DE ZOOM PARA IMAGENES ==========
+    // ========== SISTEMA DE ZOOM MEJORADO CON NAVEGACIÓN ==========
 
-    // 🔍 FUNCIÓN PARA AMPLIAR IMAGEN
+    // 🔍 FUNCIÓN MEJORADA PARA AMPLIAR IMAGEN CON NAVEGACIÓN
     function ampliarImagen(src) {
-        console.log('🔍 Ampliando imagen...');
+        console.log('🔍 Ampliando imagen con navegación...');
         
-        // Crear modal de zoom
+        // Obtener índice de la imagen actual
+        const indiceActual = imagenesProducto.indexOf(src);
+        if (indiceActual === -1) {
+            console.error('❌ Imagen no encontrada en la galería');
+            return;
+        }
+        
+        // Crear modal de zoom mejorado
         const modalZoom = document.createElement('div');
         modalZoom.id = 'modal-zoom';
-        modalZoom.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.95);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            cursor: zoom-out;
-            animation: fadeIn 0.3s ease;
-        `;
+        modalZoom.className = 'modal-zoom-container';
         
         modalZoom.innerHTML = `
-            <div style="position: relative; max-width: 95%; max-height: 95%;">
-                <img src="${src}" 
-                     alt="Vista ampliada" 
-                     style="max-width: 100%; max-height: 95vh; object-fit: contain; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.3);"
-                     onclick="cerrarZoom()">
-                <button onclick="cerrarZoom()" 
-                        style="position: absolute; top: -50px; right: 0; background: #ff4444; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;">
-                    ✕
-                </button>
-                <div style="color: white; text-align: center; margin-top: 15px; font-size: 14px; background: rgba(0,0,0,0.7); padding: 8px 16px; border-radius: 20px;">
-                    <i class="bi bi-mouse"></i> Haz clic en la imagen para cerrar • 
-                    <i class="bi bi-escape"></i> Presiona ESC para salir
+            <div class="modal-zoom-content">
+                <div class="modal-zoom-image-container">
+                    <img src="${src}" 
+                         alt="Vista ampliada" 
+                         class="modal-zoom-image"
+                         onclick="cerrarZoom()">
+                    
+                    <!-- Botones de navegación -->
+                    <div class="modal-zoom-controls">
+                        <button class="modal-zoom-btn" onclick="navegarImagen(-1)" id="btn-prev" ${indiceActual === 0 ? 'disabled' : ''}>
+                            <i class="bi bi-chevron-left"></i>
+                        </button>
+                        <button class="modal-zoom-btn" onclick="navegarImagen(1)" id="btn-next" ${indiceActual === imagenesProducto.length - 1 ? 'disabled' : ''}>
+                            <i class="bi bi-chevron-right"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Botón cerrar -->
+                    <button class="modal-zoom-close" onclick="cerrarZoom()">
+                        ✕
+                    </button>
+                </div>
+                
+                <!-- Footer del modal -->
+                <div class="modal-zoom-footer">
+                    <!-- Información de navegación -->
+                    <div class="modal-zoom-info">
+                        <i class="bi bi-mouse"></i> Haz clic en la imagen para cerrar • 
+                        <i class="bi bi-arrows-fullscreen"></i> Flechas para navegar • 
+                        <i class="bi bi-escape"></i> ESC para salir
+                    </div>
+                    
+                    <!-- Contador de imágenes -->
+                    <div class="modal-zoom-counter">
+                        ${indiceActual + 1} / ${imagenesProducto.length}
+                    </div>
+                    
+                    <!-- Miniaturas -->
+                    <div class="modal-zoom-thumbnails" id="modal-thumbnails">
+                        ${imagenesProducto.map((img, index) => `
+                            <img src="${img}" 
+                                 alt="${nombresVariantes[index] || `Variante ${index + 1}`}" 
+                                 class="modal-zoom-thumbnail ${index === indiceActual ? 'active' : ''}"
+                                 onclick="cambiarImagenModal(${index})"
+                                 title="${nombresVariantes[index] || `Variante ${index + 1}`}">
+                        `).join('')}
+                    </div>
+                    
+                    <!-- Botón para seleccionar esta variante -->
+                    <button class="modal-zoom-select-btn" onclick="seleccionarDesdeModal(${indiceActual})">
+                        <i class="bi bi-check-circle"></i> Seleccionar "${nombresVariantes[indiceActual] || `Variante ${indiceActual + 1}`}"
+                    </button>
                 </div>
             </div>
         `;
@@ -582,11 +612,129 @@
             if (e.key === 'Escape') {
                 cerrarZoom();
                 document.removeEventListener('keydown', zoomKeyHandler);
+            } else if (e.key === 'ArrowLeft') {
+                navegarImagen(-1);
+            } else if (e.key === 'ArrowRight') {
+                navegarImagen(1);
             }
         });
         
         // Prevenir scroll del body
         document.body.style.overflow = 'hidden';
+    }
+
+    // ➡️ FUNCIÓN PARA NAVEGAR ENTRE IMÁGENES EN EL MODAL
+    function navegarImagen(direccion) {
+        const modal = document.getElementById('modal-zoom');
+        if (!modal) return;
+        
+        const imagenActual = modal.querySelector('.modal-zoom-image');
+        const indiceActual = imagenesProducto.indexOf(imagenActual.src);
+        
+        if (indiceActual === -1) return;
+        
+        const nuevoIndice = indiceActual + direccion;
+        
+        // Verificar límites
+        if (nuevoIndice < 0 || nuevoIndice >= imagenesProducto.length) {
+            return;
+        }
+        
+        // Cambiar imagen con animación
+        imagenActual.style.opacity = '0';
+        
+        setTimeout(() => {
+            imagenActual.src = imagenesProducto[nuevoIndice];
+            imagenActual.style.opacity = '1';
+            
+            // Actualizar botones de navegación
+            document.getElementById('btn-prev').disabled = nuevoIndice === 0;
+            document.getElementById('btn-next').disabled = nuevoIndice === imagenesProducto.length - 1;
+            
+            // Actualizar contador
+            modal.querySelector('.modal-zoom-counter').textContent = `${nuevoIndice + 1} / ${imagenesProducto.length}`;
+            
+            // Actualizar miniaturas activas
+            const thumbnails = modal.querySelectorAll('.modal-zoom-thumbnail');
+            thumbnails.forEach((thumb, index) => {
+                thumb.classList.toggle('active', index === nuevoIndice);
+            });
+            
+            // Actualizar botón de selección
+            const btnSeleccionar = modal.querySelector('.modal-zoom-select-btn');
+            btnSeleccionar.textContent = `Seleccionar "${nombresVariantes[nuevoIndice] || `Variante ${nuevoIndice + 1}`}"`;
+            btnSeleccionar.onclick = () => seleccionarDesdeModal(nuevoIndice);
+        }, 300);
+    }
+
+    // 🖼️ FUNCIÓN PARA CAMBIAR IMAGEN DESDE MINIATURA EN MODAL
+    function cambiarImagenModal(indice) {
+        const modal = document.getElementById('modal-zoom');
+        if (!modal) return;
+        
+        const imagenActual = modal.querySelector('.modal-zoom-image');
+        
+        // Cambiar imagen con animación
+        imagenActual.style.opacity = '0';
+        
+        setTimeout(() => {
+            imagenActual.src = imagenesProducto[indice];
+            imagenActual.style.opacity = '1';
+            
+            // Actualizar botones de navegación
+            document.getElementById('btn-prev').disabled = indice === 0;
+            document.getElementById('btn-next').disabled = indice === imagenesProducto.length - 1;
+            
+            // Actualizar contador
+            modal.querySelector('.modal-zoom-counter').textContent = `${indice + 1} / ${imagenesProducto.length}`;
+            
+            // Actualizar miniaturas activas
+            const thumbnails = modal.querySelectorAll('.modal-zoom-thumbnail');
+            thumbnails.forEach((thumb, index) => {
+                thumb.classList.toggle('active', index === indice);
+            });
+            
+            // Actualizar botón de selección
+            const btnSeleccionar = modal.querySelector('.modal-zoom-select-btn');
+            btnSeleccionar.textContent = `Seleccionar "${nombresVariantes[indice] || `Variante ${indice + 1}`}"`;
+            btnSeleccionar.onclick = () => seleccionarDesdeModal(indice);
+        }, 300);
+    }
+
+    // ✅ FUNCIÓN PARA SELECCIONAR VARIANTE DESDE EL MODAL
+    function seleccionarDesdeModal(indice) {
+        const imagenSrc = imagenesProducto[indice];
+        const nombreVariante = nombresVariantes[indice] || `Variante ${indice + 1}`;
+        
+        console.log('🖱️ Seleccionando desde modal:', { indice, nombreVariante });
+        
+        // Actualizar imagen principal
+        document.getElementById('imagen-principal').src = imagenSrc;
+        
+        // Actualizar variables globales
+        varianteSeleccionada = nombreVariante;
+        imagenSeleccionada = imagenSrc;
+        
+        // Mostrar variante actual
+        mostrarVarianteActual(nombreVariante);
+        
+        // Actualizar miniaturas en la página principal
+        const miniaturas = document.querySelectorAll('.miniatura');
+        miniaturas.forEach((miniatura, index) => {
+            miniatura.classList.toggle('active', index === indice);
+            miniatura.style.borderColor = index === indice ? '#007bff' : '#ddd';
+        });
+        
+        // Verificar estado del botón
+        verificarEstadoBotonAgregar();
+        
+        // Cerrar modal
+        cerrarZoom();
+        
+        // Mostrar confirmación
+        mostrarAlertaTemporal(`✅ Variante seleccionada: "${nombreVariante}"`, 'success');
+        
+        console.log('✅ Variante cambiada desde modal:', nombreVariante);
     }
 
     // ❌ FUNCIÓN PARA CERRAR ZOOM
@@ -701,10 +849,15 @@
         
         // Obtener primera imagen para imagenSeleccionada
         if (productoActual.url && productoActual.url.includes("[]")) {
-          const imagenes = productoActual.url.split("[]").map(u => u.trim()).filter(Boolean);
-          imagenSeleccionada = imagenes[0];
+          imagenesProducto = productoActual.url.split("[]").map(u => u.trim()).filter(Boolean);
+          imagenSeleccionada = imagenesProducto[0];
+          
+          // Generar nombres de variantes
+          nombresVariantes = imagenesProducto.map((_, index) => `Variante ${index + 1}`);
         } else {
+          imagenesProducto = [productoActual.imagen];
           imagenSeleccionada = productoActual.imagen;
+          nombresVariantes = ['Variante 1'];
         }
         
         // ✅ VERIFICAR SI ESTÁ EN PROMOCIÓN ACTUAL
@@ -715,7 +868,9 @@
           imagenSeleccionada,
           cantidad,
           estaEnPromocion: estaEnPromo,
-          vieneDePromociones: vieneDePromos
+          vieneDePromociones: vieneDePromos,
+          imagenesProducto,
+          nombresVariantes
         });
         
         // Renderizar producto CON VERIFICACIÓN DE PROMOCIÓN
@@ -748,6 +903,8 @@
         
         productoActual = productoEjemplo;
         varianteSeleccionada = 'Variante 1';
+        imagenesProducto = [productoEjemplo.imagen];
+        nombresVariantes = ['Variante 1'];
         imagenSeleccionada = productoEjemplo.imagen;
         cantidad = 1;
         
@@ -830,36 +987,28 @@
         const galeria = document.getElementById('galeria-miniaturas');
         const alertaSeleccion = document.getElementById('alerta-seleccion-imagen');
         
-        // Obtener imágenes
-        let imagenes = [];
-        if (producto.url && producto.url.includes("[]")) {
-            imagenes = producto.url.split("[]").map(u => u.trim()).filter(Boolean);
-        } else if (producto.imagen) {
-            imagenes = [producto.imagen];
-        }
-        
-        console.log('🖼️ Imágenes para galería:', imagenes.length);
+        console.log('🖼️ Imágenes para galería:', imagenesProducto.length);
 
-        if (imagenes.length === 0) {
+        if (imagenesProducto.length === 0) {
             imagenPrincipal.src = 'https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg';
             return;
         }
 
         // Imagen principal
-        imagenPrincipal.src = imagenes[0];
+        imagenPrincipal.src = imagenesProducto[0];
         imagenPrincipal.alt = producto.producto;
         
         // ✅ VARIANTE POR DEFECTO
-        varianteSeleccionada = 'Variante 1';
-        imagenSeleccionada = imagenes[0];
+        varianteSeleccionada = nombresVariantes[0];
+        imagenSeleccionada = imagenesProducto[0];
         
         // Mostrar variante actual
-        mostrarVarianteActual('Variante 1');
+        mostrarVarianteActual(nombresVariantes[0]);
 
         // MINIATURAS PEQUEÑAS Y SELECCIONABLES
-        if (imagenes.length > 1) {
-            galeria.innerHTML = imagenes.map((img, index) => {
-                const nombreVariante = `Variante ${index + 1}`;
+        if (imagenesProducto.length > 1) {
+            galeria.innerHTML = imagenesProducto.map((img, index) => {
+                const nombreVariante = nombresVariantes[index];
                 return `
                     <img src="${img}" 
                          alt="${producto.producto} - ${nombreVariante}" 
@@ -872,7 +1021,7 @@
                 `;
             }).join('');
             
-            console.log('✅ Miniaturas creadas:', imagenes.length);
+            console.log('✅ Miniaturas creadas:', imagenesProducto.length);
             
             // Mostrar alerta si hay múltiples imágenes
             alertaSeleccion.style.display = 'block';
@@ -1459,6 +1608,9 @@
     window.comprarAhora = comprarAhora;
     window.ampliarImagen = ampliarImagen;
     window.cerrarZoom = cerrarZoom;
+    window.navegarImagen = navegarImagen;
+    window.cambiarImagenModal = cambiarImagenModal;
+    window.seleccionarDesdeModal = seleccionarDesdeModal;
     window.abrirFormularioPedido = abrirFormularioPedido;  
   </script>
 
