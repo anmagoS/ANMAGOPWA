@@ -565,38 +565,39 @@
                     </button>
                 </div>
                 
-                <!-- Footer del modal -->
-                <div class="modal-zoom-footer">
-                    <!-- Información de navegación -->
-                    <div class="modal-zoom-info">
-                        <i class="bi bi-mouse"></i> Haz clic en la imagen para cerrar • 
-                        <i class="bi bi-arrows-fullscreen"></i> Flechas para navegar • 
-                        <i class="bi bi-escape"></i> ESC para salir
-                    </div>
-                    
-                    <!-- Contador de imágenes -->
-                    <div class="modal-zoom-counter">
-                        ${indiceActual + 1} / ${imagenesProducto.length}
-                    </div>
-                    
-                    <!-- Miniaturas -->
-                    <div class="modal-zoom-thumbnails" id="modal-thumbnails">
-                        ${imagenesProducto.map((img, index) => `
-                            <img src="${img}" 
-                                 alt="${nombresVariantes[index] || `Variante ${index + 1}`}" 
-                                 class="modal-zoom-thumbnail ${index === indiceActual ? 'active' : ''}"
-                                 onclick="cambiarImagenModal(${index})"
-                                 title="${nombresVariantes[index] || `Variante ${index + 1}`}">
-                        `).join('')}
-                    </div>
-                    
-                    <!-- Botón para seleccionar esta variante -->
-                    <button class="modal-zoom-select-btn" onclick="seleccionarDesdeModal(${indiceActual})">
-                        <i class="bi bi-check-circle"></i> Seleccionar "${nombresVariantes[indiceActual] || `Variante ${indiceActual + 1}`}"
-                    </button>
-                </div>
-            </div>
-        `;
+                // En la función ampliarImagen, modificar esta parte del HTML:
+
+<!-- Footer del modal -->
+<div class="modal-zoom-footer">
+    <!-- Contador de imágenes -->
+    <div class="modal-zoom-counter">
+        ${indiceActual + 1} / ${imagenesProducto.length}
+    </div>
+    
+    <!-- Miniaturas -->
+    <div class="modal-zoom-thumbnails" id="modal-thumbnails">
+        ${imagenesProducto.map((img, index) => `
+            <img src="${img}" 
+                 alt="${nombresVariantes[index] || `Variante ${index + 1}`}" 
+                 class="modal-zoom-thumbnail ${index === indiceActual ? 'active' : ''}"
+                 onclick="cambiarImagenModal(${index})"
+                 title="${nombresVariantes[index] || `Variante ${index + 1}`}">
+        `).join('')}
+    </div>
+    
+    <!-- Botón para seleccionar esta variante -->
+    <button class="modal-zoom-select-btn" onclick="seleccionarDesdeModal(${indiceActual})">
+        <i class="bi bi-check-circle"></i> Seleccionar "${nombresVariantes[indiceActual] || `Variante ${indiceActual + 1}`}"
+    </button>
+    
+    <!-- Información de navegación -->
+    <div class="modal-zoom-info">
+        <i class="bi bi-mouse"></i> Haz clic en la imagen para cerrar • 
+        <i class="bi bi-arrows-fullscreen"></i> Flechas para navegar • 
+        <i class="bi bi-escape"></i> ESC para salir
+    </div>
+</div>
+`;
         
         document.body.appendChild(modalZoom);
         
