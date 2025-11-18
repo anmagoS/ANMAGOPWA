@@ -7,7 +7,7 @@ window.articulosCarrito = [];
 window.formularioInicializado = false;
 window.ciudadesColombia = [];
 
-// 🔍 FUNCIÓN FALTANTE - CONSULTA CLIENTE EXISTENTE
+// 🔍 FUNCIÓN MEJORADA - CONSULTA CLIENTE EXISTENTE SIN LIMPIAR CAMPOS
 async function consultarClienteAPI(telefono) {
     try {
         console.log('🔍 CONSULTANDO CLIENTE EXISTENTE:', telefono);
@@ -488,55 +488,74 @@ function inicializarFormulario() {
         if (el) el.addEventListener("input", validarFormularioCliente);
     });
 
-    // 📱 EVENTO TELÉFONO - VERSIÓN OPTIMIZADA
-    const campoTelefono = document.getElementById("telefonoCliente");
-    if (campoTelefono) {
-        let timeoutConsulta;
+   // 📱 EVENTO TELÉFONO - VERSIÓN CORREGIDA (NO LIMPIA CAMPOS)
+const campoTelefono = document.getElementById("telefonoCliente");
+if (campoTelefono) {
+    let timeoutConsulta;
+    
+    campoTelefono.addEventListener("input", () => {
+        clearTimeout(timeoutConsulta);
+        const telefono = campoTelefono.value.trim();
         
-        campoTelefono.addEventListener("input", () => {
-            clearTimeout(timeoutConsulta);
-            const telefono = campoTelefono.value.trim();
-            
-            if (!/^3\d{9}$/.test(telefono)) {
-                validarFormularioCliente();
-                return;
-            }
+        if (!/^3\d{9}$/.test(telefono)) {
+            validarFormularioCliente();
+            return;
+        }
 
-            // Deshabilitar temporalmente
-            otrosCampos.forEach(el => el.disabled = true);
-            
-            timeoutConsulta = setTimeout(async () => {
-                try {
-                    console.log('📞 CONSULTANDO CLIENTE:', telefono);
-                    const resultado = await consultarClienteAPI(telefono);
+        // Deshabilitar temporalmente
+        otrosCampos.forEach(el => el.disabled = true);
+        
+        timeoutConsulta = setTimeout(async () => {
+            try {
+                console.log('📞 CONSULTANDO CLIENTE:', telefono);
+                const resultado = await consultarClienteAPI(telefono);
+                
+                if (resultado?.existe && resultado.datos) {
+                    const d = resultado.datos;
+                    console.log('✅ CLIENTE ENCONTRADO - PRECARGANDO DATOS:', d);
                     
-                    if (resultado?.existe && resultado.datos) {
-                        const d = resultado.datos;
+                    // SOLO PRECARGAR CAMPOS QUE ESTÉN VACÍOS O QUE TENGAN DATOS EN BD
+                    // No sobreescribir lo que el usuario ya haya escrito
+                    
+                    if (!document.getElementById("clienteId").value) {
                         document.getElementById("clienteId").value = d["CLIENTEID"] || "";
-                        document.getElementById("telefonoCliente").value = d["TELEFONOCLIENTE"] || "";
-                        document.getElementById("nombreCliente").value = d["NOMBRECLIENTE"] || "";
-                        document.getElementById("ciudadCliente").value = d["CIUDAD DESTINO"] || "";
-                        document.getElementById("emailCliente").value = d["CORREO"] || "";
-                        repartirDireccionConcatenada(d["DIRECCIONCLIENTE"] || "");
-                    } else {
-                        // Limpiar campos si no existe
-                        ["clienteId", "nombreCliente", "DireccionCompleta", "tipoUnidad", 
-                         "numeroApto", "barrio", "observacionDireccion", "ciudadCliente", "emailCliente"]
-                        .forEach(id => {
-                            const el = document.getElementById(id);
-                            if (el) el.value = "";
-                        });
                     }
-                } catch (error) {
-                    console.error('❌ Error en consulta:', error);
-                } finally {
-                    // Siempre habilitar campos
-                    otrosCampos.forEach(el => el.disabled = false);
-                    validarFormularioCliente();
+                    
+                    if (!document.getElementById("nombreCliente").value && d["NOMBRECLIENTE"]) {
+                        document.getElementById("nombreCliente").value = d["NOMBRECLIENTE"];
+                    }
+                    
+                    if (!document.getElementById("ciudadCliente").value && d["CIUDAD DESTINO"]) {
+                        document.getElementById("ciudadCliente").value = d["CIUDAD DESTINO"];
+                    }
+                    
+                    if (!document.getElementById("emailCliente").value && d["CORREO"]) {
+                        document.getElementById("emailCliente").value = d["CORREO"];
+                    }
+                    
+                    // Solo precargar dirección si el campo principal está vacío
+                    if (!document.getElementById("DireccionCompleta").value && d["DIRECCIONCLIENTE"]) {
+                        repartirDireccionConcatenada(d["DIRECCIONCLIENTE"]);
+                    }
+                    
+                    console.log('✅ PRECARGA COMPLETADA - Campos preservados');
+                    
+                } else {
+                    console.log('🆕 CLIENTE NUEVO - Manteniendo campos existentes');
+                    // NO LIMPIAR CAMPOS - el usuario puede estar escribiendo
+                    // Solo asegurar que clienteId esté vacío para nuevo cliente
+                    document.getElementById("clienteId").value = "";
                 }
-            }, 800);
-        });
-    }
+            } catch (error) {
+                console.error('❌ Error en consulta:', error);
+            } finally {
+                // Siempre habilitar campos
+                otrosCampos.forEach(el => el.disabled = false);
+                validarFormularioCliente();
+            }
+        }, 800);
+    });
+}
 
     // 🟢 EVENTO ENVIAR - VERSIÓN CORREGIDA
     const btnEnviar = document.getElementById("btnEnviarPedido");
