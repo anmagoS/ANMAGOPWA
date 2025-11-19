@@ -1243,7 +1243,7 @@
   {
     "id": "24DBE567",
     "tipo": "HOGAR",
-    "subtipo": "ELECTRO",
+    "subtipo": "COCINA",
     "categoria": "COCINA",
     "subcategoria": "JARRAS",
     "producto": "JARRA HERVIDORA ELECTRICA",
@@ -1260,7 +1260,7 @@
   {
     "id": "CC2EFAB1",
     "tipo": "HOGAR",
-    "subtipo": "ELECTRO",
+    "subtipo": "COCINA",
     "categoria": "COCINA",
     "subcategoria": "JARRAS",
     "producto": "TETERA ELECTRICA SOKANY 2.5 LT",
@@ -1277,7 +1277,7 @@
   {
     "id": "0C55C555",
     "tipo": "HOGAR",
-    "subtipo": "ELECTRO",
+    "subtipo": "COCINA",
     "categoria": "COCINA",
     "subcategoria": "VASOS",
     "producto": "VASO METALICO MEZCLADOR",
