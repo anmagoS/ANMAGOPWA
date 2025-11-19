@@ -1226,7 +1226,7 @@
   {
     "id": "041F88D2",
     "tipo": "HOGAR",
-    "subtipo": "HOGAR",
+    "subtipo": "ILUMINACION",
     "categoria": "LAMPARAS",
     "subcategoria": "PARLANTE RECARGABLE BLUETOTH",
     "producto": "ASTRONAUTA PROYECTOR",
@@ -1243,7 +1243,7 @@
   {
     "id": "24DBE567",
     "tipo": "HOGAR",
-    "subtipo": "HOGAR",
+    "subtipo": "ELECTRO",
     "categoria": "COCINA",
     "subcategoria": "JARRAS",
     "producto": "JARRA HERVIDORA ELECTRICA",
@@ -1260,7 +1260,7 @@
   {
     "id": "CC2EFAB1",
     "tipo": "HOGAR",
-    "subtipo": "HOGAR",
+    "subtipo": "ELECTRO",
     "categoria": "COCINA",
     "subcategoria": "JARRAS",
     "producto": "TETERA ELECTRICA SOKANY 2.5 LT",
@@ -1277,7 +1277,7 @@
   {
     "id": "0C55C555",
     "tipo": "HOGAR",
-    "subtipo": "HOGAR",
+    "subtipo": "ELECTRO",
     "categoria": "COCINA",
     "subcategoria": "VASOS",
     "producto": "VASO METALICO MEZCLADOR",
@@ -1294,7 +1294,7 @@
   {
     "id": "629FA20D",
     "tipo": "HOGAR",
-    "subtipo": "HOGAR",
+    "subtipo": "COCINA",
     "categoria": "COCINA",
     "subcategoria": "VASOS",
     "producto": "VASO TERMO VIAJERO",
@@ -2046,7 +2046,7 @@
   {
     "id": "DF4EC51F",
     "tipo": "HOGAR",
-    "subtipo": "HOGAR",
+    "subtipo": "HABITACION",
     "categoria": "KAWAII",
     "subcategoria": "COBIJAS",
     "producto": "COBIJA 73 X 130 CM",
