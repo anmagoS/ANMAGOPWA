@@ -2841,5 +2841,21 @@
     "url": "https://ik.imagekit.io/mbsk9dati/producto_179/PRODUCTOS_Images_62428bd7.IMAGEN_1.193524.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_179/PRODUCTOS_Images_62428bd7.IMAGEN_2.193524.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_179/PRODUCTOS_Images_62428bd7.IMAGEN_3.193524.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_179/PRODUCTOS_Images_62428bd7.IMAGEN_4.193528.jpg?tr=w-600,q-80",
     "proveedor": "ESTAMPADOS JYM CARLOS TORRES",
     "descripcion": "HERMOSO CONJUNTO DE MICKEY MOUSE CON BIKER EN SUPLEX , RECUERDA Q LA TALLA UNICA SIRVE PARA S,M,L. Q ESPERAR REALIZA YA TU PEDIDO"
+  },
+  {
+    "id": "5C1BDC01",
+    "tipo": "ROPA",
+    "subtipo": "DAMA",
+    "categoria": "ROPA DEPORTIVA",
+    "subcategoria": "BIKER",
+    "producto": "CONJUNTO BIKER SUPLEX PUMA",
+    "material": "ALGONDON Y SUPLEX",
+    "tallas": "UNICA,XL",
+    "precio": 62040,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_180/PRODUCTOS_Images_5c1bdc01.IMAGEN_1.194247.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_180/PRODUCTOS_Images_5c1bdc01.IMAGEN_1.194247.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_180/PRODUCTOS_Images_5c1bdc01.IMAGEN_2.194247.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_180/PRODUCTOS_Images_5c1bdc01.IMAGEN_3.194247.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_180/PRODUCTOS_Images_5c1bdc01.IMAGEN_4.194251.jpg?tr=w-600,q-80",
+    "proveedor": "ESTAMPADOS JYM CARLOS TORRES",
+    "descripcion": "CONJUNTO DE CAMISETA EN ALGODON Y BIKER EN SUPLEX, TALLAS DISPONIBLES UNICA (S,M,L) Y XL."
   }
 ]
