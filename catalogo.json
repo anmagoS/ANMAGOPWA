@@ -2777,5 +2777,21 @@
     "url": "https://ik.imagekit.io/mbsk9dati/producto_175/PRODUCTOS_Images_54a5abb2.IMAGEN_1.185451.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_175/PRODUCTOS_Images_54a5abb2.IMAGEN_2.185451.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_175/PRODUCTOS_Images_54a5abb2.IMAGEN_3.185451.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_175/PRODUCTOS_Images_54a5abb2.IMAGEN_4.185453.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_175/PRODUCTOS_Images_54a5abb2.IMAGEN_5.185454.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_175/PRODUCTOS_Images_54a5abb2.IMAGEN_6.185454.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_175/PRODUCTOS_Images_54a5abb2.IMAGEN_7.185456.jpg?tr=w-600,q-80",
     "proveedor": "ESTAMPADOS JYM CARLOS TORRES",
     "descripcion": "CONJUNTO DE CAMISETA EN ALGONDON Y PANTALONETA EN BURDA. ECRIBENOS O ENVIA TU PEDIDO"
+  },
+  {
+    "id": "ABC07A0D",
+    "tipo": "ROPA",
+    "subtipo": "CABALLERO",
+    "categoria": "CONJUNTOS",
+    "subcategoria": "NEW YORK",
+    "producto": "CONJUNTO NEW YORK",
+    "material": "ALGODON Y BURDA",
+    "tallas": "S,M,L,XL",
+    "precio": 63450,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_176/PRODUCTOS_Images_abc07a0d.IMAGEN_1.190922.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_176/PRODUCTOS_Images_abc07a0d.IMAGEN_1.190922.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_176/PRODUCTOS_Images_abc07a0d.IMAGEN_2.190922.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_176/PRODUCTOS_Images_abc07a0d.IMAGEN_3.190922.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_176/PRODUCTOS_Images_abc07a0d.IMAGEN_4.190926.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_176/PRODUCTOS_Images_abc07a0d.IMAGEN_5.190926.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_176/PRODUCTOS_Images_abc07a0d.IMAGEN_6.190926.jpg?tr=w-600,q-80",
+    "proveedor": "ESTAMPADOS JYM CARLOS TORRES",
+    "descripcion": "HERMOSOS CONJUNTOS DE CAMISETA EN ALGODON Y PANTALONETA EN BURDA. QUE ESEPRAR PARA LUCIR BIEN?"
   }
 ]
