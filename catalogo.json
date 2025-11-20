@@ -2793,5 +2793,21 @@
     "url": "https://ik.imagekit.io/mbsk9dati/producto_176/PRODUCTOS_Images_abc07a0d.IMAGEN_1.190922.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_176/PRODUCTOS_Images_abc07a0d.IMAGEN_2.190922.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_176/PRODUCTOS_Images_abc07a0d.IMAGEN_3.190922.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_176/PRODUCTOS_Images_abc07a0d.IMAGEN_4.190926.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_176/PRODUCTOS_Images_abc07a0d.IMAGEN_5.190926.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_176/PRODUCTOS_Images_abc07a0d.IMAGEN_6.190926.jpg?tr=w-600,q-80",
     "proveedor": "ESTAMPADOS JYM CARLOS TORRES",
     "descripcion": "HERMOSOS CONJUNTOS DE CAMISETA EN ALGODON Y PANTALONETA EN BURDA. QUE ESEPRAR PARA LUCIR BIEN?"
+  },
+  {
+    "id": "2FF9929E",
+    "tipo": "ROPA",
+    "subtipo": "DAMA",
+    "categoria": "ROPA DEPORTIVA",
+    "subcategoria": "TOMY",
+    "producto": "CONJUNTO PANTALONETA TOMMY",
+    "material": "ALGODON Y BURDA",
+    "tallas": "S,M,L,XL",
+    "precio": 63450,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_177/PRODUCTOS_Images_2ff9929e.IMAGEN_1.191911.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_177/PRODUCTOS_Images_2ff9929e.IMAGEN_1.191911.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_177/PRODUCTOS_Images_2ff9929e.IMAGEN_2.191911.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_177/PRODUCTOS_Images_2ff9929e.IMAGEN_3.191911.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_177/PRODUCTOS_Images_2ff9929e.IMAGEN_4.191914.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_177/PRODUCTOS_Images_2ff9929e.IMAGEN_5.191914.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_177/PRODUCTOS_Images_2ff9929e.IMAGEN_6.191915.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_177/PRODUCTOS_Images_2ff9929e.IMAGEN_7.191916.jpg?tr=w-600,q-80",
+    "proveedor": "ESTAMPADOS JYM CARLOS TORRES",
+    "descripcion": "CONUJNTO DE CAMISETA EN ALGODON Y PANTALONETA EN BURDA , CAMISETA HORMA AMPLIA."
   }
 ]
