@@ -2873,5 +2873,21 @@
     "url": "https://ik.imagekit.io/mbsk9dati/producto_181/PRODUCTOS_Images_19ba48cd.IMAGEN_1.194755.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_181/PRODUCTOS_Images_19ba48cd.IMAGEN_2.194755.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_181/PRODUCTOS_Images_19ba48cd.IMAGEN_3.194755.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_181/PRODUCTOS_Images_19ba48cd.IMAGEN_4.194758.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_181/PRODUCTOS_Images_19ba48cd.IMAGEN_5.194758.jpg?tr=w-600,q-80",
     "proveedor": "ESTAMPADOS JYM CARLOS TORRES",
     "descripcion": "CONJUNTO CABALLERO PANTALONETA EN BURDA CAMISETA EN ALGODNON LOGO DE POLO RALPH LAUREN"
+  },
+  {
+    "id": "EAF57483",
+    "tipo": "ROPA",
+    "subtipo": "NIÑOS",
+    "categoria": "CONJUNTO",
+    "subcategoria": "POLO RALPH LAUREN",
+    "producto": "CONJUNTO RALPH LAUREN",
+    "material": "BURDA Y ALGODON",
+    "tallas": "2-4,6-8,10-12,14-16",
+    "precio": 54990,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_182/PRODUCTOS_Images_eaf57483.IMAGEN_1.195101.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_182/PRODUCTOS_Images_eaf57483.IMAGEN_1.195101.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_182/PRODUCTOS_Images_eaf57483.IMAGEN_2.195101.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_182/PRODUCTOS_Images_eaf57483.IMAGEN_3.195101.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_182/PRODUCTOS_Images_eaf57483.IMAGEN_4.195103.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_182/PRODUCTOS_Images_eaf57483.IMAGEN_5.195104.jpg?tr=w-600,q-80",
+    "proveedor": "ESTAMPADOS JYM CARLOS TORRES",
+    "descripcion": "CONJUNTO PARA NIÑOS CON CAMISETA EN ALGODON Y PANTALONETA EN BORDA CON LOGO DE POLO RALPH LAUREN"
   }
 ]
