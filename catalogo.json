@@ -2857,5 +2857,21 @@
     "url": "https://ik.imagekit.io/mbsk9dati/producto_180/PRODUCTOS_Images_5c1bdc01.IMAGEN_1.194247.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_180/PRODUCTOS_Images_5c1bdc01.IMAGEN_2.194247.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_180/PRODUCTOS_Images_5c1bdc01.IMAGEN_3.194247.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_180/PRODUCTOS_Images_5c1bdc01.IMAGEN_4.194251.jpg?tr=w-600,q-80",
     "proveedor": "ESTAMPADOS JYM CARLOS TORRES",
     "descripcion": "CONJUNTO DE CAMISETA EN ALGODON Y BIKER EN SUPLEX, TALLAS DISPONIBLES UNICA (S,M,L) Y XL."
+  },
+  {
+    "id": "19BA48CD",
+    "tipo": "ROPA",
+    "subtipo": "CABALLERO",
+    "categoria": "ROPA DEPORTIVA",
+    "subcategoria": "PANTALONETA LOGO POLO RALPH LAUREN",
+    "producto": "CONJUNTO PANTALONETA POLO RALPH LAUREN",
+    "material": "ALGODON Y BURDA",
+    "tallas": "S,M,L,XL",
+    "precio": 63450,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_181/PRODUCTOS_Images_19ba48cd.IMAGEN_1.194755.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_181/PRODUCTOS_Images_19ba48cd.IMAGEN_1.194755.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_181/PRODUCTOS_Images_19ba48cd.IMAGEN_2.194755.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_181/PRODUCTOS_Images_19ba48cd.IMAGEN_3.194755.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_181/PRODUCTOS_Images_19ba48cd.IMAGEN_4.194758.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_181/PRODUCTOS_Images_19ba48cd.IMAGEN_5.194758.jpg?tr=w-600,q-80",
+    "proveedor": "ESTAMPADOS JYM CARLOS TORRES",
+    "descripcion": "CONJUNTO CABALLERO PANTALONETA EN BURDA CAMISETA EN ALGODNON LOGO DE POLO RALPH LAUREN"
   }
 ]
