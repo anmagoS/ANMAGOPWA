@@ -2809,5 +2809,21 @@
     "url": "https://ik.imagekit.io/mbsk9dati/producto_177/PRODUCTOS_Images_2ff9929e.IMAGEN_1.191911.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_177/PRODUCTOS_Images_2ff9929e.IMAGEN_2.191911.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_177/PRODUCTOS_Images_2ff9929e.IMAGEN_3.191911.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_177/PRODUCTOS_Images_2ff9929e.IMAGEN_4.191914.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_177/PRODUCTOS_Images_2ff9929e.IMAGEN_5.191914.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_177/PRODUCTOS_Images_2ff9929e.IMAGEN_6.191915.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_177/PRODUCTOS_Images_2ff9929e.IMAGEN_7.191916.jpg?tr=w-600,q-80",
     "proveedor": "ESTAMPADOS JYM CARLOS TORRES",
     "descripcion": "CONUJNTO DE CAMISETA EN ALGODON Y PANTALONETA EN BURDA , CAMISETA HORMA AMPLIA."
+  },
+  {
+    "id": "8609BC6B",
+    "tipo": "ROPA",
+    "subtipo": "DAMA",
+    "categoria": "ROPA DEPORTIVA",
+    "subcategoria": "SUPLEX",
+    "producto": "CONJUNTO PANTALON SUPLEX ICE",
+    "material": "SUPLEX Y ALGODON",
+    "tallas": "UNICA",
+    "precio": 64860,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_178/PRODUCTOS_Images_8609bc6b.IMAGEN_1.192552.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_178/PRODUCTOS_Images_8609bc6b.IMAGEN_1.192552.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_178/PRODUCTOS_Images_8609bc6b.IMAGEN_2.192552.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_178/PRODUCTOS_Images_8609bc6b.IMAGEN_3.192552.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_178/PRODUCTOS_Images_8609bc6b.IMAGEN_4.192555.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_178/PRODUCTOS_Images_8609bc6b.IMAGEN_5.192555.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_178/PRODUCTOS_Images_8609bc6b.IMAGEN_6.192555.jpg?tr=w-600,q-80",
+    "proveedor": "ESTAMPADOS JYM CARLOS TORRES",
+    "descripcion": "CONJUNTO ICE CREAM CON SUPLEX"
   }
 ]
