@@ -749,10 +749,6 @@
   },
   {
     "id_producto": "EC381FD3",
-    "ruta": "/HOGAR/HOGAR/COCINA/ORGANIZADORES"
-  },
-  {
-    "id_producto": "EC381FD3",
-    "ruta": "/HOGAR/COCINA/ORGANIZADORES"
+    "ruta": "/HOGAR/COCINA/COCINA/ORGANIZADORES"
   }
 ]
