@@ -2970,5 +2970,20 @@
     "url": "https://ik.imagekit.io/mbsk9dati/producto_187/PRODUCTOS_Images_ec381fd3.IMAGEN_1.215336.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_187/PRODUCTOS_Images_ec381fd3.IMAGEN_2.215336.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_187/PRODUCTOS_Images_ec381fd3.IMAGEN_3.215336.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_187/PRODUCTOS_Images_ec381fd3.IMAGEN_4.215339.jpg?tr=w-600,q-80",
     "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA",
     "descripcion": "ALTO     95CM\nANCHO 65CM\nFONDO 30CM"
+  },
+  {
+    "id": "EEBF9E4F",
+    "tipo": "HOGAR",
+    "subtipo": "HABITACION",
+    "categoria": "ORGANIZADORES",
+    "subcategoria": "CALZADO",
+    "producto": "ZAPATERO DOBLE DE CINCO ESPACIOS",
+    "material": ".",
+    "tallas": "N/A",
+    "precio": 63450,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_188/PRODUCTOS_Images_eebf9e4f.IMAGEN_1.231118.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_188/PRODUCTOS_Images_eebf9e4f.IMAGEN_1.231118.jpg?tr=w-600,q-80",
+    "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA"
   }
 ]
