@@ -738,5 +738,13 @@
   {
     "id_producto": "4471BA20",
     "ruta": "/HOGAR/SONIDO Y TELEVISION/PROYECTORES"
+  },
+  {
+    "id_producto": "80202FF4",
+    "ruta": "/HOGAR/HOGAR/COCINA/MAQUINAS"
+  },
+  {
+    "id_producto": "80202FF4",
+    "ruta": "/HOGAR/COCINA/MAQUINAS"
   }
 ]
