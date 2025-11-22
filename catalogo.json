@@ -2939,5 +2939,20 @@
     "url": "https://ik.imagekit.io/mbsk9dati/producto_185/PRODUCTOS_Images_80202ff4.IMAGEN_1.213402.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_185/PRODUCTOS_Images_80202ff4.IMAGEN_2.213402.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_185/PRODUCTOS_Images_80202ff4.IMAGEN_3.213402.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_185/PRODUCTOS_Images_80202ff4.IMAGEN_4.213405.jpg?tr=w-600,q-80",
     "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA",
     "descripcion": "MAQUINA PAA HACER DONAS EN FIGURAS"
+  },
+  {
+    "id": "390C49F7",
+    "tipo": "HOGAR",
+    "subtipo": "HOGAR",
+    "categoria": "COCINA",
+    "subcategoria": "MAQUINAS",
+    "producto": "MAQUINA PARA DERRITIR CHOCOLATE Y OTROS CON MOLDES",
+    "material": ".",
+    "tallas": "N/A",
+    "precio": 49900,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_186/PRODUCTOS_Images_390c49f7.IMAGEN_1.214714.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_186/PRODUCTOS_Images_390c49f7.IMAGEN_1.214714.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_186/PRODUCTOS_Images_390c49f7.IMAGEN_2.214714.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_186/PRODUCTOS_Images_390c49f7.IMAGEN_3.214714.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_186/PRODUCTOS_Images_390c49f7.IMAGEN_4.214717.jpg?tr=w-600,q-80",
+    "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA"
   }
 ]
