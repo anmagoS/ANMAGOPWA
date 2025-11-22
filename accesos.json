@@ -754,5 +754,13 @@
   {
     "id_producto": "390C49F7",
     "ruta": "/HOGAR/COCINA/MAQUINAS"
+  },
+  {
+    "id_producto": "EC381FD3",
+    "ruta": "/HOGAR/HOGAR/COCINA/ORGANIZADORES"
+  },
+  {
+    "id_producto": "EC381FD3",
+    "ruta": "/HOGAR/COCINA/ORGANIZADORES"
   }
 ]
