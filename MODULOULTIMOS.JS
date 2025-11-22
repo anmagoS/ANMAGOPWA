@@ -21,43 +21,36 @@ async function cargarUltimosProductos() {
     mostrarErrorUltimosProductos();
   }
 }
-
 function renderUltimosProductosML(productos) {
   const contenedor = document.getElementById("grid-ultimos");
   if (!contenedor) return;
 
-  const ultimos = productos.slice(-12).reverse();
-  
+  const ultimos = productos.slice(-20).reverse();
+
   if (ultimos.length === 0) {
     mostrarEstadoVacio();
     return;
   }
 
   contenedor.innerHTML = ultimos.map(p => {
-    if (!p.id || !p.producto || !p.imagen || !p.precio) return '';
+    const id = p.id || "sin-id";
+    const nombre = (p.producto || "Sin nombre").replace(/"/g, '&quot;');
+    const imagen = p.imagen || "https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg";
+    const precioFormateado = p.precio ? p.precio.toLocaleString("es-CO") : "N/D";
 
-    const precioFormateado = p.precio.toLocaleString("es-CO");
-    
     return `
-      <div class="card-producto-ml" data-producto-id="${p.id}">
-        <a href="PRODUCTO.HTML?id=${p.id}" class="text-decoration-none">
-          <img src="${p.imagen}" 
-               alt="${p.producto}" 
-               class="card-img-ml" 
-               loading="lazy" 
+      <div class="card-producto-ml" data-producto-id="${id}">
+        <a href="PRODUCTO.HTML?id=${id}" class="text-decoration-none">
+          <img src="${imagen}" alt="${nombre}" class="card-img-ml" loading="lazy"
                onerror="this.src='https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg'">
-          
           <div class="card-body-ml">
-            <h3 class="nombre-producto-ml small text-dark mb-2 line-clamp-2" title="${p.producto}">
-              ${p.producto}
+            <h3 class="nombre-producto-ml small text-dark mb-2 line-clamp-2" title="${nombre}">
+              ${nombre}
             </h3>
-            
             <div class="precio-ml mb-3">$${precioFormateado}</div>
-            
             <div class="d-grid">
-              <!-- ✅ CORREGIDO: Cambiado a "Ver detalles" que lleva a producto.html -->
-              <button class="btn btn-outline-primary btn-sm" 
-                      onclick="event.preventDefault(); event.stopPropagation(); verDetallesProducto('${p.id}')">
+              <button class="btn btn-outline-primary btn-sm"
+                      onclick="event.preventDefault(); event.stopPropagation(); verDetallesProducto('${id}')">
                 <i class="bi bi-eye"></i> Ver detalles
               </button>
             </div>
@@ -69,6 +62,7 @@ function renderUltimosProductosML(productos) {
 
   inicializarEventosProductos();
 }
+
 
 // ✅ NUEVA FUNCIÓN: Redirigir a la página del producto
 function verDetallesProducto(productoId) {
