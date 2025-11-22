@@ -50,7 +50,7 @@ function renderUltimosProductosML(productos) {
             <div class="precio-ml mb-3">$${precioFormateado}</div>
             <div class="d-grid">
               <button class="btn btn-outline-primary btn-sm"
-                      onclick="event.preventDefault(); event.stopPropagation(); verDetallesProducto('${id}')">
+                      onclick="verDetallesProducto('${id}')">
                 <i class="bi bi-eye"></i> Ver detalles
               </button>
             </div>
