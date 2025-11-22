@@ -780,7 +780,8 @@
       setTimeout(async () => {
           try {
               const productos = await obtenerCatalogo();
-              const ultimosProductos = productos.slice(-8);
+              // MEJOR SOLUCIÓN - usa la misma lógica que en MODULOULTIMOS.JS
+const ultimosProductos = productos.slice(-20).reverse();
               
               const grid = document.getElementById('grid-ultimos');
               grid.innerHTML = ultimosProductos.map(producto => `
