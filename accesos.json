@@ -746,5 +746,13 @@
   {
     "id_producto": "80202FF4",
     "ruta": "/HOGAR/COCINA/MAQUINAS"
+  },
+  {
+    "id_producto": "390C49F7",
+    "ruta": "/HOGAR/HOGAR/COCINA/MAQUINAS"
+  },
+  {
+    "id_producto": "390C49F7",
+    "ruta": "/HOGAR/COCINA/MAQUINAS"
   }
 ]
