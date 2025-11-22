@@ -730,5 +730,13 @@
   {
     "id_producto": "663D2264",
     "ruta": "/ROPA/CABALLERO/CAMISAS/CAMISA CABALLERO"
+  },
+  {
+    "id_producto": "4471BA20",
+    "ruta": "/HOGAR/HOGAR/SONIDO Y TELEVISION/PROYECTORES"
+  },
+  {
+    "id_producto": "4471BA20",
+    "ruta": "/HOGAR/SONIDO Y TELEVISION/PROYECTORES"
   }
 ]
