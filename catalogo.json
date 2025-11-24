@@ -2985,5 +2985,20 @@
     "promo": true,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_188/PRODUCTOS_Images_eebf9e4f.IMAGEN_1.231118.jpg?tr=w-600,q-80",
     "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA"
+  },
+  {
+    "id": "1643F081",
+    "tipo": "HOGAR",
+    "subtipo": "HABITACION",
+    "categoria": "ORGANIZADORES",
+    "subcategoria": "CLZDO Y OTROS",
+    "producto": "PERCHERO CON GABINETE",
+    "material": ".",
+    "tallas": "N/A",
+    "precio": 42300,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_189/PRODUCTOS_Images_1643f081.IMAGEN_1.191600.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_189/PRODUCTOS_Images_1643f081.IMAGEN_1.191600.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_189/PRODUCTOS_Images_1643f081.IMAGEN_2.191600.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_189/PRODUCTOS_Images_1643f081.IMAGEN_3.191600.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_189/PRODUCTOS_Images_1643f081.IMAGEN_4.191604.jpg?tr=w-600,q-80",
+    "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA"
   }
 ]
