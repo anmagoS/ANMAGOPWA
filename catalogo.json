@@ -3000,5 +3000,20 @@
     "promo": true,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_189/PRODUCTOS_Images_1643f081.IMAGEN_1.191600.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_189/PRODUCTOS_Images_1643f081.IMAGEN_2.191600.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_189/PRODUCTOS_Images_1643f081.IMAGEN_3.191600.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_189/PRODUCTOS_Images_1643f081.IMAGEN_4.191604.jpg?tr=w-600,q-80",
     "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA"
+  },
+  {
+    "id": "FB9792EF",
+    "tipo": "BELLEZA",
+    "subtipo": "DAMA",
+    "categoria": "CABELLO",
+    "subcategoria": ".",
+    "producto": "CEPILLO SECADOR MÁS PLANCHA SECADORA CON PLAQUETAS CERÁMICAS",
+    "material": "IONS",
+    "tallas": "N/A",
+    "precio": 89900,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_190/PRODUCTOS_Images_fb9792ef.IMAGEN_1.155848.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_190/PRODUCTOS_Images_fb9792ef.IMAGEN_1.155848.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_190/PRODUCTOS_Images_fb9792ef.IMAGEN_2.155848.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_190/PRODUCTOS_Images_fb9792ef.IMAGEN_3.155848.jpg?tr=w-600,q-80",
+    "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA"
   }
 ]
