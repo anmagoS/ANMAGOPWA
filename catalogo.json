@@ -3135,5 +3135,21 @@
     "promo": true,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_198/PRODUCTOS_Images_8f1fe173.IMAGEN_1.170358.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_198/PRODUCTOS_Images_8f1fe173.IMAGEN_2.170358.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_198/PRODUCTOS_Images_8f1fe173.IMAGEN_3.170358.jpg?tr=w-600,q-80",
     "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA"
+  },
+  {
+    "id": "0F404108",
+    "tipo": "HOGAR",
+    "subtipo": "VEHICULOS",
+    "categoria": "GENERICO",
+    "subcategoria": "CARROS",
+    "producto": "HIDROLAVADORA DOBLE BATERÍA DE 48 WATTS",
+    "material": "BATERIA DE 48 WATTS",
+    "tallas": "N/A",
+    "precio": 75500,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_199/PRODUCTOS_Images_0f404108.IMAGEN_1.211655.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_199/PRODUCTOS_Images_0f404108.IMAGEN_1.211655.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_199/PRODUCTOS_Images_0f404108.IMAGEN_2.211655.jpg?tr=w-600,q-80",
+    "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA",
+    "video_url": "https://youtube.com/shorts/udibsBHb0Jk?feature=share"
   }
 ]
