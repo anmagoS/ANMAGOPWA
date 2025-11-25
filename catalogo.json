@@ -3060,5 +3060,20 @@
     "promo": true,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_193/PRODUCTOS_Images_97ecdc4f.IMAGEN_1.163737.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_193/PRODUCTOS_Images_97ecdc4f.IMAGEN_2.163737.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_193/PRODUCTOS_Images_97ecdc4f.IMAGEN_3.163737.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_193/PRODUCTOS_Images_97ecdc4f.IMAGEN_4.163740.jpg?tr=w-600,q-80",
     "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA"
+  },
+  {
+    "id": "BB921C4B",
+    "tipo": "HOGAR",
+    "subtipo": "HABITACION",
+    "categoria": "ORGANIZADORES",
+    "subcategoria": "CALZADO",
+    "producto": "ARMARIO CON TAPA 5 NIVELES",
+    "material": ".",
+    "tallas": "N/A",
+    "precio": 58900,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_194/PRODUCTOS_Images_bb921c4b.IMAGEN_1.164309.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_194/PRODUCTOS_Images_bb921c4b.IMAGEN_1.164309.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_194/PRODUCTOS_Images_bb921c4b.IMAGEN_2.164309.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_194/PRODUCTOS_Images_bb921c4b.IMAGEN_3.164309.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_194/PRODUCTOS_Images_bb921c4b.IMAGEN_4.164312.jpg?tr=w-600,q-80",
+    "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA"
   }
 ]
