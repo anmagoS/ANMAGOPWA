@@ -3090,5 +3090,20 @@
     "promo": true,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_195/PRODUCTOS_Images_b0175d01.IMAGEN_1.164718.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_195/PRODUCTOS_Images_b0175d01.IMAGEN_2.164718.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_195/PRODUCTOS_Images_b0175d01.IMAGEN_3.164718.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_195/PRODUCTOS_Images_b0175d01.IMAGEN_4.164721.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_195/PRODUCTOS_Images_b0175d01.IMAGEN_5.164721.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_195/PRODUCTOS_Images_b0175d01.IMAGEN_6.164721.jpg?tr=w-600,q-80",
     "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA"
+  },
+  {
+    "id": "54EF50A8",
+    "tipo": "HOGAR",
+    "subtipo": "SALUD",
+    "categoria": "GENERICO",
+    "subcategoria": ".",
+    "producto": "TENSIOMETRO DIGITAL",
+    "material": ".",
+    "tallas": "N/A",
+    "precio": 45900,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_196/PRODUCTOS_Images_54ef50a8.IMAGEN_1.165155.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_196/PRODUCTOS_Images_54ef50a8.IMAGEN_1.165155.jpg?tr=w-600,q-80",
+    "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA"
   }
 ]
