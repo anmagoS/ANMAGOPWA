@@ -778,5 +778,9 @@
   {
     "id_producto": "B0175D01",
     "ruta": "/HOGAR/COCINA/COCINA/CUBIERTOS"
+  },
+  {
+    "id_producto": "54EF50A8",
+    "ruta": "/HOGAR/SALUD/GENERICO/."
   }
 ]
