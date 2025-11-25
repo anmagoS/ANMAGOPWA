@@ -3105,5 +3105,20 @@
     "promo": true,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_196/PRODUCTOS_Images_54ef50a8.IMAGEN_1.165155.jpg?tr=w-600,q-80",
     "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA"
+  },
+  {
+    "id": "6E7F6BAB",
+    "tipo": "HOGAR",
+    "subtipo": "BAÑO",
+    "categoria": "ORGANIZADORES",
+    "subcategoria": ".",
+    "producto": "REPISA PARA SANITARIO",
+    "material": ".",
+    "tallas": "N/A",
+    "precio": 59900,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_197/PRODUCTOS_Images_6e7f6bab.IMAGEN_1.165937.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_197/PRODUCTOS_Images_6e7f6bab.IMAGEN_1.165937.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_197/PRODUCTOS_Images_6e7f6bab.IMAGEN_2.165937.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_197/PRODUCTOS_Images_6e7f6bab.IMAGEN_3.165937.jpg?tr=w-600,q-80",
+    "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA"
   }
 ]
