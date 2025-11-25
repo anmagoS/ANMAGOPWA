@@ -3045,5 +3045,20 @@
     "promo": true,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_192/PRODUCTOS_Images_203b9170.IMAGEN_1.163121.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_192/PRODUCTOS_Images_203b9170.IMAGEN_2.163121.jpg?tr=w-600,q-80",
     "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA"
+  },
+  {
+    "id": "97ECDC4F",
+    "tipo": "BELLEZA",
+    "subtipo": "DAMA",
+    "categoria": "CABELLO",
+    "subcategoria": "PLANCHAS",
+    "producto": "PLANCHA DE ARGAN",
+    "material": ".",
+    "tallas": "N/A",
+    "precio": 78900,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_193/PRODUCTOS_Images_97ecdc4f.IMAGEN_1.163737.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_193/PRODUCTOS_Images_97ecdc4f.IMAGEN_1.163737.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_193/PRODUCTOS_Images_97ecdc4f.IMAGEN_2.163737.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_193/PRODUCTOS_Images_97ecdc4f.IMAGEN_3.163737.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_193/PRODUCTOS_Images_97ecdc4f.IMAGEN_4.163740.jpg?tr=w-600,q-80",
+    "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA"
   }
 ]
