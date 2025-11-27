@@ -826,5 +826,9 @@
   {
     "id_producto": "8B80535D",
     "ruta": "/HOGAR/MASCOTAS/GENERICO/PEINE"
+  },
+  {
+    "id_producto": "21FE4D56",
+    "ruta": "/HOGAR/MASCOTAS/GENERICO/CORREA"
   }
 ]
