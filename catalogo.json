@@ -3293,5 +3293,20 @@
     "url": "https://ik.imagekit.io/mbsk9dati/producto_208/PRODUCTOS_Images_21fe4d56.IMAGEN_1.192413.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_208/PRODUCTOS_Images_21fe4d56.IMAGEN_2.192413.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_208/PRODUCTOS_Images_21fe4d56.IMAGEN_3.192413.jpg?tr=w-600,q-80",
     "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA",
     "descripcion": "."
+  },
+  {
+    "id": "CBD23E93",
+    "tipo": "HOGAR",
+    "subtipo": "MASCOTAS",
+    "categoria": "GENERICO",
+    "subcategoria": "CORRAL",
+    "producto": "CORRAL PARA MASCOTAS DE RAZAS PEQUEÑAS",
+    "material": ".",
+    "tallas": "N/A",
+    "precio": 64900,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_209/PRODUCTOS_Images_cbd23e93.IMAGEN_1.192925.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_209/PRODUCTOS_Images_cbd23e93.IMAGEN_1.192925.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_209/PRODUCTOS_Images_cbd23e93.IMAGEN_2.192925.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_209/PRODUCTOS_Images_cbd23e93.IMAGEN_3.192925.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_209/PRODUCTOS_Images_cbd23e93.IMAGEN_4.192927.jpg?tr=w-600,q-80",
+    "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA"
   }
 ]
