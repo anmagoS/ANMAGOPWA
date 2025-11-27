@@ -3231,5 +3231,20 @@
     "url": "https://ik.imagekit.io/mbsk9dati/producto_204/PRODUCTOS_Images_b364a1cd.IMAGEN_1.174600.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_204/PRODUCTOS_Images_b364a1cd.IMAGEN_2.174600.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_204/PRODUCTOS_Images_b364a1cd.IMAGEN_3.174600.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_204/PRODUCTOS_Images_b364a1cd.IMAGEN_4.174603.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_204/PRODUCTOS_Images_b364a1cd.IMAGEN_5.174603.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_204/PRODUCTOS_Images_b364a1cd.IMAGEN_7.174606.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_204/PRODUCTOS_Images_b364a1cd.IMAGEN_8.174606.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_204/PRODUCTOS_Images_b364a1cd.IMAGEN_9.174607.jpg?tr=w-600,q-80",
     "proveedor": "MANDRA",
     "descripcion": "CAMISAS CABALLERO"
+  },
+  {
+    "id": "63E984D3",
+    "tipo": "HOGAR",
+    "subtipo": "MASCOTAS",
+    "categoria": "GENERICO",
+    "subcategoria": "MALETA",
+    "producto": "MALETA PARA MASCOTAS CON ACRÍLICO FRONTAL",
+    "material": "ACRILICO",
+    "tallas": "N/A",
+    "precio": 65000,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_205/PRODUCTOS_Images_63e984d3.IMAGEN_1.184700.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_205/PRODUCTOS_Images_63e984d3.IMAGEN_1.184700.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_205/PRODUCTOS_Images_63e984d3.IMAGEN_2.184700.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_205/PRODUCTOS_Images_63e984d3.IMAGEN_3.184700.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_205/PRODUCTOS_Images_63e984d3.IMAGEN_4.184703.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_205/PRODUCTOS_Images_63e984d3.IMAGEN_5.184704.jpg?tr=w-600,q-80",
+    "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA"
   }
 ]
