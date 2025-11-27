@@ -3261,5 +3261,21 @@
     "promo": true,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_206/PRODUCTOS_Images_9a512f91.IMAGEN_1.190649.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_206/PRODUCTOS_Images_9a512f91.IMAGEN_2.190649.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_206/PRODUCTOS_Images_9a512f91.IMAGEN_3.190649.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_206/PRODUCTOS_Images_9a512f91.IMAGEN_4.190653.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_206/PRODUCTOS_Images_9a512f91.IMAGEN_5.190653.jpg?tr=w-600,q-80",
     "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA"
+  },
+  {
+    "id": "8B80535D",
+    "tipo": "HOGAR",
+    "subtipo": "MASCOTAS",
+    "categoria": "GENERICO",
+    "subcategoria": "PEINE",
+    "producto": "CEPILLO DOS EN UNO PARA LIMPIAR Y RECOGER MOTAS",
+    "material": ".",
+    "tallas": "N/A",
+    "precio": 11280,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_207/PRODUCTOS_Images_8b80535d.IMAGEN_1.191730.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_207/PRODUCTOS_Images_8b80535d.IMAGEN_1.191730.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_207/PRODUCTOS_Images_8b80535d.IMAGEN_2.191730.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_207/PRODUCTOS_Images_8b80535d.IMAGEN_3.191730.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_207/PRODUCTOS_Images_8b80535d.IMAGEN_4.191733.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_207/PRODUCTOS_Images_8b80535d.IMAGEN_5.191734.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_207/PRODUCTOS_Images_8b80535d.IMAGEN_6.191735.jpg?tr=w-600,q-80",
+    "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA",
+    "descripcion": "."
   }
 ]
