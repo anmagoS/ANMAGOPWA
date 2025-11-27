@@ -3246,5 +3246,20 @@
     "promo": true,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_205/PRODUCTOS_Images_63e984d3.IMAGEN_1.184700.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_205/PRODUCTOS_Images_63e984d3.IMAGEN_2.184700.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_205/PRODUCTOS_Images_63e984d3.IMAGEN_3.184700.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_205/PRODUCTOS_Images_63e984d3.IMAGEN_4.184703.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_205/PRODUCTOS_Images_63e984d3.IMAGEN_5.184704.jpg?tr=w-600,q-80",
     "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA"
+  },
+  {
+    "id": "9A512F91",
+    "tipo": "HOGAR",
+    "subtipo": "MASCOTAS",
+    "categoria": "GENERICO",
+    "subcategoria": "MALETA",
+    "producto": "MALETA PARA MASCOTAS DESARMABLE",
+    "material": "LICRADO",
+    "tallas": "N/A",
+    "precio": 75900,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_206/PRODUCTOS_Images_9a512f91.IMAGEN_1.190649.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_206/PRODUCTOS_Images_9a512f91.IMAGEN_1.190649.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_206/PRODUCTOS_Images_9a512f91.IMAGEN_2.190649.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_206/PRODUCTOS_Images_9a512f91.IMAGEN_3.190649.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_206/PRODUCTOS_Images_9a512f91.IMAGEN_4.190653.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_206/PRODUCTOS_Images_9a512f91.IMAGEN_5.190653.jpg?tr=w-600,q-80",
+    "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA"
   }
 ]
