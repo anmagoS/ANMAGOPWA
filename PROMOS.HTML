@@ -718,5 +718,63 @@ console.log('🎯 8 productos por bloque');
 console.log('📊 Filtro: productos con promo === true');
 
 </script>
+// ==== FIX CRÍTICO: ACTIVAR INTERVALO DE 6 HORAS ====
+(function() {
+    console.log('🔧 APLICANDO FIX CRÍTICO PARA INTERVALO...');
+    
+    // 1. Verificar si el intervalo está funcionando
+    if (!window.intervaloActualizacion) {
+        console.warn('⚠️ INTERVALO NO ACTIVO - Activando ahora...');
+        
+        // 2. Activar el intervalo inmediatamente
+        window.intervaloActualizacion = setInterval(() => {
+            console.log('🔄 ACTUALIZACIÓN AUTOMÁTICA (Intervalo 6h)');
+            console.log('🕐 Hora:', new Date().toLocaleTimeString());
+            
+            // Llamar a la función de actualización
+            if (typeof window.cargarProductosPromocion === 'function') {
+                window.cargarProductosPromocion();
+            } else {
+                console.error('❌ No se encontró cargarProductosPromocion');
+            }
+        }, 6 * 60 * 60 * 1000); // 6 horas en milisegundos
+        
+        console.log('✅ Intervalo activado:', window.intervaloActualizacion);
+        console.log('⏰ Próxima actualización automática en 6 horas');
+    }
+    
+    // 3. Verificación adicional: programar próxima actualización exacta
+    setTimeout(() => {
+        const ahora = new Date();
+        const horaActual = ahora.getHours();
+        
+        // Calcular próxima hora múltiplo de 6
+        let proximaHora = Math.ceil(horaActual / 6) * 6;
+        if (proximaHora >= 24) proximaHora = 0;
+        
+        const horaProxima = new Date(ahora);
+        horaProxima.setHours(proximaHora, 0, 0, 0);
+        if (proximaHora <= horaActual) {
+            horaProxima.setDate(horaProxima.getDate() + 1);
+        }
+        
+        const msHastaProxima = horaProxima - ahora;
+        const horasHasta = (msHastaProxima / (1000 * 60 * 60)).toFixed(2);
+        
+        console.log('⏰ Próxima actualización programada:');
+        console.log('   - Hora actual:', ahora.toLocaleTimeString());
+        console.log('   - Próxima actualización:', horaProxima.toLocaleTimeString());
+        console.log('   - En:', horasHasta, 'horas');
+        
+        // Programar actualización exacta
+        setTimeout(() => {
+            console.log('🔄 ACTUALIZACIÓN EXACTA (cambio de bloque)');
+            if (typeof window.cargarProductosPromocion === 'function') {
+                window.cargarProductosPromocion();
+            }
+        }, msHastaProxima);
+        
+    }, 1000);
+})();
 </body>
 </html>
