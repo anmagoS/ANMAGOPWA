@@ -3403,5 +3403,20 @@
     "promo": true,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_216/PRODUCTOS_Images_259d941b.IMAGEN_1.223712.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_216/PRODUCTOS_Images_259d941b.IMAGEN_2.223712.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_216/PRODUCTOS_Images_259d941b.IMAGEN_3.223712.jpg?tr=w-600,q-80",
     "proveedor": "FAMS"
+  },
+  {
+    "id": "C351E230",
+    "tipo": "ROPA",
+    "subtipo": "UNISEX",
+    "categoria": "PIJAMAS",
+    "subcategoria": "NAVIDEÑAS",
+    "producto": "PIJAMA NAVIDEÑA CABALLERO",
+    "material": "PIEL DE DURAZNO",
+    "tallas": "S,M,L,XL",
+    "precio": 52000,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_217/PRODUCTOS_Images_c351e230.IMAGEN_1.230354.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_217/PRODUCTOS_Images_c351e230.IMAGEN_1.230354.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_217/PRODUCTOS_Images_c351e230.IMAGEN_2.230354.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_217/PRODUCTOS_Images_c351e230.IMAGEN_3.230354.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_217/PRODUCTOS_Images_c351e230.IMAGEN_4.230356.jpg?tr=w-600,q-80",
+    "proveedor": "FAMS"
   }
 ]
