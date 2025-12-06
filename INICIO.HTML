@@ -453,7 +453,7 @@
           carouselContent.innerHTML = bloquePromociones.map((producto, index) => {
               const precioOriginal = Number(producto.precio) || 0;
               
-              // Calcular precio con descuento (15% por defecto o usar precioOferta si existe)
+              // Calcular precio con descuento (10% por defecto o usar precioOferta si existe)
               let precioDescuento;
               let descuentoPorcentaje;
               
@@ -461,7 +461,7 @@
                   precioDescuento = Number(producto.precioOferta);
                   descuentoPorcentaje = Math.round((1 - precioDescuento / precioOriginal) * 100);
               } else {
-                  descuentoPorcentaje = 15; // Descuento por defecto
+                  descuentoPorcentaje = 10; // Descuento por defecto
                   precioDescuento = Math.round(precioOriginal * (1 - descuentoPorcentaje / 100));
               }
               
