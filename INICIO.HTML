@@ -969,22 +969,60 @@ async checkForUpdates() {
             const registration = await navigator.serviceWorker.getRegistration();
             if (registration) {
                 await registration.update();
+                console.log('✅ Service Worker actualizado');
             }
         }
         
-        // 2. COMENTA o ELIMINA la verificación del CONFIG.json
-        // Simplemente no hagas esta petición si el archivo no existe
-        
-        // 3. Verificar si hay nuevo Service Worker
-        if (navigator.serviceWorker.controller) {
-            navigator.serviceWorker.controller.postMessage({
-                type: 'CHECK_FOR_UPDATES'
-            });
+        // 2. Verificar CONFIG.json con manejo de errores
+        try {
+            const configResponse = await fetch('./CONFIG.json?v=' + Date.now());
+            if (configResponse.ok) {
+                const config = await configResponse.json();
+                console.log('📋 Configuración cargada:', config.version);
+                
+                if (config.version && config.version !== this.currentVersion) {
+                    this.showUpdateNotification(
+                        `Nueva versión ${config.version} disponible. ` +
+                        `Cambios: ${config.changelog || 'Mejoras generales'}`
+                    );
+                }
+            }
+        } catch (configError) {
+            console.log('ℹ️ CONFIG.json no disponible, usando versión local');
+            // Puedes crear un CONFIG.json dinámico en localStorage
+            this.createFallbackConfig();
         }
         
+        // 3. Verificar versión guardada en localStorage
+        const savedVersion = localStorage.getItem('app_version');
+        if (savedVersion && savedVersion !== this.currentVersion) {
+            this.showUpdateNotification(
+                `Tienes la versión ${savedVersion}. ` +
+                `Actualiza a ${this.currentVersion} para nuevas funciones.`
+            );
+        }
+        
+        // 4. Guardar versión actual si no existe
+        if (!savedVersion) {
+            localStorage.setItem('app_version', this.currentVersion);
+        }
+        
+        console.log('✅ Verificación completada');
+        
     } catch (error) {
-        console.log('ℹ️ Verificación completada:', error.message || 'Sin errores');
+        console.log('ℹ️ Verificación:', error.message || 'Completada');
     }
+}
+
+createFallbackConfig() {
+    const fallbackConfig = {
+        version: this.currentVersion,
+        last_updated: new Date().toISOString().split('T')[0],
+        changelog: 'Versión actual de la aplicación',
+        force_update: false
+    };
+    
+    localStorage.setItem('app_config_fallback', JSON.stringify(fallbackConfig));
 }
     
     async forceUpdate() {
