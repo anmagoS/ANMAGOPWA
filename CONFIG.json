@@ -1,0 +1,12 @@
+{
+  "version": "v4.0",
+  "last_updated": "2024-12-06",
+  "changelog": "Sistema de actualización automática PWA",
+  "force_update": false,
+  "min_version": "v3.0",
+  "features": [
+    "Actualizaciones automáticas",
+    "Notificaciones de nueva versión",
+    "Cache optimizado"
+  ]
+}
