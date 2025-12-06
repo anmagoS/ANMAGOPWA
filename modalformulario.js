@@ -212,10 +212,11 @@ function detectarCarritoGarantizado() {
     return false;
 }
 
-// 🔥 EJECUCIÓN INMEDIATA - No esperar eventos
-const tieneCarrito = detectarCarritoGarantizado();
-console.log('🎯 RESULTADO DETECCIÓN:', tieneCarrito ? 'CON CARRITO' : 'SOLO REGISTRO');
-
+// 🔥 EJECUCIÓN INMEDIATA - En IIFE para evitar redeclaración
+(function() {
+    const tieneCarrito = detectarCarritoGarantizado();
+    console.log('🎯 RESULTADO DETECCIÓN:', tieneCarrito ? 'CON CARRITO' : 'SOLO REGISTRO');
+})();
 // 👤 Construir nombre del cliente - VERSIÓN RÁPIDA
 function construirNombreCliente() {
     const nombreInput = document.getElementById("nombreCliente");
