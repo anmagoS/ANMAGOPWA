@@ -300,6 +300,10 @@
       </div>
     </div>
   </nav>
+
+<!-- SCRIPTS EXTERNOS - Bootstrap debe ir ANTES de nuestro script -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
 // ========== CONFIGURACIÓN COMPARTIDA CON PROMOS.HTML ==========
 const CONFIG_PROMOS = {
@@ -312,24 +316,28 @@ const CONFIG_PROMOS = {
 let productosEnPromocion = [];
 let temporizadorInterval = null;
 let carruselInicializado = false;
+let carruselBootstrapInstancia = null;
 
-// ========== INICIALIZACIÓN ==========
+// ========== INICIALIZACIÓN SEGURA ==========
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 INICIO.HTML - Sistema de carrusel con rotación dinámica');
     
-    // Cargar en este orden
-    if (typeof cargarHeaderFooter === 'function') cargarHeaderFooter();
-    if (typeof inicializarCarrito === 'function') inicializarCarrito();
-    if (typeof configurarInstalacionPWA === 'function') configurarInstalacionPWA();
-    
-    // Sistema principal del carrusel
-    iniciarSistemaCarrusel();
-    
-    // Cargar productos recién llegados
-    setTimeout(() => cargarUltimosProductos(), 1000);
-    
-    // Manejar parámetros de URL
-    if (typeof manejarParametrosURL === 'function') manejarParametrosURL();
+    // Esperar un momento para asegurar que Bootstrap cargue
+    setTimeout(() => {
+        // Cargar en este orden
+        if (typeof cargarHeaderFooter === 'function') cargarHeaderFooter();
+        if (typeof inicializarCarrito === 'function') inicializarCarrito();
+        if (typeof configurarInstalacionPWA === 'function') configurarInstalacionPWA();
+        
+        // Sistema principal del carrusel
+        iniciarSistemaCarrusel();
+        
+        // Cargar productos recién llegados
+        setTimeout(() => cargarUltimosProductos(), 1000);
+        
+        // Manejar parámetros de URL
+        if (typeof manejarParametrosURL === 'function') manejarParametrosURL();
+    }, 500);
 });
 
 // ========== SISTEMA PRINCIPAL DEL CARRUSEL ==========
@@ -342,10 +350,7 @@ async function iniciarSistemaCarrusel() {
     // 2. Cargar productos en promoción
     await cargarProductosPromocionHome();
     
-    // 3. Configurar carrusel Bootstrap
-    configurarCarruselBootstrap();
-    
-    // 4. Programar actualización automática
+    // 3. Programar actualización automática
     programarActualizacionCarrusel();
     
     console.log('✅ Sistema de carrusel iniciado');
@@ -549,7 +554,7 @@ async function cargarProductosPromocionHome() {
     }
 }
 
-// ========== RENDERIZADO DEL CARRUSEL ==========
+// ========== RENDERIZADO DEL CARRUSEL (VERSIÓN SEGURA) ==========
 function renderizarCarruselOfertas(productos) {
     const contenedor = document.getElementById('carousel-promos-home-contenido');
     
@@ -582,15 +587,16 @@ function renderizarCarruselOfertas(productos) {
             : 'https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg?tr=w-600,h-400';
         
         return `
-            <div class="carousel-item ${index === 0 ? 'active' : ''}">
+            <div class="carousel-item ${index === 0 ? 'active' : ''}" data-index="${index}">
                 <a href="PRODUCTO.HTML?id=${producto.id || ''}&origen=home&promo=true" 
-                   class="producto-carrusel-card text-decoration-none">
+                   class="producto-carrusel-card text-decoration-none d-block">
                     <div class="position-relative">
                         <img src="${imagenUrl}" 
                              alt="${producto.producto || 'Producto en oferta'}" 
-                             class="producto-carrusel-img"
+                             class="producto-carrusel-img w-100"
                              loading="lazy"
-                             onerror="this.src='https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg?tr=w-600,h-400'">
+                             onerror="this.src='https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg?tr=w-600,h-400'"
+                             style="height: 200px; object-fit: cover;">
                         
                         <!-- Badge de descuento -->
                         <div class="position-absolute top-0 start-0 m-2">
@@ -607,27 +613,27 @@ function renderizarCarruselOfertas(productos) {
                         </div>
                     </div>
                     
-                    <div class="producto-carrusel-info">
-                        <div class="producto-carrusel-nombre line-clamp-2">
+                    <div class="producto-carrusel-info p-3">
+                        <div class="producto-carrusel-nombre line-clamp-2 fw-bold" style="height: 40px; overflow: hidden;">
                             ${producto.producto || 'Producto en oferta'}
                         </div>
                         
-                        <div class="producto-carrusel-precios">
+                        <div class="producto-carrusel-precios mt-2">
                             <div class="d-flex align-items-center gap-2">
-                                <span class="producto-carrusel-precio fw-bold text-danger">
+                                <span class="producto-carrusel-precio fw-bold text-danger fs-5">
                                     $${precioOferta.toLocaleString('es-CO')}
                                 </span>
                                 <span class="producto-carrusel-precio-original text-muted text-decoration-line-through small">
                                     $${precioOriginal.toLocaleString('es-CO')}
                                 </span>
                             </div>
-                            <div class="producto-carrusel-ahorro text-success small fw-bold">
+                            <div class="producto-carrusel-ahorro text-success small fw-bold mt-1">
                                 <i class="bi bi-coin"></i> Ahorras $${ahorro.toLocaleString('es-CO')}
                             </div>
                         </div>
                         
-                        <div class="producto-carrusel-accion mt-2">
-                            <span class="btn btn-sm btn-warning w-100 text-white fw-bold">
+                        <div class="producto-carrusel-accion mt-3">
+                            <span class="btn btn-sm btn-warning w-100 text-white fw-bold py-2">
                                 <i class="bi bi-cart-plus"></i> Ver oferta
                             </span>
                         </div>
@@ -650,96 +656,100 @@ function renderizarCarruselOfertas(productos) {
     
     console.log('✅ Carrusel renderizado con', productos.length, 'productos');
     
-    // Inicializar carrusel si no está inicializado
-    if (!carruselInicializado && productos.length > 1) {
-        inicializarCarruselBootstrap();
+    // Inicializar carrusel después de un breve retraso
+    setTimeout(() => {
+        inicializarCarruselSeguro();
+    }, 300);
+}
+
+// ========== INICIALIZAR CARRUSEL DE FORMA SEGURA ==========
+function inicializarCarruselSeguro() {
+    if (carruselInicializado) {
+        console.log('ℹ️ Carrusel ya está inicializado');
+        return;
     }
-}
-
-// ========== CONFIGURAR CARRUSEL BOOTSTRAP ==========
-function configurarCarruselBootstrap() {
-    const carousel = document.getElementById('carouselPromosHome');
-    if (!carousel) return;
-    
-    // Configurar intervalo automático (cambia cada 5 segundos)
-    const bsCarousel = new bootstrap.Carousel(carousel, {
-        interval: 5000, // 5 segundos
-        wrap: true,
-        touch: true
-    });
-    
-    console.log('✅ Carrusel Bootstrap configurado');
-}
-
-// ========== INICIALIZAR CARRUSEL BOOTSTRAP ==========
-function inicializarCarruselBootstrap() {
-    if (carruselInicializado) return;
     
     const carouselElement = document.getElementById('carouselPromosHome');
-    if (carouselElement) {
+    if (!carouselElement) {
+        console.error('❌ Elemento del carrusel no encontrado');
+        return;
+    }
+    
+    // Verificar si Bootstrap está disponible
+    if (typeof bootstrap === 'undefined') {
+        console.warn('⚠️ Bootstrap no está disponible. Usando carrusel simple...');
+        usarCarruselSimple();
+        return;
+    }
+    
+    try {
         // Inicializar carrusel Bootstrap
-        const carousel = new bootstrap.Carousel(carouselElement, {
-            interval: 5000,
+        carruselBootstrapInstancia = new bootstrap.Carousel(carouselElement, {
+            interval: 5000, // 5 segundos
             wrap: true,
-            touch: true
+            touch: true,
+            pause: 'hover'
         });
         
         carruselInicializado = true;
-        console.log('✅ Carrusel Bootstrap inicializado');
+        console.log('✅ Carrusel Bootstrap inicializado correctamente');
+        
+    } catch (error) {
+        console.error('💥 Error inicializando carrusel Bootstrap:', error);
+        console.log('🔄 Cambiando a modo carrusel simple...');
+        usarCarruselSimple();
     }
 }
 
-// ========== PROGRAMAR ACTUALIZACIÓN AUTOMÁTICA ==========
-function programarActualizacionCarrusel() {
-    console.log('⏰ Programando actualización automática del carrusel...');
+// ========== MODO CARRUSEL SIMPLE (fallback sin Bootstrap) ==========
+function usarCarruselSimple() {
+    console.log('🎠 Iniciando carrusel simple (modo fallback)...');
     
-    // Calcular tiempo hasta próxima hora múltiplo de 6
-    const ahora = new Date();
-    const horaActual = ahora.getHours();
-    const minutosActual = ahora.getMinutes();
-    const segundosActual = ahora.getSeconds();
+    const carouselElement = document.getElementById('carouselPromosHome');
+    if (!carouselElement) return;
     
-    // Próxima hora de cambio (0, 6, 12, 18)
-    let proximaHora = Math.ceil(horaActual / 6) * 6;
-    if (proximaHora >= 24) proximaHora = 0;
+    const items = carouselElement.querySelectorAll('.carousel-item');
+    if (items.length <= 1) return;
     
-    let msHastaCambio;
+    let currentIndex = 0;
     
-    if (proximaHora > horaActual) {
-        // Cambio hoy
-        const horasHasta = proximaHora - horaActual - 1;
-        const minutosHasta = 59 - minutosActual;
-        const segundosHasta = 60 - segundosActual;
-        msHastaCambio = (horasHasta * 3600 + minutosHasta * 60 + segundosHasta) * 1000;
-    } else {
-        // Cambio mañana (medianoche)
-        const horasHasta = 23 - horaActual;
-        const minutosHasta = 59 - minutosActual;
-        const segundosHasta = 60 - segundosActual;
-        msHastaCambio = (horasHasta * 3600 + minutosHasta * 60 + segundosHasta) * 1000;
-    }
-    
-    console.log('📅 Próxima actualización del carrusel:', {
-        horaActual: `${horaActual}:${minutosActual}`,
-        proximaHoraCambio: proximaHora,
-        msHastaCambio: msHastaCambio,
-        enHoras: (msHastaCambio / (1000 * 60 * 60)).toFixed(2)
+    // Mostrar primer elemento
+    items.forEach((item, idx) => {
+        item.classList.remove('active');
+        if (idx === 0) item.classList.add('active');
     });
     
-    // Programar primera actualización exacta
-    setTimeout(() => {
-        console.log('🔄 ¡Hora exacta de actualizar carrusel!');
-        cargarProductosPromocionHome();
-        
-        // Configurar intervalo de 6 horas para actualizaciones futuras
-        setInterval(() => {
-            console.log('🔄 Actualización automática del carrusel (cada 6 horas)');
-            cargarProductosPromocionHome();
-        }, CONFIG_PROMOS.horasPorBloque * 60 * 60 * 1000);
-        
-    }, msHastaCambio);
+    // Función para cambiar slide
+    function nextSlide() {
+        items[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + 1) % items.length;
+        items[currentIndex].classList.add('active');
+    }
     
-    console.log('✅ Actualización automática programada');
+    // Configurar intervalo automático
+    setInterval(nextSlide, 5000);
+    
+    // Configurar botones de navegación si existen
+    const prevBtn = carouselElement.querySelector('.carousel-control-prev');
+    const nextBtn = carouselElement.querySelector('.carousel-control-next');
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            items[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex - 1 + items.length) % items.length;
+            items[currentIndex].classList.add('active');
+        });
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            nextSlide();
+        });
+    }
+    
+    console.log('✅ Carrusel simple iniciado');
 }
 
 // ========== ESTADOS DEL CARRUSEL ==========
@@ -749,24 +759,29 @@ function mostrarCarruselSinOfertas() {
     
     contenedor.innerHTML = `
         <div class="carousel-item active">
-            <a href="PROMOS.HTML" class="producto-carrusel-card text-decoration-none">
-                <div class="producto-carrusel-img" style="background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
-                    🎁
-                </div>
-                <div class="producto-carrusel-info text-center">
-                    <div class="producto-carrusel-nombre fw-bold">¡No hay ofertas activas!</div>
-                    <div class="producto-carrusel-oferta text-muted">Revisa más tarde o visita nuestras promociones</div>
-                    <div class="producto-carrusel-accion mt-3">
-                        <span class="btn btn-primary">
-                            <i class="bi bi-arrow-right"></i> Ver promociones
-                        </span>
+            <div class="text-center py-5">
+                <div class="alert alert-warning">
+                    <i class="bi bi-emoji-frown fs-1"></i>
+                    <h5 class="mt-3">😔 No hay ofertas en este momento</h5>
+                    <p class="text-muted mb-0">Pronto tendremos nuevas promociones para ti.</p>
+                    <div class="mt-3">
+                        <a href="PROMOS.HTML" class="btn btn-primary btn-sm">
+                            Ver todas las promociones
+                        </a>
                     </div>
                 </div>
-            </a>
+            </div>
         </div>
     `;
     
-    console.log('ℹ️ Carrusel: No hay ofertas activas');
+    // Ocultar controles
+    const carousel = document.getElementById('carouselPromosHome');
+    if (carousel) {
+        const prevBtn = carousel.querySelector('.carousel-control-prev');
+        const nextBtn = carousel.querySelector('.carousel-control-next');
+        if (prevBtn) prevBtn.style.display = 'none';
+        if (nextBtn) nextBtn.style.display = 'none';
+    }
 }
 
 function mostrarCarruselError() {
@@ -775,15 +790,13 @@ function mostrarCarruselError() {
     
     contenedor.innerHTML = `
         <div class="carousel-item active">
-            <div class="producto-carrusel-card">
-                <div class="producto-carrusel-img" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
-                    ⚠️
-                </div>
-                <div class="producto-carrusel-info text-center">
-                    <div class="producto-carrusel-nombre fw-bold">Error cargando ofertas</div>
-                    <div class="producto-carrusel-oferta text-muted">Intenta recargar la página</div>
-                    <div class="producto-carrusel-accion mt-3">
-                        <button onclick="cargarProductosPromocionHome()" class="btn btn-warning">
+            <div class="text-center py-5">
+                <div class="alert alert-danger">
+                    <i class="bi bi-exclamation-triangle fs-1"></i>
+                    <h5 class="mt-3">⚠️ Error al cargar ofertas</h5>
+                    <p class="text-muted mb-0">Intenta recargar la página.</p>
+                    <div class="mt-3">
+                        <button onclick="cargarProductosPromocionHome()" class="btn btn-danger btn-sm">
                             <i class="bi bi-arrow-clockwise"></i> Reintentar
                         </button>
                     </div>
@@ -791,140 +804,228 @@ function mostrarCarruselError() {
             </div>
         </div>
     `;
-    
-    console.error('❌ Error en carrusel');
 }
 
-// ========== CARGAR ÚLTIMOS PRODUCTOS ==========
+// ========== PROGRAMAR ACTUALIZACIÓN ==========
+function programarActualizacionCarrusel() {
+    // Calcular minutos hasta la próxima hora múltiplo de 6
+    const ahora = new Date();
+    const hora = ahora.getHours();
+    const minutos = ahora.getMinutes();
+    const segundos = ahora.getSeconds();
+    
+    // Próximo múltiplo de 6
+    const proximaHora = Math.ceil(hora / 6) * 6;
+    let minutosHastaProxima;
+    
+    if (proximaHora > hora) {
+        minutosHastaProxima = (proximaHora - hora - 1) * 60 + (59 - minutos);
+    } else {
+        // Si es medianoche, calcular hasta las 6
+        minutosHastaProxima = (23 - hora) * 60 + (59 - minutos);
+    }
+    
+    const segundosHastaProxima = minutosHastaProxima * 60 - segundos + 10; // +10 segundos de margen
+    
+    console.log(`🔄 Programando actualización en ${Math.floor(segundosHastaProxima / 60)} minutos`);
+    
+    // Programar actualización
+    setTimeout(() => {
+        console.log('🔄 Actualizando carrusel automáticamente...');
+        cargarProductosPromocionHome();
+        programarActualizacionCarrusel(); // Reprogramar para el próximo ciclo
+    }, segundosHastaProxima * 1000);
+}
+
+// ========== CARGA DE ÚLTIMOS PRODUCTOS ==========
 async function cargarUltimosProductos() {
     try {
-        console.log('📦 Cargando últimos productos...');
-        
-        const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json?t=" + Date.now();
-        const respuesta = await fetch(url);
-        const productos = await respuesta.json();
-        
-        // Tomar los últimos 20 productos y revertir el orden
-        const ultimosProductos = productos.slice(-20).reverse();
-        
         const grid = document.getElementById('grid-ultimos');
-        if (!grid) {
-            console.warn('⚠️ Grid de últimos productos no encontrado');
-            return;
+        if (!grid) return;
+        
+        // Mostrar skeleton
+        grid.innerHTML = '';
+        for (let i = 0; i < 4; i++) {
+            grid.innerHTML += `<div class="card-producto-ml skeleton" style="height: 280px;"></div>`;
         }
         
-        grid.innerHTML = ultimosProductos.map(producto => {
+        // Cargar datos
+        const url = "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json?t=" + Date.now();
+        const respuesta = await fetch(url);
+        
+        if (!respuesta.ok) throw new Error(`Error HTTP ${respuesta.status}`);
+        
+        const todosProductos = await respuesta.json();
+        
+        // Ordenar por fecha (suponiendo campo 'fecha') o tomar los últimos
+        const ultimosProductos = todosProductos
+            .sort((a, b) => (b.id || 0) - (a.id || 0)) // Orden descendente por ID
+            .slice(0, 8); // Tomar 8 productos
+        
+        // Renderizar
+        grid.innerHTML = '';
+        ultimosProductos.forEach(producto => {
+            const precio = Number(producto.precio) || 0;
+            const precioFormateado = precio.toLocaleString('es-CO');
+            
             const imagenUrl = producto.imagen && producto.imagen.startsWith('http') 
                 ? producto.imagen 
-                : 'https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg?tr=w-600,h-600';
+                : 'https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg?tr=w-400,h-300';
             
-            return `
-                <div class="card-producto-ml">
-                    <a href="#" onclick="irADetalleProducto('${producto.id}', '${producto.tipo || ''}', '${producto.subtipo || ''}', '${producto.categoria || ''}'); return false;">
+            grid.innerHTML += `
+                <div class="card-producto-ml" onclick="mostrarDetalleProducto('${producto.id || ''}')">
+                    <div class="producto-img-container">
                         <img src="${imagenUrl}" 
-                             alt="${producto.producto || 'Producto'}" 
-                             class="card-img-ml imagen-completa"
+                             alt="${producto.producto || ''}" 
                              loading="lazy"
-                             onerror="this.src='https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg'">
-                        <div class="card-body-ml">
-                            <h3 class="nombre-producto-ml small line-clamp-2">${producto.producto || 'Producto'}</h3>
-                            <div class="precio-ml fw-bold text-primary">
-                                $${(producto.precio || 0).toLocaleString('es-CO')}
-                            </div>
-                            <button class="btn btn-outline-primary btn-sm mt-2">
-                                <i class="bi bi-eye"></i> Ver detalles
-                            </button>
-                        </div>
-                    </a>
+                             onerror="this.src='https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg?tr=w-400,h-300'">
+                    </div>
+                    <div class="producto-info">
+                        <h3 class="producto-nombre">${producto.producto || 'Producto'}</h3>
+                        <div class="producto-precio">$${precioFormateado}</div>
+                        <button class="btn-agregar-carrito" onclick="event.stopPropagation(); agregarAlCarrito('${producto.id || ''}')">
+                            <i class="bi bi-cart-plus"></i> Agregar
+                        </button>
+                    </div>
                 </div>
             `;
-        }).join('');
+        });
         
-        console.log(`✅ ${ultimosProductos.length} últimos productos cargados`);
+        console.log('✅ Últimos productos cargados:', ultimosProductos.length);
         
     } catch (error) {
         console.error('💥 Error cargando últimos productos:', error);
+        const grid = document.getElementById('grid-ultimos');
+        if (grid) {
+            grid.innerHTML = `
+                <div class="col-12 text-center py-4">
+                    <div class="alert alert-warning">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        <p class="mb-0">Error al cargar productos</p>
+                        <button onclick="cargarUltimosProductos()" class="btn btn-sm btn-warning mt-2">
+                            Reintentar
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
     }
 }
 
-// ========== FUNCIONES DE NAVEGACIÓN (compatibilidad) ==========
-// Si ya existen estas funciones en tu código, estas servirán como respaldo
-if (typeof cargarSubtipos !== 'function') {
-    window.cargarSubtipos = function(tipo) {
-        console.log('📂 Cargando subtipos para:', tipo);
-        // Tu lógica existente o redirigir a función apropiada
-    };
+// ========== FUNCIONES DE NAVEGACIÓN ==========
+function volverAInicio() {
+    // Ocultar todas las vistas
+    document.querySelectorAll('.vista').forEach(vista => {
+        vista.classList.remove('vista-activa');
+    });
+    
+    // Mostrar vista inicio
+    document.getElementById('vista-inicio').classList.add('vista-activa');
+    
+    // Restablecer breadcrumb
+    document.querySelectorAll('.breadcrumb-vista .breadcrumb-item').forEach((item, index) => {
+        if (index > 0) {
+            item.classList.add('d-none');
+        }
+    });
+    
+    console.log('🏠 Volviendo a inicio');
+    return false;
 }
 
-if (typeof volverAInicio !== 'function') {
-    window.volverAInicio = function() {
-        window.location.href = 'INICIO.HTML';
-        return false;
-    };
+function cargarSubtipos(tipo) {
+    // Implementar según tu sistema de categorías
+    console.log('📂 Cargando subtipos para:', tipo);
+    
+    // Aquí deberías cargar los subtipos desde tu base de datos
+    // Por ahora mostramos un mensaje
+    alert(`Cargando categorías de ${tipo}...`);
+    
+    return false;
 }
 
-if (typeof irADetalleProducto !== 'function') {
-    window.irADetalleProducto = function(productoId, tipo, subtipo, categoria) {
-        const url = `PRODUCTO.HTML?id=${productoId}&origen=home`;
-        if (tipo) url += `&tipo=${tipo}`;
-        if (subtipo) url += `&subtipo=${subtipo}`;
-        if (categoria) url += `&categoria=${categoria}`;
-        window.location.href = url;
-        return false;
-    };
+// ========== FUNCIONES DE PRODUCTO ==========
+function mostrarDetalleProducto(id) {
+    window.location.href = `PRODUCTO.HTML?id=${id}&origen=home`;
 }
 
-// ========== DEBUG Y MONITOREO ==========
-window.mostrarInfoCarrusel = function() {
-    console.log('📊 INFORMACIÓN DEL CARRUSEL HOME');
-    console.log('-'.repeat(40));
-    console.log('🕐 Hora actual:', new Date().toLocaleTimeString());
-    console.log('📊 Bloque actual:', Math.floor(new Date().getHours() / 6) + 1);
-    console.log('🎯 Índice calculado:', obtenerIndicePromocionalDinamico());
-    console.log('📦 Productos en memoria:', productosEnPromocion.length);
-    console.log('🎠 Productos en carrusel:', obtenerProductosDelBloqueDinamico().length);
-    console.log('⏰ Temporizador activo:', temporizadorInterval ? 'SÍ' : 'NO');
-    console.log('🔄 Carrusel inicializado:', carruselInicializado ? 'SÍ' : 'NO');
-};
+function agregarAlCarrito(id) {
+    if (typeof agregarProducto === 'function') {
+        agregarProducto(id);
+    } else {
+        console.warn('⚠️ Función agregarProducto no disponible');
+        // Mostrar notificación
+        if ('Notification' in window && Notification.permission === 'granted') {
+            new Notification('Producto agregado', {
+                body: 'Producto añadido al carrito',
+                icon: 'https://ik.imagekit.io/mbsk9dati/logo.jpg?tr=w-100,q-80'
+            });
+        }
+    }
+}
 
-// ========== FUNCIONES DE CONTROL ==========
-window.forzarActualizacionCarrusel = function() {
-    console.log('🔄 Forzando actualización del carrusel...');
-    cargarProductosPromocionHome();
-};
-
-window.validarSincronizacion = function() {
-    console.log('🔍 VALIDANDO SINCRONIZACIÓN CON PROMOS.HTML');
-    console.log('-'.repeat(40));
-    
-    const ahora = new Date();
-    const hora = ahora.getHours();
-    const bloque = Math.floor(hora / 6);
-    const indice = bloque * 8;
-    
-    console.log('🎯 Datos actuales:');
-    console.log('   • Hora:', hora);
-    console.log('   • Bloque:', bloque + 1);
-    console.log('   • Índice base:', indice);
-    console.log('   • Productos PROMOS.HTML:', '17-24 (si es hora 12)');
-    console.log('   • Productos HOME carrusel:', `${indice+1}-${indice+CONFIG_PROMOS.carruselProductos}`);
-    
-    if (productosEnPromocion.length > 0) {
-        const productosCarrusel = obtenerProductosDelBloqueDinamico();
-        console.log('\n📋 Productos actuales en carrusel:');
-        productosCarrusel.forEach((p, i) => {
-            console.log(`   ${i+1}. ${p.producto} (ID: ${p.id})`);
-        });
+// ========== LIMPIEZA AL SALIR ==========
+window.addEventListener('beforeunload', function() {
+    if (temporizadorInterval) {
+        clearInterval(temporizadorInterval);
     }
     
-    console.log('\n✅ El carrusel está sincronizado con PROMOS.HTML');
-    console.log('   Ambos usan la misma lógica de rotación cada 6 horas');
+    if (carruselBootstrapInstancia) {
+        try {
+            carruselBootstrapInstancia.dispose();
+        } catch (e) {
+            console.log('ℹ️ Carrusel ya limpiado');
+        }
+    }
+});
+
+// ========== MANEJAR VISIBILIDAD DE LA PÁGINA ==========
+document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) {
+        // Página visible nuevamente
+        console.log('🔍 Página visible - verificando actualizaciones');
+        
+        // Verificar si ha pasado tiempo suficiente para actualizar
+        const ahora = new Date();
+        const hora = ahora.getHours();
+        
+        // Si cambió el bloque de 6 horas, actualizar
+        const bloqueActual = Math.floor(hora / CONFIG_PROMOS.horasPorBloque);
+        const ultimaActualizacion = window._ultimaActualizacionCarrusel;
+        
+        if (!ultimaActualizacion || 
+            Math.floor(new Date(ultimaActualizacion).getHours() / CONFIG_PROMOS.horasPorBloque) !== bloqueActual) {
+            
+            console.log('🔄 Cambio de bloque detectado - actualizando carrusel');
+            cargarProductosPromocionHome();
+        }
+    }
+});
+
+// ========== FUNCIÓN PARA DEBUG ==========
+window.mostrarDebugCarrusel = function() {
+    console.log('🔍 DEBUG - Estado del carrusel:', {
+        productosEnPromocion: productosEnPromocion?.length || 0,
+        carruselInicializado: carruselInicializado,
+        instanciaBootstrap: carruselBootstrapInstancia ? 'Activa' : 'Inactiva',
+        config: CONFIG_PROMOS,
+        horaActual: new Date().getHours(),
+        bloqueActual: Math.floor(new Date().getHours() / 6) + 1,
+        indiceActual: obtenerIndicePromocionalDinamico()
+    });
 };
 
-console.log('✅ Sistema de carrusel dinámico cargado');
-console.log('🎯 Se sincronizará con PROMOS.HTML automáticamente');
+// ========== EXPORTAR FUNCIONES NECESARIAS ==========
+window.cargarProductosPromocionHome = cargarProductosPromocionHome;
+window.volverAInicio = volverAInicio;
+window.cargarSubtipos = cargarSubtipos;
+window.iniciarTemporizadorHome = iniciarTemporizadorHome;
+
+// Inicialización final
+setTimeout(() => {
+    console.log('🏁 INICIO.HTML completamente cargado');
+    window._ultimaActualizacionCarrusel = new Date();
+}, 1000);
 </script>
-<!-- 🔥 BUSCADOR SE CARGA DESPUÉS DEL HEADER -->
-<script src="buscador.js?v=20251115"></script>
 </body>
 </html>
