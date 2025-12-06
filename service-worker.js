@@ -14,7 +14,6 @@ const ARCHIVOS_A_CACHEAR = [
   'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css',
   'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js'
 ];
-
 // Instalar y cachear SOLO lo esencial
 self.addEventListener('install', event => {
   console.log('[Service Worker] Instalando versión:', CACHE_NAME);
