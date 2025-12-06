@@ -1,6 +1,6 @@
-// modalformulario.js - VERSIÓN ULTRA RÁPIDA Y CONFIABLE CON AUTOCOMPLETADO DE CIUDADES
+// modalformulario.js - VERSIÓN COMPLETA PARA CLIENTE, PEDIDO Y DETALLE PEDIDO
 // 🚀 INICIALIZACIÓN INMEDIATA - Sin esperar DOMContentLoaded
-console.log('🚀 INICIANDO FORMULARIO - VERSIÓN ULTRA RÁPIDA CON CIUDADES');
+console.log('🚀 INICIANDO FORMULARIO - VERSIÓN COMPLETA PEDIDOS + CLIENTES');
 
 // 🔥 VARIABLES GLOBALES INMEDIATAS
 window.articulosCarrito = [];
@@ -12,7 +12,6 @@ async function consultarClienteAPI(telefono) {
     try {
         console.log('🔍 CONSULTANDO CLIENTE EXISTENTE:', telefono);
         
-        // ✅ SOLO enviar el teléfono - NO enviar 'accion=consultar'
         const url = `https://script.google.com/macros/s/AKfycbwt-rFg_coabATigGv_zNOa93aO6u9uNqC-Oynh_HAL4dbuKo6pvmtw7jKlixXagW5o/exec?telefonoCliente=${telefono}`;
         
         const response = await fetch(url);
@@ -41,11 +40,9 @@ async function cargarCiudades() {
         window.ciudadesColombia = await response.json();
         console.log('✅ Ciudades cargadas:', window.ciudadesColombia.length);
         
-        // Inicializar autocompletado después de cargar ciudades
         inicializarAutocompletadoCiudades();
     } catch (error) {
         console.error('❌ Error cargando ciudades:', error);
-        // Fallback con algunas ciudades básicas
         window.ciudadesColombia = [
             {departamento: "AMAZONAS", ciudad: "LETICIA"},
             {departamento: "ANTIOQUIA", ciudad: "MEDELLÍN"},
@@ -78,7 +75,6 @@ function inicializarAutocompletadoCiudades() {
             return;
         }
 
-        // Filtrar ciudades que coincidan (ciudad o departamento)
         const coincidencias = window.ciudadesColombia.filter(item =>
             item.ciudad.toLowerCase().includes(valor.toLowerCase()) ||
             item.departamento.toLowerCase().includes(valor.toLowerCase())
@@ -87,14 +83,12 @@ function inicializarAutocompletadoCiudades() {
         mostrarSugerenciasCiudades(coincidencias);
     });
 
-    // Ocultar sugerencias al hacer clic fuera
     document.addEventListener('click', function(e) {
         if (!inputCiudad.contains(e.target) && !sugerencias.contains(e.target)) {
             sugerencias.style.display = 'none';
         }
     });
 
-    // Manejar teclado
     inputCiudad.addEventListener('keydown', function(e) {
         const items = sugerencias.querySelectorAll('.sugerencia-item');
         let itemActivo = sugerencias.querySelector('.sugerencia-item.active');
@@ -139,20 +133,17 @@ function mostrarSugerenciasCiudades(coincidencias) {
 
     sugerencias.innerHTML = '';
     
-    // Mostrar máximo 8 sugerencias
     coincidencias.slice(0, 8).forEach(item => {
         const li = document.createElement('li');
         li.className = 'dropdown-item sugerencia-item';
         li.style.cursor = 'pointer';
         li.style.padding = '8px 12px';
-        li.innerHTML = `
-            <div class="fw-bold">${item.ciudad} - ${item.departamento}</div>
-        `;
+        li.innerHTML = `<div class="fw-bold">${item.ciudad} - ${item.departamento}</div>`;
         
         li.addEventListener('click', () => {
             inputCiudad.value = `${item.ciudad} - ${item.departamento}`;
             sugerencias.style.display = 'none';
-            validarFormularioCliente(); // Validar después de seleccionar
+            validarFormularioCliente();
         });
         
         li.addEventListener('mouseenter', () => {
@@ -173,7 +164,7 @@ function seleccionarCiudad(elemento) {
     if (inputCiudad && sugerencias) {
         inputCiudad.value = elemento.textContent.trim();
         sugerencias.style.display = 'none';
-        validarFormularioCliente(); // Validar después de seleccionar
+        validarFormularioCliente();
     }
 }
 
@@ -181,7 +172,6 @@ function seleccionarCiudad(elemento) {
 function detectarCarritoGarantizado() {
     console.log('🎯 INICIANDO DETECCIÓN GARANTIZADA DEL CARRITO');
     
-    // 1. PRIMERO: Verificar URL parameters (más rápido)
     const urlParams = new URLSearchParams(window.location.search);
     const productosParam = urlParams.get('productos');
     
@@ -198,7 +188,6 @@ function detectarCarritoGarantizado() {
         }
     }
     
-    // 2. SEGUNDO: Verificar localStorage (rápido)
     try {
         const carritoLocal = localStorage.getItem('carritoAnmago');
         if (carritoLocal && carritoLocal !== '[]' && carritoLocal !== 'null') {
@@ -213,7 +202,6 @@ function detectarCarritoGarantizado() {
         console.error('❌ Error parseando localStorage:', error);
     }
     
-    // 3. TERCERO: Verificar window.opener (menos confiable pero lo intentamos)
     if (window.opener && Array.isArray(window.opener.articulosCarrito) && window.opener.articulosCarrito.length > 0) {
         window.articulosCarrito = JSON.parse(JSON.stringify(window.opener.articulosCarrito));
         console.log('✅ CARRITO DETECTADO desde window.opener:', window.articulosCarrito.length, 'productos');
@@ -256,6 +244,38 @@ function validarFormularioCliente() {
     return todosLlenos && telefonoValido;
 }
 
+// 🔍 FUNCIÓN NUEVA: Validar estructura de productos
+function validarProductosCarrito() {
+    if (!window.articulosCarrito || !Array.isArray(window.articulosCarrito)) {
+        console.error('❌ Carrito no válido');
+        return false;
+    }
+    
+    const problemas = [];
+    
+    window.articulosCarrito.forEach((item, index) => {
+        if (!item.id) {
+            problemas.push(`Producto ${index + 1}: Sin ID`);
+        }
+        if (!item.nombre) {
+            problemas.push(`Producto ${index + 1}: Sin nombre`);
+        }
+        if (!item.precio || item.precio <= 0) {
+            problemas.push(`Producto ${index + 1}: Precio inválido (${item.precio})`);
+        }
+        if (!item.cantidad || item.cantidad <= 0) {
+            problemas.push(`Producto ${index + 1}: Cantidad inválida (${item.cantidad})`);
+        }
+    });
+    
+    if (problemas.length > 0) {
+        console.warn('⚠️ Problemas en el carrito:', problemas);
+        return false;
+    }
+    
+    return true;
+}
+
 // 🏠 Construir dirección estructurada - VERSIÓN RÁPIDA
 function construirDireccionEstructurada() {
     const direccionBase = document.getElementById("DireccionCompleta")?.value.trim() || '';
@@ -288,7 +308,6 @@ function repartirDireccionConcatenada(direccionConc) {
     const barrioInput = document.getElementById("barrio");
     const refInput = document.getElementById("observacionDireccion");
 
-    // Resetear campos
     if (tipoInput) tipoInput.value = "";
     if (numeroInput) numeroInput.value = "";
     if (barrioInput) barrioInput.value = "";
@@ -299,13 +318,11 @@ function repartirDireccionConcatenada(direccionConc) {
     
     if (partes.length === 0) return;
 
-    // 1. Dirección base (siempre la primera parte)
     if (baseInput) {
         baseInput.value = partes[0];
         console.log('📍 DIRECCIÓN BASE:', partes[0]);
     }
 
-    // 2. Tipo de unidad + Número (segunda parte)
     if (partes.length > 1 && tipoInput) {
         const segundaParte = partes[1].toUpperCase();
         console.log('📍 SEGUNDA PARTE:', segundaParte);
@@ -317,7 +334,6 @@ function repartirDireccionConcatenada(direccionConc) {
             tipoInput.value = tipoEncontrado.charAt(0) + tipoEncontrado.slice(1).toLowerCase();
             console.log('📍 TIPO UNIDAD:', tipoInput.value);
             
-            // Extraer número
             const numeroTexto = partes[1].replace(new RegExp(tipoEncontrado, 'i'), "").trim();
             if (numeroTexto && numeroInput) {
                 numeroInput.value = numeroTexto;
@@ -326,14 +342,12 @@ function repartirDireccionConcatenada(direccionConc) {
         }
     }
 
-    // 3. Barrio (tercera parte)
     if (partes.length > 2 && barrioInput) {
         const barrioValue = partes[2].replace(/^barrio\s*/i, "").trim();
         barrioInput.value = barrioValue;
         console.log('📍 BARRIO:', barrioValue);
     }
 
-    // 4. Observación (cuarta parte en adelante)
     if (partes.length > 3 && refInput) {
         const referenciaValue = partes.slice(3).join(", ");
         refInput.value = referenciaValue;
@@ -343,11 +357,43 @@ function repartirDireccionConcatenada(direccionConc) {
     console.log('📍 PARSEO DE DIRECCIÓN COMPLETADO');
 }
 
-// 💬 Generar texto para WhatsApp - VERSIÓN ULTRA CONFIABLE
+// 🔧 FUNCIÓN NUEVA: Preparar productos para enviar
+function prepararProductosParaEnvio() {
+    if (!window.articulosCarrito || window.articulosCarrito.length === 0) {
+        return [];
+    }
+    
+    console.log('📦 Preparando productos para enviar:', window.articulosCarrito.length);
+    
+    return window.articulosCarrito.map((item, index) => {
+        const idCompleto = item.id || '';
+        const [idBase, ...varianteParts] = idCompleto.split('-');
+        const variante = varianteParts.join('-').trim() || 'Estándar';
+        
+        console.log(`  Producto ${index + 1}:`, {
+            idCompleto,
+            idBase,
+            variante,
+            nombre: item.nombre,
+            talla: item.talla
+        });
+        
+        return {
+            productoId: idBase.trim(),
+            nombreCompleto: item.nombre || 'Producto sin nombre',
+            talla: item.talla || 'Única',
+            precio: item.precio || 0,
+            cantidad: item.cantidad || 1,
+            variante: variante,
+            imagen: item.imagen || ''
+        };
+    });
+}
+
+// 💬 Generar texto para WhatsApp - VERSIÓN ULTRA CONFIABLE (SIN CAMBIOS)
 function generarTextoWhatsApp() {
     const nombreCliente = construirNombreCliente();
     
-    // ✅ DETECCIÓN EN TIEMPO REAL - No confiar en variables antiguas
     const carritoActual = window.articulosCarrito;
     const tieneProductos = Array.isArray(carritoActual) && carritoActual.length > 0;
     
@@ -364,7 +410,6 @@ function generarTextoWhatsApp() {
         const productos = carritoActual.map((p, i) => {
             let productoTexto = `${i + 1}. ${p.nombre || 'Producto'}\n`;
             
-            // ✅ AGREGAR LA LÍNEA DE LA IMAGEN SI EXISTE
             if (p.imagen) {
                 productoTexto += `🖼️ Imagen: ${p.imagen}\n`;
             }
@@ -387,16 +432,15 @@ function generarTextoWhatsApp() {
     }
 }
 
-// 📤 Envío a WhatsApp - VERSIÓN MEJORADA
+// 📤 Envío a WhatsApp - VERSIÓN MEJORADA (SIN CAMBIOS)
 function enviarPedidoWhatsApp() {
     try {
         const mensaje = generarTextoWhatsApp();
-        const telefono = '573006498710'; // Número fijo para evitar errores
+        const telefono = '573006498710';
         const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
         
         console.log('📤 ENVIANDO WHATSAPP:', url.substring(0, 100) + '...');
         
-        // Abrir en nueva pestaña inmediatamente
         const nuevaVentana = window.open(url, '_blank');
         if (!nuevaVentana) {
             console.warn('⚠️  Popup bloqueado, redirigiendo en misma ventana');
@@ -408,13 +452,12 @@ function enviarPedidoWhatsApp() {
     }
 }
 
-// 📊 Enviar datos a Google Sheets - VERSIÓN GET CON TODOS LOS PARÁMETROS
+// 📊 Enviar datos a Google Sheets - VERSIÓN COMPLETA PARA PEDIDOS
 function enviarDatosGoogleSheets() {
     return new Promise((resolve, reject) => {
         try {
-            console.log('📤 ENVIANDO DATOS CLIENTE VÍA GET...');
+            console.log('📤 ENVIANDO DATOS CLIENTE Y PEDIDO VÍA GET...');
             
-            // Obtener datos del formulario
             const telefono = document.getElementById('telefonoCliente')?.value.trim() || '';
             const nombre = document.getElementById('nombreCliente')?.value.trim() || '';
             const direccionBase = document.getElementById('DireccionCompleta')?.value.trim() || '';
@@ -422,13 +465,21 @@ function enviarDatosGoogleSheets() {
             const email = document.getElementById('emailCliente')?.value.trim() || '';
             const clienteId = document.getElementById('clienteId')?.value.trim() || '';
             
-            // Construir dirección completa
             const direccionCompleta = construirDireccionEstructurada();
             
-            // ✅ CONSTRUIR URL GET CON TODOS LOS PARÁMETROS QUE ESPERA TU GOOGLE APPS SCRIPT
+            const productos = prepararProductosParaEnvio();
+            const tieneProductos = productos.length > 0;
+            
+            console.log('🛒 Estado del pedido:', {
+                tieneProductos,
+                cantidadProductos: productos.length,
+                productos: productos
+            });
+            
             const baseURL = 'https://script.google.com/macros/s/AKfycbwt-rFg_coabATigGv_zNOa93aO6u9uNqC-Oynh_HAL4dbuKo6pvmtw7jKlixXagW5o/exec';
             
             const params = new URLSearchParams();
+            
             params.append('telefonoCliente', telefono);
             params.append('nombreCliente', nombre);
             params.append('direccionCliente', direccionBase);
@@ -438,29 +489,40 @@ function enviarDatosGoogleSheets() {
             params.append('clienteId', clienteId);
             params.append('usuario', 'ANMAGOSTORE@GMAIL.COM');
             
-            // Agregar campos vacíos para los que espera tu script
-            params.append('apellidoCompl', ''); // Campo esperado por tu script
+            params.append('apellidoCompl', '');
             params.append('cedula', '');
             params.append('rotular', '');
             params.append('rotulo', '');
             params.append('mensajeCobro', '');
             
+            params.append('tipoOperacion', tieneProductos ? 'pedidoCompleto' : 'soloCliente');
+            
+            if (tieneProductos) {
+                params.append('productosJSON', JSON.stringify(productos));
+                console.log('📦 Productos incluidos en la solicitud');
+            }
+            
             const urlCompleta = `${baseURL}?${params.toString()}`;
             
-            console.log('🔗 URL de actualización:', urlCompleta);
+            console.log('🔗 URL de envío (primeros 200 chars):', urlCompleta.substring(0, 200) + '...');
             
-            // ✅ USAR FETCH CON GET - Sin CORS issues
             fetch(urlCompleta)
                 .then(response => {
                     console.log('✅ Solicitud GET enviada exitosamente');
-                    // No podemos leer la respuesta por CORS, pero la solicitud se ejecuta
-                    resolve(true);
+                    resolve({
+                        success: true,
+                        tieneProductos: tieneProductos,
+                        cantidadProductos: productos.length
+                    });
                 })
                 .catch(error => {
                     console.error('❌ Error en fetch GET:', error);
-                    // Intentar con imagen fallback (método antiguo confiable)
                     fallbackImageRequest(urlCompleta);
-                    resolve(true); // Resolvemos igual porque el request se envió
+                    resolve({
+                        success: true,
+                        tieneProductos: tieneProductos,
+                        cantidadProductos: productos.length
+                    });
                 });
                 
         } catch (error) {
@@ -499,85 +561,76 @@ function inicializarFormulario() {
 
     console.log("✅ FORMULARIO ENCONTRADO, CONFIGURANDO EVENTOS...");
 
-    // Configurar campos
     const otrosCampos = document.querySelectorAll("#formCliente input:not(#telefonoCliente), #formCliente textarea, #formCliente select");
     otrosCampos.forEach(el => el.disabled = true);
 
-    // Validación en tiempo real
     ["nombreCliente", "telefonoCliente", "DireccionCompleta", "ciudadCliente"].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.addEventListener("input", validarFormularioCliente);
     });
 
-    // 📱 EVENTO TELÉFONO - VERSIÓN MEJORADA (NO LIMPIA CAMPOS EXISTENTES)
-const campoTelefono = document.getElementById("telefonoCliente");
-if (campoTelefono) {
-    let timeoutConsulta;
-    
-    campoTelefono.addEventListener("input", () => {
-        clearTimeout(timeoutConsulta);
-        const telefono = campoTelefono.value.trim();
+    const campoTelefono = document.getElementById("telefonoCliente");
+    if (campoTelefono) {
+        let timeoutConsulta;
         
-        if (!/^3\d{9}$/.test(telefono)) {
-            validarFormularioCliente();
-            return;
-        }
-
-        // Deshabilitar temporalmente
-        otrosCampos.forEach(el => el.disabled = true);
-        
-        timeoutConsulta = setTimeout(async () => {
-            try {
-                console.log('📞 CONSULTANDO CLIENTE:', telefono);
-                const resultado = await consultarClienteAPI(telefono);
-                
-                if (resultado?.existe && resultado.datos) {
-                    const d = resultado.datos;
-                    console.log('✅ CLIENTE EXISTENTE - PRECARGANDO DATOS:', d);
-                    
-                    // ✅ PRECARGAR SOLO SI LOS CAMPOS ESTÁN VACÍOS
-                    if (!document.getElementById("clienteId").value) {
-                        document.getElementById("clienteId").value = d["CLIENTEID"] || "";
-                    }
-                    
-                    if (!document.getElementById("nombreCliente").value) {
-                        document.getElementById("nombreCliente").value = d["NOMBRECLIENTE"] || "";
-                    }
-                    
-                    if (!document.getElementById("ciudadCliente").value) {
-                        document.getElementById("ciudadCliente").value = d["CIUDAD DESTINO"] || "";
-                    }
-                    
-                    if (!document.getElementById("emailCliente").value) {
-                        document.getElementById("emailCliente").value = d["CORREO"] || "";
-                    }
-                    
-                    // Solo precargar dirección si está vacía
-                    if (!document.getElementById("DireccionCompleta").value && d["DIRECCIONCLIENTE"]) {
-                        repartirDireccionConcatenada(d["DIRECCIONCLIENTE"]);
-                    }
-                    
-                    console.log('✅ PRECARGA COMPLETADA - Campos actualizados');
-                    
-                } else {
-                    console.log('🆕 CLIENTE NUEVO - Manteniendo campos existentes');
-                    // ✅ NO LIMPIAR CAMPOS - el usuario puede estar escribiendo
-                    // Solo asegurar que clienteId esté vacío para nuevo cliente
-                    if (!document.getElementById("clienteId").value) {
-                        document.getElementById("clienteId").value = "";
-                    }
-                }
-            } catch (error) {
-                console.error('❌ Error en consulta:', error);
-            } finally {
-                // Siempre habilitar campos
-                otrosCampos.forEach(el => el.disabled = false);
+        campoTelefono.addEventListener("input", () => {
+            clearTimeout(timeoutConsulta);
+            const telefono = campoTelefono.value.trim();
+            
+            if (!/^3\d{9}$/.test(telefono)) {
                 validarFormularioCliente();
+                return;
             }
-        }, 800);
-    });
-}
-    // 🟢 EVENTO ENVIAR - VERSIÓN CORREGIDA
+
+            otrosCampos.forEach(el => el.disabled = true);
+            
+            timeoutConsulta = setTimeout(async () => {
+                try {
+                    console.log('📞 CONSULTANDO CLIENTE:', telefono);
+                    const resultado = await consultarClienteAPI(telefono);
+                    
+                    if (resultado?.existe && resultado.datos) {
+                        const d = resultado.datos;
+                        console.log('✅ CLIENTE EXISTENTE - PRECARGANDO DATOS:', d);
+                        
+                        if (!document.getElementById("clienteId").value) {
+                            document.getElementById("clienteId").value = d["CLIENTEID"] || "";
+                        }
+                        
+                        if (!document.getElementById("nombreCliente").value) {
+                            document.getElementById("nombreCliente").value = d["NOMBRECLIENTE"] || "";
+                        }
+                        
+                        if (!document.getElementById("ciudadCliente").value) {
+                            document.getElementById("ciudadCliente").value = d["CIUDAD DESTINO"] || "";
+                        }
+                        
+                        if (!document.getElementById("emailCliente").value) {
+                            document.getElementById("emailCliente").value = d["CORREO"] || "";
+                        }
+                        
+                        if (!document.getElementById("DireccionCompleta").value && d["DIRECCIONCLIENTE"]) {
+                            repartirDireccionConcatenada(d["DIRECCIONCLIENTE"]);
+                        }
+                        
+                        console.log('✅ PRECARGA COMPLETADA - Campos actualizados');
+                        
+                    } else {
+                        console.log('🆕 CLIENTE NUEVO - Manteniendo campos existentes');
+                        if (!document.getElementById("clienteId").value) {
+                            document.getElementById("clienteId").value = "";
+                        }
+                    }
+                } catch (error) {
+                    console.error('❌ Error en consulta:', error);
+                } finally {
+                    otrosCampos.forEach(el => el.disabled = false);
+                    validarFormularioCliente();
+                }
+            }, 800);
+        });
+    }
+
     const btnEnviar = document.getElementById("btnEnviarPedido");
     if (btnEnviar) {
         btnEnviar.addEventListener("click", async (e) => {
@@ -588,33 +641,34 @@ if (campoTelefono) {
                 alert('❌ Completa todos los campos requeridos');
                 return;
             }
+            
+            const tieneCarrito = window.articulosCarrito && window.articulosCarrito.length > 0;
+            if (tieneCarrito && !validarProductosCarrito()) {
+                alert('⚠️ Hay problemas con los productos del carrito. Revísalos antes de enviar.');
+                return;
+            }
 
-            // 🔥 PROCESO SECUENCIAL MEJORADO
             try {
                 btnEnviar.textContent = '📤 Enviando...';
                 btnEnviar.disabled = true;
 
-                // 1. Construir dirección final
                 const direccionFinal = construirDireccionEstructurada();
                 document.getElementById("DireccionCompleta").value = direccionFinal;
 
-                // 2. ENVIAR CLIENTE A SHEETS (ESPERAR ESTO)
-                console.log('👤 ENVIANDO/ACTUALIZANDO CLIENTE...');
-                await enviarDatosGoogleSheets();
-                console.log('✅ CLIENTE PROCESADO EN SHEETS');
+                console.log('👤 ENVIANDO/ACTUALIZANDO CLIENTE Y PEDIDO...');
+                const resultadoEnvio = await enviarDatosGoogleSheets();
+                console.log('✅ PROCESADO EN SHEETS:', resultadoEnvio);
 
-                // 3. Enviar WhatsApp
                 console.log('📱 ENVIANDO WHATSAPP...');
                 enviarPedidoWhatsApp();
                 console.log('✅ WHATSAPP INICIADO');
 
-                // 4. Limpiar carrito SI EXISTE
                 if (window.articulosCarrito.length > 0) {
                     console.log('🛒 LIMPIANDO CARRITO...');
                     window.articulosCarrito = [];
                     localStorage.removeItem('carritoAnmago');
                     
-                    if (window.opener) {
+                    if (window.opener && !window.opener.closed) {
                         try {
                             window.opener.postMessage("limpiarCarrito", "*");
                         } catch (e) {
@@ -623,11 +677,9 @@ if (campoTelefono) {
                     }
                 }
 
-                // 5. Feedback final
                 btnEnviar.textContent = '✅ ¡Enviado!';
                 console.log('🎯 PROCESO COMPLETADO - Cliente y pedido enviados');
 
-                // 6. Cerrar después de feedback visual
                 setTimeout(() => {
                     if (window.opener && !window.opener.closed) {
                         window.close();
@@ -645,7 +697,6 @@ if (campoTelefono) {
         });
     }
 
-    // Validación inicial
     setTimeout(validarFormularioCliente, 100);
     console.log("🎯 FORMULARIO INICIALIZADO CORRECTAMENTE");
 }
@@ -653,10 +704,9 @@ if (campoTelefono) {
 // 🔥 EJECUCIÓN INMEDIATA - Múltiples estrategias
 document.addEventListener('DOMContentLoaded', function() {
     inicializarFormulario();
-    cargarCiudades(); // Cargar ciudades después de que el DOM esté listo
+    cargarCiudades();
 });
 
-// Estrategia de respaldo por si DOMContentLoaded tarda
 setTimeout(() => {
     if (!window.formularioInicializado) {
         inicializarFormulario();
@@ -666,7 +716,6 @@ setTimeout(() => {
     }
 }, 500);
 
-// Estrategia final por si todo falla
 setTimeout(() => {
     if (!window.formularioInicializado) {
         console.log('⚡ INICIALIZACIÓN POR TIMEOUT DE SEGURIDAD');
@@ -687,10 +736,18 @@ window.diagnosticoFormulario = function() {
     console.log("- Ciudades cargadas:", window.ciudadesColombia.length);
     console.log("- WhatsApp generado:", generarTextoWhatsApp().substring(0, 100) + '...');
     
-    // Verificar campo ciudad
     const ciudadInput = document.getElementById('ciudadCliente');
     console.log("- Campo ciudad:", ciudadInput ? 'ENCONTRADO' : 'NO ENCONTRADO');
     if (ciudadInput) {
         console.log("- Valor ciudad:", ciudadInput.value);
     }
+};
+
+// 🔧 NUEVA FUNCIÓN: Test de envío de productos
+window.testEnvioProductos = function() {
+    console.log('🧪 TEST: Preparando productos para envío');
+    const productos = prepararProductosParaEnvio();
+    console.log('📦 Productos preparados:', productos);
+    console.log('🔗 JSON para enviar:', JSON.stringify(productos));
+    return productos;
 };
