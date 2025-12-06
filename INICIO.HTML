@@ -959,38 +959,33 @@ class AppUpdater {
         }
     }
     
-    async checkForUpdates() {
-        console.log('🔍 Verificando actualizaciones...');
-        
-        try {
-            // 1. Forzar actualización del Service Worker
-            if ('serviceWorker' in navigator) {
-                const registration = await navigator.serviceWorker.getRegistration();
-                if (registration) {
-                    await registration.update();
-                }
+   // EN TU HTML, en el script del AppUpdater, busca esta línea:
+async checkForUpdates() {
+    console.log('🔍 Verificando actualizaciones...');
+    
+    try {
+        // 1. Forzar actualización del Service Worker
+        if ('serviceWorker' in navigator) {
+            const registration = await navigator.serviceWorker.getRegistration();
+            if (registration) {
+                await registration.update();
             }
-            
-            // 2. Verificar versión del archivo de configuración
-            const response = await fetch('/CONFIG.json?v=' + Date.now());
-            if (response.ok) {
-                const config = await response.json();
-                if (config.version && config.version !== this.currentVersion) {
-                    this.showUpdateNotification(`Nueva versión ${config.version} disponible`);
-                }
-            }
-            
-            // 3. Enviar mensaje al Service Worker para verificar
-            if (navigator.serviceWorker.controller) {
-                navigator.serviceWorker.controller.postMessage({
-                    type: 'CHECK_FOR_UPDATES'
-                });
-            }
-            
-        } catch (error) {
-            console.log('ℹ️ No se pudo verificar actualizaciones:', error.message);
         }
+        
+        // 2. COMENTA o ELIMINA la verificación del CONFIG.json
+        // Simplemente no hagas esta petición si el archivo no existe
+        
+        // 3. Verificar si hay nuevo Service Worker
+        if (navigator.serviceWorker.controller) {
+            navigator.serviceWorker.controller.postMessage({
+                type: 'CHECK_FOR_UPDATES'
+            });
+        }
+        
+    } catch (error) {
+        console.log('ℹ️ Verificación completada:', error.message || 'Sin errores');
     }
+}
     
     async forceUpdate() {
         console.log('🔄 Forzando actualización...');
