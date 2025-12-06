@@ -2387,7 +2387,7 @@
     "subtipo": "UNISEX",
     "categoria": "PIJAMAS",
     "subcategoria": "PIEL DE DURAZNO",
-    "producto": "PIJAMA FAMILIAR",
+    "producto": "PIJAMA CABALLERO",
     "material": "PIEL DE DURAZNO",
     "tallas": "S,M,L,XL",
     "precio": 52000,
@@ -3356,5 +3356,21 @@
     "url": "https://ik.imagekit.io/mbsk9dati/producto_213/PRODUCTOS_Images_0a916ec8.IMAGEN_1.191052.jpg?tr=w-600,q-80",
     "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA",
     "descripcion": "BALON PARA FUTBOLL 5 DE ATLETICO NACIONAL"
+  },
+  {
+    "id": "53DF353G",
+    "tipo": "ROPA",
+    "subtipo": "UNISEX",
+    "categoria": "PIJAMAS",
+    "subcategoria": "PIEL DE DURAZNO",
+    "producto": "PIJAMA DAMA",
+    "material": "PIEL DE DURAZNO",
+    "tallas": "S,M,L,XL",
+    "precio": 48000,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_151/PRODUCTOS_Images_53DF353F.IMAGEN_2.220956.jpg?tr=w-600,q-80",
+    "promo": false,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_151/PRODUCTOS_Images_53DF353F.IMAGEN_2.220956.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_151/PRODUCTOS_Images_53DF353F.IMAGEN_1.221522.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_151/PRODUCTOS_Images_53DF353F.IMAGEN_3.220956.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_151/PRODUCTOS_Images_53DF353F.IMAGEN_4.220956.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_151/PRODUCTOS_Images_53DF353F.IMAGEN_5.220959.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_151/PRODUCTOS_Images_53DF353F.IMAGEN_6.220959.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_151/PRODUCTOS_Images_53DF353F.IMAGEN_7.220959.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_151/PRODUCTOS_Images_53DF353F.IMAGEN_8.221001.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_151/PRODUCTOS_Images_53DF353F.IMAGEN_9.221001.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_151/PRODUCTOS_Images_53DF353F.IMAGEN_10.221001.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_151/PRODUCTOS_Images_53DF353F.IMAGEN_11.221003.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_151/PRODUCTOS_Images_53DF353F.IMAGEN_12.221003.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_151/PRODUCTOS_Images_53DF353F.IMAGEN_13.221003.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_151/PRODUCTOS_Images_53DF353F.IMAGEN_14.221005.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_151/PRODUCTOS_Images_53DF353F.IMAGEN_15.221005.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_151/PRODUCTOS_Images_53DF353F.IMAGEN_16.221006.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_151/PRODUCTOS_Images_53DF353F.IMAGEN_17.221008.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_151/PRODUCTOS_Images_53DF353F.IMAGEN_18.221008.jpg?tr=w-600,q-80",
+    "proveedor": "FAMS",
+    "descripcion": "PUEDES REALIZAR TODO EL PROCESO DE COMPRA DIRECTAMENTE DESDE ESTE CANAL, Y DURANTE EL CHAT VERIFICAMOS JUNTOS LA DISPONIBILIDAD DE TALLA Y COLOR PARA ASEGURAR UNA EXPERIENCIA PERFECTA. DAMA"
   }
 ]
