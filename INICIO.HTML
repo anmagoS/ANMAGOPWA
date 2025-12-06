@@ -300,12 +300,11 @@
       </div>
     </div>
   </nav>
-
-  <script>
-  // ✅ CONFIGURACIÓN CON ÍNDICE DINÁMICO
+<script>
+  // ✅ CONFIGURACIÓN CON ÍNDICE DINÁMICO (ACTUALIZADA)
   const CONFIG_PROMOS = {
-      productosPorBloque: 4,
-      horasPorBloque: 6
+      productosPorBloque: 4,      // 4 productos en el carrusel de inicio
+      horasPorBloque: 6           // Cambia cada 6 horas (IGUAL QUE PROMOS.HTML)
   };
 
   // ✅ SISTEMA DE NAVEGACIÓN UNIFICADO
@@ -336,113 +335,263 @@
     "salud": "https://ik.imagekit.io/mbsk9dati/subtipos/SALUD.png?tr=w-300,q-80"
   };
 
-  // 🎯 OBTENER ÍNDICE DINÁMICO BASADO EN LA HORA ACTUAL
+  // ✅ VARIABLES PARA EL CARRUSEL
+  let productosEnPromocion = [];
+  let temporizadorInterval = null;
+
+  // 🎯 OBTENER ÍNDICE DINÁMICO BASADO EN LA HORA ACTUAL (MEJORADO)
   function obtenerIndicePromocionalDinamico() {
       const ahora = new Date();
       const horaActual = ahora.getHours();
+      
+      // Bloques de 6 horas: 0-6, 6-12, 12-18, 18-24
       const bloqueActual = Math.floor(horaActual / CONFIG_PROMOS.horasPorBloque);
+      
+      // Cada bloque muestra 4 productos en el carrusel
       const indice = bloqueActual * CONFIG_PROMOS.productosPorBloque;
       
-      console.log('🔄 Índice dinámico calculado:', {
-          horaActual: horaActual,
-          bloqueActual: bloqueActual,
-          indiceCalculado: indice
+      console.log('📅 Índice dinámico para carrusel:', {
+          hora: horaActual,
+          bloque: bloqueActual + 1,
+          indice: indice,
+          productosPorBloque: CONFIG_PROMOS.productosPorBloque
       });
       
       return indice;
   }
 
-  // 🎯 OBTENER PRODUCTOS DEL BLOQUE DINÁMICO
+  // 🎯 OBTENER PRODUCTOS DEL BLOQUE DINÁMICO (MEJORADO)
   function obtenerProductosDelBloqueDinamico(promociones) {
       if (!promociones || !promociones.length) return [];
       
       const indiceDinamico = obtenerIndicePromocionalDinamico();
       const totalPromos = promociones.length;
+      
+      // Índice cíclico (si hay menos productos que índices)
       const indiceReal = indiceDinamico % totalPromos;
       const inicio = indiceReal;
-      const fin = inicio + CONFIG_PROMOS.productosPorBloque;
+      let fin = inicio + CONFIG_PROMOS.productosPorBloque;
       
-      console.log('🎯 Obteniendo productos con índice dinámico:', {
+      console.log('🎯 Selección para carrusel:', {
+          totalProductos: totalPromos,
           indiceDinamico: indiceDinamico,
           indiceReal: indiceReal,
-          totalPromos: totalPromos,
           inicio: inicio,
           fin: fin
       });
       
-      // Si llegamos al final del array, volvemos al inicio
-      if (fin > totalPromos) {
+      // Caso normal: hay suficientes productos desde inicio
+      if (fin <= totalPromos) {
+          return promociones.slice(inicio, fin);
+      } 
+      // Caso wrap-around: combinar final + inicio
+      else {
           const sobrante = fin - totalPromos;
           const productosCombinados = [
-              ...promociones.slice(inicio),
-              ...promociones.slice(0, sobrante)
+              ...promociones.slice(inicio),        // Desde inicio hasta final
+              ...promociones.slice(0, sobrante)    // Desde inicio del array
           ];
-          console.log('🔄 Combinando productos (fin del array):', productosCombinados.length);
+          
+          console.log('🔄 Wrap-around en carrusel:', {
+              sobrante: sobrante,
+              primerSegmento: totalPromos - inicio,
+              segundoSegmento: sobrante
+          });
+          
           return productosCombinados;
       }
-      
-      return promociones.slice(inicio, fin);
   }
 
-  // 🎠 CARGAR CARRUSEL DE PROMOCIONES CON ÍNDICE DINÁMICO
+  // 🎠 CARGAR CARRUSEL DE PROMOCIONES CON ÍNDICE DINÁMICO (MEJORADO)
   async function cargarCarruselPromociones() {
       try {
           const productos = await obtenerCatalogo();
           
-          // Filtrar productos en promoción
-          const promociones = productos.filter(p => {
-              const promo = typeof p.promo === "string" ? p.promo.toLowerCase().trim() : p.promo;
-              return promo === true || promo === "true" || promo === "sí" || promo === "activo" || promo === "si";
+          // FILTRO MEJORADO: igual que PROMOS.HTML
+          const promociones = productos.filter(producto => {
+              if (!producto) return false;
+              
+              const promo = producto.promo;
+              
+              // Caso 1: promo es boolean true
+              if (promo === true) return true;
+              
+              // Caso 2: promo es string "true"
+              if (typeof promo === 'string') {
+                  const promoLower = promo.toLowerCase().trim();
+                  return promoLower === 'true' || 
+                         promoLower === 'sí' || 
+                         promoLower === 'si' || 
+                         promoLower === 'yes' || 
+                         promoLower === 'activo';
+              }
+              
+              // Caso 3: promo es number 1
+              if (typeof promo === 'number') {
+                  return promo === 1;
+              }
+              
+              return false;
           });
 
+          console.log(`✅ ${promociones.length} productos en promoción`);
+
+          // Guardar para usar en temporizador
+          productosEnPromocion = promociones;
+
           if (promociones.length === 0) {
-              document.getElementById('carousel-promos-home-contenido').innerHTML = `
-                  <div class="carousel-item active">
-                      <a href="PROMOS.HTML" class="producto-carrusel-card">
-                          <div class="producto-carrusel-img" style="background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
-                              🎁
-                          </div>
-                          <div class="producto-carrusel-info text-center">
-                              <div class="producto-carrusel-nombre">¡Descubre nuestras ofertas!</div>
-                              <div class="producto-carrusel-oferta">Haz clic para ver promociones</div>
-                          </div>
-                      </a>
-                  </div>
-              `;
+              mostrarCarruselSinOfertas();
               return;
           }
 
-          // Obtener bloque de productos con índice dinámico
+          // ✅ CORRECIÓN: Obtener productos del bloque actual
           const bloquePromociones = obtenerProductosDelBloqueDinamico(promociones);
 
           const carouselContent = document.getElementById('carousel-promos-home-contenido');
+          
+          // ✅ MEJOR RENDERIZADO CON DESCUENTOS REALES
           carouselContent.innerHTML = bloquePromociones.map((producto, index) => {
               const precioOriginal = Number(producto.precio) || 0;
-              const precioDescuento = Math.round(precioOriginal * 0.9);
+              
+              // Calcular precio con descuento (15% por defecto o usar precioOferta si existe)
+              let precioDescuento;
+              let descuentoPorcentaje;
+              
+              if (producto.precioOferta && producto.precioOferta > 0) {
+                  precioDescuento = Number(producto.precioOferta);
+                  descuentoPorcentaje = Math.round((1 - precioDescuento / precioOriginal) * 100);
+              } else {
+                  descuentoPorcentaje = 15; // Descuento por defecto
+                  precioDescuento = Math.round(precioOriginal * (1 - descuentoPorcentaje / 100));
+              }
+              
+              const ahorro = precioOriginal - precioDescuento;
+              const horaActual = new Date().getHours();
+              const bloqueActual = Math.floor(horaActual / 6) + 1;
               
               return `
                   <div class="carousel-item ${index === 0 ? 'active' : ''}">
-                      <a href="PRODUCTO.HTML?id=${producto.id}&origen=home" class="producto-carrusel-card">
-                          <img src="${producto.imagen}" 
-                               alt="${producto.producto}" 
-                               class="producto-carrusel-img"
-                               loading="lazy"
-                               onerror="this.src='https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg'">
+                      <a href="PRODUCTO.HTML?id=${producto.id}&origen=home&bloque=${bloqueActual}" class="producto-carrusel-card">
+                          <div class="position-relative">
+                              <img src="${producto.imagen || 'https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg'}" 
+                                   alt="${producto.producto}" 
+                                   class="producto-carrusel-img"
+                                   loading="lazy"
+                                   onerror="this.src='https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg'">
+                              
+                              <!-- Badge de descuento -->
+                              <div class="position-absolute top-0 start-0 m-2">
+                                  <span class="badge bg-danger fs-6">
+                                      -${descuentoPorcentaje}%
+                                  </span>
+                              </div>
+                              
+                              <!-- Badge "EN OFERTA" -->
+                              <div class="position-absolute top-0 end-0 m-2">
+                                  <span class="badge bg-warning text-dark">
+                                      <i class="bi bi-lightning"></i> EN OFERTA
+                                  </span>
+                              </div>
+                          </div>
+                          
                           <div class="producto-carrusel-info">
-                              <div class="producto-carrusel-nombre">${producto.producto}</div>
-                              <div class="producto-carrusel-precio">$${precioDescuento.toLocaleString('es-CO')}</div>
-                              <div class="producto-carrusel-oferta">10% OFF</div>
+                              <div class="producto-carrusel-nombre line-clamp-2">${producto.producto}</div>
+                              
+                              <div class="producto-carrusel-precios">
+                                  <div class="d-flex align-items-center gap-2">
+                                      <span class="producto-carrusel-precio fw-bold text-danger fs-5">
+                                          $${precioDescuento.toLocaleString('es-CO')}
+                                      </span>
+                                      <span class="producto-carrusel-precio-original text-muted text-decoration-line-through small">
+                                          $${precioOriginal.toLocaleString('es-CO')}
+                                      </span>
+                                  </div>
+                                  <div class="producto-carrusel-ahorro text-success small fw-bold mt-1">
+                                      <i class="bi bi-coin"></i> Ahorras $${ahorro.toLocaleString('es-CO')}
+                                  </div>
+                              </div>
+                              
+                              <div class="producto-carrusel-accion mt-2">
+                                  <span class="btn btn-sm btn-warning w-100 text-white fw-bold py-2">
+                                      <i class="bi bi-cart-plus"></i> Ver oferta
+                                  </span>
+                              </div>
                           </div>
                       </a>
                   </div>
               `;
           }).join('');
 
-          console.log("✅ Carrusel de promociones cargado con índice dinámico:", bloquePromociones.length, "productos");
+          console.log("✅ Carrusel cargado con índice dinámico:", {
+              totalPromos: promociones.length,
+              bloqueActual: Math.floor(new Date().getHours() / 6) + 1,
+              productosMostrados: bloquePromociones.length,
+              horaActual: new Date().toLocaleTimeString()
+          });
+
+          // Inicializar carrusel Bootstrap si existe
+          setTimeout(() => {
+              const carouselElement = document.getElementById('carouselPromosHome');
+              if (carouselElement && typeof bootstrap !== 'undefined') {
+                  try {
+                      new bootstrap.Carousel(carouselElement, {
+                          interval: 5000,
+                          wrap: true,
+                          touch: true
+                      });
+                  } catch (e) {
+                      console.log("ℹ️ Carrusel ya inicializado o error:", e);
+                  }
+              }
+          }, 300);
 
       } catch (error) {
-          console.error("❌ Error cargando carrusel de promociones:", error);
+          console.error("❌ Error cargando carrusel:", error);
+          mostrarCarruselError();
       }
+  }
+
+  // ⏰ TEMPORIZADOR PARA PROMOCIONES (MEJORADO)
+  function iniciarTemporizadorHome() {
+      const temporizador = document.getElementById("temporizador-home");
+
+      const actualizarTemporizador = () => {
+          const ahora = new Date();
+          const hora = ahora.getHours();
+          const minutos = ahora.getMinutes();
+          const segundos = ahora.getSeconds();
+          
+          // Calcular próxima hora múltiplo de 6
+          const proximaHora = Math.ceil(hora / 6) * 6;
+          let minutosRestantes;
+          
+          if (proximaHora > hora) {
+              minutosRestantes = (proximaHora - hora - 1) * 60 + (59 - minutos);
+          } else {
+              minutosRestantes = (23 - hora) * 60 + (59 - minutos);
+          }
+          
+          const segundosRestantes = minutosRestantes * 60 - segundos;
+          
+          const h = Math.floor(segundosRestantes / 3600);
+          const m = Math.floor((segundosRestantes % 3600) / 60);
+          const s = segundosRestantes % 60;
+          
+          temporizador.textContent = `⏰ Ofertas cambian en ${h}h ${m}m ${s}s`;
+          
+          // Si es hora de cambiar, actualizar el carrusel
+          if (segundosRestantes <= 0) {
+              console.log('🔄 ¡Hora de actualizar carrusel!');
+              temporizador.textContent = "🔄 Actualizando ofertas...";
+              cargarCarruselPromociones();
+          }
+      };
+
+      // Limpiar intervalo anterior si existe
+      if (temporizadorInterval) clearInterval(temporizadorInterval);
+      
+      actualizarTemporizador();
+      temporizadorInterval = setInterval(actualizarTemporizador, 1000);
   }
 
   // 🎯 FUNCIONES FALTANTES PARA CARGAR Y RENDERIZAR PRODUCTOS
@@ -569,37 +718,6 @@
               }
           });
       });
-  }
-
-  // ⏰ TEMPORIZADOR PARA PROMOCIONES
-  function iniciarTemporizadorHome() {
-      const temporizador = document.getElementById("temporizador-home");
-
-      const actualizarTemporizador = () => {
-          const ahora = new Date();
-          const horaActual = ahora.getHours();
-          const siguienteCorte = horaActual % 6 === 0 ? horaActual + 6 : Math.ceil(horaActual / 6) * 6;
-
-          const siguienteFecha = new Date(ahora);
-          siguienteFecha.setHours(siguienteCorte, 0, 0, 0);
-
-          const restante = siguienteFecha - ahora;
-
-          if (restante <= 0) {
-              temporizador.textContent = "🔄 ¡Ofertas actualizadas!";
-              cargarCarruselPromociones();
-              return;
-          }
-
-          const h = Math.floor(restante / (1000 * 60 * 60));
-          const m = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
-          const s = Math.floor((restante % (1000 * 60)) / 1000);
-
-          temporizador.textContent = `⏰ Ofertas cambian en ${h}h ${m}m ${s}s`;
-      };
-
-      actualizarTemporizador();
-      setInterval(actualizarTemporizador, 1000);
   }
 
   // 🧭 MANEJAR PARÁMETROS DE URL PARA NAVEGACIÓN DIRECTA
@@ -759,6 +877,51 @@
       return await respuesta.json();
   }
 
+  // ✅ FUNCIONES AUXILIARES PARA EL CARRUSEL
+  function mostrarCarruselSinOfertas() {
+      const contenedor = document.getElementById('carousel-promos-home-contenido');
+      if (!contenedor) return;
+      
+      contenedor.innerHTML = `
+          <div class="carousel-item active">
+              <div class="text-center py-5">
+                  <div class="alert alert-warning">
+                      <i class="bi bi-emoji-frown fs-1"></i>
+                      <h5 class="mt-3">😔 No hay ofertas en este momento</h5>
+                      <p class="text-muted mb-0">Pronto tendremos nuevas promociones para ti.</p>
+                      <div class="mt-3">
+                          <a href="PROMOS.HTML" class="btn btn-primary btn-sm">
+                              Ver todas las promociones
+                          </a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      `;
+  }
+
+  function mostrarCarruselError() {
+      const contenedor = document.getElementById('carousel-promos-home-contenido');
+      if (!contenedor) return;
+      
+      contenedor.innerHTML = `
+          <div class="carousel-item active">
+              <div class="text-center py-5">
+                  <div class="alert alert-danger">
+                      <i class="bi bi-exclamation-triangle fs-1"></i>
+                      <h5 class="mt-3">⚠️ Error al cargar ofertas</h5>
+                      <p class="text-muted mb-0">Intenta recargar la página.</p>
+                      <div class="mt-3">
+                          <button onclick="cargarCarruselPromociones()" class="btn btn-danger btn-sm">
+                              <i class="bi bi-arrow-clockwise"></i> Reintentar
+                          </button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      `;
+  }
+
   // 🚀 INICIALIZACIÓN
   document.addEventListener('DOMContentLoaded', function() {
       // Inicializar carrito
@@ -772,7 +935,7 @@
       // Manejar parámetros de URL y restaurar navegación
       manejarParametrosURL();
       
-      // Cargar carrusel de promociones con índice dinámico
+      // ✅ CORRECIÓN: Cargar carrusel con índice dinámico
       cargarCarruselPromociones();
       iniciarTemporizadorHome();
       
@@ -781,7 +944,7 @@
           try {
               const productos = await obtenerCatalogo();
               // MEJOR SOLUCIÓN - usa la misma lógica que en MODULOULTIMOS.JS
-const ultimosProductos = productos.slice(-20).reverse();
+              const ultimosProductos = productos.slice(-20).reverse();
               
               const grid = document.getElementById('grid-ultimos');
               grid.innerHTML = ultimosProductos.map(producto => `
@@ -803,7 +966,7 @@ const ultimosProductos = productos.slice(-20).reverse();
           }
       }, 1000);
   });
-  </script>
+</script>
  <!-- SCRIPTS EXTERNOS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
  <!-- 🔥 BUSCADOR SE CARGA DESPUÉS DEL HEADER -->
