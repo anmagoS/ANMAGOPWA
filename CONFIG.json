@@ -1,12 +1,17 @@
 {
-  "version": "v4.0",
+  "version": "v5.0",
   "last_updated": "2024-12-06",
-  "changelog": "Sistema de actualización automática PWA",
+  "changelog": "Sistema de actualización automática PWA mejorado",
   "force_update": false,
-  "min_version": "v3.0",
+  "min_version": "v4.0",
   "features": [
     "Actualizaciones automáticas",
-    "Notificaciones de nueva versión",
-    "Cache optimizado"
-  ]
+    "Notificaciones push",
+    "Cache optimizado",
+    "Funcionamiento offline"
+  ],
+  "urls": {
+    "catalogo": "https://raw.githubusercontent.com/anmagoS/ANMAGOPWA/main/catalogo.json",
+    "logo": "https://ik.imagekit.io/mbsk9dati/logo.jpg"
+  }
 }
