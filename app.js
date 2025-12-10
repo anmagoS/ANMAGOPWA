@@ -55,6 +55,14 @@ async function cargarCatalogoGlobal() {
     const res = await fetch(url);
     const productos = await res.json();
     window.catalogoGlobal = productos;
+    
+    // Inicializar sistema de filtrado por categorías
+    if (typeof inicializarFiltroCategorias === 'function') {
+      setTimeout(() => {
+        inicializarFiltroCategorias();
+      }, 500);
+    }
+    
     return productos;
   } catch (err) {
     console.error("❌ Error al cargar catálogo:", err);
@@ -316,6 +324,262 @@ function renderizarProductos(productos) {
     `;
   }).join('');
 }
+
+// === SISTEMA DE FILTRADO POR CATEGORÍAS RÁPIDAS (ESTILO TEMU) ===
+// Se integra sin afectar el funcionamiento actual
+
+let productosGlobal = [];
+let categoriaFiltroActual = 'TODOS';
+
+// Función para filtrar por categoría (llamada desde las categorías rápidas)
+function filtrarPorCategoria(categoria) {
+  categoriaFiltroActual = categoria;
+  
+  // Actualizar estado activo en las categorías
+  document.querySelectorAll('.categoria-rapida').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.getAttribute('data-tipo') === categoria) {
+      btn.classList.add('active');
+    }
+  });
+  
+  // Obtener los productos del catálogo global
+  const productos = window.catalogoGlobal || [];
+  
+  if (categoria === 'TODOS') {
+    // Ocultar el contenedor de productos filtrados
+    const filtroContainer = document.getElementById('productos-filtrados-container');
+    if (filtroContainer) filtroContainer.classList.add('d-none');
+    // Mostrar secciones normales
+    const ultimosGrid = document.getElementById('grid-ultimos');
+    if (ultimosGrid) ultimosGrid.style.display = 'grid';
+    return;
+  }
+  
+  // Crear contenedor si no existe
+  let contenedor = document.getElementById('productos-filtrados-container');
+  let grid = document.getElementById('grid-productos-filtrados');
+  let titulo = document.getElementById('titulo-categoria-filtrada');
+  let contador = document.getElementById('contador-productos-filtrados');
+  let sinProductos = document.getElementById('sin-productos-filtrados');
+  
+  if (!contenedor) {
+    // Crear el contenedor dinámicamente
+    const vistaInicio = document.getElementById('vista-inicio');
+    const nuevoHTML = `
+      <div id="productos-filtrados-container" class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="h4 fw-bold mb-0" id="titulo-categoria-filtrada">Productos</h2>
+          <span class="badge bg-primary" id="contador-productos-filtrados">0 productos</span>
+        </div>
+        <div id="grid-productos-filtrados" class="grid-productos-ml">
+          <!-- Los productos filtrados aparecerán aquí -->
+        </div>
+        <div id="sin-productos-filtrados" class="text-center py-5 d-none">
+          <i class="bi bi-emoji-frown fs-1 text-muted"></i>
+          <h5 class="mt-3">No hay productos en esta categoría</h5>
+          <p class="text-muted">Prueba con otra categoría</p>
+          <button class="btn btn-outline-primary mt-2" onclick="filtrarPorCategoria('TODOS')">
+            Ver todos los productos
+          </button>
+        </div>
+      </div>
+    `;
+    
+    // Insertar después del banner promocional o carrusel
+    const ultimosContainer = document.querySelector('.container.mt-4');
+    if (ultimosContainer) {
+      ultimosContainer.insertAdjacentHTML('beforebegin', nuevoHTML);
+    } else {
+      vistaInicio.insertAdjacentHTML('beforeend', nuevoHTML);
+    }
+    
+    // Reasignar variables
+    contenedor = document.getElementById('productos-filtrados-container');
+    grid = document.getElementById('grid-productos-filtrados');
+    titulo = document.getElementById('titulo-categoria-filtrada');
+    contador = document.getElementById('contador-productos-filtrados');
+    sinProductos = document.getElementById('sin-productos-filtrados');
+  }
+  
+  // Mostrar contenedor de productos filtrados
+  contenedor.classList.remove('d-none');
+  // Ocultar últimos productos temporalmente
+  const ultimosGrid = document.getElementById('grid-ultimos');
+  if (ultimosGrid) ultimosGrid.style.display = 'none';
+  
+  // Filtrar productos por categoría (busca en tipo, subtipo, categoria o keywords)
+  const productosFiltrados = productos.filter(producto => {
+    // Buscar en diferentes campos
+    const tipoMatch = producto.tipo && producto.tipo.toUpperCase() === categoria;
+    const subtipoMatch = producto.subtipo && producto.subtipo.toUpperCase() === categoria;
+    const categoriaMatch = producto.categoria && producto.categoria.toUpperCase() === categoria;
+    const keywordsMatch = producto.keywords && producto.keywords.toUpperCase().includes(categoria);
+    
+    return tipoMatch || subtipoMatch || categoriaMatch || keywordsMatch;
+  });
+  
+  // Actualizar título y contador
+  titulo.textContent = categoria;
+  contador.textContent = `${productosFiltrados.length} productos`;
+  
+  // Mostrar productos o mensaje de no hay productos
+  if (productosFiltrados.length === 0) {
+    grid.innerHTML = '';
+    sinProductos.classList.remove('d-none');
+  } else {
+    sinProductos.classList.add('d-none');
+    
+    // Generar HTML de productos (máximo 8 para no sobrecargar)
+    let html = '';
+    productosFiltrados.slice(0, 8).forEach((producto) => {
+      const precioOriginal = Number(producto.precio) || 0;
+      const precioDescuento = producto.promo === "sí" ? Math.round(precioOriginal * 0.9) : precioOriginal;
+      
+      html += `
+        <div class="card-producto-ml">
+          <a href="PRODUCTO.HTML?id=${producto.id}">
+            <div class="position-relative">
+              <img src="${producto.imagen || 'https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg'}" 
+                   alt="${producto.producto}" class="card-img-ml"
+                   onerror="this.src='https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg'">
+              ${producto.promo === "sí" ? '<span class="badge bg-danger position-absolute" style="top: 10px; left: 10px;">-10%</span>' : ''}
+              ${producto.stock <= 5 ? '<span class="badge bg-warning text-dark position-absolute" style="top: 10px; right: 10px;">Últimas</span>' : ''}
+            </div>
+            <div class="card-body-ml">
+              <h3 class="nombre-producto-ml small line-clamp-2">${producto.producto}</h3>
+              <div class="precio-ml fw-bold text-primary">
+                $${precioDescuento.toLocaleString('es-CO')}
+              </div>
+              ${producto.promo === "sí" && precioOriginal !== precioDescuento ? 
+                `<div class="text-muted text-decoration-line-through small">
+                  $${precioOriginal.toLocaleString('es-CO')}
+                </div>` : ''
+              }
+              <button class="btn btn-outline-primary btn-sm mt-2" onclick="event.preventDefault(); window.location.href='PRODUCTO.HTML?id=${producto.id}'">
+                <i class="bi bi-eye"></i> Ver detalles
+              </button>
+            </div>
+          </a>
+        </div>
+      `;
+    });
+    
+    // Agregar botón "Ver más" si hay más de 8 productos
+    if (productosFiltrados.length > 8) {
+      html += `
+        <div class="card-producto-ml d-flex align-items-center justify-content-center">
+          <div class="text-center p-4">
+            <p class="mb-3">Hay ${productosFiltrados.length - 8} productos más</p>
+            <button class="btn btn-primary" onclick="cargarSubtipos('${categoria.toLowerCase()}')">
+              Ver todos en esta categoría
+            </button>
+          </div>
+        </div>
+      `;
+    }
+    
+    grid.innerHTML = html;
+  }
+}
+
+// Función para mostrar todos los productos (mantiene compatibilidad)
+function mostrarTodosLosProductos() {
+  filtrarPorCategoria('TODOS');
+  // También activa la vista de todos los productos si existe
+  if (typeof window.mostrarTodosLosProductosCompleto === 'function') {
+    window.mostrarTodosLosProductosCompleto();
+  } else if (typeof mostrarTodosLosProductos === 'function') {
+    // Esto es para compatibilidad con tu función existente
+    // Se maneja más adelante
+  }
+}
+
+// Función para cargar subtipos (mantiene compatibilidad con tu sistema)
+function cargarSubtipos(tipo) {
+  // Primero filtra por la categoría
+  filtrarPorCategoria(tipo.toUpperCase());
+  
+  // También puede navegar a la vista de subtipos si el usuario quiere
+  // (esto mantiene tu sistema de navegación original)
+  // Descomenta la siguiente línea si quieres ambas funcionalidades:
+  /*
+  setTimeout(() => {
+    // Tu lógica original para cargar subtipos
+    if (window.cargarYRenderizarSubtipos) {
+      window.cargarYRenderizarSubtipos(tipo);
+    }
+  }, 100);
+  */
+}
+
+// Inicializar el sistema de filtrado cuando se cargan los productos
+function inicializarFiltroCategorias() {
+  // Esperar a que se carguen los productos
+  if (window.catalogoGlobal && window.catalogoGlobal.length > 0) {
+    productosGlobal = window.catalogoGlobal;
+    console.log(`✅ Sistema de filtrado Temu listo con ${productosGlobal.length} productos`);
+    
+    // Agregar badges de contador a las categorías
+    agregarContadoresCategorias();
+  } else {
+    // Reintentar después de 2 segundos
+    setTimeout(() => {
+      if (window.catalogoGlobal && window.catalogoGlobal.length > 0) {
+        productosGlobal = window.catalogoGlobal;
+        agregarContadoresCategorias();
+      }
+    }, 2000);
+  }
+}
+
+// Agregar contadores a las categorías
+function agregarContadoresCategorias() {
+  document.querySelectorAll('.categoria-rapida').forEach(categoria => {
+    const tipo = categoria.getAttribute('data-tipo');
+    if (tipo !== 'TODOS') {
+      // Contar productos que pertenecen a esta categoría
+      const count = productosGlobal.filter(producto => {
+        const tipoMatch = producto.tipo && producto.tipo.toUpperCase() === tipo;
+        const subtipoMatch = producto.subtipo && producto.subtipo.toUpperCase() === tipo;
+        const categoriaMatch = producto.categoria && producto.categoria.toUpperCase() === tipo;
+        const keywordsMatch = producto.keywords && producto.keywords.toUpperCase().includes(tipo);
+        
+        return tipoMatch || subtipoMatch || categoriaMatch || keywordsMatch;
+      }).length;
+      
+      if (count > 0) {
+        // Eliminar badge anterior si existe
+        const badgeAnterior = categoria.querySelector('.badge-categoria-count');
+        if (badgeAnterior) {
+          badgeAnterior.remove();
+        }
+        
+        // Crear nuevo badge
+        const badge = document.createElement('span');
+        badge.className = 'badge-categoria-count';
+        badge.textContent = count;
+        badge.style.cssText = `
+          position: absolute;
+          top: -5px;
+          right: -5px;
+          background: #ff4757;
+          color: white;
+          border-radius: 50%;
+          width: 18px;
+          height: 18px;
+          font-size: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        `;
+        categoria.style.position = 'relative';
+        categoria.appendChild(badge);
+      }
+    }
+  });
+}
+
 // 🛍️ FUNCIONES PARA "TODOS LOS PRODUCTOS" - VERSIÓN SCROLL INFINITO
 
 let todosProductos = [];
@@ -325,8 +589,8 @@ const productosPorCarga = 20; // Cuántos productos cargar cada vez
 let cargandoMasProductos = false;
 let tieneMasProductos = true;
 
-// Función para mostrar todos los productos
-async function mostrarTodosLosProductos() {
+// Función para mostrar todos los productos (vista completa)
+async function mostrarTodosLosProductosCompleto() {
   try {
     console.log("🛍️ Cargando todos los productos...");
     
@@ -355,7 +619,7 @@ async function mostrarTodosLosProductos() {
     
     // Asegurarse de tener el catálogo cargado
     if (!window.catalogoGlobal || window.catalogoGlobal.length === 0) {
-      window.catalogoGlobal = await obtenerCatalogo();
+      window.catalogoGlobal = await cargarCatalogoGlobal();
     }
     
     todosProductos = window.catalogoGlobal || [];
@@ -385,7 +649,7 @@ async function mostrarTodosLosProductos() {
           <div class="alert alert-danger">
             <i class="bi bi-exclamation-triangle"></i>
             <p>Error al cargar los productos. Intenta recargar la página.</p>
-            <button onclick="mostrarTodosLosProductos()" class="btn btn-danger btn-sm">
+            <button onclick="mostrarTodosLosProductosCompleto()" class="btn btn-danger btn-sm">
               <i class="bi bi-arrow-clockwise"></i> Reintentar
             </button>
           </div>
@@ -518,7 +782,7 @@ function crearCardProducto(producto) {
             ` : ''}
           </div>
           
-          <button class="btn btn-outline-primary btn-sm">
+          <button class="btn btn-outline-primary btn-sm" onclick="event.preventDefault(); window.location.href='PRODUCTO.HTML?id=${producto.id}'">
             <i class="bi bi-eye"></i>
           </button>
         </div>
@@ -590,7 +854,7 @@ function llenarFiltrosTodos() {
   }
 }
 
-// Función para filtrar productos
+// Función para filtrar productos en vista "todos"
 function filtrarProductosTodos() {
   const filtroTipo = document.getElementById('filtro-tipo-todos')?.value || '';
   const busqueda = document.getElementById('buscar-todos')?.value.toLowerCase() || '';
@@ -676,51 +940,11 @@ function aplicarOrdenamientoActual() {
     case 'recientes':
     default:
       // Mantener orden original (más recientes primero)
-      // Si tu JSON viene ordenado por fecha de adición, ya está bien
       break;
   }
 }
 
 // Modificar la función de volver al inicio para limpiar el scroll infinito
-function volverAInicio() {
-  navegacionStack = [];
-  cambiarVista('inicio');
-  
-  // Limpiar listener de scroll infinito
-  window.removeEventListener('scroll', manejarScrollInfinito);
-  
-  // Limpiar filtros
-  const busqueda = document.getElementById('buscar-todos');
-  const filtroTipo = document.getElementById('filtro-tipo-todos');
-  const orden = document.getElementById('ordenar-todos');
-  
-  if (busqueda) busqueda.value = '';
-  if (filtroTipo) filtroTipo.value = '';
-  if (orden) orden.value = 'recientes';
-  
-  window.history.replaceState({}, '', window.location.pathname);
-}
-
-// Agregar este código al final de tu inicialización
-document.addEventListener('DOMContentLoaded', function() {
-  // ... tu código existente ...
-  
-  // Agregar manejo de parámetros URL para la vista "todos"
-  const urlParams = new URLSearchParams(window.location.search);
-  const vista = urlParams.get('vista');
-  
-  if (vista === 'todos') {
-    // Esperar un poco para que todo cargue
-    setTimeout(() => {
-      mostrarTodosLosProductos();
-    }, 500);
-  }
-  
-  // ... resto de tu código ...
-});
-
-
-// Función para volver al inicio
 function volverAInicio() {
   // Ocultar todas las vistas y mostrar solo la vista de inicio
   document.querySelectorAll('.vista').forEach(vista => {
@@ -731,6 +955,21 @@ function volverAInicio() {
   if (vistaInicio) {
     vistaInicio.classList.add('vista-activa');
   }
+  
+  // Limpiar listener de scroll infinito
+  window.removeEventListener('scroll', manejarScrollInfinito);
+  
+  // Limpiar filtros de la vista "todos"
+  const busqueda = document.getElementById('buscar-todos');
+  const filtroTipo = document.getElementById('filtro-tipo-todos');
+  const orden = document.getElementById('ordenar-todos');
+  
+  if (busqueda) busqueda.value = '';
+  if (filtroTipo) filtroTipo.value = '';
+  if (orden) orden.value = 'recientes';
+  
+  // También volver al filtro "TODOS" en categorías rápidas
+  filtrarPorCategoria('TODOS');
   
   // Limpiar parámetros de URL
   const nuevaURL = new URL(window.location);
@@ -854,7 +1093,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (vista === 'todos') {
     // Esperar un poco para que todo cargue
     setTimeout(() => {
-      mostrarTodosLosProductos();
+      mostrarTodosLosProductosCompleto();
     }, 500);
   }
 
@@ -872,4 +1111,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   ) {
     window.renderizarCarrito();
   }
+  
+  // ✅ Inicializar sistema de filtrado de categorías
+  setTimeout(() => {
+    inicializarFiltroCategorias();
+  }, 1000);
 });
