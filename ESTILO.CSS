@@ -965,265 +965,68 @@ body { padding-top: 70px; }
   border-color: #c3e6cb;
   color: #155724;
 }
-/* === FOOTER ANMAGO - VERSIÓN CORREGIDA === */
-.footer {
-  background: var(--primary-color) !important;
-  color: var(--white) !important;
-  padding: 2rem 1rem 3rem !important;
-  margin-top: 3rem !important;
-}
-
-.footer-container {
-  max-width: 1200px !important;
-  margin: 0 auto !important;
-  padding: 0 15px !important;
-}
-
-/* Primera fila - tres columnas */
-.footer-main {
-  display: grid !important;
-  grid-template-columns: 1fr !important;
-  gap: 2rem !important;
-  margin-bottom: 2.5rem !important;
-}
-
-@media (min-width: 768px) {
-  .footer-main {
-    grid-template-columns: 2fr 1.5fr 1fr !important;
-    gap: 2rem !important;
-  }
-}
-
-.footer-section h4 {
-  color: var(--white) !important;
-  margin-bottom: 1rem !important;
-  font-size: 1.1rem !important;
-  border-bottom: 2px solid var(--secondary-color) !important;
-  padding-bottom: 0.5rem !important;
-  display: inline-block !important;
-}
-
-/* Enlaces */
-.footer-links {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 0.75rem !important;
-}
-
-.footer-links a {
-  color: rgba(255, 255, 255, 0.85) !important;
-  text-decoration: none !important;
-  transition: all 0.3s ease !important;
-  font-size: 0.9rem !important;
-}
-
-.footer-links a:hover {
-  color: var(--secondary-color) !important;
-  padding-left: 0.5rem !important;
-}
-
-/* Contacto */
-.contacto-compacto p {
-  margin: 0.5rem 0 !important;
-  font-size: 0.9rem !important;
-  color: rgba(255, 255, 255, 0.85) !important;
-  line-height: 1.5 !important;
-}
-
-.contacto-compacto strong {
-  color: var(--white) !important;
-  font-weight: 600 !important;
-}
-
-/* Redes sociales */
-.redes-sociales-compactas {
-  display: flex !important;
-  gap: 0.75rem !important;
-  flex-wrap: wrap !important;
-  margin-top: 0.5rem !important;
-}
-
-.redes-sociales-compactas a {
-  display: inline-flex !important;
-  transition: all 0.3s ease !important;
-  width: 36px !important;
-  height: 36px !important;
-}
-
-.redes-sociales-compactas img {
-  width: 100% !important;
-  height: 100% !important;
-  border-radius: 6px !important;
-  object-fit: contain !important;
-  background: rgba(255, 255, 255, 0.1) !important;
-  padding: 4px !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-}
-
-.redes-sociales-compactas a:hover {
-  transform: translateY(-3px) !important;
-}
-
-.redes-sociales-compactas a:hover img {
-  background: var(--secondary-color) !important;
-  border-color: var(--secondary-color) !important;
-}
-
-/* Segunda fila - Pagos y Transportadoras */
-.footer-secondary {
-  border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
-  padding-top: 2rem !important;
-  margin-top: 2rem !important;
-}
-
+/* ===== TRANSPORTADORAS CONVENIO ===== */
 .payment-shipping-container {
-  display: grid !important;
-  grid-template-columns: 1fr !important;
-  gap: 2.5rem !important;
-  margin-bottom: 2rem !important;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 @media (min-width: 768px) {
   .payment-shipping-container {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 3rem !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
   }
 }
 
-/* Medios de pago - VERSIÓN CORREGIDA */
-.medios-pago-compactos h4 {
-  color: var(--white) !important;
-  margin-bottom: 1rem !important;
-  text-align: center !important;
-  font-size: 1.1rem !important;
-}
-
-.logos-pago-compactos {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  gap: 1.5rem !important;
-  flex-wrap: wrap !important;
-  padding: 1.5rem !important;
-  background: rgba(255, 255, 255, 0.08) !important;
-  border-radius: 12px !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-}
-
-/* Logos de pago CON COLOR - NO usar filter */
-.logos-pago-compactos img {
-  height: 32px !important;
-  width: auto !important;
-  object-fit: contain !important;
-  background: white !important;
-  padding: 6px !important;
-  border-radius: 6px !important;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2) !important;
-  transition: all 0.3s ease !important;
-  /* REMOVER filter: brightness(0) invert(1) */
-}
-
-.logos-pago-compactos img:hover {
-  transform: scale(1.1) !important;
-  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3) !important;
-}
-
-/* Transportadoras - VERSIÓN CORREGIDA */
 .transportadoras-convenio {
-  text-align: center !important;
+  text-align: center;
 }
 
 .transportadoras-convenio h4 {
-  color: var(--white) !important;
-  margin-bottom: 1.5rem !important;
-  font-size: 1.1rem !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 0.75rem !important;
+  color: white;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
 }
 
 .logos-transportadoras {
-  display: grid !important;
-  grid-template-columns: repeat(2, 1fr) !important;
-  gap: 1rem !important;
-  margin-bottom: 1.5rem !important;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 @media (min-width: 768px) {
   .logos-transportadoras {
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 1.2rem !important;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
   }
 }
 
-/* Transportadoras CON FONDO BLANCO */
-.transportadora-item {
-  background: white !important; /* FONDO BLANCO */
-  border-radius: 10px !important;
-  padding: 1rem 0.75rem !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  min-height: 65px !important;
-  border: 2px solid rgba(255, 255, 255, 0.3) !important;
-  transition: all 0.3s ease !important;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
+.logos-transportadoras img {
+  width: 100%;
+  height: 40px;
+  object-fit: contain;
+  background: white;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
 }
 
-.transportadora-item:hover {
-  background: #f8f9fa !important;
-  border-color: var(--secondary-color) !important;
-  transform: translateY(-5px) !important;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25) !important;
+.logos-transportadoras img:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 12px rgba(0,0,0,0.3);
 }
 
-/* Logos de transportadoras CON COLOR ORIGINAL */
-.transportadora-item img {
-  max-width: 100% !important;
-  height: auto !important;
-  max-height: 28px !important;
-  object-fit: contain !important;
-  /* REMOVER filter: brightness(0) invert(1) */
-  opacity: 0.9 !important;
-  transition: all 0.3s ease !important;
+.contrarrembolso-text {
+  color: #20c997;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
 }
 
-.transportadora-item:hover img {
-  opacity: 1 !important;
-  transform: scale(1.05) !important;
-}
-
-/* Badge contrarreembolso */
-.contrarrembolso-badge {
-  background: var(--secondary-color) !important;
-  color: var(--white) !important;
-  padding: 0.6rem 1.5rem !important;
-  border-radius: 25px !important;
-  font-size: 0.85rem !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 0.5rem !important;
-  margin-top: 1rem !important;
-  font-weight: 600 !important;
-  box-shadow: 0 4px 12px rgba(25, 148, 97, 0.3) !important;
-  border: none !important;
-  transition: all 0.3s ease !important;
-}
-
-.contrarrembolso-badge:hover {
-  background: #157a4f !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 6px 16px rgba(25, 148, 97, 0.4) !important;
-}
-
-/* Copyright */
-.copyright {
-  text-align: center !important;
-  padding-top: 1.5rem !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
-  color: rgba(255, 255, 255, 0.8) !important;
-  font-size: 0.85rem !important;
-  margin-top: 2rem !important;
+.contrarrembolso-text i {
+  margin-right: 5px;
 }
