@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Anmago Store - Ropa, Hogar, Belleza y más</title>
   <meta name="description" content="Encuentra ropa, relojería, hogar, belleza y más en Anmago Store. Los mejores precios y calidad garantizada.">
-  <!-- Preconexiones optimizadas -->
+    <!-- Preconexiones optimizadas -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="preconnect" href="https://ik.imagekit.io">
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-  <!-- PWA y favicon -->
+    <!-- PWA y favicon -->
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="https://ik.imagekit.io/mbsk9dati/logo.jpg?tr=w-560,q-80" type="image/x-icon" />
   <!-- Bootstrap e iconos -->
@@ -17,98 +17,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
   <!-- CSS optimizado -->
   <link rel="stylesheet" href="ESTILO.CSS?v=20251116" />
-  <style>
-    /* ESTILOS PARA LAS CATEGORÍAS RÁPIDAS MEJORADAS */
-    .categorias-rapidas-wrapper {
-      display: flex;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-      padding: 5px 0;
-      margin: 0 -15px;
-    }
-
-    .categorias-rapidas {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      padding: 10px 15px;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-      flex: 1;
-    }
-
-    .categorias-rapidas::-webkit-scrollbar {
-      display: none;
-    }
-
-    .categoria-rapida {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-decoration: none;
-      color: #333;
-      min-width: 70px;
-      padding: 8px 5px;
-      border-radius: 12px;
-      background: #f8f9fa;
-      border: 2px solid transparent;
-      transition: all 0.3s ease;
-      flex-shrink: 0;
-    }
-
-    .categoria-rapida:hover {
-      background: #e9ecef;
-      transform: translateY(-2px);
-    }
-
-    .categoria-rapida.active {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border-color: transparent;
-      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-    }
-
-    .categoria-rapida div:first-child {
-      font-size: 20px;
-      margin-bottom: 5px;
-    }
-
-    .categoria-rapida div:last-child {
-      font-size: 11px;
-      font-weight: 500;
-      white-space: nowrap;
-    }
-
-    /* Estilos para carrusel en categorías */
-    .carrusel-en-categoria {
-      margin-top: 40px;
-      padding-top: 30px;
-      border-top: 1px solid #eee;
-    }
-    
-    .carrusel-en-categoria h3 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #666;
-      font-size: 1.2rem;
-    }
-    
-    /* Contador de productos en categorías rápidas */
-    .contador-categoria {
-      font-size: 9px;
-      background: #dc3545;
-      color: white;
-      border-radius: 10px;
-      padding: 1px 4px;
-      position: absolute;
-      top: -5px;
-      right: -5px;
-      min-width: 18px;
-      text-align: center;
-    }
-  </style>
 </head>
 <body class="bg-light">
   <!-- Scripts optimizados -->
@@ -117,21 +25,39 @@
 
   <!-- HEADER STICKY -->
   <div id="header-container" class="header-sticky"></div>
-  
-  <!-- CATEGORÍAS RÁPIDAS - AHORA CON SUBTIPOS -->
-  <div class="container-fluid mt-3">
-    <div class="categorias-rapidas" id="categorias-rapidas">
-      <!-- Botón TODOS -->
-      <a href="#" class="categoria-rapida active position-relative" 
-         onclick="filtrarPorCategoria('TODOS', 'TODOS')">
-        <div>🛍️</div>
-        <div>Todos</div>
-      </a>
-      
-      <!-- Categorías principales (se cargarán dinámicamente) -->
-      <!-- Ejemplo: ROYAL, BELLEZA, etc. -->
-    </div>
-  </div>
+  <!-- CATEGORÍAS RÁPIDAS -->
+      <div class="container-fluid mt-3">
+        <div class="categorias-rapidas">
+         <a href="#" class="categoria-rapida" data-tipo="TODOS" onclick="mostrarTodosLosProductos()">
+      <div>🛍️</div>
+      <div>Todos</div>
+    </a>
+     <a href="#" class="categoria-rapida" data-tipo="ROPA" onclick="cargarSubtipos('ROPA')">
+            <div>👗</div>
+            <div>Ropa</div>
+          </a>
+          <a href="#" class="categoria-rapida" data-tipo="RELOJERIA" onclick="cargarSubtipos('RELOJERIA')">
+            <div>⌚</div>
+            <div>Relojería</div>
+          </a>
+          <a href="#" class="categoria-rapida" data-tipo="HOGAR" onclick="cargarSubtipos('HOGAR')">
+            <div>🏠</div>
+            <div>Hogar</div>
+          </a>
+          <a href="#" class="categoria-rapida" data-tipo="BELLEZA" onclick="cargarSubtipos('BELLEZA')">
+            <div>💄</div>
+            <div>Belleza</div>
+          </a>
+          <a href="#" class="categoria-rapida" data-tipo="NAVIDAD" onclick="cargarSubtipos('NAVIDAD')">
+            <div>🎄</div>
+            <div>Navidad</div>
+          </a>
+          <a href="#" class="categoria-rapida" data-tipo="ESCOLAR" onclick="cargarSubtipos('ESCOLAR')">
+            <div>🎒</div>
+            <div>Escolar</div>
+          </a>
+        </div>
+      </div>
 
   <!-- BANNER PROMOCIONAL -->
   <div class="container-fluid banner-promocional py-2">
@@ -146,13 +72,26 @@
       <i class="bi bi-download"></i> Instalar App
     </button>
   </div>
+  
 
   <!-- ✅ SISTEMA DE VISTAS DINÁMICAS -->
   <main>
+
+    
     <!-- VISTA 1: INICIO (HOME) -->
     <div id="vista-inicio" class="vista vista-activa">
-      <!-- CARRUSEL DE PROMOCIONES -->
-      <div class="container mt-3" id="carrusel-inicio-container">
+     
+      
+
+      <!-- BOTÓN PROMOCIONES -->
+      <div class="container text-center mt-3">
+        <a href="PROMOS.HTML" class="btn btn-warning fw-bold px-4 py-2 rounded-pill">
+          🎁 Ver Todas las Ofertas
+        </a>
+      </div>
+
+      <!-- CARRUSEL DE PROMOCIONES MEJORADO -->
+      <div class="container mt-3">
         <div class="carrusel-temporizador mb-2">
           <i class="bi bi-clock"></i>
           <span id="temporizador-home" class="fw-bold ms-1">Cargando promociones...</span>
@@ -160,6 +99,7 @@
         
         <div id="carouselPromosHome" class="carousel slide carousel-promos-home" data-bs-ride="carousel">
           <div class="carousel-inner" id="carousel-promos-home-contenido">
+            <!-- Se carga dinámicamente con productos en promoción -->
             <div class="carousel-item active">
               <div class="text-center py-4">
                 <div class="spinner-border text-primary"></div>
@@ -176,34 +116,16 @@
             <span class="visually-hidden">Siguiente</span>
           </button>
         </div>
-      </div>
-
-      <!-- PRODUCTOS FILTRADOS POR CATEGORÍA/SUBTIPO -->
-      <div id="productos-categoria-container" class="container mt-4 d-none">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h2 class="h4 fw-bold mb-0" id="titulo-categoria-seleccionada">Productos</h2>
-          <span class="badge bg-primary" id="contador-productos-categoria">0 productos</span>
-        </div>
-        <div id="grid-productos-categoria" class="grid-productos-ml">
-          <!-- Los productos filtrados aparecerán aquí -->
-        </div>
-        <div id="sin-productos-categoria" class="text-center py-5 d-none">
-          <i class="bi bi-emoji-frown fs-1 text-muted"></i>
-          <h5 class="mt-3">No hay productos en esta categoría</h5>
-          <p class="text-muted">Prueba con otra categoría</p>
-          <button class="btn btn-outline-primary mt-2" onclick="filtrarPorCategoria('TODOS', 'TODOS')">
-            Ver todos los productos
-          </button>
+        
+        <div class="text-center mt-2">
+          <small class="text-muted">Desliza para ver más ofertas</small>
         </div>
       </div>
 
       <!-- ÚLTIMOS PRODUCTOS -->
-      <div id="ultimos-productos-container" class="container mt-4">
+      <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h2 class="h4 fw-bold mb-0">🆕 Productos recién llegados</h2>
-          <a href="javascript:void(0)" onclick="irATodosLosProductos()" class="small text-primary">
-            Ver todos <i class="bi bi-arrow-right"></i>
-          </a>
         </div>
         <div id="grid-ultimos" class="grid-productos-ml">
           <div class="card-producto-ml skeleton" style="height: 280px;"></div>
@@ -214,104 +136,815 @@
       </div>
     </div>
 
-    <!-- VISTA 5: TODOS LOS PRODUCTOS -->
-    <div id="vista-todos" class="vista">
+    <!-- VISTA 2: SUBTIPOS -->
+    <div id="vista-subtipos" class="vista">
       <div class="container mt-3">
         <nav class="breadcrumb-vista">
           <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item"><a href="#" onclick="volverAInicio()">INICIO</a></li>
-            <li class="breadcrumb-item active" id="breadcrumb-todos">Todos los productos</li>
+            <li class="breadcrumb-item active" id="breadcrumb-tipo"></li>
+          </ol>
+        </nav>
+        
+        <h1 class="h4 fw-bold mb-3" id="titulo-subtipos">Subtipos</h1>
+        <div id="grid-subtipos" class="grid-productos-ml"></div>
+      </div>
+    </div>
+
+    <!-- VISTA 3: CATEGORÍAS -->
+    <div id="vista-categorias" class="vista">
+      <div class="container mt-3">
+        <nav class="breadcrumb-vista">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="#" onclick="volverAInicio()">INICIO</a></li>
+            <li class="breadcrumb-item"><a href="#" id="breadcrumb-tipo-link"></a></li>
+            <li class="breadcrumb-item active" id="breadcrumb-subtipo"></li>
+          </ol>
+        </nav>
+        
+        <h1 class="h4 fw-bold mb-3" id="titulo-categorias">Categorías</h1>
+        <div id="grid-categorias" class="grid-productos-ml"></div>
+      </div>
+    </div>
+
+    <!-- VISTA 4: PRODUCTOS -->
+    <div id="vista-productos" class="vista">
+      <div class="container mt-3">
+        <nav class="breadcrumb-vista">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="#" onclick="volverAInicio()">INICIO</a></li>
+            <li class="breadcrumb-item"><a href="#" id="breadcrumb-tipo-link-prod"></a></li>
+            <li class="breadcrumb-item"><a href="#" id="breadcrumb-subtipo-link"></a></li>
+            <li class="breadcrumb-item active" id="breadcrumb-categoria"></li>
           </ol>
         </nav>
         
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <h1 class="h4 fw-bold mb-0">🛍️ Todos los productos</h1>
-          <div class="d-flex align-items-center gap-2">
-            <span class="badge bg-primary" id="contador-todos">0 productos</span>
-          </div>
+          <h1 class="h4 fw-bold mb-0" id="titulo-productos">Productos</h1>
+          <span class="badge bg-primary" id="contador-productos">0 productos</span>
         </div>
-        
-        <!-- Filtros -->
-        <div class="row mb-3 g-2">
-          <div class="col-md-4">
-            <div class="input-group input-group-sm">
-              <span class="input-group-text"><i class="bi bi-search"></i></span>
-              <input type="text" id="buscar-todos" class="form-control" placeholder="Buscar producto..." 
-                     onkeyup="filtrarProductosTodos()">
-            </div>
-          </div>
-          <div class="col-md-4">
-            <select class="form-select form-select-sm" id="filtro-categoria-todos" onchange="filtrarProductosTodos()">
-              <option value="">Filtrar por categoría</option>
-            </select>
-          </div>
-          <div class="col-md-4">
-            <select class="form-select form-select-sm" id="ordenar-todos" onchange="ordenarProductosTodos()">
-              <option value="recientes">Ordenar por: Recientes</option>
-              <option value="precio-asc">Precio: Menor a mayor</option>
-              <option value="precio-desc">Precio: Mayor a menor</option>
-              <option value="nombre">Nombre A-Z</option>
-            </select>
-          </div>
-        </div>
-        
-        <!-- Grid de productos -->
-        <div id="grid-todos" class="grid-productos-ml"></div>
-        
-        <!-- Mensaje de no hay resultados -->
-        <div id="sin-resultados-todos" class="text-center py-5 d-none">
-          <i class="bi bi-search fs-1 text-muted"></i>
-          <h5 class="mt-3">No se encontraron productos</h5>
-          <p class="text-muted">Intenta con otros filtros de búsqueda</p>
-        </div>
+        <div id="grid-productos" class="grid-productos-ml"></div>
       </div>
     </div>
   </main>
+<!-- VISTA 5: TODOS LOS PRODUCTOS -->
+<div id="vista-todos" class="vista">
+  <div class="container mt-3">
+    <nav class="breadcrumb-vista">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="#" onclick="volverAInicio()">INICIO</a></li>
+        <li class="breadcrumb-item active" id="breadcrumb-todos">Todos los productos</li>
+      </ol>
+    </nav>
+    
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1 class="h4 fw-bold mb-0">🛍️ Todos los productos</h1>
+      <div class="d-flex align-items-center gap-2">
+        <span class="badge bg-primary" id="contador-todos">0 productos</span>
+      </div>
+    </div>
+    
+    <!-- Filtros mejorados -->
+    <div class="row mb-3 g-2">
+      <div class="col-md-4">
+        <div class="input-group input-group-sm">
+          <span class="input-group-text"><i class="bi bi-search"></i></span>
+          <input type="text" id="buscar-todos" class="form-control" placeholder="Buscar producto..." 
+                 onkeyup="filtrarProductosTodos()">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <select class="form-select form-select-sm" id="filtro-tipo-todos" onchange="filtrarProductosTodos()">
+          <option value="">Filtrar por tipo</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <select class="form-select form-select-sm" id="ordenar-todos" onchange="ordenarProductosTodos()">
+          <option value="recientes">Ordenar por: Recientes</option>
+          <option value="precio-asc">Precio: Menor a mayor</option>
+          <option value="precio-desc">Precio: Mayor a menor</option>
+          <option value="nombre">Nombre A-Z</option>
+        </select>
+      </div>
+    </div>
+    
+    <!-- Grid de productos INFINITO (igual que las otras vistas) -->
+    <div id="grid-todos" class="grid-productos-ml"></div>
+    
+    <!-- Spinner para scroll infinito -->
+    <div id="cargando-todos" class="text-center py-4 d-none">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando más productos...</span>
+      </div>
+      <p class="text-muted mt-2">Cargando más productos...</p>
+    </div>
+    
+    <!-- Mensaje de no hay resultados -->
+    <div id="sin-resultados-todos" class="text-center py-5 d-none">
+      <i class="bi bi-search fs-1 text-muted"></i>
+      <h5 class="mt-3">No se encontraron productos</h5>
+      <p class="text-muted">Intenta con otros filtros de búsqueda</p>
+    </div>
+    
+    <!-- Botón para ver más (opcional, por si falla el scroll infinito) -->
+    <div id="btn-ver-mas-container" class="text-center mt-3 d-none">
+      <button id="btn-ver-mas" class="btn btn-outline-primary" onclick="cargarMasProductos()">
+        <i class="bi bi-arrow-down"></i> Ver más productos
+      </button>
+    </div>
+  </div>
+</div>
+  
 
-  <!-- Footer y demás código... (mantener igual) -->
+  <!-- CARRITO OFFCANVAS -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito">
+    <div class="offcanvas-header border-bottom">
+      <h4 class="offcanvas-title fw-bold">🛒 Tu Carrito</h4>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+    </div>
+    <div class="offcanvas-body" id="carrito-contenido">
+      <div class="text-center text-muted py-4">
+        <i class="bi bi-bag-x fs-1"></i>
+        <p class="mt-2">Tu carrito está vacío</p>
+      </div>
+    </div>
+    <div class="offcanvas-footer p-3 border-top">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <span class="fw-bold">Subtotal:</span>
+        <span id="subtotal" class="fw-bold fs-5 text-primary">$0</span>
+      </div>
+      <button class="btn btn-gradient px-4 py-2 rounded-pill fw-bold" onclick="abrirFormularioPedido()">
+        ✨Continuar compra✨
+      </button>
+    </div>
+  </div>
 
+  <!-- BOTÓN CARRITO FLOTANTE -->
+  <a href="#" class="btn-carrito-flotante d-none d-md-flex" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
+    <i class="bi bi-bag-heart fs-5"></i>
+    <span id="contador-carrito" class="contador-carrito">0</span>
+  </a>
+
+  <!-- ✅ FOOTER FIJADO EN TODAS LAS VISTAS -->
+  <footer class="footer mt-5" id="footer-container">
+    <!-- Enlaces institucionales -->
+    <div class="footer-links">
+      <a href="#" onclick="volverAInicio(); return false;">Inicio</a>
+      <a href="https://sites.google.com/view/anmagostore/quienes-somos" target="_blank">Nosotros</a>
+      <a href="https://sites.google.com/view/anmagostore/politica-de-tratamiento-de-datos" target="_blank">Tratamiento de datos</a>
+      <a href="https://sites.google.com/view/anmagostore/politicas-de-envios" target="_blank">Envíos</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSevvlCBgz7L6l2-DecKQLazoswqzf7DRYWOaCq4FtMGOR6D2Q/viewform?usp=header" target="_blank">Contacto</a>
+    </div>
+    
+    <!-- Redes sociales -->
+    <div class="redes-sociales">
+      <a href="https://www.facebook.com/profile.php?id=100092463703154&mibextid=ZbWKwL" target="_blank">
+        <img src="https://ik.imagekit.io/mbsk9dati/iconos%20redes/4896d785.IMAGEN.155541.jpg?updatedAt=1761587966118" alt="Facebook" width="48" height="48" loading="lazy">
+      </a>
+      <a href="https://www.youtube.com/channel/UCTrvoIT0-3ZbRuE7inPPxDg" target="_blank">
+        <img src="https://ik.imagekit.io/mbsk9dati/iconos%20redes/2a9cda61.IMAGEN.155515.jpg?updatedAt=1761587966369" alt="YouTube" width="48" height="48" loading="lazy">
+      </a>
+      <a href="https://www.tiktok.com/@anmagostore?_t=8g37PtO0Los&_r=1" target="_blank">
+        <img src="https://ik.imagekit.io/mbsk9dati/iconos%20redes/1d8aa1ac.IMAGEN.155420.jpg?updatedAt=1761587966443" alt="TikTok" width="48" height="48" loading="lazy">
+      </a>
+      <a href="https://instagram.com/anmagostore?igshid=OGQ5ZDc2ODk2ZA==" target="_blank">
+        <img src="https://ik.imagekit.io/mbsk9dati/iconos%20redes/cf840649.IMAGEN.155447.jpg?updatedAt=1761587966410" alt="Instagram" width="48" height="48" loading="lazy">
+      </a>
+      <a href="https://wa.me/573006498710" target="_blank">
+        <img src="https://ik.imagekit.io/mbsk9dati/iconos%20redes/9018ebd1.IMAGEN.155401.jpg?updatedAt=1761587966435" alt="WhatsApp" width="48" height="48" loading="lazy">
+      </a>
+      <a href="https://www.google.com/search?q=anmago+store" target="_blank">
+        <img src="https://ik.imagekit.io/mbsk9dati/iconos%20redes/ea6b8532.IMAGEN.155430.jpg?updatedAt=1761587966451" alt="Google" width="48" height="48" loading="lazy">
+      </a>
+    </div>
+
+    <!-- Medios de pago -->
+    <div class="medios-pago">
+      <h4>Medios de pago</h4>
+      <div class="logos-pago">
+        <img src="https://cdn.worldvectorlogo.com/logos/nequi-2.svg" alt="Nequi">
+        <img src="https://cdn.worldvectorlogo.com/logos/daviplata.svg" alt="Daviplata">
+        <img src="https://epayco.com/wp-content/uploads/2023/01/epayco_pago_seguro.jpg" alt="ePayco">
+      </div>
+    </div>
+
+    <!-- Datos de contacto -->
+    <div class="datos-contacto">
+      <h4>Contacto</h4>
+      <p><strong>Email:</strong> anmagostore@gmail.com</p>
+      <p><strong>Celulares:</strong> 3006498710 – 3115046741</p>
+      <p><strong>Administración:</strong> Carrera 13 N° 9-39, C.C. Visto Centro de Moda</p>
+    </div>
+
+    <!-- Derechos -->
+    <div class="copyright">
+      &copy; 2025 Anmago Store. Todos los derechos reservados.
+    </div>
+  </footer>
+
+  <!-- ✅ BARRA INFERIOR MOBILE FIJADA -->
+  <nav class="navbar fixed-bottom bg-white border-top d-md-none py-2" style="z-index: 1030;">
+    <div class="container-fluid">
+      <div class="d-flex justify-content-around w-100">
+        <a href="#" class="text-center text-decoration-none text-primary" onclick="volverAInicio(); return false;">
+          <i class="bi bi-house-fill fs-5"></i>
+          <div class="small">Inicio</div>
+        </a>
+        <a href="PROMOS.HTML" class="text-center text-decoration-none text-dark">
+          <i class="bi bi-percent fs-5"></i>
+          <div class="small">Ofertas</div>
+        </a>
+        <a href="#" class="text-center text-decoration-none position-relative"
+           data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito">
+          <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center" 
+               style="width: 50px; height: 50px; margin-top: -8px;">
+            <i class="bi bi-bag-heart fs-5 text-white"></i>
+          </div>
+          <span id="contador-carrito-mobile" class="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill" style="font-size: 0.6rem;">0</span>
+          <div class="small mt-1">Carrito</div>
+        </a>
+        <a href="https://wa.me/573006498710?text=¡Hola!%20Me%20interesan%20sus%20productos%20de%20Anmago%20Store" 
+           class="text-center text-decoration-none text-success"
+           target="_blank">
+          <i class="bi bi-whatsapp fs-5"></i>
+          <div class="small">Chat</div>
+        </a>
+        <a href="modalformulario.html" class="text-center text-decoration-none text-dark">
+          <i class="bi bi-person fs-5"></i>
+          <div class="small">Cuenta</div>
+        </a>
+      </div>
+    </div>
+  </nav>
 <script>
-  // ✅ CONFIGURACIÓN
+  // ✅ CONFIGURACIÓN CON ÍNDICE DINÁMICO (ACTUALIZADA)
   const CONFIG_PROMOS = {
-      productosPorBloque: 8,
-      horasPorBloque: 6
+      productosPorBloque: 8,      // 8 productos en el carrusel de inicio
+      horasPorBloque: 6           // Cambia cada 6 horas (IGUAL QUE PROMOS.HTML)
   };
 
-  // ✅ VARIABLES GLOBALES
-  let todosLosProductos = [];
-  let categoriasRapidas = [];
-  let filtroActual = { tipo: 'TODOS', subtipo: 'TODOS' };
+  // ✅ SISTEMA DE NAVEGACIÓN UNIFICADO
+  let navegacionStack = [];
+  let tipoActual = '';
+  let subtipoActual = '';
+  let categoriaActual = '';
+  let deferredPrompt;
 
-  // 🗂️ ICONOS PARA CATEGORÍAS RÁPIDAS
-  const ICONOS_CATEGORIAS = {
-    'TODOS': '🛍️',
-    'ROPA': '👗',
-    'DAMA': '👩',
-    'CABALLERO': '👨',
-    'NIÑOS': '👦',
-    'NIÑAS': '👧',
-    'UNISEX': '👥',
-    'RELOJERIA': '⌚',
-    'HOGAR': '🏠',
-    'BELLEZA': '💄',
-    'MAQUILLAJE': '💋',
-    'CUIDADO FACIAL': '🧴',
-    'TECNOLOGIA': '📱',
-    'NAVIDAD': '🎄',
-    'ESCOLAR': '🎒',
-    'DEPORTE': '⚽',
-    'ACCESORIOS': '👓',
-    'CALZADO': '👟',
-    'BOLSOS': '👜',
-    'JOYERIA': '💍',
-    'DECORACION': '🖼️',
-    'COCINA': '🍳',
-    'ILUMINACION': '💡',
-    'VEHICULOS': '🚗',
-    'SALUD': '🏥',
-    'BAÑO': '🛁',
-    'HABITACION': '🛏️'
+  // 🗂️ IMÁGENES POR SUBTIPO
+  const IMAGENES_POR_SUBTIPO = {
+    "dama": "https://ik.imagekit.io/mbsk9dati/subtipos/ícono%20realista%20para%20.png?tr=w-300,q-80",
+    "caballero": "https://ik.imagekit.io/mbsk9dati/subtipos/ícono%20realista%20para%20h.png?tr=w-300,q-80",
+    "unisex": "https://ik.imagekit.io/mbsk9dati/subtipos/ícono%20estilizado%20parej.png?tr=w-300,q-80",
+    "niños": "https://ik.imagekit.io/mbsk9dati/subtipos/ícono%20realista%20para%20nño.png?tr=w-300,q-80",
+    "niñas": "https://ik.imagekit.io/mbsk9dati/subtipos/ícono%20realista%20para%20niña.png?tr=w-300,q-80",
+    "hogar": "https://ik.imagekit.io/mbsk9dati/subtipos/ícono%20realista%20para%20hogar.png?tr=w-300,q-80",
+    "iluminacion": "https://ik.imagekit.io/mbsk9dati/subtipos/%C3%ADcono%20realista%20de%20bo.png?tr=w-300,q-80",
+    "analógico": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/reloj_analogico.jpg?tr=w-300,q-80",
+    "smartwatch": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/smartwatch.jpg?tr=w-300,q-80",
+    "cocina": "https://ik.imagekit.io/mbsk9dati/subtipos/%C3%ADcono%20realista%20de%20co.png?tr=w-300,q-80",
+    "decoración": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/decoracion.jpg?tr=w-300,q-80",
+    "maquillaje": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/maquillaje.jpg?tr=w-300,q-80",
+    "cuidado facial": "https://ik.imagekit.io/mbsk9dati/SUBTIPOS/facial.jpg?tr=w-300,q-80",
+    "baño": "https://ik.imagekit.io/mbsk9dati/subtipos/ba%C3%B1o.png?tr=w-300,q-80",
+    "vehiculos": "https://ik.imagekit.io/mbsk9dati/subtipos/VEHICULO.png?tr=w-300,q-80",
+    "habitacion": "https://ik.imagekit.io/mbsk9dati/subtipos/%C3%ADcono%20realista%20de%20ca.png?tr=w-300,q-80",
+    "salud": "https://ik.imagekit.io/mbsk9dati/subtipos/SALUD.png?tr=w-300,q-80"
   };
+
+  // ✅ VARIABLES PARA EL CARRUSEL
+  let productosEnPromocion = [];
+  let temporizadorInterval = null;
+
+  // 🎯 OBTENER ÍNDICE DINÁMICO BASADO EN LA HORA ACTUAL (MEJORADO)
+  function obtenerIndicePromocionalDinamico() {
+      const ahora = new Date();
+      const horaActual = ahora.getHours();
+      
+      // Bloques de 6 horas: 0-6, 6-12, 12-18, 18-24
+      const bloqueActual = Math.floor(horaActual / CONFIG_PROMOS.horasPorBloque);
+      
+      // Cada bloque muestra 4 productos en el carrusel
+      const indice = bloqueActual * CONFIG_PROMOS.productosPorBloque;
+      
+      console.log('📅 Índice dinámico para carrusel:', {
+          hora: horaActual,
+          bloque: bloqueActual + 1,
+          indice: indice,
+          productosPorBloque: CONFIG_PROMOS.productosPorBloque
+      });
+      
+      return indice;
+  }
+
+  // 🎯 OBTENER PRODUCTOS DEL BLOQUE DINÁMICO (MEJORADO)
+  function obtenerProductosDelBloqueDinamico(promociones) {
+      if (!promociones || !promociones.length) return [];
+      
+      const indiceDinamico = obtenerIndicePromocionalDinamico();
+      const totalPromos = promociones.length;
+      
+      // Índice cíclico (si hay menos productos que índices)
+      const indiceReal = indiceDinamico % totalPromos;
+      const inicio = indiceReal;
+      let fin = inicio + CONFIG_PROMOS.productosPorBloque;
+      
+      console.log('🎯 Selección para carrusel:', {
+          totalProductos: totalPromos,
+          indiceDinamico: indiceDinamico,
+          indiceReal: indiceReal,
+          inicio: inicio,
+          fin: fin
+      });
+      
+      // Caso normal: hay suficientes productos desde inicio
+      if (fin <= totalPromos) {
+          return promociones.slice(inicio, fin);
+      } 
+      // Caso wrap-around: combinar final + inicio
+      else {
+          const sobrante = fin - totalPromos;
+          const productosCombinados = [
+              ...promociones.slice(inicio),        // Desde inicio hasta final
+              ...promociones.slice(0, sobrante)    // Desde inicio del array
+          ];
+          
+          console.log('🔄 Wrap-around en carrusel:', {
+              sobrante: sobrante,
+              primerSegmento: totalPromos - inicio,
+              segundoSegmento: sobrante
+          });
+          
+          return productosCombinados;
+      }
+  }
+
+  // 🎠 CARGAR CARRUSEL DE PROMOCIONES CON ÍNDICE DINÁMICO (MEJORADO)
+  async function cargarCarruselPromociones() {
+      try {
+          const productos = await obtenerCatalogo();
+          
+          // FILTRO MEJORADO: igual que PROMOS.HTML
+          const promociones = productos.filter(producto => {
+              if (!producto) return false;
+              
+              const promo = producto.promo;
+              
+              // Caso 1: promo es boolean true
+              if (promo === true) return true;
+              
+              // Caso 2: promo es string "true"
+              if (typeof promo === 'string') {
+                  const promoLower = promo.toLowerCase().trim();
+                  return promoLower === 'true' || 
+                         promoLower === 'sí' || 
+                         promoLower === 'si' || 
+                         promoLower === 'yes' || 
+                         promoLower === 'activo';
+              }
+              
+              // Caso 3: promo es number 1
+              if (typeof promo === 'number') {
+                  return promo === 1;
+              }
+              
+              return false;
+          });
+
+          console.log(`✅ ${promociones.length} productos en promoción`);
+
+          // Guardar para usar en temporizador
+          productosEnPromocion = promociones;
+
+          if (promociones.length === 0) {
+              mostrarCarruselSinOfertas();
+              return;
+          }
+
+          // ✅ CORRECIÓN: Obtener productos del bloque actual
+          const bloquePromociones = obtenerProductosDelBloqueDinamico(promociones);
+
+          const carouselContent = document.getElementById('carousel-promos-home-contenido');
+          
+          // ✅ MEJOR RENDERIZADO CON DESCUENTOS REALES
+          carouselContent.innerHTML = bloquePromociones.map((producto, index) => {
+              const precioOriginal = Number(producto.precio) || 0;
+              
+              // Calcular precio con descuento (10% por defecto o usar precioOferta si existe)
+              let precioDescuento;
+              let descuentoPorcentaje;
+              
+              if (producto.precioOferta && producto.precioOferta > 0) {
+                  precioDescuento = Number(producto.precioOferta);
+                  descuentoPorcentaje = Math.round((1 - precioDescuento / precioOriginal) * 100);
+              } else {
+                  descuentoPorcentaje = 10; // Descuento por defecto
+                  precioDescuento = Math.round(precioOriginal * (1 - descuentoPorcentaje / 100));
+              }
+              
+              const ahorro = precioOriginal - precioDescuento;
+              const horaActual = new Date().getHours();
+              const bloqueActual = Math.floor(horaActual / 6) + 1;
+              
+              return `
+                  <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                      <a href="PRODUCTO.HTML?id=${producto.id}&origen=home&bloque=${bloqueActual}" class="producto-carrusel-card">
+                          <div class="position-relative">
+                              <img src="${producto.imagen || 'https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg'}" 
+                                   alt="${producto.producto}" 
+                                   class="producto-carrusel-img"
+                                   loading="lazy"
+                                   onerror="this.src='https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg'">
+                              
+                              <!-- Badge de descuento -->
+                              <div class="position-absolute top-0 start-0 m-2">
+                                  <span class="badge bg-danger fs-6">
+                                      -${descuentoPorcentaje}%
+                                  </span>
+                              </div>
+                              
+                              <!-- Badge "EN OFERTA" -->
+                              <div class="position-absolute top-0 end-0 m-2">
+                                  <span class="badge bg-warning text-dark">
+                                      <i class="bi bi-lightning"></i> EN OFERTA
+                                  </span>
+                              </div>
+                          </div>
+                          
+                          <div class="producto-carrusel-info">
+                              <div class="producto-carrusel-nombre line-clamp-2">${producto.producto}</div>
+                              
+                              <div class="producto-carrusel-precios">
+                                  <div class="d-flex align-items-center gap-2">
+                                      <span class="producto-carrusel-precio fw-bold text-danger fs-5">
+                                          $${precioDescuento.toLocaleString('es-CO')}
+                                      </span>
+                                      <span class="producto-carrusel-precio-original text-muted text-decoration-line-through small">
+                                          $${precioOriginal.toLocaleString('es-CO')}
+                                      </span>
+                                  </div>
+                                  <div class="producto-carrusel-ahorro text-success small fw-bold mt-1">
+                                      <i class="bi bi-coin"></i> Ahorras $${ahorro.toLocaleString('es-CO')}
+                                  </div>
+                              </div>
+                              
+                              <div class="producto-carrusel-accion mt-2">
+                                  <span class="btn btn-sm btn-warning w-100 text-white fw-bold py-2">
+                                      <i class="bi bi-cart-plus"></i> Ver oferta
+                                  </span>
+                              </div>
+                          </div>
+                      </a>
+                  </div>
+              `;
+          }).join('');
+
+          console.log("✅ Carrusel cargado con índice dinámico:", {
+              totalPromos: promociones.length,
+              bloqueActual: Math.floor(new Date().getHours() / 6) + 1,
+              productosMostrados: bloquePromociones.length,
+              horaActual: new Date().toLocaleTimeString()
+          });
+
+          // Inicializar carrusel Bootstrap si existe
+          setTimeout(() => {
+              const carouselElement = document.getElementById('carouselPromosHome');
+              if (carouselElement && typeof bootstrap !== 'undefined') {
+                  try {
+                      new bootstrap.Carousel(carouselElement, {
+                          interval: 5000,
+                          wrap: true,
+                          touch: true
+                      });
+                  } catch (e) {
+                      console.log("ℹ️ Carrusel ya inicializado o error:", e);
+                  }
+              }
+          }, 300);
+
+      } catch (error) {
+          console.error("❌ Error cargando carrusel:", error);
+          mostrarCarruselError();
+      }
+  }
+
+  // ⏰ TEMPORIZADOR PARA PROMOCIONES (MEJORADO)
+  function iniciarTemporizadorHome() {
+      const temporizador = document.getElementById("temporizador-home");
+
+      const actualizarTemporizador = () => {
+          const ahora = new Date();
+          const hora = ahora.getHours();
+          const minutos = ahora.getMinutes();
+          const segundos = ahora.getSeconds();
+          
+          // Calcular próxima hora múltiplo de 6
+          const proximaHora = Math.ceil(hora / 6) * 6;
+          let minutosRestantes;
+          
+          if (proximaHora > hora) {
+              minutosRestantes = (proximaHora - hora - 1) * 60 + (59 - minutos);
+          } else {
+              minutosRestantes = (23 - hora) * 60 + (59 - minutos);
+          }
+          
+          const segundosRestantes = minutosRestantes * 60 - segundos;
+          
+          const h = Math.floor(segundosRestantes / 3600);
+          const m = Math.floor((segundosRestantes % 3600) / 60);
+          const s = segundosRestantes % 60;
+          
+          temporizador.textContent = `⏰ Ofertas cambian en ${h}h ${m}m ${s}s`;
+          
+          // Si es hora de cambiar, actualizar el carrusel
+          if (segundosRestantes <= 0) {
+              console.log('🔄 ¡Hora de actualizar carrusel!');
+              temporizador.textContent = "🔄 Actualizando ofertas...";
+              cargarCarruselPromociones();
+          }
+      };
+
+      // Limpiar intervalo anterior si existe
+      if (temporizadorInterval) clearInterval(temporizadorInterval);
+      
+      actualizarTemporizador();
+      temporizadorInterval = setInterval(actualizarTemporizador, 1000);
+  }
+
+  // 🎯 FUNCIONES FALTANTES PARA CARGAR Y RENDERIZAR PRODUCTOS
+  async function cargarYRenderizarSubtipos(tipo) {
+    try {
+      const productos = await obtenerCatalogo();
+      const subtipos = [...new Set(productos
+        .filter(p => p.tipo === tipo)
+        .map(p => p.subtipo)
+        .filter(Boolean)
+      )];
+
+      const grid = document.getElementById('grid-subtipos');
+      grid.innerHTML = subtipos.map(subtipo => {
+        const imagen = IMAGENES_POR_SUBTIPO[subtipo.toLowerCase()] || "https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg";
+        
+        return `
+          <div class="card-producto-ml">
+            <a href="#" onclick="cargarCategorias('${tipo}', '${subtipo}'); return false;">
+              <img src="${imagen}" alt="${subtipo}" class="card-img-ml">
+              <div class="card-body-ml">
+                <h3 class="nombre-producto-ml small">${subtipo}</h3>
+                <span class="btn btn-outline-primary btn-sm">Ver categorías</span>
+              </div>
+            </a>
+          </div>
+        `;
+      }).join('');
+    } catch (error) {
+      console.error('Error cargando subtipos:', error);
+    }
+  }
+
+  async function cargarYRenderizarCategorias(tipo, subtipo) {
+    try {
+      const productos = await obtenerCatalogo();
+      const categorias = [...new Set(productos
+        .filter(p => p.tipo === tipo && p.subtipo === subtipo)
+        .map(p => p.categoria)
+        .filter(Boolean)
+      )];
+
+      const grid = document.getElementById('grid-categorias');
+      grid.innerHTML = categorias.map(categoria => {
+        const productoEjemplo = productos.find(p => p.tipo === tipo && p.subtipo === subtipo && p.categoria === categoria);
+        const imagen = productoEjemplo?.imagen || "https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg";
+        
+        return `
+          <div class="card-producto-ml">
+            <a href="#" onclick="cargarProductos('${tipo}', '${subtipo}', '${categoria}'); return false;">
+              <img src="${imagen}" alt="${categoria}" class="card-img-ml">
+              <div class="card-body-ml">
+                <h3 class="nombre-producto-ml small">${categoria}</h3>
+                <span class="btn btn-outline-primary btn-sm">Ver productos</span>
+              </div>
+            </a>
+          </div>
+        `;
+      }).join('');
+    } catch (error) {
+      console.error('Error cargando categorías:', error);
+    }
+  }
+
+  async function cargarYRenderizarProductos(tipo, subtipo, categoria) {
+    try {
+      const productos = await obtenerCatalogo();
+      const productosFiltrados = productos.filter(p => 
+        p.tipo === tipo && p.subtipo === subtipo && p.categoria === categoria
+      );
+
+      document.getElementById('contador-productos').textContent = `${productosFiltrados.length} productos`;
+
+      const grid = document.getElementById('grid-productos');
+      grid.innerHTML = productosFiltrados.map(producto => `
+        <div class="card-producto-ml">
+          <a href="#" onclick="irADetalleProducto('${producto.id}', '${tipo}', '${subtipo}', '${categoria}')">
+            <img src="${producto.imagen}" alt="${producto.producto}" class="card-img-ml">
+            <div class="card-body-ml">
+              <h3 class="nombre-producto-ml">${producto.producto}</h3>
+              <p class="precio-producto-ml">$${Number(producto.precio).toLocaleString('es-CO')}</p>
+              ${producto.promo === "sí" ? '<span class="badge bg-danger">EN PROMOCIÓN</span>' : ''}
+              ${producto.stock <= 5 ? '<span class="badge bg-warning text-dark">ÚLTIMAS UNIDADES</span>' : ''}
+              <button class="btn btn-outline-primary btn-sm mt-2">
+                <i class="bi bi-eye"></i> Ver detalles
+              </button>
+            </div>
+          </a>
+        </div>
+      `).join('');
+
+    } catch (error) {
+      console.error('Error cargando productos:', error);
+      document.getElementById('grid-productos').innerHTML = `
+        <div class="col-12 text-center py-4">
+          <p class="text-muted">Error al cargar los productos. Intenta nuevamente.</p>
+        </div>
+      `;
+    }
+  }
+
+  // 📲 SISTEMA DE INSTALACIÓN PWA
+  function configurarInstalacionPWA() {
+      // Verificar si ya está instalado
+      const esPWAInstalado = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+      if (!esPWAInstalado) {
+          const contenedor = document.getElementById("instalar-container");
+          if (contenedor) contenedor.classList.remove("d-none");
+      }
+
+      window.addEventListener("beforeinstallprompt", (e) => {
+          e.preventDefault();
+          deferredPrompt = e;
+
+          const boton = document.getElementById("boton-instalar");
+          boton?.addEventListener("click", async () => {
+              if (deferredPrompt) {
+                  deferredPrompt.prompt();
+                  const resultado = await deferredPrompt.userChoice;
+                  console.log("📲 Resultado instalación:", resultado.outcome);
+                  deferredPrompt = null;
+                  document.getElementById("instalar-container")?.classList.add("d-none");
+              }
+          });
+      });
+  }
+
+  // 🧭 MANEJAR PARÁMETROS DE URL PARA NAVEGACIÓN DIRECTA
+  function manejarParametrosURL() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tipo = urlParams.get('tipo');
+      const subtipo = urlParams.get('subtipo');
+      const categoria = urlParams.get('categoria');
+      const vista = urlParams.get('vista');
+      
+      if (vista === 'productos' && tipo && subtipo && categoria) {
+          cargarProductos(tipo, subtipo, categoria);
+      } else if (vista === 'categorias' && tipo && subtipo) {
+          cargarCategorias(tipo, subtipo);
+      } else if (vista === 'subtipos' && tipo) {
+          cargarSubtipos(tipo);
+      } else {
+          restaurarNavegacionDesdeProducto();
+      }
+  }
+
+  // 🔄 FUNCIÓN PARA RESTAURAR NAVEGACIÓN AL VOLVER DESDE PRODUCTO
+  function restaurarNavegacionDesdeProducto() {
+      const estadoGuardado = localStorage.getItem('navegacionAnmago');
+      
+      if (estadoGuardado) {
+          try {
+              const estado = JSON.parse(estadoGuardado);
+              const ahora = Date.now();
+              const tiempoTranscurrido = ahora - estado.timestamp;
+              
+              // Solo restaurar si ha pasado menos de 30 minutos
+              if (tiempoTranscurrido < 30 * 60 * 1000) {
+                  switch (estado.vistaAnterior) {
+                      case 'productos':
+                          if (estado.tipo && estado.subtipo && estado.categoria) {
+                              cargarProductos(estado.tipo, estado.subtipo, estado.categoria);
+                              return true;
+                          }
+                          break;
+                      case 'categorias':
+                          if (estado.tipo && estado.subtipo) {
+                              cargarCategorias(estado.tipo, estado.subtipo);
+                              return true;
+                          }
+                          break;
+                      case 'subtipos':
+                          if (estado.tipo) {
+                              cargarSubtipos(estado.tipo);
+                              return true;
+                          }
+                          break;
+                  }
+              }
+              
+              // Limpiar estado expirado
+              localStorage.removeItem('navegacionAnmago');
+          } catch (error) {
+              console.error('Error restaurando navegación:', error);
+              localStorage.removeItem('navegacionAnmago');
+          }
+      }
+      return false;
+  }
+
+  // 🔄 FUNCIONES DE NAVEGACIÓN
+  function cambiarVista(vistaDestino) {
+      document.querySelectorAll('.vista').forEach(vista => {
+          vista.classList.remove('vista-activa');
+      });
+      document.getElementById(`vista-${vistaDestino}`).classList.add('vista-activa');
+      navegacionStack.push(vistaDestino);
+      
+      const nuevaURL = new URL(window.location);
+      nuevaURL.searchParams.set('vista', vistaDestino);
+      window.history.replaceState({}, '', nuevaURL);
+  }
+
+  function cargarSubtipos(tipo) {
+      const estadoNavegacion = {
+          vistaAnterior: 'inicio',
+          tipo: tipo,
+          timestamp: Date.now()
+      };
+      
+      tipoActual = tipo;
+      cambiarVista('subtipos');
+      document.getElementById('breadcrumb-tipo').textContent = tipo;
+      document.getElementById('titulo-subtipos').textContent = tipo;
+      cargarYRenderizarSubtipos(tipo);
+  }
+
+  function cargarCategorias(tipo, subtipo) {
+      const estadoNavegacion = {
+          vistaAnterior: 'subtipos',
+          tipo: tipo,
+          subtipo: subtipo,
+          timestamp: Date.now()
+      };
+      
+      subtipoActual = subtipo;
+      cambiarVista('categorias');
+      document.getElementById('breadcrumb-tipo-link').textContent = tipo;
+      document.getElementById('breadcrumb-tipo-link').onclick = () => cargarSubtipos(tipo);
+      document.getElementById('breadcrumb-subtipo').textContent = subtipo;
+      document.getElementById('titulo-categorias').textContent = subtipo;
+      cargarYRenderizarCategorias(tipo, subtipo);
+  }
+
+  function cargarProductos(tipo, subtipo, categoria) {
+      const estadoNavegacion = {
+          vistaAnterior: 'productos',
+          tipo: tipo,
+          subtipo: subtipo,
+          categoria: categoria,
+          timestamp: Date.now()
+      };
+      
+      categoriaActual = categoria;
+      cambiarVista('productos');
+      document.getElementById('breadcrumb-tipo-link-prod').textContent = tipo;
+      document.getElementById('breadcrumb-tipo-link-prod').onclick = () => cargarSubtipos(tipo);
+      document.getElementById('breadcrumb-subtipo-link').textContent = subtipo;
+      document.getElementById('breadcrumb-subtipo-link').onclick = () => cargarCategorias(tipo, subtipo);
+      document.getElementById('breadcrumb-categoria').textContent = categoria;
+      document.getElementById('titulo-productos').textContent = categoria;
+      cargarYRenderizarProductos(tipo, subtipo, categoria);
+  }
+
+  function volverAInicio() {
+      navegacionStack = [];
+      cambiarVista('inicio');
+      window.history.replaceState({}, '', window.location.pathname);
+  }
+
+  function irADetalleProducto(productoId, tipo, subtipo, categoria) {
+      const estadoNavegacion = {
+          vistaAnterior: 'productos',
+          tipo: tipo,
+          subtipo: subtipo,
+          categoria: categoria,
+          timestamp: Date.now(),
+          url: window.location.href
+      };
+      
+      localStorage.setItem('navegacionAnmago', JSON.stringify(estadoNavegacion));
+      window.location.href = `PRODUCTO.HTML?id=${productoId}&origen=tienda&tipo=${tipo}&subtipo=${subtipo}&categoria=${categoria}`;
+      
+      if (event) event.preventDefault();
+      return false;
+  }
 
   // 🎯 FUNCIÓN PARA OBTENER CATÁLOGO
   async function obtenerCatalogo() {
@@ -320,342 +953,99 @@
       return await respuesta.json();
   }
 
-  // 🎯 CARGAR CATEGORÍAS RÁPIDAS DESDE EL JSON
-  async function cargarCategoriasRapidas() {
-    try {
-      const productos = await obtenerCatalogo();
-      todosLosProductos = productos;
+  // ✅ FUNCIONES AUXILIARES PARA EL CARRUSEL
+  function mostrarCarruselSinOfertas() {
+      const contenedor = document.getElementById('carousel-promos-home-contenido');
+      if (!contenedor) return;
       
-      // Extraer TODOS los tipos y subtipos únicos
-      const tiposUnicos = [...new Set(productos.map(p => p.tipo).filter(Boolean))];
-      const subtiposUnicos = [...new Set(productos.map(p => p.subtipo).filter(Boolean))];
-      
-      // Combinar tipos y subtipos para las categorías rápidas
-      const todasCategorias = [...tiposUnicos, ...subtiposUnicos];
-      
-      // Filtrar duplicados y ordenar
-      const categoriasUnicas = [...new Set(todasCategorias)].sort();
-      
-      // Agregar "TODOS" al inicio
-      categoriasUnicas.unshift('TODOS');
-      
-      // Renderizar categorías rápidas
-      const contenedor = document.getElementById('categorias-rapidas');
-      contenedor.innerHTML = categoriasUnicas.map(categoria => {
-        const icono = ICONOS_CATEGORIAS[categoria] || '📦';
-        const productosEnCategoria = contarProductosEnCategoria(categoria, productos);
-        
-        return `
-          <a href="#" class="categoria-rapida position-relative ${categoria === 'TODOS' ? 'active' : ''}"
-             onclick="filtrarPorCategoria('${categoria}', '${categoria}')">
-            <div>${icono}</div>
-            <div>${categoria.charAt(0) + categoria.slice(1).toLowerCase()}</div>
-            ${productosEnCategoria > 0 ? `<span class="contador-categoria">${productosEnCategoria}</span>` : ''}
-          </a>
-        `;
-      }).join('');
-      
-      // Guardar categorías para usar en filtros
-      categoriasRapidas = categoriasUnicas;
-      
-      // Llenar select de filtro en vista "Todos"
-      const selectFiltro = document.getElementById('filtro-categoria-todos');
-      if (selectFiltro) {
-        selectFiltro.innerHTML = `
-          <option value="">Filtrar por categoría</option>
-          ${categoriasUnicas.map(cat => 
-            `<option value="${cat}">${cat.charAt(0) + cat.slice(1).toLowerCase()}</option>`
-          ).join('')}
-        `;
-      }
-      
-    } catch (error) {
-      console.error('Error cargando categorías rápidas:', error);
-    }
-  }
-
-  // 🎯 CONTAR PRODUCTOS EN UNA CATEGORÍA
-  function contarProductosEnCategoria(categoria, productos) {
-    if (categoria === 'TODOS') return productos.length;
-    
-    // Buscar en tipos
-    const enTipos = productos.filter(p => p.tipo === categoria).length;
-    if (enTipos > 0) return enTipos;
-    
-    // Buscar en subtipos
-    const enSubtipos = productos.filter(p => p.subtipo === categoria).length;
-    return enSubtipos;
-  }
-
-  // 🎯 FILTRAR POR CATEGORÍA (TIPO O SUBTIPO)
-  async function filtrarPorCategoria(categoriaSeleccionada, tipoFiltro) {
-    // Actualizar botones activos
-    document.querySelectorAll('.categoria-rapida').forEach(btn => {
-      btn.classList.remove('active');
-    });
-    event.target.closest('.categoria-rapida').classList.add('active');
-    
-    // Actualizar filtro actual
-    filtroActual = { 
-      tipo: categoriaSeleccionada, 
-      subtipo: tipoFiltro === 'subtipo' ? categoriaSeleccionada : 'TODOS' 
-    };
-    
-    // Ocultar secciones de inicio
-    document.getElementById('carrusel-inicio-container').classList.add('d-none');
-    document.getElementById('ultimos-productos-container').classList.add('d-none');
-    
-    // Mostrar contenedor de productos filtrados
-    const contenedor = document.getElementById('productos-categoria-container');
-    contenedor.classList.remove('d-none');
-    
-    // Actualizar título
-    const titulo = document.getElementById('titulo-categoria-seleccionada');
-    titulo.textContent = categoriaSeleccionada === 'TODOS' 
-      ? '🛍️ Todos los productos' 
-      : `${ICONOS_CATEGORIAS[categoriaSeleccionada] || '📦'} ${categoriaSeleccionada.charAt(0) + categoriaSeleccionada.slice(1).toLowerCase()}`;
-    
-    try {
-      let productosFiltrados;
-      
-      if (categoriaSeleccionada === 'TODOS') {
-        productosFiltrados = todosLosProductos;
-      } else {
-        // Filtrar productos: buscar en tipo O en subtipo
-        productosFiltrados = todosLosProductos.filter(producto => 
-          producto.tipo === categoriaSeleccionada || 
-          producto.subtipo === categoriaSeleccionada
-        );
-      }
-      
-      // Actualizar contador
-      document.getElementById('contador-productos-categoria').textContent = `${productosFiltrados.length} productos`;
-      
-      // Renderizar productos
-      const grid = document.getElementById('grid-productos-categoria');
-      
-      if (productosFiltrados.length === 0) {
-        document.getElementById('sin-productos-categoria').classList.remove('d-none');
-        grid.innerHTML = '';
-      } else {
-        document.getElementById('sin-productos-categoria').classList.add('d-none');
-        
-        grid.innerHTML = productosFiltrados.map(producto => `
-          <div class="card-producto-ml">
-            <a href="#" onclick="irADetalleProducto('${producto.id}')">
-              <img src="${producto.imagen}" alt="${producto.producto}" class="card-img-ml">
-              <div class="card-body-ml">
-                <h3 class="nombre-producto-ml line-clamp-2">${producto.producto}</h3>
-                <div class="precio-ml fw-bold text-primary">$${Number(producto.precio).toLocaleString('es-CO')}</div>
-                <div class="d-flex flex-wrap gap-1 mb-2">
-                  ${producto.tipo ? `<span class="badge bg-secondary">${producto.tipo}</span>` : ''}
-                  ${producto.subtipo ? `<span class="badge bg-info">${producto.subtipo}</span>` : ''}
-                  ${producto.categoria ? `<span class="badge bg-warning text-dark">${producto.categoria}</span>` : ''}
-                </div>
-                ${producto.promo === true || producto.promo === "sí" ? '<span class="badge bg-danger">EN PROMOCIÓN</span>' : ''}
-                <button class="btn btn-outline-primary btn-sm mt-2">
-                  <i class="bi bi-eye"></i> Ver detalles
-                </button>
+      contenedor.innerHTML = `
+          <div class="carousel-item active">
+              <div class="text-center py-5">
+                  <div class="alert alert-warning">
+                      <i class="bi bi-emoji-frown fs-1"></i>
+                      <h5 class="mt-3">😔 No hay ofertas en este momento</h5>
+                      <p class="text-muted mb-0">Pronto tendremos nuevas promociones para ti.</p>
+                      <div class="mt-3">
+                          <a href="PROMOS.HTML" class="btn btn-primary btn-sm">
+                              Ver todas las promociones
+                          </a>
+                      </div>
+                  </div>
               </div>
-            </a>
           </div>
-        `).join('');
-      }
-      
-    } catch (error) {
-      console.error('Error filtrando productos:', error);
-    }
+      `;
   }
 
-  // 🎯 FUNCIÓN PARA IR A DETALLE DE PRODUCTO
-  function irADetalleProducto(productoId) {
-    window.location.href = `PRODUCTO.HTML?id=${productoId}&origen=home`;
-    if (event) event.preventDefault();
-    return false;
-  }
-
-  // 🎯 FUNCIÓN PARA IR A TODOS LOS PRODUCTOS
-  function irATodosLosProductos() {
-    cambiarVista('todos');
-    cargarTodosLosProductos();
-  }
-
-  // 🎯 CARGAR TODOS LOS PRODUCTOS EN LA VISTA 5
-  async function cargarTodosLosProductos() {
-    try {
-      if (!todosLosProductos.length) {
-        todosLosProductos = await obtenerCatalogo();
-      }
+  function mostrarCarruselError() {
+      const contenedor = document.getElementById('carousel-promos-home-contenido');
+      if (!contenedor) return;
       
-      document.getElementById('contador-todos').textContent = `${todosLosProductos.length} productos`;
-      
-      const grid = document.getElementById('grid-todos');
-      grid.innerHTML = todosLosProductos.map(producto => `
-        <div class="card-producto-ml">
-          <a href="#" onclick="irADetalleProducto('${producto.id}')">
-            <img src="${producto.imagen}" alt="${producto.producto}" class="card-img-ml">
-            <div class="card-body-ml">
-              <h3 class="nombre-producto-ml line-clamp-2">${producto.producto}</h3>
-              <div class="precio-ml fw-bold text-primary">$${Number(producto.precio).toLocaleString('es-CO')}</div>
-              <div class="d-flex flex-wrap gap-1 mb-2">
-                ${producto.tipo ? `<span class="badge bg-secondary">${producto.tipo}</span>` : ''}
-                ${producto.subtipo ? `<span class="badge bg-info">${producto.subtipo}</span>` : ''}
-                ${producto.categoria ? `<span class="badge bg-warning text-dark">${producto.categoria}</span>` : ''}
+      contenedor.innerHTML = `
+          <div class="carousel-item active">
+              <div class="text-center py-5">
+                  <div class="alert alert-danger">
+                      <i class="bi bi-exclamation-triangle fs-1"></i>
+                      <h5 class="mt-3">⚠️ Error al cargar ofertas</h5>
+                      <p class="text-muted mb-0">Intenta recargar la página.</p>
+                      <div class="mt-3">
+                          <button onclick="cargarCarruselPromociones()" class="btn btn-danger btn-sm">
+                              <i class="bi bi-arrow-clockwise"></i> Reintentar
+                          </button>
+                      </div>
+                  </div>
               </div>
-              ${producto.promo === true || producto.promo === "sí" ? '<span class="badge bg-danger">EN PROMOCIÓN</span>' : ''}
-              <button class="btn btn-outline-primary btn-sm mt-2">
-                <i class="bi bi-eye"></i> Ver detalles
-              </button>
-            </div>
-          </a>
-        </div>
-      `).join('');
-      
-    } catch (error) {
-      console.error('Error cargando todos los productos:', error);
-    }
-  }
-
-  // 🎯 FILTRAR Y ORDENAR EN VISTA TODOS
-  function filtrarProductosTodos() {
-    const busqueda = document.getElementById('buscar-todos').value.toLowerCase();
-    const filtroCategoria = document.getElementById('filtro-categoria-todos').value;
-    
-    const productosFiltrados = todosLosProductos.filter(producto => {
-      const coincideNombre = producto.producto.toLowerCase().includes(busqueda);
-      const coincideCategoria = !filtroCategoria || 
-        producto.tipo === filtroCategoria || 
-        producto.subtipo === filtroCategoria;
-      return coincideNombre && coincideCategoria;
-    });
-    
-    renderizarProductosFiltrados(productosFiltrados);
-  }
-
-  function ordenarProductosTodos() {
-    const orden = document.getElementById('ordenar-todos').value;
-    const productos = [...todosLosProductos];
-    
-    switch (orden) {
-      case 'precio-asc':
-        productos.sort((a, b) => (a.precio || 0) - (b.precio || 0));
-        break;
-      case 'precio-desc':
-        productos.sort((a, b) => (b.precio || 0) - (a.precio || 0));
-        break;
-      case 'nombre':
-        productos.sort((a, b) => a.producto.localeCompare(b.producto));
-        break;
-      case 'recientes':
-      default:
-        // Mantener orden original
-        break;
-    }
-    
-    renderizarProductosFiltrados(productos);
-  }
-
-  function renderizarProductosFiltrados(productos) {
-    const grid = document.getElementById('grid-todos');
-    const sinResultados = document.getElementById('sin-resultados-todos');
-    
-    if (productos.length === 0) {
-      grid.innerHTML = '';
-      sinResultados.classList.remove('d-none');
-    } else {
-      sinResultados.classList.add('d-none');
-      
-      grid.innerHTML = productos.map(producto => `
-        <div class="card-producto-ml">
-          <a href="#" onclick="irADetalleProducto('${producto.id}')">
-            <img src="${producto.imagen}" alt="${producto.producto}" class="card-img-ml">
-            <div class="card-body-ml">
-              <h3 class="nombre-producto-ml line-clamp-2">${producto.producto}</h3>
-              <div class="precio-ml fw-bold text-primary">$${Number(producto.precio).toLocaleString('es-CO')}</div>
-              <div class="d-flex flex-wrap gap-1 mb-2">
-                ${producto.tipo ? `<span class="badge bg-secondary">${producto.tipo}</span>` : ''}
-                ${producto.subtipo ? `<span class="badge bg-info">${producto.subtipo}</span>` : ''}
-                ${producto.categoria ? `<span class="badge bg-warning text-dark">${producto.categoria}</span>` : ''}
-              </div>
-              ${producto.promo === true || producto.promo === "sí" ? '<span class="badge bg-danger">EN PROMOCIÓN</span>' : ''}
-              <button class="btn btn-outline-primary btn-sm mt-2">
-                <i class="bi bi-eye"></i> Ver detalles
-              </button>
-            </div>
-          </a>
-        </div>
-      `).join('');
-    }
-  }
-
-  // 🔄 FUNCIONES DE NAVEGACIÓN
-  function cambiarVista(vistaDestino) {
-    document.querySelectorAll('.vista').forEach(vista => {
-      vista.classList.remove('vista-activa');
-    });
-    document.getElementById(`vista-${vistaDestino}`).classList.add('vista-activa');
-  }
-
-  function volverAInicio() {
-    cambiarVista('inicio');
-    
-    // Mostrar secciones de inicio
-    document.getElementById('carrusel-inicio-container').classList.remove('d-none');
-    document.getElementById('ultimos-productos-container').classList.remove('d-none');
-    document.getElementById('productos-categoria-container').classList.add('d-none');
-    
-    // Resetear botón activo a "Todos"
-    document.querySelectorAll('.categoria-rapida').forEach(btn => {
-      btn.classList.remove('active');
-    });
-    document.querySelector('.categoria-rapida[onclick*="TODOS"]').classList.add('active');
-    
-    filtroActual = { tipo: 'TODOS', subtipo: 'TODOS' };
+          </div>
+      `;
   }
 
   // 🚀 INICIALIZACIÓN
   document.addEventListener('DOMContentLoaded', function() {
-    // Inicializar carrito si existe
-    if (window.inicializarCarrito) {
-      window.inicializarCarrito();
-    }
-    
-    // Cargar categorías rápidas
-    cargarCategoriasRapidas();
-    
-    // Cargar productos recién llegados
-    setTimeout(async () => {
-      try {
-        if (!todosLosProductos.length) {
-          todosLosProductos = await obtenerCatalogo();
-        }
-        
-        const ultimosProductos = todosLosProductos.slice(-20).reverse();
-        
-        const grid = document.getElementById('grid-ultimos');
-        grid.innerHTML = ultimosProductos.map(producto => `
-          <div class="card-producto-ml">
-            <a href="#" onclick="irADetalleProducto('${producto.id}')">
-              <img src="${producto.imagen}" alt="${producto.producto}" class="card-img-ml">
-              <div class="card-body-ml">
-                <h3 class="nombre-producto-ml small line-clamp-2">${producto.producto}</h3>
-                <div class="precio-ml fw-bold text-primary">$${producto.precio?.toLocaleString('es-CO') || '0'}</div>
-                <div class="d-flex flex-wrap gap-1 mb-2">
-                  ${producto.tipo ? `<span class="badge bg-secondary">${producto.tipo}</span>` : ''}
-                  ${producto.subtipo ? `<span class="badge bg-info">${producto.subtipo}</span>` : ''}
-                </div>
-                <button class="btn btn-outline-primary btn-sm">
-                  <i class="bi bi-eye"></i> Ver detalles
-                </button>
-              </div>
-            </a>
-          </div>
-        `).join('');
-      } catch (error) {
-        console.error('Error cargando últimos productos:', error);
+      // Inicializar carrito
+      if (window.inicializarCarrito) {
+          window.inicializarCarrito();
       }
-    }, 1000);
+      
+      // Configurar instalación PWA
+      configurarInstalacionPWA();
+      
+      // Manejar parámetros de URL y restaurar navegación
+      manejarParametrosURL();
+      
+      // ✅ CORRECIÓN: Cargar carrusel con índice dinámico
+      cargarCarruselPromociones();
+      iniciarTemporizadorHome();
+      
+      // Cargar productos recién llegados
+      setTimeout(async () => {
+          try {
+              const productos = await obtenerCatalogo();
+              // MEJOR SOLUCIÓN - usa la misma lógica que en MODULOULTIMOS.JS
+              const ultimosProductos = productos.slice(-20).reverse();
+              
+              const grid = document.getElementById('grid-ultimos');
+              grid.innerHTML = ultimosProductos.map(producto => `
+                  <div class="card-producto-ml">
+                      <a href="#" onclick="irADetalleProducto('${producto.id}', '${producto.tipo}', '${producto.subtipo}', '${producto.categoria}')">
+                          <img src="${producto.imagen}" alt="${producto.producto}" class="card-img-ml imagen-completa">
+                          <div class="card-body-ml">
+                              <h3 class="nombre-producto-ml small line-clamp-2">${producto.producto}</h3>
+                              <div class="precio-ml fw-bold text-primary">$${producto.precio?.toLocaleString('es-CO') || '0'}</div>
+                              <button class="btn btn-outline-primary btn-sm">
+                                  <i class="bi bi-eye"></i> Ver detalles
+                              </button>
+                          </div>
+                      </a>
+                  </div>
+              `).join('');
+          } catch (error) {
+              console.error('Error cargando últimos productos:', error);
+          }
+      }, 1000);
   });
 </script>
+ <!-- SCRIPTS EXTERNOS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+ <!-- 🔥 BUSCADOR SE CARGA DESPUÉS DEL HEADER -->
+  <script src="buscador.js?v=20251115"></script>
 </body>
 </html>
