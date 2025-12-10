@@ -1030,3 +1030,23 @@ body { padding-top: 70px; }
 .contrarrembolso-text i {
   margin-right: 5px;
 }
+/* Fuerza la visualización de logos */
+.logos-pago-compactos img {
+  background: white !important;
+  padding: 8px !important;
+  border-radius: 6px !important;
+  height: 35px !important;
+  width: auto !important;
+  object-fit: contain !important;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2) !important;
+}
+
+.logos-transportadoras img {
+  background: white !important;
+  padding: 8px !important;
+  border-radius: 8px !important;
+  height: 40px !important;
+  width: 100% !important;
+  object-fit: contain !important;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2) !important;
+}
