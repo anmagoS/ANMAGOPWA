@@ -18,11 +18,13 @@
   <!-- CSS optimizado -->
   <link rel="stylesheet" href="ESTILO.CSS?v=20251116" />
   <style>
-    /* ESTILOS MEJORADOS PARA CATEGORÍAS RÁPIDAS CON SCROLL */
+    /* ESTILOS MEJORADOS PARA CATEGORÍAS RÁPIDAS ESTILO PESTAÑAS (como TEMU) */
     .categorias-container {
       position: relative;
       margin: 15px 0;
-      padding: 0 40px;
+      background: white;
+      border-bottom: 1px solid #e0e0e0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
     .categorias-wrapper {
@@ -32,13 +34,12 @@
 
     .categorias-rapidas {
       display: flex;
-      gap: 10px;
       overflow-x: auto;
       scroll-behavior: smooth;
-      padding: 10px 0;
+      padding: 0;
       -ms-overflow-style: none;
       scrollbar-width: none;
-      scroll-snap-type: x mandatory;
+      white-space: nowrap;
     }
 
     .categorias-rapidas::-webkit-scrollbar {
@@ -46,172 +47,183 @@
     }
 
     .categoria-rapida {
-      display: flex;
-      flex-direction: column;
+      display: inline-flex;
       align-items: center;
       text-decoration: none;
       color: #333;
-      min-width: 80px;
-      max-width: 80px;
-      padding: 10px 5px;
-      border-radius: 12px;
-      background: #f8f9fa;
-      border: 2px solid transparent;
+      padding: 12px 20px;
+      border: none;
+      background: transparent;
+      font-size: 14px;
+      font-weight: 500;
       transition: all 0.3s ease;
-      flex-shrink: 0;
-      scroll-snap-align: start;
       position: relative;
+      flex-shrink: 0;
+      border-bottom: 3px solid transparent;
     }
 
     .categoria-rapida:hover {
-      background: #e9ecef;
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      color: #667eea;
+      background: #f8f9fa;
     }
 
     .categoria-rapida.active {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border-color: transparent;
-      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+      color: #667eea;
+      border-bottom: 3px solid #667eea;
+      font-weight: 600;
     }
 
-    .categoria-rapida div:first-child {
-      font-size: 22px;
-      margin-bottom: 6px;
+    .categoria-rapida.active::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 20px;
+      right: 20px;
+      height: 3px;
+      background: #667eea;
+      border-radius: 3px 3px 0 0;
     }
 
-    .categoria-rapida div:last-child {
+    .contador-categoria {
+      display: inline-block;
+      background: #f0f0f0;
+      color: #666;
       font-size: 11px;
-      font-weight: 500;
-      white-space: nowrap;
+      font-weight: normal;
+      padding: 2px 6px;
+      border-radius: 10px;
+      margin-left: 6px;
+      min-width: 24px;
       text-align: center;
-      width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
-    /* Botones de navegación */
+    .categoria-rapida.active .contador-categoria {
+      background: #667eea;
+      color: white;
+    }
+
+    /* Botones de navegación para desktop */
     .btn-scroll {
       position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 36px;
-      height: 36px;
-      background: white;
-      border: 1px solid #ddd;
-      border-radius: 50%;
+      top: 0;
+      height: 100%;
+      width: 40px;
+      background: linear-gradient(90deg, white 60%, transparent);
+      border: none;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       z-index: 10;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
       opacity: 0.9;
       transition: all 0.3s ease;
     }
 
     .btn-scroll:hover {
-      background: #f8f9fa;
       opacity: 1;
-      transform: translateY(-50%) scale(1.1);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      background: linear-gradient(90deg, #f8f9fa 60%, transparent);
     }
 
     .btn-scroll.left {
       left: 0;
+      justify-content: flex-start;
+      padding-left: 10px;
     }
 
     .btn-scroll.right {
       right: 0;
+      justify-content: flex-end;
+      padding-right: 10px;
+      background: linear-gradient(270deg, white 60%, transparent);
+    }
+
+    .btn-scroll.right:hover {
+      background: linear-gradient(270deg, #f8f9fa 60%, transparent);
     }
 
     .btn-scroll i {
       font-size: 16px;
       color: #333;
-    }
-
-    /* Indicador de scroll */
-    .scroll-indicator {
-      text-align: center;
-      margin-top: 5px;
-    }
-
-    .scroll-indicator span {
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      background: #ddd;
+      background: rgba(255, 255, 255, 0.9);
       border-radius: 50%;
-      margin: 0 3px;
-      transition: all 0.3s ease;
-    }
-
-    .scroll-indicator span.active {
-      background: #667eea;
-      transform: scale(1.2);
-    }
-
-    /* Contador de productos */
-    .contador-categoria {
-      position: absolute;
-      top: -5px;
-      right: -5px;
-      background: #dc3545;
-      color: white;
-      font-size: 10px;
-      font-weight: bold;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
+      width: 28px;
+      height: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
-      line-height: 1;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
-    /* Responsive */
+    /* Ocultar botones en móvil */
     @media (max-width: 768px) {
-      .categorias-container {
-        padding: 0 35px;
-      }
-      
-      .categoria-rapida {
-        min-width: 70px;
-        max-width: 70px;
-      }
-      
-      .categoria-rapida div:first-child {
-        font-size: 20px;
-      }
-      
-      .categoria-rapida div:last-child {
-        font-size: 10px;
-      }
-      
       .btn-scroll {
-        width: 32px;
-        height: 32px;
-      }
-    }
-
-    @media (max-width: 576px) {
-      .categorias-container {
-        padding: 0 30px;
+        display: none;
       }
       
       .categoria-rapida {
-        min-width: 65px;
-        max-width: 65px;
-        padding: 8px 4px;
-      }
-      
-      .categoria-rapida div:first-child {
-        font-size: 18px;
+        padding: 10px 16px;
+        font-size: 13px;
       }
     }
 
-    /* Animación suave al filtrar */
+    /* Responsive adicional */
+    @media (max-width: 576px) {
+      .categoria-rapida {
+        padding: 8px 12px;
+        font-size: 12px;
+      }
+      
+      .contador-categoria {
+        font-size: 10px;
+        padding: 1px 4px;
+        margin-left: 4px;
+      }
+    }
+
+    /* Contenedor para los productos en "Todos" */
+    #grid-todos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    /* Paginación para "Todos" */
+    .paginacion-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 30px;
+      gap: 10px;
+    }
+
+    .btn-pagina {
+      padding: 8px 16px;
+      border: 1px solid #ddd;
+      background: white;
+      color: #333;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-pagina:hover {
+      background: #f8f9fa;
+      border-color: #667eea;
+    }
+
+    .btn-pagina.active {
+      background: #667eea;
+      color: white;
+      border-color: #667eea;
+    }
+
+    .btn-pagina:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Animación suave */
     .producto-filtrado {
       animation: fadeIn 0.5s ease;
     }
@@ -236,7 +248,7 @@
   <!-- HEADER STICKY -->
   <div id="header-container" class="header-sticky"></div>
   
-  <!-- CATEGORÍAS RÁPIDAS CON SCROLL MEJORADO -->
+  <!-- CATEGORÍAS RÁPIDAS ESTILO PESTAÑAS (como TEMU) -->
   <div class="categorias-container">
     <div class="categorias-wrapper">
       <!-- Botón izquierdo -->
@@ -250,13 +262,10 @@
       </div>
       
       <!-- Botón derecho -->
-      <div class="btn-scroll right" onclick="scrollCategorias(1)">
+      <div class="btn-scroll right d-none" onclick="scrollCategorias(1)">
         <i class="bi bi-chevron-right"></i>
       </div>
     </div>
-    
-    <!-- Indicador de scroll -->
-    <div class="scroll-indicator" id="scroll-indicator"></div>
   </div>
 
   <!-- BANNER PROMOCIONAL -->
@@ -328,6 +337,9 @@
             Ver todos los productos
           </button>
         </div>
+        
+        <!-- Paginación para categorías -->
+        <div id="paginacion-categoria" class="paginacion-container d-none"></div>
       </div>
 
       <!-- ÚLTIMOS PRODUCTOS -->
@@ -362,6 +374,7 @@
           <h1 class="h4 fw-bold mb-0">🛍️ Todos los productos</h1>
           <div class="d-flex align-items-center gap-2">
             <span class="badge bg-primary" id="contador-todos">0 productos</span>
+            <span class="badge bg-info" id="pagina-actual-info">Página 1</span>
           </div>
         </div>
         
@@ -392,6 +405,9 @@
         <!-- Grid de productos -->
         <div id="grid-todos" class="grid-productos-ml"></div>
         
+        <!-- Paginación -->
+        <div id="paginacion-todos" class="paginacion-container"></div>
+        
         <!-- Mensaje de no hay resultados -->
         <div id="sin-resultados-todos" class="text-center py-5 d-none">
           <i class="bi bi-search fs-1 text-muted"></i>
@@ -405,8 +421,8 @@
 <script>
   // ✅ CONFIGURACIÓN PARA EL CARRUSEL
   const CONFIG_PROMOS = {
-      productosPorBloque: 8,      // 8 productos en el carrusel de inicio
-      horasPorBloque: 6           // Cambia cada 6 horas (IGUAL QUE PROMOS.HTML)
+      productosPorBloque: 8,
+      horasPorBloque: 6
   };
 
   // ✅ VARIABLES GLOBALES
@@ -416,57 +432,18 @@
   let currentScrollPosition = 0;
   let productosEnPromocion = [];
   let temporizadorInterval = null;
-
-  // 🗂️ ICONOS PARA CATEGORÍAS RÁPIDAS
-  const ICONOS_CATEGORIAS = {
-    'TODOS': '🛍️',
-    'ROPA': '👗',
-    'DAMA': '👩',
-    'CABALLERO': '👨',
-    'NIÑOS': '👦',
-    'NIÑAS': '👧',
-    'UNISEX': '👥',
-    'RELOJERIA': '⌚',
-    'HOGAR': '🏠',
-    'BELLEZA': '💄',
-    'MAQUILLAJE': '💋',
-    'CUIDADO FACIAL': '🧴',
-    'TECNOLOGIA': '📱',
-    'NAVIDAD': '🎄',
-    'ESCOLAR': '🎒',
-    'DEPORTE': '⚽',
-    'ACCESORIOS': '👓',
-    'CALZADO': '👟',
-    'BOLSOS': '👜',
-    'JOYERIA': '💍',
-    'DECORACION': '🖼️',
-    'COCINA': '🍳',
-    'ILUMINACION': '💡',
-    'VEHICULOS': '🚗',
-    'SALUD': '🏥',
-    'BAÑO': '🛁',
-    'HABITACION': '🛏️',
-    'ANALOGICO': '⏱️',
-    'SMARTWATCH': '⌚',
-    'DEPORTIVO': '🏃',
-    'FORMAL': '🤵',
-    'CASUAL': '👕',
-    'PLAYA': '🏖️',
-    'INVIERNO': '❄️',
-    'VERANO': '☀️'
-  };
+  
+  // Variables para paginación
+  let productosPorPagina = 20;
+  let paginaActual = 1;
+  let productosFiltradosTodos = [];
 
   // 🎯 OBTENER ÍNDICE DINÁMICO BASADO EN LA HORA ACTUAL
   function obtenerIndicePromocionalDinamico() {
       const ahora = new Date();
       const horaActual = ahora.getHours();
-      
-      // Bloques de 6 horas: 0-6, 6-12, 12-18, 18-24
       const bloqueActual = Math.floor(horaActual / CONFIG_PROMOS.horasPorBloque);
-      
-      // Cada bloque muestra 4 productos en el carrusel
       const indice = bloqueActual * CONFIG_PROMOS.productosPorBloque;
-      
       return indice;
   }
 
@@ -476,63 +453,41 @@
       
       const indiceDinamico = obtenerIndicePromocionalDinamico();
       const totalPromos = promociones.length;
-      
-      // Índice cíclico (si hay menos productos que índices)
       const indiceReal = indiceDinamico % totalPromos;
       const inicio = indiceReal;
       let fin = inicio + CONFIG_PROMOS.productosPorBloque;
       
-      // Caso normal: hay suficientes productos desde inicio
       if (fin <= totalPromos) {
           return promociones.slice(inicio, fin);
-      } 
-      // Caso wrap-around: combinar final + inicio
-      else {
+      } else {
           const sobrante = fin - totalPromos;
-          const productosCombinados = [
-              ...promociones.slice(inicio),        // Desde inicio hasta final
-              ...promociones.slice(0, sobrante)    // Desde inicio del array
+          return [
+              ...promociones.slice(inicio),
+              ...promociones.slice(0, sobrante)
           ];
-          
-          return productosCombinados;
       }
   }
 
-  // 🎠 CARGAR CARRUSEL DE PROMOCIONES CON ÍNDICE DINÁMICO
+  // 🎠 CARGAR CARRUSEL DE PROMOCIONES
   async function cargarCarruselPromociones() {
       try {
           const productos = await obtenerCatalogo();
-          
-          // FILTRO MEJORADO: igual que PROMOS.HTML
           const promociones = productos.filter(producto => {
               if (!producto) return false;
-              
               const promo = producto.promo;
               
-              // Caso 1: promo es boolean true
               if (promo === true) return true;
-              
-              // Caso 2: promo es string "true"
               if (typeof promo === 'string') {
                   const promoLower = promo.toLowerCase().trim();
-                  return promoLower === 'true' || 
-                         promoLower === 'sí' || 
-                         promoLower === 'si' || 
-                         promoLower === 'yes' || 
+                  return promoLower === 'true' || promoLower === 'sí' || 
+                         promoLower === 'si' || promoLower === 'yes' || 
                          promoLower === 'activo';
               }
-              
-              // Caso 3: promo es number 1
-              if (typeof promo === 'number') {
-                  return promo === 1;
-              }
-              
+              if (typeof promo === 'number') return promo === 1;
               return false;
           });
 
           console.log(`✅ ${promociones.length} productos en promoción`);
-
-          // Guardar para usar en temporizador
           productosEnPromocion = promociones;
 
           if (promociones.length === 0) {
@@ -540,24 +495,18 @@
               return;
           }
 
-          // Obtener productos del bloque actual
           const bloquePromociones = obtenerProductosDelBloqueDinamico(promociones);
-
           const carouselContent = document.getElementById('carousel-promos-home-contenido');
           
-          // RENDERIZADO CON DESCUENTOS REALES
           carouselContent.innerHTML = bloquePromociones.map((producto, index) => {
               const precioOriginal = Number(producto.precio) || 0;
-              
-              // Calcular precio con descuento (10% por defecto o usar precioOferta si existe)
-              let precioDescuento;
-              let descuentoPorcentaje;
+              let precioDescuento, descuentoPorcentaje;
               
               if (producto.precioOferta && producto.precioOferta > 0) {
                   precioDescuento = Number(producto.precioOferta);
                   descuentoPorcentaje = Math.round((1 - precioDescuento / precioOriginal) * 100);
               } else {
-                  descuentoPorcentaje = 10; // Descuento por defecto
+                  descuentoPorcentaje = 10;
                   precioDescuento = Math.round(precioOriginal * (1 - descuentoPorcentaje / 100));
               }
               
@@ -575,14 +524,10 @@
                                    loading="lazy"
                                    onerror="this.src='https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg'">
                               
-                              <!-- Badge de descuento -->
                               <div class="position-absolute top-0 start-0 m-2">
-                                  <span class="badge bg-danger fs-6">
-                                      -${descuentoPorcentaje}%
-                                  </span>
+                                  <span class="badge bg-danger fs-6">-${descuentoPorcentaje}%</span>
                               </div>
                               
-                              <!-- Badge "EN OFERTA" -->
                               <div class="position-absolute top-0 end-0 m-2">
                                   <span class="badge bg-warning text-dark">
                                       <i class="bi bi-lightning"></i> EN OFERTA
@@ -618,7 +563,6 @@
               `;
           }).join('');
 
-          // Inicializar carrusel Bootstrap si existe
           setTimeout(() => {
               const carouselElement = document.getElementById('carouselPromosHome');
               if (carouselElement && typeof bootstrap !== 'undefined') {
@@ -643,6 +587,7 @@
   // ⏰ TEMPORIZADOR PARA PROMOCIONES
   function iniciarTemporizadorHome() {
       const temporizador = document.getElementById("temporizador-home");
+      if (!temporizador) return;
 
       const actualizarTemporizador = () => {
           const ahora = new Date();
@@ -650,7 +595,6 @@
           const minutos = ahora.getMinutes();
           const segundos = ahora.getSeconds();
           
-          // Calcular próxima hora múltiplo de 6
           const proximaHora = Math.ceil(hora / 6) * 6;
           let minutosRestantes;
           
@@ -661,14 +605,12 @@
           }
           
           const segundosRestantes = minutosRestantes * 60 - segundos;
-          
           const h = Math.floor(segundosRestantes / 3600);
           const m = Math.floor((segundosRestantes % 3600) / 60);
           const s = segundosRestantes % 60;
           
           temporizador.textContent = `⏰ Ofertas cambian en ${h}h ${m}m ${s}s`;
           
-          // Si es hora de cambiar, actualizar el carrusel
           if (segundosRestantes <= 0) {
               console.log('🔄 ¡Hora de actualizar carrusel!');
               temporizador.textContent = "🔄 Actualizando ofertas...";
@@ -676,9 +618,7 @@
           }
       };
 
-      // Limpiar intervalo anterior si existe
       if (temporizadorInterval) clearInterval(temporizadorInterval);
-      
       actualizarTemporizador();
       temporizadorInterval = setInterval(actualizarTemporizador, 1000);
   }
@@ -738,7 +678,7 @@
   // 🎯 SCROLL DE CATEGORÍAS
   function scrollCategorias(direction) {
     const container = document.querySelector('.categorias-rapidas');
-    const scrollAmount = 200; // Píxeles a desplazar
+    const scrollAmount = 300;
     
     if (container) {
       const newPosition = container.scrollLeft + (direction * scrollAmount);
@@ -759,14 +699,12 @@
     const btnRight = document.querySelector('.btn-scroll.right');
     
     if (container && btnLeft && btnRight) {
-      // Mostrar/ocultar botón izquierdo
       if (container.scrollLeft > 0) {
         btnLeft.classList.remove('d-none');
       } else {
         btnLeft.classList.add('d-none');
       }
       
-      // Mostrar/ocultar botón derecho
       const maxScroll = container.scrollWidth - container.clientWidth;
       if (container.scrollLeft < maxScroll - 10) {
         btnRight.classList.remove('d-none');
@@ -776,20 +714,7 @@
     }
   }
 
-  // 🎯 CREAR INDICADORES DE SCROLL
-  function crearIndicadoresScroll(cantidadCategorias) {
-    const indicator = document.getElementById('scroll-indicator');
-    if (!indicator) return;
-    
-    // Calcular cuántos indicadores mostrar (máximo 10)
-    const numIndicators = Math.min(Math.ceil(cantidadCategorias / 5), 10);
-    
-    indicator.innerHTML = Array.from({length: numIndicators}, (_, i) => 
-      `<span class="${i === 0 ? 'active' : ''}" data-index="${i}"></span>`
-    ).join('');
-  }
-
-  // 🎯 CARGAR CATEGORÍAS RÁPIDAS DESDE EL JSON
+  // 🎯 CARGAR CATEGORÍAS RÁPIDAS DESDE EL JSON - ESTILO PESTAÑAS
   async function cargarCategoriasRapidas() {
     try {
       const productos = await obtenerCatalogo();
@@ -798,45 +723,30 @@
       // Extraer TODOS los tipos y subtipos únicos
       const tiposUnicos = [...new Set(productos.map(p => p.tipo).filter(Boolean))];
       const subtiposUnicos = [...new Set(productos.map(p => p.subtipo).filter(Boolean))];
-      
-      // Combinar tipos y subtipos para las categorías rápidas
       const todasCategorias = [...tiposUnicos, ...subtiposUnicos];
-      
-      // Filtrar duplicados y ordenar alfabéticamente
-      const categoriasUnicas = [...new Set(todasCategorias)]
-        .sort((a, b) => a.localeCompare(b));
-      
-      // Agregar "TODOS" al inicio
+      const categoriasUnicas = [...new Set(todasCategorias)].sort((a, b) => a.localeCompare(b));
       categoriasUnicas.unshift('TODOS');
       
-      // Renderizar categorías rápidas
+      // Renderizar categorías rápidas estilo pestañas
       const contenedor = document.getElementById('categorias-rapidas');
       contenedor.innerHTML = categoriasUnicas.map(categoria => {
-        const icono = ICONOS_CATEGORIAS[categoria] || '📦';
         const productosEnCategoria = contarProductosEnCategoria(categoria, productos);
-        const nombreMostrar = categoria.length > 8 ? categoria.substring(0, 8) + '...' : categoria;
+        const nombreFormateado = categoria.charAt(0) + categoria.slice(1).toLowerCase();
         
         return `
           <a href="#" class="categoria-rapida ${categoria === 'TODOS' ? 'active' : ''}"
              onclick="filtrarPorCategoria('${categoria}')" 
-             title="${categoria.charAt(0) + categoria.slice(1).toLowerCase()}">
-            <div>${icono}</div>
-            <div>${nombreMostrar.charAt(0) + nombreMostrar.slice(1).toLowerCase()}</div>
+             title="${nombreFormateado}">
+            ${nombreFormateado}
             ${productosEnCategoria > 0 ? `<span class="contador-categoria">${productosEnCategoria}</span>` : ''}
           </a>
         `;
       }).join('');
       
-      // Crear indicadores de scroll
-      crearIndicadoresScroll(categoriasUnicas.length);
-      
       // Configurar evento de scroll
       contenedor.addEventListener('scroll', actualizarBotonesScroll);
-      
-      // Actualizar botones inicialmente
       setTimeout(actualizarBotonesScroll, 100);
       
-      // Guardar categorías para usar en filtros
       categoriasRapidas = categoriasUnicas;
       
       // Llenar select de filtro en vista "Todos"
@@ -859,42 +769,33 @@
   function contarProductosEnCategoria(categoria, productos) {
     if (categoria === 'TODOS') return productos.length;
     
-    // Buscar en tipos
     const enTipos = productos.filter(p => p.tipo === categoria).length;
     if (enTipos > 0) return enTipos;
     
-    // Buscar en subtipos
     const enSubtipos = productos.filter(p => p.subtipo === categoria).length;
     return enSubtipos;
   }
 
-  // 🎯 FILTRAR POR CATEGORÍA (TIPO O SUBTIPO)
+  // 🎯 FILTRAR POR CATEGORÍA (TIPO O SUBTIPO) - CON PAGINACIÓN
   async function filtrarPorCategoria(categoriaSeleccionada) {
-    // Actualizar botones activos
     document.querySelectorAll('.categoria-rapida').forEach(btn => {
       btn.classList.remove('active');
     });
     event.target.closest('.categoria-rapida').classList.add('active');
     
-    // Actualizar filtro actual
     filtroActual = categoriaSeleccionada;
+    paginaActual = 1;
     
-    // Ocultar secciones de inicio
     document.getElementById('carrusel-inicio-container').classList.add('d-none');
     document.getElementById('ultimos-productos-container').classList.add('d-none');
     
-    // Mostrar contenedor de productos filtrados
     const contenedor = document.getElementById('productos-categoria-container');
     contenedor.classList.remove('d-none');
     
-    // Actualizar título
     const titulo = document.getElementById('titulo-categoria-seleccionada');
-    if (categoriaSeleccionada === 'TODOS') {
-      titulo.textContent = '🛍️ Todos los productos';
-    } else {
-      const icono = ICONOS_CATEGORIAS[categoriaSeleccionada] || '📦';
-      titulo.textContent = `${icono} ${categoriaSeleccionada.charAt(0) + categoriaSeleccionada.slice(1).toLowerCase()}`;
-    }
+    titulo.textContent = categoriaSeleccionada === 'TODOS' 
+      ? '🛍️ Todos los productos' 
+      : categoriaSeleccionada.charAt(0) + categoriaSeleccionada.slice(1).toLowerCase();
     
     try {
       let productosFiltrados;
@@ -902,95 +803,164 @@
       if (categoriaSeleccionada === 'TODOS') {
         productosFiltrados = todosLosProductos;
       } else {
-        // Filtrar productos: buscar en tipo O en subtipo
         productosFiltrados = todosLosProductos.filter(producto => 
           producto.tipo === categoriaSeleccionada || 
           producto.subtipo === categoriaSeleccionada
         );
       }
       
-      // Actualizar contador
       document.getElementById('contador-productos-categoria').textContent = `${productosFiltrados.length} productos`;
       
-      // Renderizar productos con animación
-      const grid = document.getElementById('grid-productos-categoria');
-      
-      if (productosFiltrados.length === 0) {
-        document.getElementById('sin-productos-categoria').classList.remove('d-none');
-        grid.innerHTML = '';
-      } else {
-        document.getElementById('sin-productos-categoria').classList.add('d-none');
-        
-        // Mostrar máximo 20 productos inicialmente
-        const productosAMostrar = productosFiltrados.slice(0, 20);
-        
-        grid.innerHTML = productosAMostrar.map((producto, index) => `
-          <div class="card-producto-ml producto-filtrado" style="animation-delay: ${index * 0.05}s">
-            <a href="#" onclick="irADetalleProducto('${producto.id}')">
-              <img src="${producto.imagen}" alt="${producto.producto}" class="card-img-ml" 
-                   loading="lazy" onerror="this.src='https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg'">
-              <div class="card-body-ml">
-                <h3 class="nombre-producto-ml line-clamp-2">${producto.producto}</h3>
-                <div class="precio-ml fw-bold text-primary">$${Number(producto.precio).toLocaleString('es-CO')}</div>
-                <div class="d-flex flex-wrap gap-1 mb-2">
-                  ${producto.tipo ? `<span class="badge bg-secondary">${producto.tipo}</span>` : ''}
-                  ${producto.subtipo ? `<span class="badge bg-info">${producto.subtipo}</span>` : ''}
-                  ${producto.categoria ? `<span class="badge bg-warning text-dark">${producto.categoria}</span>` : ''}
-                </div>
-                ${producto.promo === true || producto.promo === "sí" ? '<span class="badge bg-danger">EN PROMOCIÓN</span>' : ''}
-                <button class="btn btn-outline-primary btn-sm mt-2">
-                  <i class="bi bi-eye"></i> Ver detalles
-                </button>
-              </div>
-            </a>
-          </div>
-        `).join('');
-      }
+      // Renderizar productos con paginación
+      renderizarProductosConPaginacion(productosFiltrados, 'grid-productos-categoria', 'paginacion-categoria');
       
     } catch (error) {
       console.error('Error filtrando productos:', error);
     }
   }
 
-  // 🎯 FUNCIÓN PARA IR A DETALLE DE PRODUCTO
-  function irADetalleProducto(productoId) {
-    window.location.href = `PRODUCTO.HTML?id=${productoId}&origen=home`;
-    if (event) event.preventDefault();
-    return false;
-  }
-
-  // 🎯 FUNCIÓN PARA IR A TODOS LOS PRODUCTOS
-  function irATodosLosProductos() {
-    cambiarVista('todos');
-    cargarTodosLosProductos();
-  }
-
-  // 🎯 CARGAR TODOS LOS PRODUCTOS EN LA VISTA 5
-  async function cargarTodosLosProductos() {
-    try {
-      if (!todosLosProductos.length) {
-        todosLosProductos = await obtenerCatalogo();
+  // 🎯 RENDERIZAR PRODUCTOS CON PAGINACIÓN
+  function renderizarProductosConPaginacion(productos, gridId, paginacionId) {
+    const grid = document.getElementById(gridId);
+    const paginacionContainer = document.getElementById(paginacionId);
+    
+    if (productos.length === 0) {
+      grid.innerHTML = '';
+      if (gridId === 'grid-productos-categoria') {
+        document.getElementById('sin-productos-categoria').classList.remove('d-none');
+      }
+      paginacionContainer.innerHTML = '';
+      return;
+    }
+    
+    if (gridId === 'grid-productos-categoria') {
+      document.getElementById('sin-productos-categoria').classList.add('d-none');
+    }
+    
+    // Calcular páginas
+    const totalPaginas = Math.ceil(productos.length / productosPorPagina);
+    const inicio = (paginaActual - 1) * productosPorPagina;
+    const fin = paginaActual * productosPorPagina;
+    const productosPagina = productos.slice(inicio, fin);
+    
+    // Renderizar productos
+    grid.innerHTML = productosPagina.map((producto, index) => `
+      <div class="card-producto-ml producto-filtrado" style="animation-delay: ${index * 0.05}s">
+        <a href="#" onclick="irADetalleProducto('${producto.id}')">
+          <img src="${producto.imagen}" alt="${producto.producto}" class="card-img-ml" 
+               loading="lazy" onerror="this.src='https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg'">
+            <div class="card-body-ml">
+            <div class="categoria-ml">${producto.tipo || 'General'}</div>
+            <h5 class="titulo-ml line-clamp-2">${producto.producto}</h5>
+            <div class="precio-ml">
+              $${Number(producto.precio).toLocaleString('es-CO')}
+              ${producto.precioOferta ? 
+                `<span class="oferta-ml">$${Number(producto.precioOferta).toLocaleString('es-CO')}</span>` : 
+                ''}
+            </div>
+            <button class="btn-carrito-ml" onclick="agregarAlCarrito(event, '${producto.id}')">
+              <i class="bi bi-cart-plus"></i> Agregar
+            </button>
+          </div>
+        </a>
+      </div>
+    `).join('');
+    
+    // Renderizar paginación
+    if (totalPaginas > 1) {
+      let paginacionHTML = `
+        <button class="btn-pagina" onclick="cambiarPagina(${paginaActual - 1}, '${gridId}')" 
+                ${paginaActual === 1 ? 'disabled' : ''}>
+          <i class="bi bi-chevron-left"></i>
+        </button>
+      `;
+      
+      for (let i = 1; i <= totalPaginas; i++) {
+        if (i === 1 || i === totalPaginas || (i >= paginaActual - 2 && i <= paginaActual + 2)) {
+          paginacionHTML += `
+            <button class="btn-pagina ${i === paginaActual ? 'active' : ''}" 
+                    onclick="cambiarPagina(${i}, '${gridId}')">
+              ${i}
+            </button>
+          `;
+        } else if (i === paginaActual - 3 || i === paginaActual + 3) {
+          paginacionHTML += `<span class="mx-1">...</span>`;
+        }
       }
       
-      document.getElementById('contador-todos').textContent = `${todosLosProductos.length} productos`;
+      paginacionHTML += `
+        <button class="btn-pagina" onclick="cambiarPagina(${paginaActual + 1}, '${gridId}')" 
+                ${paginaActual === totalPaginas ? 'disabled' : ''}>
+          <i class="bi bi-chevron-right"></i>
+        </button>
+      `;
       
-      const grid = document.getElementById('grid-todos');
-      grid.innerHTML = todosLosProductos.map(producto => `
+      paginacionContainer.innerHTML = paginacionHTML;
+      paginacionContainer.classList.remove('d-none');
+    } else {
+      paginacionContainer.innerHTML = '';
+      paginacionContainer.classList.add('d-none');
+    }
+  }
+
+  // 🎯 CAMBIAR PÁGINA
+  function cambiarPagina(nuevaPagina, gridId) {
+    if (nuevaPagina < 1) return;
+    
+    let productosFiltrados = [];
+    
+    if (gridId === 'grid-productos-categoria') {
+      if (filtroActual === 'TODOS') {
+        productosFiltrados = todosLosProductos;
+      } else {
+        productosFiltrados = todosLosProductos.filter(producto => 
+          producto.tipo === filtroActual || 
+          producto.subtipo === filtroActual
+        );
+      }
+    } else if (gridId === 'grid-todos') {
+      productosFiltrados = productosFiltradosTodos;
+    }
+    
+    const totalPaginas = Math.ceil(productosFiltrados.length / productosPorPagina);
+    if (nuevaPagina > totalPaginas) return;
+    
+    paginaActual = nuevaPagina;
+    
+    if (gridId === 'grid-productos-categoria') {
+      renderizarProductosConPaginacion(productosFiltrados, 'grid-productos-categoria', 'paginacion-categoria');
+    } else if (gridId === 'grid-todos') {
+      renderizarProductosTodos();
+    }
+    
+    // Scroll suave hacia arriba
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // 🎯 CARGAR ÚLTIMOS PRODUCTOS
+  async function cargarUltimosProductos() {
+    try {
+      const grid = document.getElementById('grid-ultimos');
+      grid.innerHTML = '';
+      
+      const productos = todosLosProductos.slice(0, 8);
+      
+      grid.innerHTML = productos.map(producto => `
         <div class="card-producto-ml">
           <a href="#" onclick="irADetalleProducto('${producto.id}')">
-            <img src="${producto.imagen}" alt="${producto.producto}" class="card-img-ml"
+            <img src="${producto.imagen}" alt="${producto.producto}" class="card-img-ml" 
                  loading="lazy" onerror="this.src='https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg'">
             <div class="card-body-ml">
-              <h3 class="nombre-producto-ml line-clamp-2">${producto.producto}</h3>
-              <div class="precio-ml fw-bold text-primary">$${Number(producto.precio).toLocaleString('es-CO')}</div>
-              <div class="d-flex flex-wrap gap-1 mb-2">
-                ${producto.tipo ? `<span class="badge bg-secondary">${producto.tipo}</span>` : ''}
-                ${producto.subtipo ? `<span class="badge bg-info">${producto.subtipo}</span>` : ''}
-                ${producto.categoria ? `<span class="badge bg-warning text-dark">${producto.categoria}</span>` : ''}
+              <div class="categoria-ml">${producto.tipo || 'General'}</div>
+              <h5 class="titulo-ml line-clamp-2">${producto.producto}</h5>
+              <div class="precio-ml">
+                $${Number(producto.precio).toLocaleString('es-CO')}
+                ${producto.precioOferta ? 
+                  `<span class="oferta-ml">$${Number(producto.precioOferta).toLocaleString('es-CO')}</span>` : 
+                  ''}
               </div>
-              ${producto.promo === true || producto.promo === "sí" ? '<span class="badge bg-danger">EN PROMOCIÓN</span>' : ''}
-              <button class="btn btn-outline-primary btn-sm mt-2">
-                <i class="bi bi-eye"></i> Ver detalles
+              <button class="btn-carrito-ml" onclick="agregarAlCarrito(event, '${producto.id}')">
+                <i class="bi bi-cart-plus"></i> Agregar
               </button>
             </div>
           </a>
@@ -998,200 +968,253 @@
       `).join('');
       
     } catch (error) {
+      console.error('Error cargando últimos productos:', error);
+    }
+  }
+
+  // 🎯 IR A TODOS LOS PRODUCTOS
+  function irATodosLosProductos() {
+    // Ocultar todas las vistas
+    document.querySelectorAll('.vista').forEach(vista => {
+      vista.classList.remove('vista-activa');
+      vista.classList.add('d-none');
+    });
+    
+    // Mostrar vista "Todos"
+    const vistaTodos = document.getElementById('vista-todos');
+    vistaTodos.classList.add('vista-activa');
+    vistaTodos.classList.remove('d-none');
+    
+    // Cargar todos los productos
+    cargarTodosLosProductos();
+  }
+
+  // 🎯 CARGAR TODOS LOS PRODUCTOS
+  async function cargarTodosLosProductos() {
+    try {
+      productosFiltradosTodos = [...todosLosProductos];
+      renderizarProductosTodos();
+      
+    } catch (error) {
       console.error('Error cargando todos los productos:', error);
     }
   }
 
-  // 🎯 FILTRAR Y ORDENAR EN VISTA TODOS
-  function filtrarProductosTodos() {
-    const busqueda = document.getElementById('buscar-todos').value.toLowerCase();
-    const filtroCategoria = document.getElementById('filtro-categoria-todos').value;
+  // 🎯 RENDERIZAR PRODUCTOS EN VISTA "TODOS"
+  function renderizarProductosTodos() {
+    const grid = document.getElementById('grid-todos');
+    const sinResultados = document.getElementById('sin-resultados-todos');
+    const contador = document.getElementById('contador-todos');
+    const paginaInfo = document.getElementById('pagina-actual-info');
     
-    const productosFiltrados = todosLosProductos.filter(producto => {
-      const coincideNombre = producto.producto.toLowerCase().includes(busqueda);
-      const coincideCategoria = !filtroCategoria || 
-        producto.tipo === filtroCategoria || 
-        producto.subtipo === filtroCategoria;
-      return coincideNombre && coincideCategoria;
-    });
+    if (productosFiltradosTodos.length === 0) {
+      grid.innerHTML = '';
+      sinResultados.classList.remove('d-none');
+      contador.textContent = '0 productos';
+      paginaInfo.textContent = 'Página 0';
+      return;
+    }
     
-    renderizarProductosFiltrados(productosFiltrados);
+    sinResultados.classList.add('d-none');
+    contador.textContent = `${productosFiltradosTodos.length} productos`;
+    
+    // Calcular páginas
+    const totalPaginas = Math.ceil(productosFiltradosTodos.length / productosPorPagina);
+    const inicio = (paginaActual - 1) * productosPorPagina;
+    const fin = paginaActual * productosPorPagina;
+    const productosPagina = productosFiltradosTodos.slice(inicio, fin);
+    
+    paginaInfo.textContent = `Página ${paginaActual} de ${totalPaginas}`;
+    
+    // Renderizar productos
+    grid.innerHTML = productosPagina.map((producto, index) => `
+      <div class="card-producto-ml producto-filtrado" style="animation-delay: ${index * 0.05}s">
+        <a href="#" onclick="irADetalleProducto('${producto.id}')">
+          <img src="${producto.imagen}" alt="${producto.producto}" class="card-img-ml" 
+               loading="lazy" onerror="this.src='https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg'">
+          <div class="card-body-ml">
+            <div class="categoria-ml">${producto.tipo || 'General'}</div>
+            <h5 class="titulo-ml line-clamp-2">${producto.producto}</h5>
+            <div class="precio-ml">
+              $${Number(producto.precio).toLocaleString('es-CO')}
+              ${producto.precioOferta ? 
+                `<span class="oferta-ml">$${Number(producto.precioOferta).toLocaleString('es-CO')}</span>` : 
+                ''}
+            </div>
+            <button class="btn-carrito-ml" onclick="agregarAlCarrito(event, '${producto.id}')">
+              <i class="bi bi-cart-plus"></i> Agregar
+            </button>
+          </div>
+        </a>
+      </div>
+    `).join('');
+    
+    // Renderizar paginación
+    const paginacionContainer = document.getElementById('paginacion-todos');
+    if (totalPaginas > 1) {
+      let paginacionHTML = `
+        <button class="btn-pagina" onclick="cambiarPaginaTodos(${paginaActual - 1})" 
+                ${paginaActual === 1 ? 'disabled' : ''}>
+          <i class="bi bi-chevron-left"></i>
+        </button>
+      `;
+      
+      for (let i = 1; i <= totalPaginas; i++) {
+        if (i === 1 || i === totalPaginas || (i >= paginaActual - 2 && i <= paginaActual + 2)) {
+          paginacionHTML += `
+            <button class="btn-pagina ${i === paginaActual ? 'active' : ''}" 
+                    onclick="cambiarPaginaTodos(${i})">
+              ${i}
+            </button>
+          `;
+        } else if (i === paginaActual - 3 || i === paginaActual + 3) {
+          paginacionHTML += `<span class="mx-1">...</span>`;
+        }
+      }
+      
+      paginacionHTML += `
+        <button class="btn-pagina" onclick="cambiarPaginaTodos(${paginaActual + 1})" 
+                ${paginaActual === totalPaginas ? 'disabled' : ''}>
+          <i class="bi bi-chevron-right"></i>
+        </button>
+      `;
+      
+      paginacionContainer.innerHTML = paginacionHTML;
+    } else {
+      paginacionContainer.innerHTML = '';
+    }
   }
 
+  // 🎯 CAMBIAR PÁGINA EN VISTA "TODOS"
+  function cambiarPaginaTodos(nuevaPagina) {
+    if (nuevaPagina < 1) return;
+    
+    const totalPaginas = Math.ceil(productosFiltradosTodos.length / productosPorPagina);
+    if (nuevaPagina > totalPaginas) return;
+    
+    paginaActual = nuevaPagina;
+    renderizarProductosTodos();
+    
+    // Scroll suave hacia arriba
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // 🎯 FILTRAR PRODUCTOS EN VISTA "TODOS"
+  function filtrarProductosTodos() {
+    const busqueda = document.getElementById('buscar-todos').value.toLowerCase();
+    const categoria = document.getElementById('filtro-categoria-todos').value;
+    
+    productosFiltradosTodos = todosLosProductos.filter(producto => {
+      const coincideBusqueda = !busqueda || 
+        producto.producto.toLowerCase().includes(busqueda) ||
+        (producto.descripcion && producto.descripcion.toLowerCase().includes(busqueda));
+      
+      const coincideCategoria = !categoria || 
+        producto.tipo === categoria || 
+        producto.subtipo === categoria;
+      
+      return coincideBusqueda && coincideCategoria;
+    });
+    
+    paginaActual = 1;
+    renderizarProductosTodos();
+  }
+
+  // 🎯 ORDENAR PRODUCTOS EN VISTA "TODOS"
   function ordenarProductosTodos() {
     const orden = document.getElementById('ordenar-todos').value;
-    const productos = [...todosLosProductos];
     
     switch (orden) {
       case 'precio-asc':
-        productos.sort((a, b) => (a.precio || 0) - (b.precio || 0));
+        productosFiltradosTodos.sort((a, b) => (Number(a.precio) || 0) - (Number(b.precio) || 0));
         break;
       case 'precio-desc':
-        productos.sort((a, b) => (b.precio || 0) - (a.precio || 0));
+        productosFiltradosTodos.sort((a, b) => (Number(b.precio) || 0) - (Number(a.precio) || 0));
         break;
       case 'nombre':
-        productos.sort((a, b) => a.producto.localeCompare(b.producto));
+        productosFiltradosTodos.sort((a, b) => a.producto.localeCompare(b.producto));
         break;
       case 'recientes':
       default:
-        // Mantener orden original
+        productosFiltradosTodos = [...todosLosProductos];
         break;
     }
     
-    renderizarProductosFiltrados(productos);
+    paginaActual = 1;
+    renderizarProductosTodos();
   }
 
-  function renderizarProductosFiltrados(productos) {
-    const grid = document.getElementById('grid-todos');
-    const sinResultados = document.getElementById('sin-resultados-todos');
-    
-    if (productos.length === 0) {
-      grid.innerHTML = '';
-      sinResultados.classList.remove('d-none');
-    } else {
-      sinResultados.classList.add('d-none');
-      
-      grid.innerHTML = productos.map(producto => `
-        <div class="card-producto-ml">
-          <a href="#" onclick="irADetalleProducto('${producto.id}')">
-            <img src="${producto.imagen}" alt="${producto.producto}" class="card-img-ml"
-                 loading="lazy" onerror="this.src='https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg'">
-            <div class="card-body-ml">
-              <h3 class="nombre-producto-ml line-clamp-2">${producto.producto}</h3>
-              <div class="precio-ml fw-bold text-primary">$${Number(producto.precio).toLocaleString('es-CO')}</div>
-              <div class="d-flex flex-wrap gap-1 mb-2">
-                ${producto.tipo ? `<span class="badge bg-secondary">${producto.tipo}</span>` : ''}
-                ${producto.subtipo ? `<span class="badge bg-info">${producto.subtipo}</span>` : ''}
-                ${producto.categoria ? `<span class="badge bg-warning text-dark">${producto.categoria}</span>` : ''}
-              </div>
-              ${producto.promo === true || producto.promo === "sí" ? '<span class="badge bg-danger">EN PROMOCIÓN</span>' : ''}
-              <button class="btn btn-outline-primary btn-sm mt-2">
-                <i class="bi bi-eye"></i> Ver detalles
-              </button>
-            </div>
-          </a>
-        </div>
-      `).join('');
-    }
-  }
-
-  // 🔄 FUNCIONES DE NAVEGACIÓN
-  function cambiarVista(vistaDestino) {
+  // 🎯 VOLVER A INICIO
+  function volverAInicio() {
     document.querySelectorAll('.vista').forEach(vista => {
       vista.classList.remove('vista-activa');
+      vista.classList.add('d-none');
     });
-    document.getElementById(`vista-${vistaDestino}`).classList.add('vista-activa');
-  }
-
-  function volverAInicio() {
-    cambiarVista('inicio');
     
-    // Mostrar secciones de inicio
+    const vistaInicio = document.getElementById('vista-inicio');
+    vistaInicio.classList.add('vista-activa');
+    vistaInicio.classList.remove('d-none');
+    
     document.getElementById('carrusel-inicio-container').classList.remove('d-none');
     document.getElementById('ultimos-productos-container').classList.remove('d-none');
     document.getElementById('productos-categoria-container').classList.add('d-none');
     
-    // Resetear botón activo a "Todos"
+    // Resetear categoría activa
     document.querySelectorAll('.categoria-rapida').forEach(btn => {
       btn.classList.remove('active');
     });
-    document.querySelector('.categoria-rapida[onclick*="TODOS"]').classList.add('active');
-    
-    filtroActual = 'TODOS';
+    const btnTodos = document.querySelector('.categoria-rapida[onclick*="TODOS"]');
+    if (btnTodos) btnTodos.classList.add('active');
   }
 
-  // 🚀 INICIALIZACIÓN
-  document.addEventListener('DOMContentLoaded', function() {
-    // Inicializar carrito si existe
-    if (window.inicializarCarrito) {
-      window.inicializarCarrito();
-    }
+  // 🎯 IR A DETALLE DE PRODUCTO
+  function irADetalleProducto(id) {
+    window.location.href = `PRODUCTO.HTML?id=${id}`;
+  }
+
+  // 🎯 AGREGAR AL CARRITO
+  function agregarAlCarrito(event, id) {
+    event.preventDefault();
+    event.stopPropagation();
     
-    // Cargar categorías rápidas
-    cargarCategoriasRapidas();
-    
-    // Cargar carrusel de promociones
-    cargarCarruselPromociones();
-    iniciarTemporizadorHome();
-    
-    // Cargar productos recién llegados
-    setTimeout(async () => {
-      try {
-        if (!todosLosProductos.length) {
-          todosLosProductos = await obtenerCatalogo();
-        }
-        
-        const ultimosProductos = todosLosProductos.slice(-20).reverse();
-        
-        const grid = document.getElementById('grid-ultimos');
-        grid.innerHTML = ultimosProductos.map(producto => `
-          <div class="card-producto-ml">
-            <a href="#" onclick="irADetalleProducto('${producto.id}')">
-              <img src="${producto.imagen}" alt="${producto.producto}" class="card-img-ml"
-                   loading="lazy" onerror="this.src='https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg'">
-              <div class="card-body-ml">
-                <h3 class="nombre-producto-ml small line-clamp-2">${producto.producto}</h3>
-                <div class="precio-ml fw-bold text-primary">$${producto.precio?.toLocaleString('es-CO') || '0'}</div>
-                <div class="d-flex flex-wrap gap-1 mb-2">
-                  ${producto.tipo ? `<span class="badge bg-secondary">${producto.tipo}</span>` : ''}
-                  ${producto.subtipo ? `<span class="badge bg-info">${producto.subtipo}</span>` : ''}
-                </div>
-                <button class="btn btn-outline-primary btn-sm">
-                  <i class="bi bi-eye"></i> Ver detalles
-                </button>
-              </div>
-            </a>
-          </div>
-        `).join('');
-      } catch (error) {
-        console.error('Error cargando últimos productos:', error);
+    const producto = todosLosProductos.find(p => p.id === id);
+    if (producto) {
+      agregarProductoAlCarrito(producto);
+      
+      // Mostrar notificación
+      if (typeof mostrarNotificacionCarrito === 'function') {
+        mostrarNotificacionCarrito(producto);
       }
-    }, 1000);
-    
-    // Configurar eventos táctiles para scroll en móviles
-    const categoriasContainer = document.querySelector('.categorias-rapidas');
-    if (categoriasContainer) {
-      let isDragging = false;
-      let startX;
-      let scrollLeft;
-      
-      categoriasContainer.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        startX = e.pageX - categoriasContainer.offsetLeft;
-        scrollLeft = categoriasContainer.scrollLeft;
-      });
-      
-      categoriasContainer.addEventListener('mouseleave', () => {
-        isDragging = false;
-      });
-      
-      categoriasContainer.addEventListener('mouseup', () => {
-        isDragging = false;
-      });
-      
-      categoriasContainer.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        e.preventDefault();
-        const x = e.pageX - categoriasContainer.offsetLeft;
-        const walk = (x - startX) * 2;
-        categoriasContainer.scrollLeft = scrollLeft - walk;
-      });
-      
-      // Para touch devices
-      categoriasContainer.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].pageX - categoriasContainer.offsetLeft;
-        scrollLeft = categoriasContainer.scrollLeft;
-      });
-      
-      categoriasContainer.addEventListener('touchmove', (e) => {
-        e.preventDefault();
-        const x = e.touches[0].pageX - categoriasContainer.offsetLeft;
-        const walk = (x - startX) * 2;
-        categoriasContainer.scrollLeft = scrollLeft - walk;
-      });
     }
-  });
+  }
+
+  // 🎯 INICIALIZAR APLICACIÓN
+  async function inicializarApp() {
+    try {
+      // Cargar categorías
+      await cargarCategoriasRapidas();
+      
+      // Cargar carrusel
+      await cargarCarruselPromociones();
+      
+      // Iniciar temporizador
+      iniciarTemporizadorHome();
+      
+      // Cargar últimos productos
+      await cargarUltimosProductos();
+      
+      // Configurar eventos
+      window.addEventListener('resize', actualizarBotonesScroll);
+      
+    } catch (error) {
+      console.error('Error inicializando app:', error);
+    }
+  }
+
+  // ✅ EJECUTAR AL CARGAR LA PÁGINA
+  document.addEventListener('DOMContentLoaded', inicializarApp);
 </script>
+
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
