@@ -726,174 +726,201 @@ body { padding-top: 70px; }
 .max-h-250 { max-height: 250px !important; }
 .max-h-300 { max-height: 300px !important; }
 
-/* === RESPONSIVE DESIGN - CON TAMAÑOS AJUSTADOS === */
-@media (min-width: 768px) {
-  .barra-inferior-mobile { display: none; }
-  
-  /* CARRUSEL TABLET - TAMAÑO AJUSTADO */
-  .carousel-promos-ml, .carousel-promos-ml .carousel-item { 
-    height: auto; max-height: 280px; /* Límite máximo */
-  }
-  
-  .grid-productos-ml {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; padding: 0 1rem;
-  }
-  
-  .card-img-ml { height: 180px; }
-  
-  .categorias-rapidas { padding: 1rem; justify-content: center; }
-  .categoria-rapida { font-size: 0.9rem; padding: 0.75rem 1.25rem; }
-  
-  .footer { padding: 2rem 1.5rem; }
-  .footer-main { grid-template-columns: 2fr 1.5fr 1fr; gap: 2rem; }
-  .footer-secondary { flex-direction: row; justify-content: space-between; align-items: center; }
-  .medios-pago-compactos { text-align: left; }
-  .logos-pago-compactos { justify-content: flex-start; }
-  
-  /* CARRUSEL HOME TABLET - TAMAÑO AJUSTADO */
-  .producto-carrusel-img { 
-    height: 180px; /* REDUCIDO de 240px a 180px */
-  }
-  
-  /* BUSCADOR EN TABLET */
-  .header-sticky .flex-grow-1 {
-    max-width: 400px;
-  }
-  
-  /* VIDEO EN TABLET */
-  #video-producto {
-    margin-bottom: 1.5rem;
-  }
+/* === ESTILOS PARA SISTEMA TEMU-LIKE === */
+/* Navegación tipo Temu */
+.navegacion-temu {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 1rem;
 }
 
-@media (min-width: 1024px) {
-  /* CARRUSEL DESKTOP - TAMAÑO AJUSTADO */
-  .carousel-promos-ml, .carousel-promos-ml .carousel-item { 
-    height: auto; max-height: 320px; /* Límite máximo */
-  }
-  
-  .grid-productos-ml { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
-  .card-img-ml { height: 200px; }
-  
-  /* CARRUSEL HOME DESKTOP - TAMAÑO AJUSTADO */
-  .producto-carrusel-img { 
-    height: 200px; /* REDUCIDO de 280px a 200px */
-  }
-  
-  /* BUSCADOR EN DESKTOP */
-  .header-sticky .flex-grow-1 {
-    max-width: 500px;
-  }
-  
-  /* VIDEO EN DESKTOP */
-  #video-producto {
-    margin-top: 2rem;
-  }
+.navegacion-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--gray-light);
+    overflow-x: auto;
+    scrollbar-width: none;
 }
 
-@media (max-width: 767px) {
-  body { padding-top: 60px; }
-  .header-sticky { 
-    height: 60px;
+.navegacion-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.nav-tab-temu {
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+    padding: 0.75rem 0.5rem;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-weight: 500;
+    color: var(--text-light);
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.nav-tab-temu.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+    background: rgba(27, 69, 87, 0.05);
+    font-weight: 600;
+}
+
+.nav-tab-temu:hover:not(.active) {
+    color: var(--primary-color);
+    background: rgba(27, 69, 87, 0.03);
+}
+
+/* Contenido de navegación */
+.nav-content {
+    display: none;
+    padding: 1rem;
+    animation: fadeIn 0.3s ease;
+}
+
+.nav-content.active {
+    display: block;
+}
+
+/* Grid híbrido - estilo Temu */
+.grid-temu {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.75rem;
     padding: 0.5rem;
-  }
-  
-  .btn-carrito-flotante { display: none; }
-  .grid-productos-ml { grid-template-columns: repeat(2, 1fr); }
-  .card-img-ml { height: 140px; object-fit: contain; padding: 5px; }
-  .nombre-producto-ml { font-size: 0.85rem; }
-  .precio-ml { font-size: 1rem; }
-  
-  .footer { padding: 1rem 0.75rem; }
-  .footer-section h4 { font-size: 0.9rem; }
-  .footer-links a, .contacto-compacto p { font-size: 0.75rem; }
-  .redes-sociales-compactas img { width: 24px; height: 24px; }
-  
-  /* CARRUSEL HOME MÓVIL - TAMAÑO AJUSTADO */
-  .producto-carrusel-img { 
-    height: 120px; /* REDUCIDO de 160px a 120px */
-  }
-  
-  .producto-carrusel-info { padding: 0.5rem; }
-  .producto-carrusel-nombre { font-size: 0.75rem; }
-  .carousel-promos-home .carousel-item { padding: 0.25rem; }
-  
-  /* BUSCADOR EN MÓVIL */
-  .buscador-header {
-    font-size: 0.8rem;
-    padding: 0.4rem 0.8rem;
-  }
-  
-  .header-sticky .flex-grow-1 {
-    max-width: 200px;
-  }
-  
-  .buscador-header::placeholder {
-    font-size: 0.75rem;
-  }
-  
-  /* SUGERENCIAS EN MÓVIL */
-  .sugerencias-container {
-    max-height: 300px;
-  }
-  
-  /* VIDEO EN MÓVIL */
-  #video-producto {
-    margin-bottom: 1.5rem;
-  }
-  
-  /* MODAL ZOOM EN MÓVIL */
-  .modal-zoom-btn {
-    width: 40px;
-    height: 40px;
-    font-size: 16px;
-  }
-  
-  .modal-zoom-thumbnail {
-    width: 50px;
-    height: 50px;
-  }
 }
 
-/* === MEDIA QUERY PARA PANTALLAS MÁS GRANDES === */
-@media (min-width: 1200px) {
-  /* CARRUSEL XL - TAMAÑO AJUSTADO */
-  .carousel-promos-ml, .carousel-promos-ml .carousel-item { 
-    max-height: 350px; /* Límite máximo para pantallas grandes */
-  }
-  
-  .producto-carrusel-img { 
-    height: 220px; /* Para pantallas muy grandes */
-  }
+.card-temu {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+    text-decoration: none;
+    color: inherit;
+    display: block;
 }
 
-/* === ACCESIBILIDAD Y COMPATIBILIDAD === */
-@media (prefers-contrast: high) {
-  :root {
-    --primary-color: #000000; --secondary-color: #000000;
-    --text-dark: #000000; --gray-light: #cccccc;
-  }
+.card-temu:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    text-decoration: none;
+    color: inherit;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+.card-temu-img {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+    background: #f8f9fa;
+    padding: 10px;
+    border-bottom: 1px solid #f0f0f0;
 }
 
-@media print {
-  .btn-carrito-flotante, .barra-inferior-mobile, .categorias-rapidas { display: none !important; }
+.card-temu-body {
+    padding: 0.75rem;
 }
 
-/* Responsive para botón instalar */
-@media (max-width: 768px) {
-  .instalar-container {
-    bottom: 90px;
-    right: 15px;
-  }
-  
-  .btn-instalar-app {
-    padding: 10px 20px;
+.card-temu-title {
     font-size: 0.85rem;
-  }
+    line-height: 1.3;
+    height: 2.6em;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+}
+
+.card-temu-price {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.25rem;
+}
+
+.card-temu-original {
+    font-size: 0.8rem;
+    color: #999;
+    text-decoration: line-through;
+    margin-bottom: 0.25rem;
+}
+
+.card-temu-discount {
+    display: inline-block;
+    background: #ff4444;
+    color: white;
+    font-size: 0.7rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+/* Botones de vista rápida */
+.view-toggle {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding: 0 1rem;
+}
+
+.view-toggle-btn {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 20px;
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.view-toggle-btn.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Breadcrumb mejorado */
+.breadcrumb-temu {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+}
+
+.breadcrumb-temu a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.breadcrumb-temu a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb-temu .active {
+    font-weight: 600;
+    color: #ffdd40;
+}
+
+/* Contador de productos */
+.contador-badge {
+    background: var(--secondary-color);
+    color: white;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
 }
 
 /* === BANNER PROMOCIONAL === */
@@ -966,3 +993,468 @@ body { padding-top: 70px; }
   color: #155724;
 }
 
+/* Estilos para la vista de todos los productos */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 3em;
+}
+
+/* Mejoras para filtros */
+.input-group-sm .input-group-text {
+  background-color: #f8f9fa;
+  border-color: #dee2e6;
+}
+
+#buscar-todos:focus {
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Spinner de carga */
+#cargando-todos .spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Botón "Ver más" */
+#btn-ver-mas {
+  padding: 10px 30px;
+  font-weight: 500;
+}
+
+/* 🏷️ ESTILOS PARA ETIQUETAS */
+.grid-etiquetas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.card-etiqueta {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid #eaeaea;
+  text-align: center;
+  cursor: pointer;
+}
+
+.card-etiqueta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.card-etiqueta-titulo {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+/* Estilo para las etiquetas relacionadas */
+#etiquetas-relacionadas .badge {
+  font-size: 0.8rem;
+  padding: 5px 10px;
+  margin: 2px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+#etiquetas-relacionadas .badge:hover {
+  background-color: #0d6efd !important;
+  color: white !important;
+}
+
+/* === RESPONSIVE DESIGN - CON TAMAÑOS AJUSTADOS === */
+@media (min-width: 768px) {
+  .barra-inferior-mobile { display: none; }
+  
+  /* CARRUSEL TABLET - TAMAÑO AJUSTADO */
+  .carousel-promos-ml, .carousel-promos-ml .carousel-item { 
+    height: auto; max-height: 280px; /* Límite máximo */
+  }
+  
+  .grid-productos-ml {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; padding: 0 1rem;
+  }
+  
+  .card-img-ml { height: 180px; }
+  
+  .categorias-rapidas { padding: 1rem; justify-content: center; }
+  .categoria-rapida { font-size: 0.9rem; padding: 0.75rem 1.25rem; }
+  
+  .footer { padding: 2rem 1.5rem; }
+  .footer-main { grid-template-columns: 2fr 1.5fr 1fr; gap: 2rem; }
+  .footer-secondary { flex-direction: row; justify-content: space-between; align-items: center; }
+  .medios-pago-compactos { text-align: left; }
+  .logos-pago-compactos { justify-content: flex-start; }
+  
+  /* CARRUSEL HOME TABLET - TAMAÑO AJUSTADO */
+  .producto-carrusel-img { 
+    height: 180px; /* REDUCIDO de 240px a 180px */
+  }
+  
+  /* BUSCADOR EN TABLET */
+  .header-sticky .flex-grow-1 {
+    max-width: 400px;
+  }
+  
+  /* VIDEO EN TABLET */
+  #video-producto {
+    margin-bottom: 1.5rem;
+  }
+  
+  /* RESPONSIVE PARA SISTEMA TEMU */
+  .grid-temu {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .card-temu-img {
+    height: 160px;
+  }
+  
+  .nav-tab-temu {
+    min-width: 140px;
+    padding: 0.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  /* CARRUSEL DESKTOP - TAMAÑO AJUSTADO */
+  .carousel-promos-ml, .carousel-promos-ml .carousel-item { 
+    height: auto; max-height: 320px; /* Límite máximo */
+  }
+  
+  .grid-productos-ml { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+  .card-img-ml { height: 200px; }
+  
+  /* CARRUSEL HOME DESKTOP - TAMAÑO AJUSTADO */
+  .producto-carrusel-img { 
+    height: 200px; /* REDUCIDO de 280px a 200px */
+  }
+  
+  /* BUSCADOR EN DESKTOP */
+  .header-sticky .flex-grow-1 {
+    max-width: 500px;
+  }
+  
+  /* VIDEO EN DESKTOP */
+  #video-producto {
+    margin-top: 2rem;
+  }
+  
+  /* TEMU SYSTEM DESKTOP */
+  .grid-temu {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+  
+  .card-temu-img {
+    height: 180px;
+  }
+}
+
+@media (max-width: 767px) {
+  body { padding-top: 60px; }
+  .header-sticky { 
+    height: 60px;
+    padding: 0.5rem;
+  }
+  
+  .btn-carrito-flotante { display: none; }
+  .grid-productos-ml { grid-template-columns: repeat(2, 1fr); }
+  .card-img-ml { height: 140px; object-fit: contain; padding: 5px; }
+  .nombre-producto-ml { font-size: 0.85rem; }
+  .precio-ml { font-size: 1rem; }
+  
+  .footer { padding: 1rem 0.75rem; }
+  .footer-section h4 { font-size: 0.9rem; }
+  .footer-links a, .contacto-compacto p { font-size: 0.75rem; }
+  .redes-sociales-compactas img { width: 24px; height: 24px; }
+  
+  /* CARRUSEL HOME MÓVIL - TAMAÑO AJUSTADO */
+  .producto-carrusel-img { 
+    height: 120px; /* REDUCIDO de 160px a 120px */
+  }
+  
+  .producto-carrusel-info { padding: 0.5rem; }
+  .producto-carrusel-nombre { font-size: 0.75rem; }
+  .carousel-promos-home .carousel-item { padding: 0.25rem; }
+  
+  /* BUSCADOR EN MÓVIL */
+  .buscador-header {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+  
+  .header-sticky .flex-grow-1 {
+    max-width: 200px;
+  }
+  
+  .buscador-header::placeholder {
+    font-size: 0.75rem;
+  }
+  
+  /* SUGERENCIAS EN MÓVIL */
+  .sugerencias-container {
+    max-height: 300px;
+  }
+  
+  /* VIDEO EN MÓVIL */
+  #video-producto {
+    margin-bottom: 1.5rem;
+  }
+  
+  /* MODAL ZOOM EN MÓVIL */
+  .modal-zoom-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+  
+  .modal-zoom-thumbnail {
+    width: 50px;
+    height: 50px;
+  }
+  
+  /* TEMU SYSTEM MOBILE */
+  .grid-temu {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.5rem;
+    padding: 0.25rem;
+  }
+  
+  .card-temu-img {
+    height: 130px;
+  }
+  
+  .nav-tab-temu {
+    min-width: 100px;
+    padding: 0.6rem 0.25rem;
+    font-size: 0.85rem;
+  }
+  
+  /* 📱 Responsivo para etiquetas */
+  .grid-etiquetas {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+  }
+  
+  .card-etiqueta {
+    padding: 12px;
+  }
+  
+  #etiquetas-relacionadas .badge {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+  }
+  
+  /* Ajustes para mobile */
+  .input-group-sm, 
+  .form-select-sm {
+    font-size: 14px;
+  }
+  
+  #contador-todos {
+    font-size: 0.8rem;
+  }
+}
+
+/* === MEDIA QUERY PARA PANTALLAS MÁS GRANDES === */
+@media (min-width: 1200px) {
+  /* CARRUSEL XL - TAMAÑO AJUSTADO */
+  .carousel-promos-ml, .carousel-promos-ml .carousel-item { 
+    max-height: 350px; /* Límite máximo para pantallas grandes */
+  }
+  
+  .producto-carrusel-img { 
+    height: 220px; /* Para pantallas muy grandes */
+  }
+  
+  /* TEMU SYSTEM XL */
+  .grid-temu {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+  
+  .card-temu-img {
+    height: 200px;
+  }
+}
+
+/* === ACCESIBILIDAD Y COMPATIBILIDAD === */
+@media (prefers-contrast: high) {
+  :root {
+    --primary-color: #000000; --secondary-color: #000000;
+    --text-dark: #000000; --gray-light: #cccccc;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+
+@media print {
+  .btn-carrito-flotante, .barra-inferior-mobile, .categorias-rapidas { display: none !important; }
+}
+
+/* Responsive para botón instalar */
+@media (max-width: 768px) {
+  .instalar-container {
+    bottom: 90px;
+    right: 15px;
+  }
+  
+  .btn-instalar-app {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+  }
+}
+
+/* === MEJORAS ADICIONALES PARA EL SISTEMA TEMU === */
+
+/* Asegurar que las cards Temu tengan altura consistente */
+.grid-temu .card-temu {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.grid-temu .card-temu-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.grid-temu .card-temu-title {
+  flex: 1;
+  min-height: 2.6em;
+}
+
+/* Mejoras para categorías en home */
+#grid-categorias-home .card-temu-img {
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  padding: 20px;
+}
+
+#grid-categorias-home .card-temu-title {
+  text-align: center;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+/* Mejoras para etiquetas en home */
+#grid-etiquetas-home .card-temu-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#grid-etiquetas-home .card-temu-title {
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* Ajustes para el carrusel dentro de tabs */
+#tab-destacados .carousel-promos-home {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+#tab-destacados .carrusel-temporizador {
+  margin-bottom: 0.5rem;
+}
+
+/* Mejoras para los badges dentro de cards Temu */
+.card-temu .badge {
+  font-size: 0.65rem;
+  padding: 0.15rem 0.35rem;
+  margin-right: 0.25rem;
+}
+
+/* Asegurar que los precios se muestren correctamente */
+.card-temu-price {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-top: auto;
+}
+
+/* Mejoras para imágenes con errores */
+.card-temu-img:before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+
+.card-temu-img img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Ajustes para navegación en móvil */
+@media (max-width: 767px) {
+  .navegacion-tabs {
+    padding: 0 0.5rem;
+  }
+  
+  .nav-tab-temu {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.8rem;
+  }
+  
+  .nav-content {
+    padding: 0.75rem;
+  }
+}
+
+/* Transiciones suaves para cambios de tab */
+.nav-content {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mejoras para el contador de productos */
+.contador-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+}
+
+/* Ajustes para botones dentro de cards */
+.card-temu-body .btn {
+  margin-top: auto;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+}
+
+/* Mejoras para el breadcrumb en vistas Temu */
+.breadcrumb-temu .breadcrumb-item + .breadcrumb-item::before {
+  content: "›";
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0.5rem;
+}
