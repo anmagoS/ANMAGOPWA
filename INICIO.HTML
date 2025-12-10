@@ -25,30 +25,14 @@
 
   <!-- HEADER STICKY -->
   <div id="header-container" class="header-sticky"></div>
-
-  <!-- BANNER PROMOCIONAL -->
-  <div class="container-fluid banner-promocional py-2">
-    <div class="container text-center">
-      <small class="fw-bold">⭐ Los mejores precios ⭐ Calidad garantizada</small>
-    </div>
-  </div>
-
-  <!-- BOTÓN INSTALAR APP -->
-  <div id="instalar-container" class="instalar-container d-none">
-    <button id="boton-instalar" class="btn-instalar-app">
-      <i class="bi bi-download"></i> Instalar App
-    </button>
-  </div>
-
-  <!-- ✅ SISTEMA DE VISTAS DINÁMICAS -->
-  <main>
-    <!-- VISTA 1: INICIO (HOME) -->
-    <div id="vista-inicio" class="vista vista-activa">
-     
-      <!-- CATEGORÍAS RÁPIDAS -->
+  <!-- CATEGORÍAS RÁPIDAS -->
       <div class="container-fluid mt-3">
         <div class="categorias-rapidas">
-          <a href="#" class="categoria-rapida" data-tipo="ROPA" onclick="cargarSubtipos('ROPA')">
+         <a href="#" class="categoria-rapida" data-tipo="TODOS" onclick="mostrarTodosLosProductos()">
+      <div>🛍️</div>
+      <div>Todos</div>
+    </a>
+     <a href="#" class="categoria-rapida" data-tipo="ROPA" onclick="cargarSubtipos('ROPA')">
             <div>👗</div>
             <div>Ropa</div>
           </a>
@@ -74,6 +58,30 @@
           </a>
         </div>
       </div>
+
+  <!-- BANNER PROMOCIONAL -->
+  <div class="container-fluid banner-promocional py-2">
+    <div class="container text-center">
+      <small class="fw-bold">⭐ Los mejores precios ⭐ Calidad garantizada</small>
+    </div>
+  </div>
+
+  <!-- BOTÓN INSTALAR APP -->
+  <div id="instalar-container" class="instalar-container d-none">
+    <button id="boton-instalar" class="btn-instalar-app">
+      <i class="bi bi-download"></i> Instalar App
+    </button>
+  </div>
+  
+
+  <!-- ✅ SISTEMA DE VISTAS DINÁMICAS -->
+  <main>
+
+    
+    <!-- VISTA 1: INICIO (HOME) -->
+    <div id="vista-inicio" class="vista vista-activa">
+     
+      
 
       <!-- BOTÓN PROMOCIONES -->
       <div class="container text-center mt-3">
@@ -179,6 +187,71 @@
       </div>
     </div>
   </main>
+
+  <!-- VISTA 5: TODOS LOS PRODUCTOS -->
+<div id="vista-todos" class="vista">
+  <div class="container mt-3">
+    <nav class="breadcrumb-vista">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="#" onclick="volverAInicio()">INICIO</a></li>
+        <li class="breadcrumb-item active" id="breadcrumb-todos">Todos los productos</li>
+      </ol>
+    </nav>
+    
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1 class="h4 fw-bold mb-0">🛍️ Todos los productos</h1>
+      <div class="d-flex align-items-center gap-2">
+        <span class="badge bg-primary" id="contador-todos">0 productos</span>
+        <!-- Opcional: Agregar filtro de búsqueda -->
+        <div class="input-group input-group-sm" style="width: 200px;">
+          <input type="text" id="buscar-todos" class="form-control" placeholder="Buscar..." 
+                 onkeyup="filtrarProductosTodos()">
+          <button class="btn btn-outline-secondary" type="button">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Filtros opcionales -->
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <select class="form-select form-select-sm" id="filtro-categoria-todos" onchange="filtrarProductosTodos()">
+          <option value="">Todas las categorías</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <select class="form-select form-select-sm" id="filtro-tipo-todos" onchange="filtrarProductosTodos()">
+          <option value="">Todos los tipos</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <select class="form-select form-select-sm" id="ordenar-todos" onchange="ordenarProductosTodos()">
+          <option value="recientes">Más recientes</option>
+          <option value="precio-asc">Precio: menor a mayor</option>
+          <option value="precio-desc">Precio: mayor a menor</option>
+          <option value="nombre">Nombre A-Z</option>
+        </select>
+      </div>
+    </div>
+    
+    <div id="grid-todos" class="grid-productos-ml"></div>
+    
+    <!-- Paginación -->
+    <nav aria-label="Paginación productos" class="mt-4" id="paginacion-todos">
+      <ul class="pagination justify-content-center">
+        <li class="page-item disabled">
+          <a class="page-link" href="#" tabindex="-1">Anterior</a>
+        </li>
+        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#">Siguiente</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
 
   <!-- CARRITO OFFCANVAS -->
   <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito">
