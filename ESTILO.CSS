@@ -965,8 +965,7 @@ body { padding-top: 70px; }
   border-color: #c3e6cb;
   color: #155724;
 }
-/* ===== FOOTER ANMAGO - VERSIÓN FINAL CORREGIDA ===== */
-/* Esto se añade al final del archivo ESTILO.CSS */
+/* ===== FOOTER CORREGIDO - AGREGAR AL FINAL DEL ARCHIVO ===== */
 
 /* Contenedor combinado pagos + transportadoras */
 .payment-shipping-container {
@@ -983,7 +982,7 @@ body { padding-top: 70px; }
   }
 }
 
-/* Medios de pago - Manteniendo tu estilo */
+/* Medios de pago */
 .medios-pago-compactos h4 {
   color: white !important;
   margin-bottom: 1rem !important;
@@ -999,6 +998,9 @@ body { padding-top: 70px; }
   gap: 1.5rem !important;
   flex-wrap: wrap !important;
   padding: 1rem !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
 }
 
 .logos-pago-compactos img {
@@ -1017,7 +1019,7 @@ body { padding-top: 70px; }
   box-shadow: 0 5px 12px rgba(0,0,0,0.3) !important;
 }
 
-/* Transportadoras - Estilos nuevos */
+/* Transportadoras */
 .transportadoras-convenio {
   text-align: center !important;
 }
@@ -1071,7 +1073,7 @@ body { padding-top: 70px; }
   height: auto !important;
   max-height: 30px !important;
   object-fit: contain !important;
-  filter: none !important; /* IMPORTANTE: quitar filtros que vuelven blanco */
+  /* NO usar filtros que vuelvan blanco los logos */
 }
 
 .contrarrembolso-text {
