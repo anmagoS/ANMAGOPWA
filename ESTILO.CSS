@@ -965,88 +965,120 @@ body { padding-top: 70px; }
   border-color: #c3e6cb;
   color: #155724;
 }
-/* ===== TRANSPORTADORAS CONVENIO ===== */
+/* === TRANSPORTADORAS - ESTILOS CORREGIDOS === */
 .payment-shipping-container {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
-  margin-bottom: 1.5rem;
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 2rem !important;
+  margin-bottom: 1.5rem !important;
 }
 
 @media (min-width: 768px) {
   .payment-shipping-container {
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 3rem !important;
   }
 }
 
 .transportadoras-convenio {
-  text-align: center;
+  text-align: center !important;
 }
 
 .transportadoras-convenio h4 {
-  color: white;
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
+  color: white !important;
+  margin-bottom: 1rem !important;
+  font-size: 1.1rem !important;
 }
 
+/* CONTENEDOR DE LOGOS DE TRANSPORTADORAS */
 .logos-transportadoras {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin-bottom: 1rem;
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 1rem !important;
+  margin-bottom: 1rem !important;
 }
 
 @media (min-width: 768px) {
   .logos-transportadoras {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 1.5rem !important;
   }
 }
 
-.logos-transportadoras img {
-  width: 100%;
-  height: 40px;
-  object-fit: contain;
-  background: white;
-  padding: 8px;
-  border-radius: 8px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-  transition: all 0.3s ease;
-}
-
-.logos-transportadoras img:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 5px 12px rgba(0,0,0,0.3);
-}
-
-.contrarrembolso-text {
-  color: #20c997;
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-top: 0.5rem;
-}
-
-.contrarrembolso-text i {
-  margin-right: 5px;
-}
-/* Fuerza la visualización de logos */
-.logos-pago-compactos img {
+/* LOGOS INDIVIDUALES CON FONDO Y BORDE */
+.transportadora-logo {
   background: white !important;
-  padding: 8px !important;
-  border-radius: 6px !important;
+  border-radius: 10px !important;
+  padding: 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 70px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+  transition: all 0.3s ease !important;
+  border: 2px solid transparent !important;
+}
+
+.transportadora-logo:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25) !important;
+  border-color: #199461 !important;
+}
+
+.transportadora-logo img {
+  width: 100% !important;
+  height: auto !important;
+  max-height: 35px !important;
+  object-fit: contain !important;
+  filter: none !important; /* IMPORTANTE: quitar filtros */
+}
+
+/* MEDIOS DE PAGO - ESTILOS CORREGIDOS */
+.medios-pago-compactos h4 {
+  color: white !important;
+  margin-bottom: 1rem !important;
+  text-align: center !important;
+  font-size: 1.1rem !important;
+}
+
+.logos-pago-compactos {
+  display: flex !important;
+  justify-content: center !important;
+  gap: 1.5rem !important;
+  flex-wrap: wrap !important;
+  padding: 1rem !important;
+  background: rgba(255,255,255,0.08) !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
+}
+
+.logos-pago-compactos img {
   height: 35px !important;
   width: auto !important;
-  object-fit: contain !important;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.2) !important;
-}
-
-.logos-transportadoras img {
   background: white !important;
   padding: 8px !important;
   border-radius: 8px !important;
-  height: 40px !important;
-  width: 100% !important;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2) !important;
+  transition: all 0.3s ease !important;
   object-fit: contain !important;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.2) !important;
+}
+
+.logos-pago-compactos img:hover {
+  transform: scale(1.1) !important;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
+}
+
+.contrarrembolso-text {
+  color: #20c997 !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  margin-top: 0.5rem !important;
+  background: rgba(32, 201, 151, 0.1) !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 20px !important;
+  display: inline-block !important;
+}
+
+.contrarrembolso-text i {
+  margin-right: 5px !important;
 }
