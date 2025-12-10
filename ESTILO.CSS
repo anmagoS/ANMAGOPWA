@@ -965,3 +965,199 @@ body { padding-top: 70px; }
   border-color: #c3e6cb;
   color: #155724;
 }
+/* FOOTER MEJORADO */
+.footer {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: white;
+  padding: 40px 0 20px;
+  margin-top: 50px;
+  border-top: 3px solid #0d6efd;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Primera fila */
+.footer-main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.footer-section h4 {
+  color: #fff;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+  border-bottom: 2px solid #0d6efd;
+  padding-bottom: 8px;
+  display: inline-block;
+}
+
+/* Enlaces */
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-links a {
+  color: #b8d4ff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.footer-links a:hover {
+  color: #fff;
+  padding-left: 5px;
+}
+
+/* Contacto */
+.contacto-compacto p {
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: #b8d4ff;
+}
+
+.contacto-compacto strong {
+  color: #fff;
+}
+
+/* Redes sociales compactas */
+.redes-sociales-compactas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.redes-sociales-compactas a {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.redes-sociales-compactas a:hover {
+  transform: translateY(-3px);
+}
+
+.redes-sociales-compactas img {
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  background: rgba(255,255,255,0.1);
+  padding: 4px;
+}
+
+/* Segunda fila */
+.footer-secondary {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 30px;
+}
+
+/* Contenedor combinado pagos + transportadoras */
+.payment-shipping-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 30px;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .payment-shipping-container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+/* Medios de pago */
+.medios-pago-compactos h4 {
+  color: #fff;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.logos-pago-compactos {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.logos-pago-compactos img {
+  height: 35px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+  transition: all 0.3s ease;
+}
+
+.logos-pago-compactos img:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* Transportadoras convenio */
+.transportadoras-convenio h4 {
+  color: #fff;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.logos-transportadoras {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  justify-items: center;
+}
+
+@media (min-width: 480px) {
+  .logos-transportadoras {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.transportadora-item {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60px;
+  width: 100%;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.transportadora-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(13, 110, 253, 0.5);
+  transform: translateY(-2px);
+}
+
+.transportadora-item img {
+  max-width: 100%;
+  height: auto;
+  max-height: 30px;
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+}
+
+.text-success {
+  color: #20c997 !important;
+}
+
+/* Copyright */
+.copyright {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  color: #8a9bb2;
+  font-size: 0.85rem;
+}
