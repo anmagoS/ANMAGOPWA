@@ -1,9 +1,9 @@
 // ====== SERVICE WORKER PARA ANMAGO STORE ======
-// Versión: v5.1 (Optimizado y sin errores)
+// Versión: v5.2 (Optimizado y sin errores)
 // Fecha: 2024-12-06
 
-const CACHE_NAME = 'anmago-cache-v5.1';
-const APP_VERSION = 'v5.0';
+const CACHE_NAME = 'anmago-cache-v5.2';
+const APP_VERSION = 'v5.2';
 
 // Archivos ESENCIALES para cachear (offline)
 const ARCHIVOS_ESENCIALES = [
