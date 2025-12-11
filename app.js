@@ -8,7 +8,6 @@ function getParametrosDesdeURL() {
     vista: params.get("vista")?.trim()
   };
 }
-
 // === Función compartida para índice promocional ===
 function obtenerIndicePromocional(cantidadPorCiclo = 4, ciclosPorDia = 4, totalPromos = 0) {
   const ahora = new Date();
