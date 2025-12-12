@@ -2,8 +2,8 @@
 // Versión: v5.2 (Optimizado y sin errores)
 // Fecha: 2024-12-06
 
-const CACHE_NAME = 'anmago-cache-v5.2';
-const APP_VERSION = 'v5.2';
+const CACHE_NAME = 'anmago-cache-v5.5';
+const APP_VERSION = 'v5.5';
 
 // Archivos ESENCIALES para cachear (offline)
 const ARCHIVOS_ESENCIALES = [
