@@ -1236,7 +1236,7 @@
   async function cargarFooter() {
     try {
       // Cargar tu archivo footer (ajusta el nombre si es diferente)
-      const respuesta = await fetch('FOOTER.HTML?v=' + Date.now());
+      const respuesta = await fetch('footer.html?v=' + Date.now());
       const htmlFooter = await respuesta.text();
       
       const contenedor = document.getElementById('footer-container');
