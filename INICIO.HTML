@@ -1027,168 +1027,217 @@
   <script src="buscador.js?v=20251115"></script>
  <!-- 🔥 BUSCADOR SE CARGA DESPUÉS DEL HEADER -->
   <script src="buscador.js?v=20251115"></script>
-  
   <!-- ====== SERVICE WORKER (FORZAR ACTUALIZACIÓN A v5.5) ====== -->
-  <script>
-  // ✅ Registrar Service Worker CON parámetro de versión (obliga a actualizar)
-  if ('serviceWorker' in navigator) {
-    // Registro CON parámetro ?v=5.5 (esto rompe el caché del navegador)
-    navigator.serviceWorker.register('service-worker.js?v=5.5')
-      .then(registration => {
-        console.log('✅ Service Worker registrado con éxito:', registration.scope);
-        console.log('📱 Versión forzada: v5.5');
-        
-        // 🔄 Código para forzar la actualización inmediata
-        navigator.serviceWorker.ready.then(reg => {
-          // Solicitar actualización inmediata
-          reg.update().then(() => {
-            console.log('🔄 Service Worker actualizado');
-            
-            // Comprobar si hay un nuevo SW esperando
-            if (reg.waiting) {
-              // Enviar mensaje para que se active (skipWaiting)
-              reg.waiting.postMessage({ type: 'SKIP_WAITING' });
-              console.log('⚡ Nuevo SW activado');
-            }
-          });
-        });
-        
-        // 🔍 Verificar versión cada 30 minutos
-        setInterval(() => {
-          registration.update();
-        }, 30 * 60 * 1000);
-        
-      })
-      .catch(error => {
-        console.error('❌ Error registrando SW:', error);
-      });
+<script>
+// ✅ Variable para controlar si ya mostramos la notificación
+let notificacionMostrada = false;
+const VERSION_ACTUAL = 'v5.5';
+
+// ✅ Registrar Service Worker CON parámetro de versión
+if ('serviceWorker' in navigator) {
+  // 1. Primero verificar si ya tenemos un SW registrado
+  navigator.serviceWorker.getRegistration().then(existingReg => {
+    const urlConVersion = 'service-worker.js?v=5.5';
     
-    // 🎯 Escuchar mensajes del Service Worker
-    navigator.serviceWorker.addEventListener('message', event => {
-      if (event.data && event.data.type === 'SW_UPDATED') {
-        console.log('🔄 ¡Nueva versión del SW disponible!', event.data.version);
-        // Opcional: mostrar notificación al usuario
-        mostrarNotificacionActualizacion();
-      }
+    // 2. Solo registrar si no existe o si la URL es diferente
+    if (!existingReg || existingReg.active?.scriptURL.indexOf('?v=') === -1) {
+      // Registrar nueva versión
+      navigator.serviceWorker.register(urlConVersion)
+        .then(registration => {
+          console.log('✅ Service Worker registrado:', VERSION_ACTUAL);
+          manejarActualizacionSW(registration);
+        })
+        .catch(error => {
+          console.error('❌ Error registrando SW:', error);
+        });
+    } else {
+      // Ya está registrado, solo verificar actualizaciones
+      console.log('ℹ️ SW ya registrado:', existingReg.active?.scriptURL);
+      manejarActualizacionSW(existingReg);
+    }
+  });
+  
+  // ✅ Función principal para manejar actualizaciones
+  function manejarActualizacionSW(registration) {
+    // Escuchar cuando se encuentre una ACTUALIZACIÓN (no siempre)
+    registration.addEventListener('updatefound', () => {
+      console.log('🔄 ¡Nueva versión del SW encontrada!');
+      const newWorker = registration.installing;
+      
+      newWorker.addEventListener('statechange', () => {
+        // Solo mostrar notificación cuando el nuevo SW esté INSTALADO
+        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+          console.log('📦 Nuevo SW instalado, mostrando notificación...');
+          if (!notificacionMostrada) {
+            mostrarNotificacionActualizacion();
+            notificacionMostrada = true;
+          }
+        }
+      });
     });
     
-    // 📱 Detectar si es PWA instalada
-    const esPWAInstalada = window.matchMedia('(display-mode: standalone)').matches || 
-                          window.navigator.standalone === true;
+    // Verificar actualizaciones periódicamente (cada 1 hora)
+    setInterval(() => {
+      registration.update();
+    }, 60 * 60 * 1000);
     
-    if (esPWAInstalada) {
-      console.log('📱 Modo PWA detectado - Forzando actualización');
-      // Forzar recarga si es PWA instalada
-      setTimeout(() => {
-        if (navigator.serviceWorker.controller) {
-          navigator.serviceWorker.controller.postMessage({ 
-            type: 'CHECK_FOR_UPDATES' 
-          });
-        }
-      }, 2000);
-    }
-    
-  } else {
-    console.log('ℹ️ Service Worker no soportado en este navegador');
+    // Forzar una verificación inicial después de 5 segundos
+    setTimeout(() => {
+      registration.update();
+    }, 5000);
   }
   
-  // 🎨 Función para mostrar notificación de actualización (opcional)
-  function mostrarNotificacionActualizacion() {
-    // Solo mostrar si no hay otra notificación
-    if (document.querySelector('.notificacion-actualizacion')) return;
-    
-    const banner = document.createElement('div');
-    banner.className = 'notificacion-actualizacion';
-    banner.innerHTML = `
-      <div style="
-        position: fixed;
-        bottom: 80px;
-        left: 10px;
-        right: 10px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 15px;
-        border-radius: 12px;
-        text-align: center;
-        z-index: 9999;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-        animation: slideUp 0.3s ease-out;
-      ">
-        <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 8px;">
-          <span style="font-size: 24px;">✨</span>
-          <strong style="font-size: 16px;">¡Actualización disponible!</strong>
-        </div>
-        <p style="margin: 0 0 12px 0; font-size: 14px; opacity: 0.9;">
-          Nueva versión 5.5 cargada. Reinicia para mejores funciones.
-        </p>
-        <div style="display: flex; gap: 10px; justify-content: center;">
-          <button onclick="location.reload()" style="
-            background: white;
-            color: #667eea;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            flex: 1;
-            max-width: 180px;
-          ">
-            Actualizar Ahora
-          </button>
-          <button onclick="this.parentElement.parentElement.style.display='none'" style="
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.3);
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-          ">
-            Más tarde
-          </button>
-        </div>
+} else {
+  console.log('ℹ️ Service Worker no soportado');
+}
+
+// 🎨 Función para mostrar notificación de actualización (SOLO cuando hay cambio)
+function mostrarNotificacionActualizacion() {
+  // Verificar si ya hay una notificación
+  if (document.querySelector('.notificacion-actualizacion')) return;
+  
+  const banner = document.createElement('div');
+  banner.className = 'notificacion-actualizacion';
+  banner.innerHTML = `
+    <div style="
+      position: fixed;
+      bottom: 80px;
+      left: 10px;
+      right: 10px;
+      background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+      color: white;
+      padding: 15px;
+      border-radius: 12px;
+      text-align: center;
+      z-index: 9999;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      animation: slideUp 0.3s ease-out;
+    ">
+      <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 8px;">
+        <span style="font-size: 24px;">🔄</span>
+        <strong style="font-size: 16px;">¡Actualización lista!</strong>
       </div>
-      <style>
-        @keyframes slideUp {
-          from { transform: translateY(100px); opacity: 0; }
-          to { transform: translateY(0); opacity: 1; }
-        }
-      </style>
-    `;
-    document.body.appendChild(banner);
-    
-    // Auto-ocultar después de 30 segundos
-    setTimeout(() => {
-      if (banner.parentNode) {
-        banner.style.opacity = '0';
-        banner.style.transition = 'opacity 0.5s';
-        setTimeout(() => {
-          if (banner.parentNode) banner.parentNode.removeChild(banner);
-        }, 500);
+      <p style="margin: 0 0 12px 0; font-size: 14px; opacity: 0.9;">
+        Nueva versión ${VERSION_ACTUAL} cargada. Reinicia para activar.
+      </p>
+      <div style="display: flex; gap: 10px; justify-content: center;">
+        <button onclick="recargarParaActualizar()" style="
+          background: white;
+          color: #28a745;
+          border: none;
+          padding: 8px 20px;
+          border-radius: 20px;
+          font-weight: bold;
+          cursor: pointer;
+          flex: 1;
+          max-width: 180px;
+        ">
+          Reiniciar Ahora
+        </button>
+        <button onclick="ocultarNotificacion()" style="
+          background: rgba(255,255,255,0.2);
+          color: white;
+          border: 1px solid rgba(255,255,255,0.3);
+          padding: 8px 15px;
+          border-radius: 20px;
+          cursor: pointer;
+        ">
+          Después
+        </button>
+      </div>
+    </div>
+    <style>
+      @keyframes slideUp {
+        from { transform: translateY(100px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
       }
-    }, 30000);
+    </style>
+  `;
+  document.body.appendChild(banner);
+  
+  // Auto-ocultar después de 30 segundos
+  setTimeout(() => {
+    ocultarNotificacion();
+  }, 30000);
+}
+
+// 🔄 Función para recargar la página
+function recargarParaActualizar() {
+  // Limpiar flag antes de recargar
+  sessionStorage.setItem('sw_actualizado', 'true');
+  location.reload();
+}
+
+// 🚫 Función para ocultar notificación
+function ocultarNotificacion() {
+  const banner = document.querySelector('.notificacion-actualizacion');
+  if (banner) {
+    banner.style.opacity = '0';
+    banner.style.transition = 'opacity 0.5s';
+    setTimeout(() => {
+      if (banner.parentNode) banner.parentNode.removeChild(banner);
+    }, 500);
+  }
+}
+
+// 🚀 Código para verificar si acabamos de actualizar
+document.addEventListener('DOMContentLoaded', function() {
+  // Verificar si acabamos de recargar por una actualización
+  if (sessionStorage.getItem('sw_actualizado') === 'true') {
+    console.log('✅ Página recargada después de actualización SW');
+    sessionStorage.removeItem('sw_actualizado');
+    
+    // Mostrar mensaje de éxito (opcional)
+    setTimeout(() => {
+      const mensaje = document.createElement('div');
+      mensaje.innerHTML = `
+        <div style="
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: #28a745;
+          color: white;
+          padding: 10px 15px;
+          border-radius: 8px;
+          z-index: 9999;
+          animation: fadeInOut 3s;
+        ">
+          <span style="margin-right: 8px;">✅</span>
+          Aplicación actualizada a ${VERSION_ACTUAL}
+        </div>
+        <style>
+          @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(-20px); }
+            10% { opacity: 1; transform: translateY(0); }
+            90% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-20px); }
+          }
+        </style>
+      `;
+      document.body.appendChild(mensaje);
+      setTimeout(() => {
+        if (mensaje.parentNode) mensaje.parentNode.removeChild(mensaje);
+      }, 3000);
+    }, 1000);
   }
   
-  // 🔄 Verificar actualizaciones cada hora
-  setInterval(() => {
-    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-      navigator.serviceWorker.controller.postMessage({ 
-        type: 'CHECK_FOR_UPDATES' 
-      });
-    }
-  }, 60 * 60 * 1000); // Cada hora
-  
-  // 🚀 Verificar al cargar la página
-  document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(() => {
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.ready.then(reg => {
-          reg.update();
-        });
+  // Verificar si el SW necesita actualización (solo una vez al cargar)
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.ready.then(registration => {
+      // Solo verificar una vez, no mostrar notificación si ya está actualizado
+      const swURL = registration.active?.scriptURL || '';
+      if (swURL.includes('?v=5.5')) {
+        console.log('✅ SW ya está en versión 5.5');
+      } else {
+        console.log('ℹ️ SW en versión antigua, verificando actualización...');
+        registration.update();
       }
-    }, 3000);
-  });
-  </script>
-  <!-- ====== FIN SERVICE WORKER ====== -->
+    });
+  }
+});
+</script>
+<!-- ====== FIN SERVICE WORKER ====== -->
+
   
 </body>
 </html>
