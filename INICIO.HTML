@@ -1025,272 +1025,217 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
  <!-- 🔥 BUSCADOR SE CARGA DESPUÉS DEL HEADER -->
   <script src="buscador.js?v=20251115"></script>
- <!-- 🔥 BUSCADOR SE CARGA DESPUÉS DEL HEADER -->
-  <script src="buscador.js?v=20251115"></script>
-<!-- ====== SERVICE WORKER (SOLUCIÓN SIN BUCLE) ====== -->
-<script>
-// ✅ Controlador global para evitar bucles
-let isUpdating = false;
-
-if ('serviceWorker' in navigator) {
-  // 1. PRIMERO: Buscar Service Worker existente
-  navigator.serviceWorker.getRegistration().then(registration => {
-    if (registration) {
-      console.log('🔍 SW encontrado:', registration.active?.scriptURL);
-      
-      // 2. Verificar si hay un SW esperando (nueva versión instalada)
-      if (registration.waiting) {
-        console.log('🔄 Hay un SW esperando - Forzando activación...');
-        isUpdating = true;
-        
-        // Enviar mensaje para que tome control INMEDIATAMENTE
-        registration.waiting.postMessage({ type: 'SKIP_WAITING' });
-        
-        // Recargar después de 1 segundo para usar la nueva versión
-        setTimeout(() => {
-          console.log('🔄 Recargando para usar nueva versión...');
-          window.location.reload();
-        }, 1000);
-        return;
-      }
-      
-      // 3. Verificar si el SW activo NO es v5.5
-      const currentScript = registration.active?.scriptURL || '';
-      const isVersion55 = currentScript.includes('?v=5.5') || 
-                         currentScript.includes('anmago-cache-v5.5');
-      
-      if (!isVersion55) {
-        console.log('📦 Versión antigua detectada - Actualizando...');
-        mostrarNotificacionUnaVez();
-      } else {
-        console.log('✅ Ya en versión 5.5');
-      }
+  
+  <!-- ====== SERVICE WORKER (VERSIÓN CORREGIDA SIN BUCLE) ====== -->
+  <script>
+  // ✅ Controlador para evitar bucles
+  let isUpdating = false;
+  const VERSION_OBJETIVO = 'v5.5';
+  
+  // 🚀 Función principal SIN BUCLE
+  function inicializarServiceWorker() {
+    if (!('serviceWorker' in navigator)) {
+      console.log('ℹ️ Service Worker no soportado');
+      return;
     }
     
-    // 4. REGISTRAR NUEVA VERSIÓN (con parámetro único para evitar caché)
-    const uniqueParam = '?v=5.5-' + Date.now();
-    navigator.serviceWorker.register('service-worker.js' + uniqueParam)
-      .then(newRegistration => {
-        console.log('✅ SW registrado con:', uniqueParam);
+    // 1. Verificar si ya estamos actualizando para evitar bucle
+    if (isUpdating) {
+      console.log('🔄 Ya en proceso de actualización, evitando bucle...');
+      return;
+    }
+    
+    // 2. Registrar Service Worker CON parámetro de versión
+    const swUrl = 'service-worker.js?v=5.5-' + new Date().getTime();
+    
+    navigator.serviceWorker.register(swUrl)
+      .then(registration => {
+        console.log('✅ SW registrado:', swUrl);
         
-        // Escuchar actualizaciones FUTURAS (no la actual)
-        newRegistration.addEventListener('updatefound', () => {
-          console.log('📡 Nueva actualización encontrada (futura)');
+        // 3. Verificar si hay un SW esperando
+        if (registration.waiting) {
+          console.log('🔄 SW esperando encontrado - Activando...');
+          isUpdating = true;
+          
+          // Enviar mensaje para activar
+          registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+          
+          // Recargar después de 2 segundos (UNA SOLA VEZ)
+          setTimeout(() => {
+            if (isUpdating) {
+              console.log('🔄 Recargando página...');
+              isUpdating = false;
+              // Usar replace() para evitar bucle histórico
+              window.location.replace(window.location.pathname + '?updated=true');
+            }
+          }, 2000);
+          return;
+        }
+        
+        // 4. Si no hay SW esperando, verificar si ya está actualizado
+        navigator.serviceWorker.ready.then(reg => {
+          const scriptUrl = reg.active?.scriptURL || '';
+          
+          // Verificar si el SW activo es la versión 5.5
+          const yaActualizado = scriptUrl.includes('?v=5.5') || 
+                               scriptUrl.includes('anmago-cache-v5.5');
+          
+          if (yaActualizado) {
+            console.log('✅ Ya en versión', VERSION_OBJETIVO);
+          } else {
+            console.log('ℹ️ Versión anterior detectada');
+            
+            // Mostrar notificación UNA SOLA VEZ (si no se ha mostrado antes)
+            if (!sessionStorage.getItem('notificacion_v5.5')) {
+              mostrarNotificacionSuave();
+              sessionStorage.setItem('notificacion_v5.5', 'true');
+            }
+          }
         });
+        
+        // 5. Escuchar futuras actualizaciones (no la actual)
+        registration.addEventListener('updatefound', () => {
+          console.log('📡 Nueva actualización disponible (futura)');
+        });
+        
       })
       .catch(error => {
         console.error('❌ Error registrando SW:', error);
+        isUpdating = false;
       });
-  });
-}
-
-// 🎯 Notificación que se muestra SOLO UNA VEZ por sesión
-function mostrarNotificacionUnaVez() {
-  // Verificar si ya mostramos notificación en esta sesión
-  if (sessionStorage.getItem('update_notification_shown') === 'true') {
-    console.log('ℹ️ Notificación ya mostrada en esta sesión');
-    return;
   }
   
-  // Verificar si ya estamos actualizando
-  if (isUpdating) return;
-  
-  console.log('📢 Mostrando notificación de actualización...');
-  
-  const banner = document.createElement('div');
-  banner.innerHTML = `
-    <div id="update-notification" style="
-      position: fixed;
-      bottom: 80px;
-      left: 10px;
-      right: 10px;
-      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
-      color: white;
-      padding: 15px;
-      border-radius: 12px;
-      text-align: center;
-      z-index: 99999;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-      animation: slideIn 0.4s ease-out;
-    ">
-      <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 8px;">
-        <span style="font-size: 26px;">⚡</span>
-        <strong style="font-size: 16px;">ACTUALIZACIÓN REQUERIDA</strong>
-      </div>
-      <p style="margin: 0 0 15px 0; font-size: 14px; opacity: 0.95;">
-        Se necesita reiniciar para cargar la versión 5.5<br>
-        <small style="opacity: 0.8;">(Mejoras en navegación y rendimiento)</small>
-      </p>
-      <div style="display: flex; gap: 10px; justify-content: center;">
-        <button id="update-now-btn" style="
-          background: white;
-          color: #ff6b6b;
-          border: none;
-          padding: 10px 25px;
-          border-radius: 25px;
-          font-weight: bold;
-          cursor: pointer;
-          flex: 1;
-          max-width: 200px;
-          font-size: 14px;
-        ">
-          🔄 REINICIAR AHORA
-        </button>
-        <button id="update-later-btn" style="
-          background: rgba(255,255,255,0.15);
-          color: white;
-          border: 1px solid rgba(255,255,255,0.4);
-          padding: 10px 20px;
-          border-radius: 25px;
-          cursor: pointer;
-          font-size: 14px;
-        ">
-          ⏰ EN 10 SEGUNDOS
-        </button>
-      </div>
-      <div style="margin-top: 10px; font-size: 12px; opacity: 0.7;">
-        <i class="bi bi-info-circle"></i> Se reiniciará automáticamente en <span id="countdown">10</span>s
-      </div>
-    </div>
-    <style>
-      @keyframes slideIn {
-        from { transform: translateY(150px); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
-      }
-    </style>
-  `;
-  
-  document.body.appendChild(banner);
-  
-  // Marcar que ya mostramos la notificación
-  sessionStorage.setItem('update_notification_shown', 'true');
-  
-  // Configurar cuenta regresiva (10 segundos)
-  let countdown = 10;
-  const countdownElement = document.getElementById('countdown');
-  const countdownInterval = setInterval(() => {
-    countdown--;
-    if (countdownElement) countdownElement.textContent = countdown;
-    
-    if (countdown <= 0) {
-      clearInterval(countdownInterval);
-      reiniciarParaActualizar();
-    }
-  }, 1000);
-  
-  // Botón "Reiniciar ahora"
-  document.getElementById('update-now-btn')?.addEventListener('click', () => {
-    clearInterval(countdownInterval);
-    reiniciarParaActualizar();
-  });
-  
-  // Botón "En 10 segundos" (reinicia el contador)
-  document.getElementById('update-later-btn')?.addEventListener('click', () => {
-    countdown = 10;
-    if (countdownElement) countdownElement.textContent = countdown;
-  });
-}
-
-// 🔄 Función para reiniciar CORRECTAMENTE
-function reiniciarParaActualizar() {
-  console.log('🔄 Reiniciando para actualización...');
-  isUpdating = true;
-  
-  // 1. Forzar al SW esperando que tome control
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistration().then(registration => {
-      if (registration && registration.waiting) {
-        registration.waiting.postMessage({ type: 'SKIP_WAITING' });
-      }
-    });
-  }
-  
-  // 2. Esperar 500ms y recargar
-  setTimeout(() => {
-    // Usar location.replace() para evitar que el botón "atrás" vuelva al bucle
-    window.location.replace(window.location.href);
-  }, 500);
-}
-
-// 🚀 Inicialización al cargar
-document.addEventListener('DOMContentLoaded', function() {
-  console.log('🚀 Iniciando verificación de actualización...');
-  
-  // Verificar si acabamos de actualizar
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('updated') === 'true') {
-    console.log('✅ Actualización completada con éxito');
-    // Opcional: mostrar mensaje de éxito
-    mostrarMensajeExito();
-    
-    // Limpiar parámetro de URL
-    const nuevaURL = window.location.pathname;
-    window.history.replaceState({}, '', nuevaURL);
-  }
-  
-  // Verificar actualización cada 5 minutos (solo en background)
-  setInterval(() => {
-    if ('serviceWorker' in navigator && !isUpdating) {
-      navigator.serviceWorker.getRegistration().then(registration => {
-        if (registration) registration.update();
-      });
-    }
-  }, 5 * 60 * 1000);
-});
-
-// ✅ Mostrar mensaje de éxito después de actualizar
-function mostrarMensajeExito() {
-  setTimeout(() => {
-    const mensaje = document.createElement('div');
-    mensaje.innerHTML = `
-      <div style="
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: #28a745;
-        color: white;
-        padding: 12px 20px;
-        border-radius: 10px;
-        z-index: 99999;
-        animation: fadeInOut 4s;
-        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      ">
-        <span style="font-size: 20px;">✅</span>
-        <div>
-          <strong>Aplicación actualizada</strong><br>
-          <small style="opacity: 0.9;">Versión 5.5 activa</small>
-        </div>
-      </div>
-      <style>
-        @keyframes fadeInOut {
-          0% { opacity: 0; transform: translateX(50px); }
-          15% { opacity: 1; transform: translateX(0); }
-          85% { opacity: 1; transform: translateX(0); }
-          100% { opacity: 0; transform: translateX(50px); }
-        }
-      </style>
-    `;
-    document.body.appendChild(mensaje);
+  // 🎨 Notificación SUAVE (sin bucle)
+  function mostrarNotificacionSuave() {
+    // Esperar 3 segundos para mostrar
     setTimeout(() => {
-      if (mensaje.parentNode) mensaje.parentNode.removeChild(mensaje);
-    }, 4000);
-  }, 1000);
-}
-
-// 🛡️ Prevenir múltiples clics en el botón
-let isReloading = false;
-window.recargarParaActualizar = function() {
-  if (isReloading) return;
-  isReloading = true;
-  reiniciarParaActualizar();
-};
-</script>
-<!-- ====== FIN SERVICE WORKER ====== -->
-
+      const banner = document.createElement('div');
+      banner.innerHTML = `
+        <div style="
+          position: fixed;
+          bottom: 100px;
+          left: 10px;
+          right: 10px;
+          background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+          color: white;
+          padding: 12px 15px;
+          border-radius: 12px;
+          text-align: center;
+          z-index: 9998;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+          animation: slideUp 0.4s ease-out;
+          font-size: 14px;
+        ">
+          <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 5px;">
+            <span style="font-size: 20px;">✨</span>
+            <strong>Nueva versión disponible</strong>
+          </div>
+          <p style="margin: 0; opacity: 0.9; font-size: 13px;">
+            Mejoras en navegación y rendimiento
+          </p>
+          <button onclick="recargarSuavemente()" style="
+            background: rgba(255,255,255,0.9);
+            color: #4facfe;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 8px;
+            cursor: pointer;
+          ">
+            Actualizar
+          </button>
+        </div>
+        <style>
+          @keyframes slideUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+          }
+        </style>
+      `;
+      document.body.appendChild(banner);
+      
+      // Auto-ocultar después de 15 segundos
+      setTimeout(() => {
+        if (banner.parentNode) {
+          banner.style.opacity = '0';
+          banner.style.transition = 'opacity 0.5s';
+          setTimeout(() => {
+            if (banner.parentNode) banner.parentNode.removeChild(banner);
+          }, 500);
+        }
+      }, 15000);
+    }, 3000);
+  }
   
+  // 🔄 Recargar suavemente (sin bucle)
+  function recargarSuavemente() {
+    if (isUpdating) return;
+    isUpdating = true;
+    
+    console.log('🔄 Recarga suave iniciada...');
+    
+    // Recargar después de un breve delay
+    setTimeout(() => {
+      window.location.href = window.location.pathname;
+    }, 300);
+  }
+  
+  // 🚀 Inicializar al cargar
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 Iniciando aplicación Anmago Store...');
+    
+    // Inicializar Service Worker después de 2 segundos
+    setTimeout(inicializarServiceWorker, 2000);
+    
+    // Verificar si acabamos de actualizar
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('updated') === 'true') {
+      console.log('✅ Actualización completada exitosamente');
+      
+      // Mostrar mensaje de éxito breve
+      setTimeout(() => {
+        const toast = document.createElement('div');
+        toast.innerHTML = `
+          <div style="
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            z-index: 9999;
+            animation: fadeInOut 3s;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+          ">
+            <span>✅</span>
+            <span>Aplicación actualizada</span>
+          </div>
+          <style>
+            @keyframes fadeInOut {
+              0% { opacity: 0; transform: translateY(-20px); }
+              15% { opacity: 1; transform: translateY(0); }
+              85% { opacity: 1; transform: translateY(0); }
+              100% { opacity: 0; transform: translateY(-20px); }
+            }
+          </style>
+        `;
+        document.body.appendChild(toast);
+        setTimeout(() => {
+          if (toast.parentNode) toast.parentNode.removeChild(toast);
+        }, 3000);
+      }, 1000);
+    }
+  });
+  </script>
+  <!-- ====== FIN SERVICE WORKER ====== -->
+</body>
+</html>
 </body>
 </html>
 
