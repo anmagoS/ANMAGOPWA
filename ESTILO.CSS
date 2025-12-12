@@ -1494,7 +1494,7 @@ body { padding-top: 70px; }
 
 .categoria-rapida div:first-child {
     font-size: 24px;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
 }
 
 .categoria-rapida div:last-child {
