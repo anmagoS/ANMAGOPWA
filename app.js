@@ -319,6 +319,7 @@ let tieneMasProductos = true;
 let filtrosActuales = { tipo: null, subtipo: null, categoria: null };
 
 // Función principal para mostrar productos con filtros
+// Función principal para mostrar productos con filtros
 async function mostrarTodosLosProductosCompleto(tipo = null, subtipo = null, categoria = null) {
     try {
         // Guardar filtros actuales
@@ -327,9 +328,9 @@ async function mostrarTodosLosProductosCompleto(tipo = null, subtipo = null, cat
         // Cambiar a vista todos
         cambiarAVista('todos');
         
-        // Mostrar loading
+        // **CORRECIÓN: Mostrar loading SOLO SI no hay productos ya cargados**
         const grid = document.getElementById('grid-todos');
-        if (grid) {
+        if (grid && grid.children.length === 0) {
             grid.innerHTML = `
                 <div class="col-12 text-center py-5">
                     <div class="spinner-border text-primary"></div>
@@ -362,6 +363,11 @@ async function mostrarTodosLosProductosCompleto(tipo = null, subtipo = null, cat
         // Llenar filtros del sidebar
         llenarFiltrosTodos();
 
+        // **CORRECIÓN IMPORTANTE: Limpiar el grid antes de cargar**
+        if (grid) {
+            grid.innerHTML = ''; // Limpiar el mensaje de carga
+        }
+
         // Cargar primera tanda
         cargarPrimeraTandaProductos();
 
@@ -393,11 +399,26 @@ function aplicarFiltrosProductos(productos, tipo, subtipo, categoria) {
 }
 
 // Cargar primera tanda de productos
+// Cargar primera tanda de productos
 function cargarPrimeraTandaProductos() {
     productosCargados = 0;
+    
+    // **CORRECIÓN: Limpiar el grid antes de renderizar**
+    const grid = document.getElementById('grid-todos');
+    if (grid) {
+        grid.innerHTML = '';
+    }
+    
+    // **CORRECIÓN: Ocultar mensaje de no resultados si existe**
+    const sinResultados = document.getElementById('sin-resultados-todos');
+    if (sinResultados) {
+        sinResultados.classList.add('d-none');
+    }
+    
     renderizarSiguientesProductos();
 }
 
+// Renderizar más productos (scroll infinito)
 // Renderizar más productos (scroll infinito)
 function renderizarSiguientesProductos() {
     if (cargandoMasProductos || !tieneMasProductos) return;
@@ -415,18 +436,22 @@ function renderizarSiguientesProductos() {
         
         const grid = document.getElementById('grid-todos');
         
-        // Ocultar mensaje de no resultados
+        // **CORRECIÓN: Ocultar mensaje de no resultados si existe**
         const sinResultados = document.getElementById('sin-resultados-todos');
         if (sinResultados) sinResultados.classList.add('d-none');
         
         if (productosParaMostrar.length === 0 && productosCargados === 0) {
-            // No hay productos
+            // **CORRECIÓN: Solo mostrar "no resultados" si realmente no hay productos**
             if (grid) grid.innerHTML = '';
             if (sinResultados) sinResultados.classList.remove('d-none');
             tieneMasProductos = false;
         } else if (productosParaMostrar.length === 0) {
             // Ya no hay más productos
             tieneMasProductos = false;
+            
+            // **CORRECIÓN: Ocultar spinner si no hay más productos**
+            const spinner = document.getElementById('cargando-todos');
+            if (spinner) spinner.classList.add('d-none');
         } else {
             // Renderizar productos
             productosParaMostrar.forEach(producto => {
@@ -443,7 +468,7 @@ function renderizarSiguientesProductos() {
             }
         }
         
-        // Ocultar spinner
+        // **CORRECIÓN: Siempre ocultar spinner al final**
         if (spinner) spinner.classList.add('d-none');
         cargandoMasProductos = false;
         
