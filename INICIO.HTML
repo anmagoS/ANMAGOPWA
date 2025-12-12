@@ -261,16 +261,14 @@
     <span id="contador-carrito" class="contador-carrito">0</span>
   </a>
 
-  <!-- ✅ FOOTER FIJADO EN TODAS LAS VISTAS -->
+   <!-- ✅ FOOTER SE CARGA DINÁMICAMENTE -->
   <footer class="footer mt-5" id="footer-container">
-    <!-- Enlaces institucionales -->
-    <div class="footer-links">
-      <a href="#" onclick="volverAInicio(); return false;">Inicio</a>
-      <a href="https://sites.google.com/view/anmagostore/quienes-somos" target="_blank">Nosotros</a>
-      <a href="https://sites.google.com/view/anmagostore/politica-de-tratamiento-de-datos" target="_blank">Tratamiento de datos</a>
-      <a href="https://sites.google.com/view/anmagostore/politicas-de-envios" target="_blank">Envíos</a>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSevvlCBgz7L6l2-DecKQLazoswqzf7DRYWOaCq4FtMGOR6D2Q/viewform?usp=header" target="_blank">Contacto</a>
+    <!-- Se cargará dinámicamente desde tu archivo FOOTER.HTML -->
+    <div class="text-center py-4">
+      <div class="spinner-border spinner-border-sm text-primary"></div>
+      <p class="mt-2 small text-muted">Cargando información...</p>
     </div>
+  </footer>
     
     <!-- Redes sociales -->
     <div class="redes-sociales">
@@ -1233,9 +1231,40 @@
     }
   });
   </script>
+  <!-- ====== CARGAR FOOTER DESDE ARCHIVO ====== -->
+  <script>
+  async function cargarFooter() {
+    try {
+      // Cargar tu archivo footer (ajusta el nombre si es diferente)
+      const respuesta = await fetch('FOOTER.HTML?v=' + Date.now());
+      const htmlFooter = await respuesta.text();
+      
+      const contenedor = document.getElementById('footer-container');
+      if (contenedor) {
+        contenedor.innerHTML = htmlFooter;
+        console.log('✅ Footer cargado correctamente');
+      }
+    } catch (error) {
+      console.error('❌ Error cargando footer:', error);
+      
+      // Mostrar footer alternativo si falla
+      const contenedor = document.getElementById('footer-container');
+      if (contenedor) {
+        contenedor.innerHTML = `
+          <div class="container text-center py-3">
+            <p class="text-muted mb-1">&copy; 2025 Anmago Store</p>
+            <p class="small text-muted">anmagostore@gmail.com</p>
+          </div>
+        `;
+      }
+    }
+  }
+  
+  // Cargar el footer cuando el DOM esté listo
+  document.addEventListener('DOMContentLoaded', cargarFooter);
+  </script>
   <!-- ====== FIN SERVICE WORKER ====== -->
 </body>
 </html>
-</body>
-</html>
+
 
