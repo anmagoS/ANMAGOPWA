@@ -1458,3 +1458,80 @@ body { padding-top: 70px; }
   color: rgba(255, 255, 255, 0.7);
   margin: 0 0.5rem;
 }
+/* Estilos para categorías rápidas dinámicas */
+.categorias-rapidas {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    padding: 10px 0;
+    scrollbar-width: thin;
+}
+
+.categoria-rapida {
+    flex: 0 0 auto;
+    width: 80px;
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    padding: 8px 5px;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.categoria-rapida:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    color: #0d6efd;
+}
+
+.categoria-rapida.active {
+    background: #0d6efd;
+    color: white;
+}
+
+.categoria-rapida div:first-child {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.categoria-rapida div:last-child {
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.badge-categoria-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ff4757;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+/* Para categorías sin iconos */
+.categoria-rapida.sin-icono {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.categoria-rapida.sin-icono .placeholder-icon {
+    height: 24px;
+    margin-bottom: 5px;
+    /* Espacio reservado para mantener alineación */
+}
+
+/* Ajustar tamaño de texto para categorías sin icono */
+.categoria-rapida.sin-icono div:last-child {
+    font-size: 12px;
+    font-weight: 700;
+}
