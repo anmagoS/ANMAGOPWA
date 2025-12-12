@@ -300,22 +300,38 @@ body { padding-top: 70px; }
 .carousel-control-prev:hover, .carousel-control-next:hover { opacity: 1; }
 
 /* === CATEGORÍAS Y BOTONES === */
+/* REDUCIDO: Espacio inferior reducido a 0.25rem */
 .categorias-rapidas {
-  display: flex; gap: 0.5rem; overflow-x: auto; padding: 0.75rem 0.5rem 0.25rem 0.5rem;
-  scrollbar-width: none; -ms-overflow-style: none;
+  display: flex; 
+  gap: 0.5rem; 
+  overflow-x: auto; 
+  padding: 0.75rem 0.5rem 0.25rem 0.5rem; /* Top: 0.75rem, Bottom: 0.25rem */
+  scrollbar-width: none; 
+  -ms-overflow-style: none;
+  margin-bottom: 0 !important;
 }
 
-.categorias-rapidas::-webkit-scrollbar { display: none; }
+.categorias-rapidas::-webkit-scrollbar { 
+  display: none; 
+}
 
 .categoria-rapida {
-  flex: 0 0 auto; text-align: center; padding: 0.75rem 1rem;
-  border: 1px solid var(--gray-light); border-radius: 24px; text-decoration: none;
-  color: var(--text-dark); font-size: 0.8rem; background: var(--white);
+  flex: 0 0 auto; 
+  text-align: center; 
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--gray-light); 
+  border-radius: 24px; 
+  text-decoration: none;
+  color: var(--text-dark); 
+  font-size: 0.8rem; 
+  background: var(--white);
   transition: var(--transition);
 }
 
 .categoria-rapida:hover {
-  border-color: #3483fa; color: #3483fa; text-decoration: none;
+  border-color: #3483fa; 
+  color: #3483fa; 
+  text-decoration: none;
 }
 
 .btn-gradient {
@@ -343,7 +359,7 @@ body { padding-top: 70px; }
 .offcanvas-header { border-bottom: 1px solid var(--gray-light); padding: 1rem 1.25rem; }
 .offcanvas-title { font-weight: 700; color: var(--primary-color); }
 .offcanvas-body { padding: 1rem 1.25rem; }
-.offcanvas-footer { border-top: 1px solid var(--gray-light); padding: 1rem 1.25rem; background: var(--white); }
+.offcanvas-footer { border-top: 0.5rem solid var(--gray-light); padding: 1rem 1.25rem; background: var(--white); }
 
 .modal-mobile-bottom {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 1060; display: none;
@@ -370,14 +386,14 @@ body { padding-top: 70px; }
 
 /* === FOOTER OPTIMIZADO === */
 .footer {
-  background: var(--primary-color); color: var(--white); padding: 1.5rem 1rem; margin-top: 2rem;
+  background: var(--primary-color); color: var(--white); padding: 0.5rem 0.5rem; margin-top: 0.5rem;
 }
 
-.footer-container { max-width: 1200px; margin: 0 auto; }
+.footer-container { max-width: 1400px; margin: 0 auto; }
 
 .footer-main {
   display: grid; grid-template-columns: 1fr; gap: 1.5rem;
-  padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 1rem;
+  padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 1.5rem;
 }
 
 .footer-section h4 { color: var(--white); margin-bottom: 0.75rem; font-size: 1rem; font-weight: 600; }
@@ -657,13 +673,13 @@ body { padding-top: 70px; }
 }
 
 .modal-zoom-footer {
-  margin-top: auto;
-  padding: 15px 0;
+  margin-top: 0.5rem;
+  padding: 10px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 15px;
-  width: 100%;
+  width: 80%;
   flex-shrink: 0;
 }
 
@@ -924,14 +940,16 @@ body { padding-top: 70px; }
 }
 
 /* === BANNER PROMOCIONAL === */
+/* REDUCIDO: margin-top reducido a 0.25rem */
 .banner-promocional {
   background: linear-gradient(135deg, #ff6b6b, #ee5a24);
   color: white;
   text-align: center;
   font-weight: 600;
   font-size: 0.9rem;
-  margin-top: 0.5rem; /* Compensa el header fixed */
- padding: 0.5rem 0;
+  margin-top: 0.25rem !important; /* Cambiado de 70px a 0.25rem */
+  padding: 0.5rem 0;
+  margin-bottom: 0 !important;
 }
 
 /* === ANIMACIONES ADICIONALES === */
@@ -1087,7 +1105,11 @@ body { padding-top: 70px; }
   
   .card-img-ml { height: 180px; }
   
-  .categorias-rapidas { padding: 1rem; justify-content: center; }
+  .categorias-rapidas { 
+    padding: 1rem 1rem 0.25rem 1rem; /* Mantiene bottom reducido */
+    justify-content: center; 
+  }
+  
   .categoria-rapida { font-size: 0.9rem; padding: 0.75rem 1.25rem; }
   
   .footer { padding: 2rem 1.5rem; }
@@ -1459,7 +1481,16 @@ body { padding-top: 70px; }
   color: rgba(255, 255, 255, 0.7);
   margin: 0 0.5rem;
 }
-/* Estilos para categorías rápidas dinámicas */
+
+/* ===== ESTILOS ESPECÍFICOS AJUSTADOS ===== */
+
+/* REDUCIR ESPACIO ENTRE HEADER Y CATEGORÍAS */
+.container-fluid.mt-3 {
+  margin-top: 0.5rem !important; /* Reducido de 1rem a 0.5rem */
+  margin-bottom: 0 !important;
+}
+
+/* Para categorías dinámicas */
 .categorias-rapidas {
     display: flex;
     overflow-x: auto;
@@ -1519,6 +1550,7 @@ body { padding-top: 70px; }
     justify-content: center;
     font-weight: bold;
 }
+
 /* Para categorías sin iconos */
 .categoria-rapida.sin-icono {
     padding-top: 15px;
