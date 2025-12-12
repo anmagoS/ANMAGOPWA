@@ -25,40 +25,16 @@
 
   <!-- HEADER STICKY -->
   <div id="header-container" class="header-sticky"></div>
-  <!-- CATEGORÍAS RÁPIDAS -->
-      <div class="container-fluid mt-3">
-        <div class="categorias-rapidas">
-         <a href="#" class="categoria-rapida" data-tipo="TODOS" onclick="mostrarTodosLosProductos()">
-      <div>🛍️</div>
-      <div>Todos</div>
-    </a>
-     <a href="#" class="categoria-rapida" data-tipo="ROPA" onclick="cargarSubtipos('ROPA')">
-            <div>👗</div>
-            <div>Ropa</div>
-          </a>
-          <a href="#" class="categoria-rapida" data-tipo="RELOJERIA" onclick="cargarSubtipos('RELOJERIA')">
-            <div>⌚</div>
-            <div>Relojería</div>
-          </a>
-          <a href="#" class="categoria-rapida" data-tipo="HOGAR" onclick="cargarSubtipos('HOGAR')">
-            <div>🏠</div>
-            <div>Hogar</div>
-          </a>
-          <a href="#" class="categoria-rapida" data-tipo="BELLEZA" onclick="cargarSubtipos('BELLEZA')">
-            <div>💄</div>
-            <div>Belleza</div>
-          </a>
-          <a href="#" class="categoria-rapida" data-tipo="NAVIDAD" onclick="cargarSubtipos('NAVIDAD')">
-            <div>🎄</div>
-            <div>Navidad</div>
-          </a>
-          <a href="#" class="categoria-rapida" data-tipo="ESCOLAR" onclick="cargarSubtipos('ESCOLAR')">
-            <div>🎒</div>
-            <div>Escolar</div>
-          </a>
+  <!-- CATEGORÍAS RÁPIDAS DINÁMICAS -->
+<div class="container-fluid mt-3">
+    <div class="categorias-rapidas" id="categorias-rapidas">
+        <!-- Se carga dinámicamente desde JavaScript -->
+        <div class="text-center py-2">
+            <div class="spinner-border spinner-border-sm text-primary"></div>
+            <small class="text-muted ms-2">Cargando categorías...</small>
         </div>
-      </div>
-
+    </div>
+</div>
   <!-- BANNER PROMOCIONAL -->
   <div class="container-fluid banner-promocional py-2">
     <div class="container text-center">
@@ -66,7 +42,7 @@
     </div>
   </div>
 
-  <!-- BOTÓN INSTALAR APP -->
+  <!-- BOTÓN INSTALAR APfunction mostrarCategoriasNivel0() {P -->
   <div id="instalar-container" class="instalar-container d-none">
     <button id="boton-instalar" class="btn-instalar-app">
       <i class="bi bi-download"></i> Instalar App
