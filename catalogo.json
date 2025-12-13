@@ -3406,5 +3406,37 @@
     "promo": true,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_219/PRODUCTOS_Images_625113c3.IMAGEN_1.222750.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_219/PRODUCTOS_Images_625113C3.IMAGEN_2.223023.jpg?tr=w-600,q-80[]https://ik.imagekit.io/mbsk9dati/producto_219/PRODUCTOS_Images_625113C3.IMAGEN_3.223023.jpg?tr=w-600,q-80",
     "proveedor": "XORA"
+  },
+  {
+    "id": "0828DAA1",
+    "tipo": "NAVIDAD",
+    "subtipo": "UNISEX",
+    "categoria": "JUGUETES",
+    "subcategoria": "CARROS",
+    "producto": "CARRO ELECTRICO CONTROL REMOTO",
+    "material": ".",
+    "tallas": "N/A",
+    "precio": 141000,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_220/PRODUCTOS_Images_0828daa1.IMAGEN_1.224144.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_220/PRODUCTOS_Images_0828daa1.IMAGEN_1.224144.jpg?tr=w-600,q-80",
+    "proveedor": "XORA",
+    "video_url": "https://youtu.be/19J1UW2PpUs"
+  },
+  {
+    "id": "5BD22550",
+    "tipo": "NAVIDAD",
+    "subtipo": "NIÑAS",
+    "categoria": "JUGUETES",
+    "subcategoria": "COCINA",
+    "producto": "COCINA",
+    "material": ".",
+    "tallas": "N/A",
+    "precio": 169200,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_221/PRODUCTOS_Images_5bd22550.IMAGEN_1.230348.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_221/PRODUCTOS_Images_5bd22550.IMAGEN_1.230348.jpg?tr=w-600,q-80",
+    "proveedor": "XORA",
+    "video_url": "https://youtube.com/shorts/0D0OoMEIxqc?feature=share"
   }
 ]
