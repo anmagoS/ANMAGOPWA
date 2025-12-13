@@ -212,10 +212,6 @@
     "ruta": "/ROPA/DAMA/CAMISAS/OVERSIZE MANGA LARGA"
   },
   {
-    "id_producto": "3B688D16",
-    "ruta": "/ROPA/DAMA/BUSOS/TEJIESTILO"
-  },
-  {
     "id_producto": "78D807CB",
     "ruta": "/ROPA/DAMA/BUSOS/TEJIESTILO"
   },
@@ -893,6 +889,10 @@
   },
   {
     "id_producto": "1CB826AF",
+    "ruta": "/BELLEZA/DAMA/GENERICO/."
+  },
+  {
+    "id_producto": "CCDB515F",
     "ruta": "/BELLEZA/DAMA/GENERICO/."
   }
 ]
