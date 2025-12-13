@@ -3479,5 +3479,21 @@
     "url": "https://ik.imagekit.io/mbsk9dati/producto_221/PRODUCTOS_Images_875f9476.IMAGEN_1.175405.png?tr=w-600,q-80",
     "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA",
     "descripcion": "INCLUYE 50 LANCETAS Y 50 TIRILLAS"
+  },
+  {
+    "id": "EB4531DC",
+    "tipo": "HOGAR",
+    "subtipo": "SALUD",
+    "categoria": "GENERICO",
+    "subcategoria": ".",
+    "producto": "REPUESTOS PARA GLUCÓMETRO 50 TIRILLAS 50 LANCETAS",
+    "material": "REPUESTOS PARA GLUCÓMETRO 50 TIRILLAS 50 LANCETAS",
+    "tallas": "N/A",
+    "precio": 44710,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_222/PRODUCTOS_Images_eb4531dc.IMAGEN_1.180129.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_222/PRODUCTOS_Images_eb4531dc.IMAGEN_1.180129.jpg?tr=w-600,q-80",
+    "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA",
+    "descripcion": "REPUESTOS PARA GLUCÓMETRO 50 TIRILLAS 50 LANCETAS"
   }
 ]
