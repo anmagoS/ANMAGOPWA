@@ -3511,5 +3511,20 @@
     "url": "https://ik.imagekit.io/mbsk9dati/producto_223/PRODUCTOS_Images_5c7682a7.IMAGEN_1.184426.png?tr=w-600,q-80",
     "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA",
     "descripcion": "MASCARILLA NIÑOS, ADULTOS Y ONHALADORA"
+  },
+  {
+    "id": "1CB826AF",
+    "tipo": "BELLEZA",
+    "subtipo": "DAMA",
+    "categoria": "GENERICO",
+    "subcategoria": ".",
+    "producto": "FAJA MODELADORA TIPO BODY",
+    "material": "LATEX",
+    "tallas": "N/A",
+    "precio": 24560,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_224/PRODUCTOS_Images_1cb826af.IMAGEN_1.185343.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_224/PRODUCTOS_Images_1cb826af.IMAGEN_1.185343.jpg?tr=w-600,q-80",
+    "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA"
   }
 ]
