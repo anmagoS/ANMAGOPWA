@@ -1,7 +1,6 @@
 // ==============================================
 // SISTEMA DE CATEGORÍAS RÁPIDAS DINÁMICAS
 // ==============================================
-
 // === Variables globales ===
 let productosGlobal = [];
 let vistaActual = 'inicio';
