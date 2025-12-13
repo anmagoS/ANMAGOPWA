@@ -3317,5 +3317,20 @@
     "promo": true,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_225/PRODUCTOS_Images_ccdb515f.IMAGEN_1.190117.png?tr=w-600,q-80",
     "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA"
+  },
+  {
+    "id": "E804444B",
+    "tipo": "HOGAR",
+    "subtipo": "SALUD",
+    "categoria": "GENERICO",
+    "subcategoria": ".",
+    "producto": "EXTRACTOR NASAL",
+    "material": ".",
+    "tallas": "N/A",
+    "precio": 26970,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_212/PRODUCTOS_Images_e804444b.IMAGEN_1.201004.png?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_212/PRODUCTOS_Images_e804444b.IMAGEN_1.201004.png?tr=w-600,q-80",
+    "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA"
   }
 ]
