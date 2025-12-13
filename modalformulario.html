@@ -21,9 +21,40 @@
   <!-- CSS optimizado -->
   <link rel="stylesheet" href="ESTILO.CSS?v=20251115" />
 </head>
+<header class="header-sticky d-flex justify-content-between align-items-center px-3 py-2">
+  <!-- LOGO -->
+  <div class="logo">
+    <a href="INICIO.HTML" id="logo-inicio" onclick="volverAInicio()">
+      <img
+        src="https://ik.imagekit.io/mbsk9dati/logo.jpg?tr=w-48,h-48"
+        alt="ANMAGO STORE"
+        width="48"
+        height="48"
+        loading="lazy"
+        style="display: block; object-fit: contain; border-radius: 6px;"
+      />
+    </a>
+  </div>
 
+  <!-- BUSCADOR EN HEADER -->
+  <div class="flex-grow-1 mx-3 position-relative" style="max-width: 500px;">
+    <input id="buscador" class="form-control buscador-header" 
+           placeholder="Buscar productos..." 
+           autocomplete="off">
+    <div id="sugerencias" class="sugerencias-container"></div>
+  </div>
 
-<!-- MENÚ LATERAL -->
+  <!-- BOTÓN HAMBURGUESA -->
+  <button class="navbar-toggler border-0 bg-transparent" type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#menuLateral"
+          aria-controls="menuLateral"
+          aria-label="Abrir menú">
+    <i class="bi bi-list fs-1 text-white"></i>
+  </button>
+</header>
+
+<!-- MENÚ LATERAL - ESTO DEBE ESTAR INCLUIDO EN EL HEADER -->
 <div class="offcanvas offcanvas-start" tabindex="-1" id="menuLateral" aria-labelledby="menuLateralLabel">
   <div class="offcanvas-header">
     <h5 class="offcanvas-title" id="menuLateralLabel">Menú</h5>
@@ -53,13 +84,7 @@
     </a>
   </div>
 </div>
-<body class="bg-light">
-
-  <!-- BOTÓN REFRESCAR -->
-  <div class="container mt-3">
-    <button type="button" class="btn btn-outline-dark" onclick="location.reload()">
-      <i class="bi bi-arrow-clockwise"></i> Refrescar
-    </button>
+  
    <!-- BOTÓN VOLVER AL INICIO (ARRIBA) -->
         <div class="mb-4">
             <a href="INICIO.HTML" class="btn btn-volver-inicio btn-sm px-3 py-2 rounded-pill">
