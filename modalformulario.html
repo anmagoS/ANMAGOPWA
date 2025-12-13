@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Registro Cliente | Anmago Store</title>
   <meta name="description" content="Completa tu registro de cliente para realizar pedidos en Anmago Store">
-    <!-- Preconexiones optimizadas -->
+  
+  <!-- Preconexiones optimizadas -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="preconnect" href="https://ik.imagekit.io">
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
@@ -21,108 +22,46 @@
   <!-- CSS optimizado -->
   <link rel="stylesheet" href="ESTILO.CSS?v=20251115" />
 </head>
-<header class="header-sticky d-flex justify-content-between align-items-center px-3 py-2">
-  <!-- LOGO -->
-  <div class="logo">
-   <a href="INICIO.HTML" >
-      <img
-        src="https://ik.imagekit.io/mbsk9dati/logo.jpg?tr=w-48,h-48"
-        alt="ANMAGO STORE"
-        width="48"
-        height="48"
-        loading="lazy"
-        style="display: block; object-fit: contain; border-radius: 6px;"
-      />
-    </a>
-  </div>
-  <!-- BOTÓN HAMBURGUESA -->
-  <button class="navbar-toggler border-0 bg-transparent" type="button"
-          data-bs-toggle="offcanvas"
-          data-bs-target="#menuLateral"
-          aria-controls="menuLateral"
-          aria-label="Abrir menú">
-    <i class="bi bi-list fs-1 text-white"></i>
-  </button>
-</header>
-
-<!-- MENÚ LATERAL -->
-<div class="offcanvas offcanvas-start" tabindex="-1" id="menuLateral" aria-labelledby="menuLateralLabel">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="menuLateralLabel">Menú</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
-  </div>
-
-  <div class="offcanvas-body d-flex flex-column gap-3">
-    <a href="INICIO.HTML" class="nav-link">Inicio</a>
-    <a href="PROMOS.HTML" class="nav-link">Promociones</a>
-
-    <!-- BOTÓN CATEGORÍAS -->
-    <button class="nav-link text-start fw-bold" id="toggle-categorias" style="cursor: pointer;">
-      Categorías ▾
-    </button>
-
-    <!-- MENÚ DESPLEGABLE DE CATEGORÍAS -->
-    <div id="menu-categorias"
-         class="d-flex flex-column ps-3 gap-2"
-         style="display: none; background: #f8f9fa; padding: 0.5rem 0;">
-      <!-- Se insertan dinámicamente desde app.js -->
-    </div>
-
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSevvlCBgz7L6l2-DecKQLazoswqzf7DRYWOaCq4FtMGOR6D2Q/viewform?usp=header"
-       target="_blank"
-       class="nav-link">
-      Contacto
-    </a>
-  </div>
-</div>
 <body class="bg-light">
 
-  <!-- BOTÓN REFRESCAR -->
-  <div class="container mt-3">
-    <button type="button" class="btn btn-outline-dark" onclick="location.reload()">
-      <i class="bi bi-arrow-clockwise"></i> Refrescar
-    </button>
-    <!-- AGREGAR BOTÓN DIAGNÓSTICO -->
-    <button type="button" class="btn btn-outline-info ms-2" onclick="diagnosticoFormulario()">
-      <i class="bi bi-bug"></i> Diagnóstico
-    </button>
-  </div>
+  <!-- HEADER STICKY -->
+  <div id="header-container"></div>
 
   <!-- CONTENIDO PRINCIPAL -->
-  <main class="container py-4">
+  <main class="container py-4 mt-5">
     <h2 class="mb-4 text-center">Registro Cliente</h2>
 
-    <form id="formCliente">
+    <form id="formCliente" class="bg-white p-4 rounded shadow-sm">
       <!-- ✅ CAMPO OCULTO CON NAME PARA GOOGLE SHEETS -->
       <input type="hidden" id="clienteId" name="clienteId">
 
       <!-- Celular principal -->
       <div class="mb-3">
-        <label for="telefonoCliente" class="form-label">Celular</label>
+        <label for="telefonoCliente" class="form-label fw-bold">Celular <span class="text-danger">*</span></label>
         <input type="tel" class="form-control" id="telefonoCliente" name="telefonoCliente" 
-               placeholder="Ej: 3001234567" maxlength="10" required>
+               placeholder="Ej: 3001234567" maxlength="10" required autofocus>
         <div class="form-text">Debe comenzar por 3 y tener 10 dígitos.</div>
       </div>
 
       <!-- Nombre -->
       <div class="mb-3">
-        <label for="nombreCliente" class="form-label">Nombres y Apellidos</label>
-        <input type="text" class="form-control" id="nombreCliente" name="nombreCliente" required>
+        <label for="nombreCliente" class="form-label fw-bold">Nombres y Apellidos <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" id="nombreCliente" name="nombreCliente" disabled>
       </div>
 
       <!-- Dirección Completa -->
       <div class="mb-3">
-        <label for="DireccionCompleta" class="form-label">Dirección Completa</label>
+        <label for="DireccionCompleta" class="form-label fw-bold">Dirección Completa <span class="text-danger">*</span></label>
         <textarea id="DireccionCompleta" class="form-control" name="DireccionCompleta" 
-                  rows="2" maxlength="200" placeholder="Ej: calle, carrera, avenida, transversal, etc." required></textarea>
+                  rows="2" maxlength="200" placeholder="Ej: calle, carrera, avenida, transversal, etc." disabled></textarea>
         <div class="form-text">Recuerda colocar tu dirección exacta para evitar contratiempos en tu entrega.</div>
       </div>
 
       <!-- Tipo de Unidad y Número -->
       <div class="row mb-3">
         <div class="col-md-6">
-          <label for="tipoUnidad" class="form-label">Tipo de unidad</label>
-          <select id="tipoUnidad" class="form-select" name="tipoUnidad">
+          <label for="tipoUnidad" class="form-label fw-bold">Tipo de unidad</label>
+          <select id="tipoUnidad" class="form-select" name="tipoUnidad" disabled>
             <option value="">Selecciona</option>
             <option value="Casa">CASA</option>
             <option value="Apartamento">APARTAMENTO</option>
@@ -132,117 +71,134 @@
           </select>
         </div>
         <div class="col-md-6">
-          <label for="numeroApto" class="form-label">Número</label>
+          <label for="numeroApto" class="form-label fw-bold">Número</label>
           <input type="text" class="form-control" id="numeroApto" name="numeroApto" 
-                 maxlength="4" inputmode="numeric" pattern="\d{1,4}" title="Solo números entre 0 y 9999">
+                 maxlength="4" inputmode="numeric" pattern="\d{1,4}" title="Solo números entre 0 y 9999" disabled>
         </div>
       </div>
 
       <!-- Barrio -->
       <div class="mb-3">
-        <label for="barrio" class="form-label">Barrio (opcional)</label>
-        <input type="text" class="form-control" id="barrio" name="barrio" maxlength="50">
+        <label for="barrio" class="form-label fw-bold">Barrio (opcional)</label>
+        <input type="text" class="form-control" id="barrio" name="barrio" maxlength="50" disabled>
       </div>
 
       <!-- Observación adicional -->
       <div class="mb-3">
-        <label for="observacionDireccion" class="form-label">Punto de referencia</label>
+        <label for="observacionDireccion" class="form-label fw-bold">Punto de referencia</label>
         <textarea id="observacionDireccion" class="form-control" name="observacionDireccion" 
-                  rows="2" maxlength="200" placeholder="Ej: entrada por portería, conjunto.., torre, casa color..., etc."></textarea>
+                  rows="2" maxlength="200" placeholder="Ej: entrada por portería, conjunto, torre, casa color..." disabled></textarea>
       </div>
 
       <!-- Ciudad con autocompletado -->
       <div class="mb-3 position-relative">
-        <label for="ciudadCliente" class="form-label">Ciudad</label>
+        <label for="ciudadCliente" class="form-label fw-bold">Ciudad <span class="text-danger">*</span></label>
         <input type="text" id="ciudadCliente" class="form-control" name="ciudadCliente" 
-               placeholder="Escribe tu ciudad" autocomplete="off" required>
-        <ul id="sugerenciasCiudades" class="dropdown-menu w-100 mt-0 z-3"></ul>
+               placeholder="Escribe tu ciudad" autocomplete="off" disabled required>
+        <ul id="sugerenciasCiudades" class="dropdown-menu w-100 mt-0 z-3 d-none"></ul>
       </div>
 
       <!-- Correo electrónico -->
       <div class="mb-3">
-        <label for="emailCliente" class="form-label">Correo electrónico</label>
-        <input type="email" class="form-control" id="emailCliente" name="emailCliente">
+        <label for="emailCliente" class="form-label fw-bold">Correo electrónico</label>
+        <input type="email" class="form-control" id="emailCliente" name="emailCliente" disabled>
       </div>
 
       <!-- Botón Enviar -->
       <div class="text-center mt-4">
         <button id="btnEnviarPedido" class="btn btn-gradient px-4 py-2 rounded-pill fw-bold" disabled>
-          <i class="bi bi-send"></i>✨ Enviar pedido ✨
+          <i class="bi bi-send"></i> ✨ Enviar pedido ✨
+        </button>
+        <button type="button" class="btn btn-outline-dark ms-2" onclick="location.reload()">
+          <i class="bi bi-arrow-clockwise"></i> Refrescar
         </button>
       </div>
     </form>
   </main>
 
-  <!-- SCRIPTS EXTERNOS -->
+  <!-- FOOTER -->
+  <footer class="footer mt-4" id="footer-container">
+    <div class="text-center py-4">
+      <div class="spinner-border spinner-border-sm text-primary"></div>
+      <p class="mt-1 small text-muted">Cargando información...</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- VALIDACIONES BÁSICAS -->
+  
+  <!-- ✅ VALIDACIONES BÁSICAS INLINE -->
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      console.log("🚀 HTML cargado - Iniciando validaciones básicas...");
+    document.addEventListener("DOMContentLoaded", function() {
+      console.log("🚀 Formulario de registro cargado");
       
-      // Validación de campos numéricos
-      const camposNumericos = ["telefonoCliente", "numeroApto"];
-
-      camposNumericos.forEach(id => {
-        const campo = document.getElementById(id);
-        if (!campo) return;
-
-        campo.addEventListener("input", () => {
-          const valor = campo.value;
-          if (!/^\d*$/.test(valor)) {
-            campo.value = valor.replace(/\D/g, "");
-          }
-        });
-      });
-
-      // Validación específica de teléfono
+      // Validación de teléfono
       const campoTelefono = document.getElementById("telefonoCliente");
       if (campoTelefono) {
-        campoTelefono.addEventListener("input", () => {
-          const valor = campoTelefono.value.trim();
-          const esValido = /^3\d{9}$/.test(valor);
-
-          if (!esValido && valor.length === 10) {
-            campoTelefono.classList.add("is-invalid");
+        campoTelefono.addEventListener("input", function() {
+          // Solo números
+          this.value = this.value.replace(/\D/g, "");
+          
+          // Validar formato
+          if (this.value.length === 10 && !this.value.startsWith("3")) {
+            this.classList.add("is-invalid");
+            showToast("⚠️ El celular debe comenzar con 3", "warning");
+          } else if (this.value.length === 10) {
+            this.classList.remove("is-invalid");
+            this.classList.add("is-valid");
           } else {
-            campoTelefono.classList.remove("is-invalid");
+            this.classList.remove("is-invalid", "is-valid");
           }
         });
       }
-
-      // Cargar header
-      fetch("HEADER.HTML")
-        .then(res => res.text())
-        .then(header => {
-          document.getElementById("header-container").innerHTML = header;
-        })
-        .catch(error => {
-          console.error("Error cargando header:", error);
-        });
-
-      // ✅ INICIAL: Deshabilitar todos los campos excepto teléfono
-      setTimeout(() => {
-        const otrosCampos = document.querySelectorAll('#formCliente input:not(#telefonoCliente), #formCliente textarea, #formCliente select');
-        otrosCampos.forEach(campo => {
-          campo.disabled = true;
-          campo.style.opacity = '0.6';
-        });
-        console.log("🔒 Campos deshabilitados (solo teléfono activo)");
-      }, 100);
+      
+      // Función para toast (si no existe)
+      if (!window.showToast) {
+        window.showToast = function(mensaje, tipo = "info") {
+          const toast = document.createElement("div");
+          toast.className = `toast align-items-center text-bg-${tipo} border-0 position-fixed bottom-0 end-0 m-3`;
+          toast.style.zIndex = "9999";
+          toast.innerHTML = `
+            <div class="d-flex">
+              <div class="toast-body">${mensaje}</div>
+              <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+          `;
+          document.body.appendChild(toast);
+          const bsToast = new bootstrap.Toast(toast);
+          bsToast.show();
+          setTimeout(() => toast.remove(), 3000);
+        };
+      }
     });
   </script>
 
-  <!-- ✅ SCRIPT PRINCIPAL DEL FORMULARIO UNIFICADO -->
+  <!-- ✅ SCRIPT DEL FORMULARIO -->
   <script src="modalformulario.js?v=20251116" defer></script>
+  
+  <!-- ✅ SCRIPT PARA CARGAR HEADER/FOOTER -->
+  <script>
+    // Cargar header
+    fetch("HEADER.HTML")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("header-container").innerHTML = html;
+        
+        // Remover menú lateral duplicado si existe
+        const menuDuplicado = document.querySelector('.offcanvas-start');
+        if (menuDuplicado && menuDuplicado.id === 'menuLateral') {
+          menuDuplicado.remove();
+        }
+      })
+      .catch(err => console.error("❌ Error cargando header:", err));
+    
+    // Cargar footer
+    fetch("FOOTER.HTML")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("footer-container").innerHTML = html;
+      })
+      .catch(err => console.error("❌ Error cargando footer:", err));
+  </script>
 </body>
- 
-      <!-- Copyright -->
-      <div class="copyright">
-        &copy; 2025 Anmago Store. Todos los derechos reservados.
-      </div>
-    </div>
-  </div>
-</footer>
 </html>
