@@ -699,14 +699,28 @@ function cambiarAVista(vista) {
 }
 
 // Volver al inicio
+// Volver al inicio - VERSIÓN MEJORADA
 function volverAInicio() {
+    console.log('🏠 Volviendo al inicio completo...');
+    
+    // 1. Cambiar a vista inicio
     cambiarAVista('inicio');
+    
+    // 2. Resetear contexto de navegación
+    contextoNavegacion = { 
+        nivel: 0, 
+        tipo: null, 
+        subtipo: null, 
+        categoria: null 
+    };
+    
+    // 3. Resetear categorías rápidas a nivel 0
     mostrarCategoriasNivel0();
     
-    // Limpiar scroll infinito
+    // 4. Limpiar scroll infinito
     window.removeEventListener('scroll', manejarScrollInfinito);
     
-    // Limpiar filtros
+    // 5. Limpiar todos los filtros y búsquedas
     const busqueda = document.getElementById('buscar-todos');
     const filtroTipo = document.getElementById('filtro-tipo-todos');
     const orden = document.getElementById('ordenar-todos');
@@ -715,10 +729,35 @@ function volverAInicio() {
     if (filtroTipo) filtroTipo.value = '';
     if (orden) orden.value = 'recientes';
     
-    // Limpiar URL
+    // 6. Limpiar URL completamente
     const nuevaURL = new URL(window.location);
     nuevaURL.searchParams.delete('vista');
+    nuevaURL.searchParams.delete('tipo');
+    nuevaURL.searchParams.delete('subtipo');
+    nuevaURL.searchParams.delete('categoria');
     window.history.replaceState({}, '', nuevaURL);
+    
+    // 7. Hacer scroll al inicio de la página
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // 8. Mostrar mensaje de confirmación (opcional)
+    console.log('✅ Inicio restablecido completamente');
+    
+    // 9. Cerrar menú si está abierto
+    if (typeof cerrarMenu === 'function') {
+        cerrarMenu();
+    }
+    
+    // 10. Forzar recarga de carruseles si existen
+    setTimeout(() => {
+        const carrusel = document.querySelector('.carousel');
+        if (carrusel) {
+            const bsCarousel = bootstrap.Carousel.getInstance(carrusel);
+            if (bsCarousel) {
+                bsCarousel.to(0); // Ir al primer slide
+            }
+        }
+    }, 100);
 }
 
 // ==============================================
