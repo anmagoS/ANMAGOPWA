@@ -25,6 +25,51 @@
     <!-- Scripts críticos -->
     <script src="carrito.js?v=20251206" defer></script>
     <script src="app.js?v=20251206" defer></script>
+    
+    <style>
+        /* Estilos adicionales */
+        .btn-volver-inicio {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-volver-inicio:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .card-oferta {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            overflow: hidden;
+        }
+        
+        .card-oferta:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .badge-oferta {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, #FF416C 0%, #FF4B2B 100%);
+            color: white;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+    </style>
 </head>
 
 <body class="bg-light">
@@ -32,17 +77,37 @@
     <div id="header-container"></div>
 
     <!-- BANNER PROMOCIONAL -->
-    <div class="container-fluid banner-promocional py-2">
+    <div class="container-fluid banner-promocional py-2 bg-warning">
         <div class="container text-center">
-            <small class="fw-bold">⭐ Los mejores precios ⭐ Calidad garantizada</small>
+            <small class="fw-bold text-dark">
+                ⭐ DESCUENTOS EXCLUSIVOS ⭐ 
+                <span class="d-block d-md-inline">SOLO POR TIEMPO LIMITADO</span>
+            </small>
         </div>
     </div>
 
     <!-- CONTENIDO PRINCIPAL -->
-    <main class="container mt-4 pt-5">
+    <main class="container mt-4 pt-3">
+        <!-- BOTÓN VOLVER AL INICIO (ARRIBA) -->
+        <div class="mb-4">
+            <a href="INICIO.HTML" class="btn btn-volver-inicio btn-sm px-3 py-2 rounded-pill">
+                <i class="bi bi-arrow-left me-2"></i> Volver al Inicio
+            </a>
+            
+            <!-- Temporizador al lado -->
+            <div class="d-inline-block float-end">
+                <div id="temporizador-ofertas" class="fw-bold text-danger">
+                    <i class="bi bi-clock-fill me-1"></i>
+                    <span id="contador-ofertas">00:00:00</span>
+                </div>
+            </div>
+        </div>
+
         <!-- HEADER DE OFERTAS -->
         <div class="text-center mb-4">
-            <h1 class="display-5 fw-bold text-gradient mb-3">🎁 Ofertas Especiales</h1>
+            <h1 class="display-5 fw-bold text-gradient mb-3">
+                <i class="bi bi-gift-fill me-2"></i>OFERTAS ESPECIALES
+            </h1>
             
             <!-- TEMPORIZADOR DE OFERTAS -->
             <div class="card border-warning bg-light mb-4 shadow-sm">
@@ -50,14 +115,16 @@
                     <div class="row align-items-center">
                         <div class="col-md-8 text-md-start text-center mb-3 mb-md-0">
                             <h5 class="card-title fw-bold text-warning mb-2">
-                                <i class="bi bi-clock me-2"></i> ¡Oferta por tiempo limitado!
+                                <i class="bi bi-stopwatch me-2"></i> ¡Oferta por tiempo limitado!
                             </h5>
-                            <p class="card-text mb-0 small text-muted">Se muestran 8 ofertas diferentes cada 6 horas</p>
+                            <p class="card-text mb-0 small text-muted">
+                                Se muestran <span class="fw-bold">8 ofertas diferentes</span> cada 6 horas
+                            </p>
                         </div>
                         <div class="col-md-4 text-md-end text-center">
-                            <div id="temporizador-ofertas" class="fw-bold fs-5 text-danger">
-                                <i class="bi bi-stopwatch me-2"></i> 
-                                <span id="contador-ofertas">00:00:00</span>
+                            <div class="fw-bold fs-5 text-danger">
+                                <i class="bi bi-hourglass-split me-2"></i> 
+                                <span id="contador-detallado">Cargando...</span>
                             </div>
                         </div>
                     </div>
@@ -65,8 +132,8 @@
             </div>
         </div>
 
-        <!-- INDICADOR DE BLOQUE -->
-        <div class="alert alert-info mb-4 shadow-sm">
+        <!-- INDICADOR DE BLOQUE Y BOTÓN ALTERNATIVO -->
+        <div class="alert alert-info mb-4 shadow-sm d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
                 <i class="bi bi-info-circle fs-4 me-3"></i>
                 <div>
@@ -75,13 +142,27 @@
                     <small class="d-block text-muted mt-1">Las ofertas cambian automáticamente cada 6 horas</small>
                 </div>
             </div>
+            <a href="INICIO.HTML" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-house-door me-1"></i> Inicio
+            </a>
         </div>
 
         <!-- PRODUCTOS EN OFERTA -->
         <section class="mb-5">
-            <h2 class="h4 fw-bold mb-4 text-primary">
-                <i class="bi bi-fire me-2"></i>Productos en Oferta
-            </h2>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="h4 fw-bold text-primary mb-0">
+                    <i class="bi bi-fire me-2"></i>Productos en Oferta
+                </h2>
+                <div class="d-flex gap-2">
+                    <button onclick="recargarOfertas()" class="btn btn-outline-warning btn-sm">
+                        <i class="bi bi-arrow-clockwise"></i>
+                    </button>
+                    <button onclick="window.mostrarInfoOfertas()" class="btn btn-outline-info btn-sm">
+                        <i class="bi bi-info-lg"></i>
+                    </button>
+                </div>
+            </div>
+            
             <div id="grid-ofertas" class="grid-productos-ml">
                 <!-- Skeletons de carga -->
                 <div class="skeleton" style="height: 280px; border-radius: 12px;"></div>
@@ -98,36 +179,48 @@
             <div id="sin-ofertas" class="text-center py-5 d-none">
                 <i class="bi bi-emoji-frown fs-1 text-muted mb-3"></i>
                 <h4 class="text-muted mb-2">No hay ofertas disponibles</h4>
-                <p class="text-muted">Regresa más tarde para ver nuevas promociones</p>
-                <a href="INICIO.HTML" class="btn btn-outline-primary mt-3">
-                    <i class="bi bi-arrow-left me-2"></i>Volver al inicio
-                </a>
+                <p class="text-muted mb-4">Regresa más tarde para ver nuevas promociones</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="INICIO.HTML" class="btn btn-primary">
+                        <i class="bi bi-arrow-left me-2"></i>Volver al inicio
+                    </a>
+                    <button onclick="recargarOfertas()" class="btn btn-outline-primary">
+                        <i class="bi bi-arrow-clockwise me-2"></i>Reintentar
+                    </button>
+                </div>
             </div>
         </section>
 
         <!-- INFORMACIÓN ADICIONAL -->
         <div class="row mt-5 pt-4 border-top g-4">
             <div class="col-md-4">
-                <div class="text-center p-3 rounded bg-light">
+                <div class="text-center p-3 rounded bg-light h-100">
                     <i class="bi bi-lightning text-warning fs-1 mb-3"></i>
                     <h5 class="fw-bold mb-2">Ofertas Relámpago</h5>
                     <p class="text-muted small">Precios especiales por tiempo limitado</p>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="text-center p-3 rounded bg-light">
+                <div class="text-center p-3 rounded bg-light h-100">
                     <i class="bi bi-arrow-repeat text-primary fs-1 mb-3"></i>
                     <h5 class="fw-bold mb-2">Rotación Constante</h5>
                     <p class="text-muted small">Nuevas ofertas cada 6 horas</p>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="text-center p-3 rounded bg-light">
+                <div class="text-center p-3 rounded bg-light h-100">
                     <i class="bi bi-percent text-success fs-1 mb-3"></i>
                     <h5 class="fw-bold mb-2">Descuentos Reales</h5>
                     <p class="text-muted small">Hasta 30% de descuento</p>
                 </div>
             </div>
+        </div>
+        
+        <!-- BOTÓN AL FINAL PARA REGRESAR -->
+        <div class="text-center mt-5 pt-4">
+            <a href="INICIO.HTML" class="btn btn-lg btn-primary px-5 rounded-pill">
+                <i class="bi bi-arrow-left-circle me-2"></i>Regresar a la Tienda Principal
+            </a>
         </div>
     </main>
 
@@ -166,8 +259,8 @@
     <nav class="navbar fixed-bottom bg-white border-top d-md-none py-2 shadow-lg">
         <div class="container-fluid px-0">
             <div class="d-flex justify-content-around w-100">
-                <a href="INICIO.HTML" class="text-center text-decoration-none text-dark">
-                    <i class="bi bi-house fs-5"></i>
+                <a href="INICIO.HTML" class="text-center text-decoration-none text-primary">
+                    <i class="bi bi-house-fill fs-5"></i>
                     <div class="small mt-1">Inicio</div>
                 </a>
                 <a href="PROMOS.HTML" class="text-center text-decoration-none text-warning">
@@ -187,7 +280,7 @@
                 </a>
                 <a href="https://wa.me/573006498710?text=¡Hola!%20Me%20interesan%20sus%20productos%20de%20Anmago%20Store" 
                    class="text-center text-decoration-none text-success"
-                   target="_blank">
+                   target="_blank" rel="noopener noreferrer">
                     <i class="bi bi-whatsapp fs-5"></i>
                     <div class="small mt-1">Chat</div>
                 </a>
@@ -205,13 +298,14 @@
     <!-- SCRIPT ESPECÍFICO PARA OFERTAS -->
     <script>
     // ==============================================
-    // SISTEMA DE OFERTAS ESPECIALES
+    // SISTEMA DE OFERTAS ESPECIALES MEJORADO
     // ==============================================
     
     // CONFIGURACIÓN
     const CONFIG_PROMOS = {
         productosPorBloque: 8,
-        horasPorBloque: 6
+        horasPorBloque: 6,
+        descuentoPorcentaje: 10 // 10% de descuento
     };
     
     // VARIABLES
@@ -221,83 +315,119 @@
     
     // INICIALIZACIÓN
     document.addEventListener('DOMContentLoaded', function() {
-        console.log('🔄 Sistema de ofertas iniciado');
+        console.log('🔄 Sistema de ofertas mejorado iniciado');
         
         // Cargar header/footer
         cargarHeaderFooter();
         
         // Iniciar sistema
-        iniciarTemporizador();
+        iniciarTemporizadores();
         cargarProductosPromocion();
         programarActualizacion();
         actualizarContadoresCarrito();
         
-        // Actualizar cada minuto (para sincronización)
-        setInterval(actualizarContadoresCarrito, 60000);
+        // Actualizar contadores cada 30 segundos
+        setInterval(actualizarContadoresCarrito, 30000);
+        
+        // Verificar cada minuto si hay cambio de bloque
+        setInterval(verificarCambioBloque, 60000);
     });
     
     // CARGAR HEADER Y FOOTER
     function cargarHeaderFooter() {
-        // Cargar header
+        // Cargar header con mejor manejo
         fetch("HEADER.HTML")
-            .then(res => res.text())
+            .then(res => {
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                return res.text();
+            })
             .then(html => {
                 document.getElementById("header-container").innerHTML = html;
+                
+                // Añadir evento al logo para regresar al inicio
+                const logoHeader = document.querySelector('.logo-header');
+                if (logoHeader) {
+                    logoHeader.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        window.location.href = 'INICIO.HTML';
+                    });
+                }
             })
-            .catch(err => console.error("❌ Error cargando header:", err));
-        
-        // Cargar footer
-        const footerPlaceholder = document.getElementById("footer-placeholder");
-        if (footerPlaceholder) {
-            fetch("FOOTER.HTML")
-                .then(res => res.text())
-                .then(html => {
-                    footerPlaceholder.innerHTML = html;
-                })
-                .catch(err => console.error("❌ Error cargando footer:", err));
-        }
+            .catch(err => {
+                console.error("❌ Error cargando header:", err);
+                // Mostrar botón alternativo si falla
+                document.getElementById("header-container").innerHTML = `
+                    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom py-2">
+                        <div class="container">
+                            <a href="INICIO.HTML" class="navbar-brand fw-bold text-primary">
+                                <i class="bi bi-shop me-2"></i>Anmago Store
+                            </a>
+                            <div class="d-flex align-items-center">
+                                <a href="INICIO.HTML" class="btn btn-outline-primary btn-sm me-2">
+                                    <i class="bi bi-house"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </nav>
+                `;
+            });
     }
     
-    // TEMPORIZADOR PRECISO
-    function iniciarTemporizador() {
+    // INICIAR TEMPORIZADORES
+    function iniciarTemporizadores() {
+        actualizarTemporizador();
+        actualizarContadorDetallado();
+        
+        // Actualizar cada segundo
+        setInterval(actualizarTemporizador, 1000);
+        setInterval(actualizarContadorDetallado, 1000);
+    }
+    
+    // TEMPORIZADOR PRINCIPAL
+    function actualizarTemporizador() {
         const elemento = document.getElementById("contador-ofertas");
         if (!elemento) return;
         
-        function actualizar() {
-            const ahora = new Date();
-            const hora = ahora.getHours();
-            const minutos = ahora.getMinutes();
-            const segundos = ahora.getSeconds();
-            
-            // Calcular próxima hora múltiplo de 6
-            const proximaHora = Math.ceil(hora / 6) * 6;
-            
-            let segundosHasta;
-            if (proximaHora > hora) {
-                segundosHasta = (proximaHora - hora - 1) * 3600 + 
-                               (59 - minutos) * 60 + 
-                               (60 - segundos);
-            } else {
-                segundosHasta = (23 - hora) * 3600 + 
-                               (59 - minutos) * 60 + 
-                               (60 - segundos);
-            }
-            
-            // Formatear HH:MM:SS
-            const h = Math.floor(segundosHasta / 3600);
-            const m = Math.floor((segundosHasta % 3600) / 60);
-            const s = segundosHasta % 60;
-            
-            elemento.textContent = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-            
-            // Actualizar productos si cambia el bloque
-            if (segundosHasta === 0) {
-                cargarProductosPromocion();
-            }
+        const tiempo = calcularTiempoRestante();
+        elemento.textContent = `${tiempo.horas}:${tiempo.minutos}:${tiempo.segundos}`;
+    }
+    
+    // CONTADOR DETALLADO
+    function actualizarContadorDetallado() {
+        const elemento = document.getElementById("contador-detallado");
+        if (!elemento) return;
+        
+        const tiempo = calcularTiempoRestante();
+        elemento.textContent = `${tiempo.horas}h ${tiempo.minutos}m ${tiempo.segundos}s`;
+    }
+    
+    // CALCULAR TIEMPO RESTANTE
+    function calcularTiempoRestante() {
+        const ahora = new Date();
+        const hora = ahora.getHours();
+        const minutos = ahora.getMinutes();
+        const segundos = ahora.getSeconds();
+        
+        // Calcular próxima hora múltiplo de 6
+        const proximaHora = Math.ceil(hora / 6) * 6;
+        
+        let segundosHasta;
+        if (proximaHora > hora) {
+            segundosHasta = (proximaHora - hora - 1) * 3600 + 
+                           (59 - minutos) * 60 + 
+                           (60 - segundos);
+        } else {
+            segundosHasta = (23 - hora) * 3600 + 
+                           (59 - minutos) * 60 + 
+                           (60 - segundos);
         }
         
-        actualizar();
-        setInterval(actualizar, 1000);
+        return {
+            horas: Math.floor(segundosHasta / 3600).toString().padStart(2, '0'),
+            minutos: Math.floor((segundosHasta % 3600) / 60).toString().padStart(2, '0'),
+            segundos: (segundosHasta % 60).toString().padStart(2, '0'),
+            totalSegundos: segundosHasta
+        };
     }
     
     // OBTENER ÍNDICE DEL BLOQUE ACTUAL
@@ -305,6 +435,12 @@
         const hora = new Date().getHours();
         const bloque = Math.floor(hora / CONFIG_PROMOS.horasPorBloque);
         return bloque * CONFIG_PROMOS.productosPorBloque;
+    }
+    
+    // OBTENER BLOQUE ACTUAL
+    function obtenerBloqueActual() {
+        const hora = new Date().getHours();
+        return Math.floor(hora / CONFIG_PROMOS.horasPorBloque) + 1;
     }
     
     // OBTENER PRODUCTOS DEL BLOQUE ACTUAL
@@ -330,7 +466,7 @@
     // CARGAR PRODUCTOS EN PROMOCIÓN
     async function cargarProductosPromocion() {
         const ahora = Date.now();
-        if (ahora - ultimaActualizacion < 30000) return;
+        if (ahora - ultimaActualizacion < 30000) return; // 30 segundos de cooldown
         ultimaActualizacion = ahora;
         
         try {
@@ -351,12 +487,12 @@
                 if (p.promo === true) return true;
                 if (typeof p.promo === 'string') {
                     const promoLower = p.promo.toLowerCase().trim();
-                    return promoLower === 'true' || promoLower === 'sí' || promoLower === 'si';
+                    return promoLower === 'true' || promoLower === 'sí' || promoLower === 'si' || promoLower === 'activo';
                 }
                 return false;
             });
             
-            console.log(`✅ ${productosEnPromocion.length} productos en promoción`);
+            console.log(`✅ ${productosEnPromocion.length} productos en promoción cargados`);
             
             // Actualizar interfaz
             actualizarIndicadorBloque();
@@ -373,13 +509,15 @@
         const elemento = document.getElementById('indicador-bloque');
         if (!elemento) return;
         
-        const hora = new Date().getHours();
-        const bloque = Math.floor(hora / 6) + 1;
+        const bloque = obtenerBloqueActual();
         const horaInicio = (bloque - 1) * 6;
         const horaFin = horaInicio + 6;
         
         elemento.textContent = `Bloque ${bloque}`;
         elemento.title = `Horario: ${horaInicio}:00 - ${horaFin}:00`;
+        
+        // Actualizar también en consola para debug
+        console.log(`📊 Bloque actual: ${bloque} (${horaInicio}:00 - ${horaFin}:00)`);
     }
     
     // RENDERIZAR PRODUCTOS EN OFERTA
@@ -389,56 +527,78 @@
         
         if (!grid) return;
         
+        // Mostrar mensaje si no hay productos
         if (!productos || productos.length === 0) {
             grid.classList.add('d-none');
             if (sinOfertas) sinOfertas.classList.remove('d-none');
             return;
         }
         
+        // Ocultar mensaje de no ofertas
         if (sinOfertas) sinOfertas.classList.add('d-none');
         grid.classList.remove('d-none');
         
-        grid.innerHTML = productos.map(p => `
-            <div class="card-producto-ml shadow-sm border-0">
-                <a href="PRODUCTO.HTML?id=${p.id || ''}&origen=promos" class="text-decoration-none">
-                    <div class="position-relative overflow-hidden">
+        // Renderizar productos
+        grid.innerHTML = productos.map(p => {
+            const precioOriginal = p.precio || 0;
+            const precioDescuento = Math.round(precioOriginal * (1 - CONFIG_PROMOS.descuentoPorcentaje/100));
+            const ahorro = precioOriginal - precioDescuento;
+            
+            return `
+            <div class="card-oferta card-producto-ml shadow-sm border-0 h-100">
+                <a href="PRODUCTO.HTML?id=${p.id || ''}&origen=promos" class="text-decoration-none text-dark h-100 d-flex flex-column">
+                    <div class="position-relative overflow-hidden flex-grow-1">
                         <img src="${p.imagen || 'https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg?tr=w-400,h-400'}" 
                              alt="${p.producto || 'Producto'}" 
-                             class="card-img-ml"
+                             class="card-img-ml w-100 h-100"
+                             style="object-fit: cover;"
                              loading="lazy"
                              onerror="this.src='https://ik.imagekit.io/mbsk9dati/placeholder-producto.jpg'">
-                        <div class="position-absolute top-0 start-0 m-2">
-                            <span class="badge bg-danger fs-6 px-2 py-1">🔥</span>
+                        
+                        <div class="badge-oferta">
+                            -${CONFIG_PROMOS.descuentoPorcentaje}%
                         </div>
+                        
                         <div class="position-absolute bottom-0 w-100 p-2 bg-dark bg-opacity-75">
-                            <small class="text-white">${p.tipo || ''} • ${p.subtipo || ''}</small>
+                            <small class="text-white d-block text-truncate">
+                                <i class="bi bi-tag me-1"></i>${p.tipo || 'Producto'}
+                            </small>
                         </div>
                     </div>
-                    <div class="card-body-ml p-3">
-                        <h3 class="nombre-producto-ml small line-clamp-2 mb-2">${p.producto || 'Producto en oferta'}</h3>
+                    
+                    <div class="card-body-ml p-3 flex-shrink-0">
+                        <h3 class="nombre-producto-ml small line-clamp-2 mb-2 fw-bold">
+                            ${p.producto || 'Producto en oferta'}
+                        </h3>
+                        
                         <div class="precios-oferta mb-3">
-                            <div class="d-flex align-items-baseline gap-2">
+                            <div class="d-flex align-items-baseline gap-2 mb-1">
                                 <span class="precio-oferta fw-bold text-danger fs-5">
-                                    $${Math.round((p.precio || 0) * 0.90).toLocaleString('es-CO')}
+                                    $${precioDescuento.toLocaleString('es-CO')}
                                 </span>
                                 <span class="precio-original text-muted text-decoration-line-through small">
-                                    $${(p.precio || 0).toLocaleString('es-CO')}
+                                    $${precioOriginal.toLocaleString('es-CO')}
                                 </span>
                             </div>
                             <div class="ahorro text-success small fw-bold">
-                                <i class="bi bi-coin me-1"></i> Ahorras: $${Math.round((p.precio || 0) * 0.10).toLocaleString('es-CO')}
+                                <i class="bi bi-piggy-bank me-1"></i> 
+                                Ahorras: $${ahorro.toLocaleString('es-CO')}
                             </div>
                         </div>
-                        <a href="PRODUCTO.HTML?id=${p.id || ''}&origen=promos" 
-                           class="btn btn-warning btn-sm w-100 fw-bold text-white">
-                            <i class="bi bi-eye me-1"></i> Ver Oferta
-                        </a>
+                        
+                        <div class="d-grid">
+                            <a href="PRODUCTO.HTML?id=${p.id || ''}&origen=promos" 
+                               class="btn btn-warning btn-sm fw-bold text-white">
+                                <i class="bi bi-bag-check me-1"></i> Ver Oferta
+                            </a>
+                        </div>
                     </div>
                 </a>
             </div>
-        `).join('');
+            `;
+        }).join('');
         
-        console.log(`✅ ${productos.length} productos renderizados`);
+        console.log(`✅ ${productos.length} productos en oferta renderizados`);
     }
     
     // PROGRAMAR ACTUALIZACIÓN AUTOMÁTICA
@@ -446,56 +606,57 @@
         if (intervaloActualizacion) clearInterval(intervaloActualizacion);
         
         const ahora = new Date();
-        const hora = ahora.getHours();
-        const minutos = ahora.getMinutes();
-        const segundos = ahora.getSeconds();
+        const tiempoRestante = calcularTiempoRestante();
         
-        // Calcular ms hasta próxima hora múltiplo de 6
-        let proximaHora = Math.ceil(hora / 6) * 6;
-        if (proximaHora >= 24) proximaHora = 0;
-        
-        let msHastaProxima;
-        if (proximaHora > hora) {
-            msHastaProxima = (proximaHora - hora - 1) * 3600000 + 
-                            (59 - minutos) * 60000 + 
-                            (60000 - segundos * 1000);
-        } else {
-            msHastaProxima = (23 - hora) * 3600000 + 
-                            (59 - minutos) * 60000 + 
-                            (60000 - segundos * 1000);
-        }
-        
-        console.log(`⏰ Próxima actualización: ${proximaHora}:00 (en ${Math.round(msHastaProxima/60000)} minutos)`);
+        console.log(`⏰ Próxima actualización en: ${tiempoRestante.horas}:${tiempoRestante.minutos}:${tiempoRestante.segundos}`);
         
         // Programar primera actualización
         setTimeout(() => {
-            console.log('🔄 ¡Actualizando ofertas!');
+            console.log('🔄 ¡Actualizando ofertas (rotación automática)!');
             cargarProductosPromocion();
             
             // Configurar intervalo de 6 horas
             intervaloActualizacion = setInterval(() => {
                 console.log('🔄 Rotación automática (cada 6 horas)');
                 cargarProductosPromocion();
-            }, 6 * 60 * 60 * 1000);
+            }, CONFIG_PROMOS.horasPorBloque * 60 * 60 * 1000);
             
-        }, msHastaProxima);
+        }, (tiempoRestante.totalSegundos + 1) * 1000); // +1 segundo para asegurar
+    }
+    
+    // VERIFICAR CAMBIO DE BLOQUE
+    function verificarCambioBloque() {
+        const tiempo = calcularTiempoRestante();
+        if (tiempo.totalSegundos === 0) {
+            console.log('🔄 Cambio de bloque detectado, recargando ofertas...');
+            cargarProductosPromocion();
+        }
     }
     
     // ACTUALIZAR CONTADORES DEL CARRITO
     function actualizarContadoresCarrito() {
-        if (typeof actualizarContadorCarrito === 'function') {
-            actualizarContadorCarrito();
-        }
-        
-        // Sincronizar contadores
-        const contadorPrincipal = document.getElementById('contador-carrito');
-        const contadorMobile = document.getElementById('contador-carrito-mobile');
-        
-        // Si hay función global, usarla
-        if (typeof obtenerTotalCarrito === 'function') {
-            const total = obtenerTotalCarrito();
-            if (contadorPrincipal) contadorPrincipal.textContent = total;
-            if (contadorMobile) contadorMobile.textContent = total;
+        try {
+            // Intentar usar función global si existe
+            if (typeof actualizarContadorCarrito === 'function') {
+                actualizarContadorCarrito();
+            }
+            
+            if (typeof obtenerTotalCarrito === 'function') {
+                const total = obtenerTotalCarrito();
+                const contadorPrincipal = document.getElementById('contador-carrito');
+                const contadorMobile = document.getElementById('contador-carrito-mobile');
+                
+                if (contadorPrincipal) {
+                    contadorPrincipal.textContent = total;
+                    contadorPrincipal.style.display = total > 0 ? 'flex' : 'none';
+                }
+                if (contadorMobile) {
+                    contadorMobile.textContent = total;
+                    contadorMobile.style.display = total > 0 ? 'block' : 'none';
+                }
+            }
+        } catch (error) {
+            console.log('⚠️ No se pudieron actualizar contadores:', error);
         }
     }
     
@@ -508,12 +669,49 @@
                     <i class="bi bi-exclamation-triangle fs-1 text-warning mb-3"></i>
                     <h4 class="text-muted mb-2">Error temporal</h4>
                     <p class="text-muted mb-3">No se pudieron cargar las ofertas</p>
-                    <button onclick="cargarProductosPromocion()" class="btn btn-outline-warning">
-                        <i class="bi bi-arrow-clockwise me-1"></i> Reintentar
-                    </button>
+                    <div class="d-flex justify-content-center gap-2">
+                        <button onclick="recargarOfertas()" class="btn btn-warning">
+                            <i class="bi bi-arrow-clockwise me-1"></i> Reintentar
+                        </button>
+                        <a href="INICIO.HTML" class="btn btn-outline-primary">
+                            <i class="bi bi-house me-1"></i> Ir al inicio
+                        </a>
+                    </div>
                 </div>
             `;
         }
+    }
+    
+    // FUNCIÓN PARA RECARGAR OFERTAS (pública)
+    function recargarOfertas() {
+        console.log('🔄 Recargando ofertas manualmente...');
+        ultimaActualizacion = 0; // Resetear cooldown
+        cargarProductosPromocion();
+        
+        // Mostrar feedback
+        const grid = document.getElementById('grid-ofertas');
+        if (grid) {
+            const originalHTML = grid.innerHTML;
+            grid.innerHTML = `
+                <div class="col-12 text-center py-3">
+                    <div class="spinner-border text-warning" role="status">
+                        <span class="visually-hidden">Cargando...</span>
+                    </div>
+                    <p class="mt-2 text-muted">Recargando ofertas...</p>
+                </div>
+            `;
+            
+            setTimeout(() => {
+                if (grid.innerHTML.includes('spinner-border')) {
+                    grid.innerHTML = originalHTML;
+                }
+            }, 3000);
+        }
+    }
+    
+    // ABRIR FORMULARIO DE PEDIDO
+    function abrirFormularioPedido() {
+        window.location.href = 'modalformulario.html';
     }
     
     // EXPONER FUNCIONES PARA DEBUG
@@ -521,12 +719,19 @@
         console.log('📊 INFORMACIÓN DEL SISTEMA DE OFERTAS:');
         console.log('• Hora actual:', new Date().toLocaleTimeString());
         console.log('• Productos en promoción:', productosEnPromocion.length);
-        console.log('• Bloque actual:', Math.floor(new Date().getHours() / 6) + 1);
-        console.log('• Índice:', obtenerIndiceBloque());
+        console.log('• Bloque actual:', obtenerBloqueActual());
+        console.log('• Índice inicio:', obtenerIndiceBloque());
         console.log('• Productos mostrados:', obtenerProductosDelBloque().length);
+        console.log('• Última actualización:', new Date(ultimaActualizacion).toLocaleTimeString());
+        console.log('• Tiempo restante:', calcularTiempoRestante().totalSegundos, 'segundos');
+        
+        // Mostrar alerta en pantalla
+        alert(`Información de ofertas:\n\n• Bloque actual: ${obtenerBloqueActual()}\n• Productos: ${productosEnPromocion.length}\n• Mostrando: ${obtenerProductosDelBloque().length}\n• Tiempo restante: ${calcularTiempoRestante().horas}h ${calcularTiempoRestante().minutos}m`);
     };
     
-    console.log('✅ Sistema de ofertas especiales cargado');
+    window.recargarOfertas = recargarOfertas;
+    
+    console.log('✅ Sistema de ofertas especiales mejorado cargado');
     </script>
 </body>
 </html>
