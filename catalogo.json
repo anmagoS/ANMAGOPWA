@@ -854,22 +854,6 @@
     "descripcion": "PUEDES REALIZAR TODO EL PROCESO DE COMPRA DIRECTAMENTE DESDE ESTE CANAL, Y DURANTE EL CHAT VERIFICAMOS JUNTOS LA DISPONIBILIDAD DE TALLA Y COLOR PARA ASEGURAR UNA EXPERIENCIA PERFECTA."
   },
   {
-    "id": "3B688D16",
-    "tipo": "ROPA",
-    "subtipo": "DAMA",
-    "categoria": "BUSOS",
-    "subcategoria": "TEJIESTILO",
-    "producto": "REF 108",
-    "material": "VISCOSA-NYLON",
-    "tallas": "UNICA",
-    "precio": 62000,
-    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_62/PRODUCTOS_Images_3b688d16.IMAGEN_1.172034.jpg",
-    "promo": false,
-    "url": "https://ik.imagekit.io/mbsk9dati/producto_62/PRODUCTOS_Images_3b688d16.IMAGEN_1.172034.jpg?tr=w-600,q-80,[]https://ik.imagekit.io/mbsk9dati/producto_62/PRODUCTOS_Images_3b688d16.IMAGEN_2.172034.jpg?tr=w-600,q-80,[]https://ik.imagekit.io/mbsk9dati/producto_62/PRODUCTOS_Images_3b688d16.IMAGEN_3.172034.jpg?tr=w-600,q-80,[]https://ik.imagekit.io/mbsk9dati/producto_62/PRODUCTOS_Images_3b688d16.IMAGEN_4.172037.png?tr=w-600,q-80",
-    "proveedor": "TEJIESTILO",
-    "descripcion": "PUEDES REALIZAR TODO EL PROCESO DE COMPRA DIRECTAMENTE DESDE ESTE CANAL, Y DURANTE EL CHAT VERIFICAMOS JUNTOS LA DISPONIBILIDAD DE TALLA Y COLOR PARA ASEGURAR UNA EXPERIENCIA PERFECTA."
-  },
-  {
     "id": "78D807CB",
     "tipo": "ROPA",
     "subtipo": "DAMA",
@@ -3525,6 +3509,21 @@
     "imagen": "https://ik.imagekit.io/mbsk9dati/producto_224/PRODUCTOS_Images_1cb826af.IMAGEN_1.185343.jpg?tr=w-600,q-80",
     "promo": true,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_224/PRODUCTOS_Images_1cb826af.IMAGEN_1.185343.jpg?tr=w-600,q-80",
+    "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA"
+  },
+  {
+    "id": "CCDB515F",
+    "tipo": "BELLEZA",
+    "subtipo": "DAMA",
+    "categoria": "GENERICO",
+    "subcategoria": ".",
+    "producto": "FAJA MODELADORA CON BROCHES",
+    "material": ".",
+    "tallas": "N/A",
+    "precio": 25560,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_225/PRODUCTOS_Images_ccdb515f.IMAGEN_1.190117.png?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_225/PRODUCTOS_Images_ccdb515f.IMAGEN_1.190117.png?tr=w-600,q-80",
     "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA"
   }
 ]
