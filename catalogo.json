@@ -3375,5 +3375,35 @@
     "promo": true,
     "url": "https://ik.imagekit.io/mbsk9dati/producto_217/PRODUCTOS_Images_932bf834.IMAGEN_1.221524.jpg?tr=w-600,q-80",
     "proveedor": "XORA"
+  },
+  {
+    "id": "85D7F10B",
+    "tipo": "NAVIDAD",
+    "subtipo": "NIÑOS",
+    "categoria": "JUGUETES",
+    "subcategoria": "CARROS",
+    "producto": "CARRO LOCO ACUATICO CON CONTROL Y MANILLA",
+    "material": ".",
+    "tallas": "N/A",
+    "precio": 105750,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_218/PRODUCTOS_Images_85d7f10b.IMAGEN_1.222607.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_218/PRODUCTOS_Images_85d7f10b.IMAGEN_1.222607.jpg?tr=w-600,q-80",
+    "proveedor": "XORA"
+  },
+  {
+    "id": "625113C3",
+    "tipo": "NAVIDAD",
+    "subtipo": "NIÑOS",
+    "categoria": "JUGUETES",
+    "subcategoria": "PISTAS",
+    "producto": "CONTENEDOR PISTA BOMBEROS",
+    "material": "40 PCS",
+    "tallas": "N/A",
+    "precio": 39480,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_219/PRODUCTOS_Images_625113c3.IMAGEN_1.222750.jpg?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_219/PRODUCTOS_Images_625113c3.IMAGEN_1.222750.jpg?tr=w-600,q-80",
+    "proveedor": "XORA"
   }
 ]
