@@ -3495,5 +3495,21 @@
     "url": "https://ik.imagekit.io/mbsk9dati/producto_222/PRODUCTOS_Images_eb4531dc.IMAGEN_1.180129.jpg?tr=w-600,q-80",
     "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA",
     "descripcion": "REPUESTOS PARA GLUCÓMETRO 50 TIRILLAS 50 LANCETAS"
+  },
+  {
+    "id": "5C7682A7",
+    "tipo": "HOGAR",
+    "subtipo": "SALUD",
+    "categoria": "GENERICO",
+    "subcategoria": ".",
+    "producto": "NEBULIZADOR RECARGABLE DOBLE MÁSCARA",
+    "material": ".",
+    "tallas": "N/A",
+    "precio": 55000,
+    "imagen": "https://ik.imagekit.io/mbsk9dati/producto_223/PRODUCTOS_Images_5c7682a7.IMAGEN_1.184426.png?tr=w-600,q-80",
+    "promo": true,
+    "url": "https://ik.imagekit.io/mbsk9dati/producto_223/PRODUCTOS_Images_5c7682a7.IMAGEN_1.184426.png?tr=w-600,q-80",
+    "proveedor": "EL PAISA MAYOR HOGAR Y TEGNOLOGIA",
+    "descripcion": "MASCARILLA NIÑOS, ADULTOS Y ONHALADORA"
   }
 ]
