@@ -757,16 +757,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         await new Promise(resolve => setTimeout(resolve, 100));
     }
 
-    // Renderizar menú lateral
-    if (Array.isArray(window.catalogoGlobal) && window.catalogoGlobal.length > 0) {
-        setTimeout(() => {
-            if (typeof renderizarMenuLateral === 'function') {
-                renderizarMenuLateral(window.catalogoGlobal);
-            }
-        }, 200);
-    }
-
-    // Activar buscador si existe
+       // Activar buscador si existe
     if (typeof activarBuscadorGlobal === "function") {
         activarBuscadorGlobal();
     }
