@@ -866,5 +866,13 @@
   {
     "id_producto": "625113C3",
     "ruta": "/NAVIDAD/NIÑOS/JUGUETES/PISTAS"
+  },
+  {
+    "id_producto": "0828DAA1",
+    "ruta": "/NAVIDAD/UNISEX/JUGUETES/CARROS"
+  },
+  {
+    "id_producto": "5BD22550",
+    "ruta": "/NAVIDAD/NIÑAS/JUGUETES/COCINA"
   }
 ]
