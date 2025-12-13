@@ -858,5 +858,13 @@
   {
     "id_producto": "932BF834",
     "ruta": "/NAVIDAD/NIÑOS/JUGUETES/MOTOS"
+  },
+  {
+    "id_producto": "85D7F10B",
+    "ruta": "/NAVIDAD/NIÑOS/JUGUETES/CARROS"
+  },
+  {
+    "id_producto": "625113C3",
+    "ruta": "/NAVIDAD/NIÑOS/JUGUETES/PISTAS"
   }
 ]
