@@ -31,33 +31,495 @@
   </button>
 </header>
 
-<!-- MENÚ LATERAL - ESTO DEBE ESTAR INCLUIDO EN EL HEADER -->
+<!-- MENÚ LATERAL -->
 <div class="offcanvas offcanvas-start" tabindex="-1" id="menuLateral" aria-labelledby="menuLateralLabel">
   <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="menuLateralLabel">Menú</h5>
+    <h5 class="offcanvas-title" id="menuLateralLabel">
+      <img src="https://ik.imagekit.io/mbsk9dati/logo.jpg?tr=w-48,h-48" 
+           alt="Anmago Store" width="30" height="30" 
+           style="border-radius: 4px; margin-right: 10px;">
+      Anmago Store
+    </h5>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
   </div>
 
   <div class="offcanvas-body d-flex flex-column gap-3">
-    <a href="INICIO.HTML" class="nav-link">Inicio</a>
-    <a href="PROMOS.HTML" class="nav-link">Promociones</a>
+    <!-- Inicio -->
+    <a href="#" class="nav-link d-flex align-items-center" onclick="volverAInicio();" data-bs-dismiss="offcanvas">
+      <i class="bi bi-house me-2"></i> Inicio
+    </a>
+
+    <!-- Promociones -->
+    <a href="PROMOS.HTML" class="nav-link d-flex align-items-center" data-bs-dismiss="offcanvas">
+      <i class="bi bi-percent me-2"></i> Promociones
+    </a>
+
+    <!-- Todos los productos -->
+    <a href="#" class="nav-link d-flex align-items-center" onclick="mostrarTodosLosProductos();" data-bs-dismiss="offcanvas">
+      <i class="bi bi-grid-3x3 me-2"></i> Todos los productos
+    </a>
 
     <!-- BOTÓN CATEGORÍAS -->
-    <button class="nav-link text-start fw-bold" id="toggle-categorias" style="cursor: pointer;">
-      Categorías ▾
+    <button class="nav-link text-start fw-bold d-flex align-items-center justify-content-between" 
+            id="toggle-categorias" 
+            style="cursor: pointer; border: none; background: none; padding: 0.5rem 0;">
+      <span><i class="bi bi-list-ul me-2"></i> Categorías</span>
+      <span id="toggle-icon">▸</span>
     </button>
 
     <!-- MENÚ DESPLEGABLE DE CATEGORÍAS -->
     <div id="menu-categorias"
-         class="d-flex flex-column ps-3 gap-2"
-         style="display: none; background: #f8f9fa; padding: 0.5rem 0;">
-      <!-- Se insertan dinámicamente desde app.js -->
+         class="d-flex flex-column gap-2 ps-3 border-start border-primary"
+         style="display: none;">
+      <!-- Se cargará dinámicamente desde JavaScript -->
+      <div class="text-center py-3">
+        <div class="spinner-border spinner-border-sm text-primary"></div>
+        <p class="mt-2 small text-muted">Cargando categorías...</p>
+      </div>
     </div>
 
+    <!-- Contacto -->
+    <a href="modalformulario.html" 
+       class="nav-link d-flex align-items-center" 
+       data-bs-dismiss="offcanvas">
+      <i class="bi bi-person me-2"></i> Mi cuenta
+    </a>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/573006498710?text=¡Hola!%20Me%20interesan%20sus%20productos%20de%20Anmago%20Store" 
+       target="_blank"
+       class="nav-link d-flex align-items-center text-success" 
+       data-bs-dismiss="offcanvas">
+      <i class="bi bi-whatsapp me-2"></i> WhatsApp
+    </a>
+
+    <!-- Contacto formulario -->
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSevvlCBgz7L6l2-DecKQLazoswqzf7DRYWOaCq4FtMGOR6D2Q/viewform?usp=header"
        target="_blank"
-       class="nav-link">
-      Contacto
+       class="nav-link d-flex align-items-center" 
+       data-bs-dismiss="offcanvas">
+      <i class="bi bi-envelope me-2"></i> Contacto
     </a>
   </div>
+
+  <div class="offcanvas-footer border-top p-3">
+    <div class="text-center small text-muted">
+      <p class="mb-1">anmagostore@gmail.com</p>
+      <p class="mb-0">3006498710 - 3115046741</p>
+    </div>
+  </div>
 </div>
+
+<script>
+// ==============================================
+// SISTEMA DE MENÚ HAMBURGUESA
+// ==============================================
+
+// Función para renderizar el menú lateral con catálogo
+function renderizarMenuLateral(catalogo) {
+    try {
+        const menuCategorias = document.getElementById('menu-categorias');
+        if (!menuCategorias || !catalogo || !Array.isArray(catalogo)) {
+            console.warn('⚠️ No se puede renderizar menú lateral');
+            return;
+        }
+
+        // Extraer tipos únicos del catálogo
+        const tiposUnicos = [...new Set(catalogo.map(p => p.tipo).filter(Boolean))];
+        
+        if (tiposUnicos.length === 0) {
+            menuCategorias.innerHTML = '<p class="text-muted small">No hay categorías disponibles</p>';
+            return;
+        }
+
+        // Crear HTML del menú
+        let html = '';
+        
+        // Opción "Todos los productos" en el menú desplegable también
+        html += `
+            <a href="#" class="nav-link menu-categoria-item" 
+               onclick="mostrarTodosLosProductos();" data-bs-dismiss="offcanvas">
+                <i class="bi bi-grid-fill me-2 text-primary"></i>
+                <span>Todos los productos</span>
+                <span class="badge bg-primary rounded-pill ms-auto">
+                    ${catalogo.length}
+                </span>
+            </a>
+        `;
+
+        // Para cada tipo, crear un item con sus subtipos
+        tiposUnicos.forEach(tipo => {
+            const productosTipo = catalogo.filter(p => p.tipo === tipo);
+            const subtiposUnicos = [...new Set(productosTipo.map(p => p.subtipo).filter(Boolean))];
+            
+            html += `
+                <div class="menu-tipo-item mb-2">
+                    <button class="menu-tipo-btn w-100 text-start d-flex align-items-center justify-content-between p-2 rounded"
+                            type="button"
+                            onclick="toggleSubtipoMenu(this)"
+                            data-tipo="${tipo}">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-folder me-2"></i>
+                            <span class="fw-medium">${tipo}</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="badge bg-secondary rounded-pill me-2">
+                                ${productosTipo.length}
+                            </span>
+                            <span class="toggle-icon">▸</span>
+                        </div>
+                    </button>
+                    
+                    <div class="menu-subtipos ps-3 mt-1" style="display: none;">
+                        <!-- Subtipo "Todos" -->
+                        <a href="#" class="nav-link menu-subtipo-item"
+                           onclick="cargarPorTipo('${tipo}');" data-bs-dismiss="offcanvas">
+                            <i class="bi bi-arrow-return-right me-2"></i>
+                            <span>Todos en ${tipo}</span>
+                        </a>
+                        
+                        <!-- Lista de subtipos -->
+                        ${subtiposUnicos.map(subtipo => {
+                            const productosSubtipo = productosTipo.filter(p => p.subtipo === subtipo);
+                            return `
+                                <a href="#" class="nav-link menu-subtipo-item"
+                                   onclick="cargarPorSubtipo('${tipo}', '${subtipo}');" data-bs-dismiss="offcanvas">
+                                    <i class="bi bi-tag me-2"></i>
+                                    <span>${subtipo}</span>
+                                    <span class="badge bg-light text-dark rounded-pill ms-auto">
+                                        ${productosSubtipo.length}
+                                    </span>
+                                </a>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+        });
+
+        menuCategorias.innerHTML = html;
+
+        // Inicializar eventos para el menú
+        inicializarEventosMenuLateral();
+
+    } catch (error) {
+        console.error('❌ Error renderizando menú lateral:', error);
+        const menuCategorias = document.getElementById('menu-categorias');
+        if (menuCategorias) {
+            menuCategorias.innerHTML = `
+                <div class="alert alert-warning">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <p class="mb-0 small">Error al cargar el menú</p>
+                </div>
+            `;
+        }
+    }
+}
+
+// Función para alternar menú de subtipos
+function toggleSubtipoMenu(boton) {
+    const tipo = boton.getAttribute('data-tipo');
+    const subtiposMenu = boton.nextElementSibling;
+    const toggleIcon = boton.querySelector('.toggle-icon');
+    
+    const isVisible = subtiposMenu.style.display === 'block';
+    
+    // Cerrar otros menús abiertos
+    document.querySelectorAll('.menu-subtipos').forEach(menu => {
+        if (menu !== subtiposMenu) {
+            menu.style.display = 'none';
+            menu.previousElementSibling?.querySelector('.toggle-icon')?.textContent = '▸';
+        }
+    });
+    
+    // Alternar el menú actual
+    subtiposMenu.style.display = isVisible ? 'none' : 'block';
+    toggleIcon.textContent = isVisible ? '▸' : '▾';
+    
+    // Agregar clase activa
+    if (!isVisible) {
+        boton.classList.add('active');
+    } else {
+        boton.classList.remove('active');
+    }
+}
+
+// Inicializar eventos del menú lateral
+function inicializarEventosMenuLateral() {
+    // Toggle del botón "Categorías"
+    const toggleBtn = document.getElementById('toggle-categorias');
+    const menuCategorias = document.getElementById('menu-categorias');
+    const toggleIcon = document.getElementById('toggle-icon');
+    
+    if (toggleBtn && menuCategorias && toggleIcon) {
+        toggleBtn.addEventListener('click', function() {
+            const isVisible = menuCategorias.style.display === 'flex';
+            menuCategorias.style.display = isVisible ? 'none' : 'flex';
+            toggleIcon.textContent = isVisible ? '▸' : '▾';
+        });
+    }
+    
+    // Eventos para items del menú
+    document.querySelectorAll('.menu-categoria-item, .menu-tipo-btn, .menu-subtipo-item').forEach(item => {
+        item.addEventListener('click', function(e) {
+            // Agregar efecto visual de selección
+            document.querySelectorAll('.menu-categoria-item, .menu-tipo-btn, .menu-subtipo-item').forEach(el => {
+                el.classList.remove('active');
+            });
+            this.classList.add('active');
+            
+            // Pequeño retraso antes de cerrar el offcanvas (para ver la selección)
+            setTimeout(() => {
+                const offcanvas = bootstrap.Offcanvas.getInstance(document.getElementById('menuLateral'));
+                if (offcanvas) {
+                    offcanvas.hide();
+                }
+            }, 300);
+        });
+    });
+}
+
+// Función para abrir el menú lateral manualmente (útil para debugging)
+function abrirMenuLateral() {
+    const menuLateral = new bootstrap.Offcanvas(document.getElementById('menuLateral'));
+    menuLateral.show();
+}
+
+// ==============================================
+// INTEGRACIÓN CON EL SISTEMA EXISTENTE
+// ==============================================
+
+// Cuando se cargue el DOM, inicializar el menú
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar eventos del menú
+    inicializarEventosMenuLateral();
+    
+    // Verificar si el catálogo ya está cargado y renderizar menú
+    if (window.catalogoGlobal && Array.isArray(window.catalogoGlobal)) {
+        setTimeout(() => {
+            renderizarMenuLateral(window.catalogoGlobal);
+        }, 500);
+    } else {
+        // Si no está cargado, esperar a que se cargue
+        const checkCatalogo = setInterval(() => {
+            if (window.catalogoGlobal && Array.isArray(window.catalogoGlobal)) {
+                renderizarMenuLacial(window.catalogoGlobal);
+                clearInterval(checkCatalogo);
+            }
+        }, 300);
+    }
+    
+    // Cerrar menú cuando se hace clic fuera (opcional)
+    document.addEventListener('click', function(e) {
+        const menuLateral = document.getElementById('menuLateral');
+        const toggleBtn = document.getElementById('toggle-categorias');
+        
+        if (menuLateral && !menuLateral.contains(e.target) && e.target !== toggleBtn) {
+            if (menuLateral.classList.contains('show')) {
+                const bsOffcanvas = bootstrap.Offcanvas.getInstance(menuLateral);
+                if (bsOffcanvas) bsOffcanvas.hide();
+            }
+        }
+    });
+});
+</script>
+
+<style>
+/* ===== ESTILOS PARA EL MENÚ LATERAL ===== */
+
+/* Header sticky */
+.header-sticky {
+  background: linear-gradient(135deg, #1B4557, #2A6A8F);
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+  height: 70px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Offcanvas personalizado */
+#menuLateral .offcanvas-header {
+  background: linear-gradient(135deg, #1B4557, #2A6A8F);
+  color: white;
+}
+
+#menuLateral .offcanvas-title {
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+/* Items del menú */
+#menuLateral .nav-link {
+  color: #333;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+#menuLateral .nav-link:hover {
+  background-color: #e9ecef;
+  color: #1B4557;
+  transform: translateX(5px);
+}
+
+#menuLateral .nav-link.active {
+  background-color: #1B4557;
+  color: white !important;
+}
+
+/* Botón toggle categorías */
+#toggle-categorias {
+  color: #1B4557;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: #f8f9fa;
+  transition: all 0.3s ease;
+}
+
+#toggle-categorias:hover {
+  background: #e9ecef;
+  color: #1B4557;
+}
+
+/* Menú de categorías */
+#menu-categorias {
+  transition: all 0.3s ease;
+  border-left: 3px solid #1B4557;
+}
+
+/* Items de tipo */
+.menu-tipo-btn {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  color: #495057;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.menu-tipo-btn:hover {
+  background: #e9ecef;
+  border-color: #1B4557;
+  color: #1B4557;
+}
+
+.menu-tipo-btn.active {
+  background: #1B4557;
+  color: white;
+  border-color: #1B4557;
+}
+
+.menu-tipo-btn.active .toggle-icon {
+  color: white;
+}
+
+/* Items de subtipo */
+.menu-subtipo-item {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  color: #6c757d;
+  border-radius: 6px;
+  margin-bottom: 2px;
+}
+
+.menu-subtipo-item:hover {
+  background: #e9ecef;
+  color: #1B4557;
+}
+
+.menu-subtipo-item.active {
+  background: #1B4557;
+  color: white !important;
+}
+
+/* Badges */
+.badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+/* Animaciones */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.menu-subtipos {
+  animation: slideIn 0.3s ease;
+}
+
+/* Footer del offcanvas */
+#menuLateral .offcanvas-footer {
+  background: #f8f9fa;
+  border-top: 1px solid #dee2e6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header-sticky {
+    height: 60px;
+    padding: 0.5rem;
+  }
+  
+  #menuLateral .nav-link {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.9rem;
+  }
+  
+  .menu-subtipo-item {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.5rem;
+  }
+}
+
+/* Buscador en header */
+.buscador-header {
+  border-radius: 20px;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.buscador-header:focus {
+  background: white;
+  box-shadow: 0 0 0 2px rgba(52, 131, 250, 0.5);
+  outline: none;
+}
+
+/* Icono hamburguesa */
+.navbar-toggler {
+  padding: 0.25rem;
+  margin-left: 0.5rem;
+}
+
+.navbar-toggler i {
+  transition: transform 0.3s ease;
+}
+
+.navbar-toggler:hover i {
+  transform: scale(1.1);
+}
+
+/* Logo */
+.logo img {
+  transition: transform 0.3s ease;
+}
+
+.logo:hover img {
+  transform: scale(1.05);
+}
+</style>
