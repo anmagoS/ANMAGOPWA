@@ -838,5 +838,13 @@
   {
     "id_producto": "E804444B",
     "ruta": "/HOGAR/SALUD/GENERICO/."
+  },
+  {
+    "id_producto": "085CD662",
+    "ruta": "/NAVIDAD/NIÑOS/JUGUETES/CARROS"
+  },
+  {
+    "id_producto": "7BE38FB8",
+    "ruta": "/NAVIDAD/NIÑOS/JUGUETES/."
   }
 ]
